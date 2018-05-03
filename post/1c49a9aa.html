@@ -128,7 +128,7 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-03T10:36:46.064Z">
+<meta property="og:updated_time" content="2018-05-03T10:43:21.121Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dockerpty使用">
 <meta name="twitter:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
@@ -525,24 +525,17 @@
 </li>
 <li>
 <p>安装</p>
-<pre><code><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
-</code></pre>
 </li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
 <h3 id="相关api"><a class="markdownIt-Anchor" href="#相关api"></a> 相关API</h3>
 <p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener">API文档</a></p>
 <ul>
 <li>
 <p>container相关参数说明</p>
 <ul>
-<li>
-<pre><code>tty (bool) – Allocate a pseudo-TTY.
-</code></pre>
-</li>
-<li>
-<pre><code> stdin_open (bool) – Keep STDIN open even if not attached.
-</code></pre>
-</li>
+<li>tty (bool) – Allocate a pseudo-TTY.</li>
+<li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
 </ul>
 </li>
 </ul>
