@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[dockerpty使用]]></title>
+    <url>%2Fpost%2F1c49a9aa.html</url>
+    <content type="text"><![CDATA[本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互 问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测试，发现其实docker的containers.run()和containers.exec_run()都是可以设置stdin=True, tty=True。但开启这些之后，将返回一个socket，需要自己来进行处理。 google大法后，找到了一个dockerpty的python lib，可以完成这件事情 环境搭建 根据dockerpty的github上提到的安装过程，只需要pip install dockerpty即可完成安装。 但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作 fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上simble1986/dockerpty 依赖 原有的project上提到依赖的docker api为docker-py&gt;=0.3.2，但docker的python API已经更新 安装docker API 1pip install docker 安装步骤 获取源码 1git clone https://github.com/simble1986/dockerpty.git 安装 123$ pip uninstall dockerpty$ cd dockerpty$ python setup.py install 相关API 参看docker官方API文档 container相关参数说明 tty (bool) – Allocate a pseudo-TTY. stdin_open (bool) – Keep STDIN open even if not attached. 基本使用 连接client 1234567root@slt-docker:/home/bqi# pythonPython 2.7.12 (default, Dec 4 2017, 14:50:18)[GCC 5.4.0 20160609] on linux2Type "help", "copyright", "credits" or "license" for more information.&gt;&gt;&gt; import docker&gt;&gt;&gt; import dockerpty&gt;&gt;&gt; client=docker.from_env() 注： 支持远程API 创建container 1&gt;&gt;&gt; test1 = client.containers.create("ubuntu","/bin/bash",tty=True,stdin_open=True) 使用dockerpty 12345&gt;&gt;&gt; dockerpty.start(client,test1)root@d6ddcf619602:/# lsbin boot dev etc home lib lib64 media mnt opt proc root run sbin srv sys tmp usr varroot@d6ddcf619602:/# exitexit]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>技术</tag>
+        <tag>docker</tag>
+        <tag>dockerpty</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker中无密码apt安装mysql]]></title>
     <url>%2Fpost%2F70cf198a.html</url>
     <content type="text"><![CDATA[问题出现 Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。 解决思路 如果将安装好的mysql-server使用apt remove从系统中卸载后，再次重新安装，则不再需要输入密码。另外当安装完一些软件后，可以使用dpkg-config来重新配置。 这样，就可以在安装软件前先对系统做好相关配置。接下来，就是需要获取软件的必要配置项 获取软件必要配置项 下载软件包 可以通过网上搜索方式下载相关的deb包，但众所周知，Linux的软件包版本多，很多情况下并不知道需要安装哪个版本。但可以使用apt来下载相应的软件包 1$ apt-get -d install -y mysql-server 使用apt-get的-d参数，将只会下载，不进行安装。下载完毕后，软件包位于/var/cache/apt/archives目录下。 获取配置项 进入软件包的存放目录，然后执行 1dpkg-preconfigure mysql-server-5.1_5.1.49-3_amd64.deb 使用debconfig-show来查看相应的配置项 12345$ debconf-show mysql-server mysql-server/root_password: (password omitted) mysql-server/root_password_again: (password omitted) mysql-server/error_setting_password: ... 可以看到，有两项是必须配置的：mysql-server/root_password和mysql-server/root_password_again 预配置 创建配置文件 在合适的目录下创建一个文件，例如mysql-passwd，输入以下内容 12debconf mysql-server/root_password password 123456debconf mysql-server/root_password_again password 123456 加载配置 1$ debconf-set-selections mysql-passwd 测试结果 再次安装mysql-server，将不再需要输入密码 1$ apt-get install -y mysql-server DockerFile处理 DockerFile应当尽量避免不需要的操作，所以，获取配置项的操作可以提前在实验环境中完成。 可将获取的命令行保存为本地文件，使用时copy过去。 12COPY ./mysql-passwd /tmp/mysql-passwdRUN apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server &amp;&amp; rm -rf /var/lib/apt/lists/* 或者是在DockerFile中直接生成，这时则可以将mysql passwd设置为参数 12RUN echo debconf mysql-server/root_password password 123456 &gt; /tmp/mysql-passwd &amp;&amp; echo debconf mysql-server/root_password_again password 123456 &gt;&gt; /tmp/mysql-passwdRUN apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server &amp;&amp; rm -rf /var/lib/apt/lists/*]]></content>
