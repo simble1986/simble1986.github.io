@@ -494,7 +494,7 @@
       
         
           <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h4 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h4>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
 <p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
