@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Docker API一种连接到PTY的交互方法]]></title>
-    <url>%2Fpost%2Fb18ab8ad.html</url>
-    <content type="text"><![CDATA[折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。 当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章 ##前言 这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。 Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接 本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互 ##自动化思路 client通过python API连接到docker 创建一个container并保持运行 使用exec_run()新建一个连接，运行/bin/bash，并开启socket方式 使用pexpect的fdspawn连接exec_run()返回的socket ###环境准备 Docker开启remote API 参见之前博文 Docker Client 安装必要的包 12$ pip install docker$ pip install pexpect ##开始使用 创建container 123&gt;&gt;&gt; import docker&gt;&gt;&gt; client=docker.DockerClient(base_url='tcp://10.0.0.10:1234')&gt;&gt;&gt; c1 = client.containers.run("ubuntu", detach=True, tty=True) 连接container 123456&gt;&gt;&gt; res = c1.exec_run("/bin/bash", socket=True, stdin=True, tty=True)&gt;&gt;&gt; resExecResult(exit_code=None, output=&lt;socket object, fd=15, family=1, type=1, protocol=0&gt;)&gt;&gt;&gt; sock = res.output&gt;&gt;&gt; sock&lt;socket object, fd=15, family=1, type=1, protocol=0&gt; 使用pexpect连接 1234567891011&gt;&gt;&gt; import pexpect.fdpexpect&gt;&gt;&gt; session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=10)&gt;&gt;&gt; &gt;&gt;&gt; session.send("ls\n")3&gt;&gt;&gt; session.expect("#")0&gt;&gt;&gt; session.before' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m \x1b[01;34mdev\x1b[0m \x1b[01;34mhome\x1b[0m \x1b[01;34mlib64\x1b[0m \x1b[01;34mmnt\x1b[0m \x1b[01;34mproc\x1b[0m \x1b[01;34mrun\x1b[0m \x1b[01;34msrv\x1b[0m \x1b[30;42mtmp\x1b[0m \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m \x1b[01;34metc\x1b[0m \x1b[01;34mlib\x1b[0m \x1b[01;34mmedia\x1b[0m \x1b[01;34mopt\x1b[0m \x1b[01;34mroot\x1b[0m \x1b[01;34msbin\x1b[0m \x1b[01;34msys\x1b[0m \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'&gt;&gt;&gt; session.after'#'&gt;&gt;&gt; ###注意事项 在使用exec_run()执行开启命令时，需要指定stdin=True，否则，pexpect的send()将无法将命令发送至container 同样，在使用exec_run()时，需要指定tty=True，否则，将没有命令行提示符，无法进行匹配]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>pexpect</tag>
-        <tag>自动化</tag>
-      </tags>
+    <title></title>
+    <url>%2Fpost%2F0.html</url>
+    <content type="text"><![CDATA[Docker API一种连接到PTY的交互方法 折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。 当弄明白之后，才发现原来是那么简单。几乎搜遍了google和百度，都没有找到相关的文章 前言 这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。 Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。 本篇博文将介绍一种使用pexpect连接到container的方法，以便与远程的container进行交互 自动化思路 通过client连接到docker 创建一个container并保持运行 使用exec_run()新建一个连接，运行/bin/bash，并开启socket方式 使用pexpect的fdspawn连接exec_run()返回的socket 环境准备 Docker开启remote API 参见之前博文 Docker Client 安装必要的包 12$ pip install docker$ pip install pexpect 开始使用 创建container 123&gt;&gt;&gt; import docker&gt;&gt;&gt; client=docker.DockerClient(base_url='tcp://10.0.0.10:1234')&gt;&gt;&gt; c1 = client.containers.run("ubuntu", detach=True, tty=True) 连接container 123456&gt;&gt;&gt; res = c1.exec_run("/bin/bash", socket=True, stdin=True, tty=True)&gt;&gt;&gt; resExecResult(exit_code=None, output=&lt;socket object, fd=15, family=1, type=1, protocol=0&gt;)&gt;&gt;&gt; sock = res.output&gt;&gt;&gt; sock&lt;socket object, fd=15, family=1, type=1, protocol=0&gt; 使用pexpect连接 1234567891011&gt;&gt;&gt; import pexpect.fdpexpect&gt;&gt;&gt; session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=10)&gt;&gt;&gt; &gt;&gt;&gt; session.send("ls\n")3&gt;&gt;&gt; session.expect("#")0&gt;&gt;&gt; session.before' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m \x1b[01;34mdev\x1b[0m \x1b[01;34mhome\x1b[0m \x1b[01;34mlib64\x1b[0m \x1b[01;34mmnt\x1b[0m \x1b[01;34mproc\x1b[0m \x1b[01;34mrun\x1b[0m \x1b[01;34msrv\x1b[0m \x1b[30;42mtmp\x1b[0m \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m \x1b[01;34metc\x1b[0m \x1b[01;34mlib\x1b[0m \x1b[01;34mmedia\x1b[0m \x1b[01;34mopt\x1b[0m \x1b[01;34mroot\x1b[0m \x1b[01;34msbin\x1b[0m \x1b[01;34msys\x1b[0m \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'&gt;&gt;&gt; session.after'#'&gt;&gt;&gt; 注意事项 在使用exec_run()执行开启命令时，需要指定stdin=True，否则，pexpect的send()将无法将命令发送至container 同样，在使用exec_run()时，需要指定tty=True，否则，将没有命令行提示符，无法进行匹配]]></content>
   </entry>
   <entry>
     <title><![CDATA[dockerpty使用]]></title>
@@ -73,9 +65,9 @@
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>blog</tag>
         <tag>hexo</tag>
         <tag>markdown</tag>
+        <tag>blog</tag>
       </tags>
   </entry>
   <entry>
