@@ -21,7 +21,6 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>技术</tag>
         <tag>docker</tag>
         <tag>dockerpty</tag>
       </tags>
@@ -34,7 +33,6 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>技术</tag>
         <tag>docker</tag>
         <tag>DockerFile</tag>
         <tag>mysql-server</tag>
@@ -61,8 +59,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>技术</tag>
-        <tag>script</tag>
+        <tag>docker</tag>
+        <tag>自动化</tag>
       </tags>
   </entry>
   <entry>
@@ -86,7 +84,6 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>技术</tag>
         <tag>docker</tag>
       </tags>
   </entry>
