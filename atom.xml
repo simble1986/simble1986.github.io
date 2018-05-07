@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-05-04T09:51:16.369Z</updated>
+  <updated>2018-05-07T02:36:14.456Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python virtenv环境搭建</title>
+    <link href="http://blog.simble.xyz/post/4926e490.html"/>
+    <id>http://blog.simble.xyz/post/4926e490.html</id>
+    <published>2018-05-06T18:32:01.000Z</published>
+    <updated>2018-05-07T02:36:14.456Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="近期由于组内测试框架更新频繁且由于框架采用了插件形式安装包很多-当使用同一台服务器来安装时可能会导致生产环境破坏-为此必须采用virtenv方式"><a class="markdownIt-Anchor" href="#近期由于组内测试框架更新频繁且由于框架采用了插件形式安装包很多-当使用同一台服务器来安装时可能会导致生产环境破坏-为此必须采用virtenv方式"></a> 近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</h2><p>title: python virtenv环境搭建<br>tags:</p><ul><li>python<br>categories: python<br>date: 2018-05-07 02:32:01</li></ul><hr><p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p><p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p><h4 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h4><p>安装virtualenv</p><ul><li>python2.7</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenv</span><br></pre></td></tr></table></figure><ul><li>python3</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install virtualenv</span><br></pre></td></tr></table></figure><h4 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h4><ul><li>创建工作目录</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># mkdir myproject</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># cd myproject</span></span><br></pre></td></tr></table></figure><ul><li>创建独立的python运行环境</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># virtualenv venv</span></span><br><span class="line">New python executable <span class="keyword">in</span> /home/<span class="built_in">test</span>/myproject/venv/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...done.</span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure><ul><li>引用新的环境变量</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># source venv/bin/activate</span></span><br><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure><ul><li>开始使用</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># pip install docker</span></span><br></pre></td></tr></table></figure><ul><li>退出当前venv环境</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># deactivate</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure><h3 id="一个小问题"><a class="markdownIt-Anchor" href="#一个小问题"></a> 一个小问题</h3><p>git clone时遇到<code>server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none</code>的解决方法</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GIT_SSL_NO_VERIFY=1</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;近期由于组内测试框架更新频繁且由于框架采用了插件形式安装包很多-当使用同一台服务器来安装时可能会导致生产环境破坏-为此必须采用virtenv方式&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#近期由于组内测试框架更新频繁且由于框架采用了
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://blog.simble.xyz/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker API一种连接到PTY的交互方法</title>
