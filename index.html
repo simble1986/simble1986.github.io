@@ -267,7 +267,7 @@
           
   <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">10</span>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">11</span>
       </a>
 </li>
 
@@ -352,6 +352,265 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/51748f3c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/51748f3c.html" itemprop="url">gitbook+gitlab发布私有的图书仓库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-11T06:28:34+08:00">2018-05-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/51748f3c.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/51748f3c.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计：</span>
+                
+                <span title="字数统计">3.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">0:03</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
+<p>另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。</p>
+<h2 id="gitbookdocker"><a class="markdownIt-Anchor" href="#gitbookdocker"></a> gitbook+docker</h2>
+<h3 id="本地安装"><a class="markdownIt-Anchor" href="#本地安装"></a> 本地安装</h3>
+<p>可参看gitbook的<a href="https://toolchain.gitbook.com/setup.html" target="_blank" rel="noopener">官方文档</a></p>
+<ul>
+<li>
+<p>环境需求</p>
+<p>gitbook需要nodejs环境</p>
+<ul>
+<li>NodeJS (v4.0.0 and above is recommended)</li>
+</ul>
+</li>
+<li>
+<p>安装gitbook-cli</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gitbook-cli -g</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>创建一本书</p>
+<p><strong>当使用gitlab时，可跳过此步骤</strong></p>
+<ul>
+<li>创建存放书籍的目录</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mybook</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook init</span><br></pre></td></tr></table></figure>
+<p>初始化完成后，将生成<code>SUMMARY.md</code>和<code>README.md</code></p>
+<ul>
+<li>插件安装</li>
+</ul>
+<p>如果没有生成book.json，可自行创建</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;root&quot;: &quot;./&quot;,</span><br><span class="line">&quot;title&quot;: &quot;mybook&quot;,</span><br><span class="line">&quot;head_title&quot;: &quot;My first book&quot;,</span><br><span class="line">&quot;description&quot;: &quot;test with gitbook&quot;,</span><br><span class="line">&quot;author&quot;: &quot;myname&quot;,</span><br><span class="line">&quot;output.name&quot;: &quot;practice&quot;,</span><br><span class="line"></span><br><span class="line">&quot;gitbook&quot;: &quot;&gt;= 3.0.0&quot;,</span><br><span class="line"></span><br><span class="line">&quot;language&quot;: &quot;zh-hans&quot;,</span><br><span class="line">&quot;plugins&quot;: [</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+<p>将插件在<code>plugins</code>字段中进行声明后，执行以下命令进行安装</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>预览和发布自己的书</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook serve</span><br></pre></td></tr></table></figure>
+<p>随后可登陆http://localhost:4000来预览自己的书</p>
+</li>
+</ul>
+<h3 id="docker镜像"><a class="markdownIt-Anchor" href="#docker镜像"></a> docker镜像</h3>
+<p>其实在docker hub上搜索便可以得到gitbook的镜像，但本着学习的态度，还是自己动手练习制作自己的docker镜像。</p>
+<p>由于nodejs有官方提供的docker镜像，所以，一切变得很简单</p>
+<ul>
+<li>Dockerfile</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">8</span>-alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> Bo Qi &lt;simble1986@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install gitbook-cli -g &amp;&amp; npm install &amp;&amp; gitbook install</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">WORKDIR /book</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">EXPOSE 4000 35729</span></span><br><span class="line"><span class="bash"></span></span><br><span class="line"><span class="bash">CMD gitbook install &amp;&amp; gitbook serve</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译docker镜像</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build --tag mygitbook .</span><br></pre></td></tr></table></figure>
+<h2 id="书的结构"><a class="markdownIt-Anchor" href="#书的结构"></a> 书的结构</h2>
+<p>当使用<code>gitbook init</code>后会在当前目录生成两个文件：<code>README.md</code>和<code>SUMMARY.md</code>.</p>
+<p>其中，<code>README.md</code>用来对本书进行一些说明</p>
+<p>而<code>SUMMARY.md</code>则用来创建目录结构。</p>
+<h3 id="summarymd"><a class="markdownIt-Anchor" href="#summarymd"></a> <a href="http://SUMMARY.md" target="_blank" rel="noopener">SUMMARY.md</a></h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Summary</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>[<span class="string">介绍</span>](<span class="link">README.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Git使用</span>](<span class="link">gitSetup.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Python基础</span>](<span class="link">part1/README.md</span>)</span><br><span class="line"><span class="code">    * [练习1-列表](part1/1.md)</span></span><br><span class="line"><span class="code">    * [练习2-字典](part1/2.md)</span></span><br><span class="line"><span class="code">    * [练习3-数据结构嵌套](part1/3.md)</span></span><br><span class="line"><span class="code">    * [练习4-运算符](part1/4.md)</span></span><br><span class="line"><span class="code">    * [练习5-逻辑控制](part1/5.md)</span></span><br><span class="line"><span class="code">    * [练习6-异常处理](part1/6.md)</span></span><br><span class="line"><span class="code">    * [练习7-函数](part1/7.md)</span></span><br><span class="line"><span class="code">    * [练习8-文件操作](part1/8.md)</span></span><br><span class="line"><span class="code">    * [轻松一刻-猜数字游戏](part1/happy1.md)</span></span><br><span class="line"><span class="code">    * [练习9-类.1](part1/9.md)</span></span><br><span class="line"><span class="code">    * [练习10-类.2](part1/10.md)</span></span><br><span class="line"><span class="code">    * [练习11-类的继承](part1/11.md)</span></span><br></pre></td></tr></table></figure>
+<h3 id="bookjson"><a class="markdownIt-Anchor" href="#bookjson"></a> book.json</h3>
+<p>需要自己创建book.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"root"</span>: <span class="string">"./"</span>,</span><br><span class="line">    <span class="attr">"title"</span>: <span class="string">"练习python"</span>,</span><br><span class="line">    <span class="attr">"head_title"</span>: <span class="string">"通过练习的方式来学习python"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"通过小练习一点一点熟悉python"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: <span class="string">"myname(simble1986@gmail.com)"</span>,</span><br><span class="line">    <span class="attr">"output.name"</span>: <span class="string">"通过练习学脚本"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"gitbook"</span>: <span class="string">"3.2.3"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"language"</span>: <span class="string">"zh-hans"</span>,</span><br><span class="line">    <span class="attr">"links"</span> : &#123;</span><br><span class="line">    <span class="attr">"sidebar"</span> : &#123;</span><br><span class="line">        <span class="attr">"Home"</span> : <span class="string">"http://www.simble.site"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"plugins"</span>: [</span><br><span class="line">        <span class="string">"autotheme"</span>,</span><br><span class="line">        <span class="string">"prism"</span>,</span><br><span class="line">        <span class="string">"prism-themes"</span>,</span><br><span class="line">        <span class="string">"-highlight"</span>,</span><br><span class="line">        <span class="string">"-search"</span>,</span><br><span class="line">        <span class="string">"search-pro"</span>,</span><br><span class="line">        <span class="string">"emphasize"</span>,</span><br><span class="line">        <span class="string">"splitter"</span>,</span><br><span class="line">        <span class="string">"tbfed-pagefooter"</span>,</span><br><span class="line">        <span class="string">"toggle-chapters"</span>,</span><br><span class="line">        <span class="string">"codeblock-filename"</span>,</span><br><span class="line">        <span class="string">"ace"</span>,</span><br><span class="line">        <span class="string">"simple-page-toc"</span>,</span><br><span class="line">        <span class="string">"edit-link"</span>,</span><br><span class="line">        <span class="string">"copy-code-button"</span>,</span><br><span class="line">        <span class="string">"alerts"</span>,</span><br><span class="line">        <span class="string">"anchor-navigation-ex"</span>,</span><br><span class="line">        <span class="string">"theme-comscore"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="git-lab归档"><a class="markdownIt-Anchor" href="#git-lab归档"></a> git-lab归档</h3>
+<p>在gitlab上创建自己的project并归档</p>
+<h2 id="在服务器上用docker启动预览"><a class="markdownIt-Anchor" href="#在服务器上用docker启动预览"></a> 在服务器上用docker启动预览</h2>
+<ul>
+<li>从gitlab上clone书的结构</li>
+<li>启动docker并挂载gitbook的目录到docker中</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 80:4000 -v /mybook:/book mygitbook</span><br></pre></td></tr></table></figure>
+<h2 id="插件及说明"><a class="markdownIt-Anchor" href="#插件及说明"></a> 插件及说明</h2>
+<p>非常感谢<a href="http://gitbook.zhangjikai.com/plugins.html" target="_blank" rel="noopener">Zhangjikai的插件说明文档</a>，然后我发现<a href="http://blog.zhangjikai.com/" target="_blank" rel="noopener">Zhangjikai</a>和我一样使用了Hexo搭建了自己的blog，并且同样适用了Next的主题</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2069,180 +2328,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/4a17b156.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simble的小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/4a17b156.html" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T19:14:57+08:00">2018-03-22</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/4a17b156.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4a17b156.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计：</span>
-                
-                <span title="字数统计">441</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
-                
-                <span title="阅读时长">0:01</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/4a17b156.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
 
 
           </div>
@@ -2287,7 +2379,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-count">11</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2444,7 +2536,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">17k</span>
+    <span title="站点总字数">20k</span>
   
 
   
@@ -2453,7 +2545,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点总阅读时长">0:17</span>
+    <span title="站点总阅读时长">0:20</span>
   
 </div>
 <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
