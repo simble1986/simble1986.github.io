@@ -247,7 +247,7 @@
           
   <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">15</span>
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">16</span>
       </a>
 </li>
 
@@ -257,7 +257,7 @@
           
   <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">4</span>
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">5</span>
       </a>
 </li>
 
@@ -267,7 +267,7 @@
           
   <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">11</span>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">12</span>
       </a>
 </li>
 
@@ -352,6 +352,262 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/b2c6ed30.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/post/b2c6ed30.html" itemprop="url">Ubuntu16.04安装Open vSwitch</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-30T06:11:23+08:00">2018-05-30</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cloud/" itemprop="url" rel="index"><span itemprop="name">cloud</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/b2c6ed30.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/b2c6ed30.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计：</span>
+                
+                <span title="字数统计">4.7k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">0:05</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
+<ul>
+<li>获取安装包</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装必要的依赖</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
+<ul>
+<li>当使用源代码时，需要自己创建<code>configure</code>脚本</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./boot.sh</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置并开启内核模块</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-linux=/lib/modules/$(uname -r)/build</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装内核模块</li>
+</ul>
+<p>该步骤可能会报错，请参看后文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br></pre></td></tr></table></figure>
+<p>官方安装文档中提到，你有可能之前已经安装了ovs的模块，为了确保使用的是你刚才编译的，则需要在<code>/etc/depmod.d/</code>中添加如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ config_file=&quot;/etc/depmod.d/openvswitch.conf&quot;</span><br><span class="line">$ for module in datapath/linux/*.ko; do</span><br><span class="line">   modname=&quot;$(basename $&#123;module&#125;)&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * extra&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * weak-updates&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   done</span><br><span class="line">$ depmod -a</span><br></pre></td></tr></table></figure>
+<ul>
+<li>加载内核模块</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/modprobe openvswitch</span><br></pre></td></tr></table></figure>
+<ul>
+<li>验证</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure>
+<h3 id="启动服务"><a class="markdownIt-Anchor" href="#启动服务"></a> 启动服务</h3>
+<p>官方说明中提到有一个<code>ovs-ctl</code>的命令，然而，我安装完之后并没有这个命令。可能官方文档比较老了吧。</p>
+<h4 id="创建必要的目录"><a class="markdownIt-Anchor" href="#创建必要的目录"></a> 创建必要的目录</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure>
+<h4 id="配置ovsdb-server"><a class="markdownIt-Anchor" href="#配置ovsdb-server"></a> 配置ovsdb-server</h4>
+<ul>
+<li>从源文件目录创建<code>conf.db</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ovs$ ovsdb-tool create /etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovsdb-server --remote=punix:/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure>
+<h4 id="启动ovs进程"><a class="markdownIt-Anchor" href="#启动ovs进程"></a> 启动ovs进程</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
+<ul>
+<li>创建bridge</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为br0添加接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure>
+<h3 id="问题及解决"><a class="markdownIt-Anchor" href="#问题及解决"></a> 问题及解决</h3>
+<p>安装内核模块时出现如下错误，<strong>忽略即可</strong>（我还以为很严重，搜了一阵，发现不用管）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -2070,195 +2326,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/4fa2931e.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simble的小站">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/post/4fa2931e.html" itemprop="url">在树莓派上部署nodejs</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T01:32:39+08:00">2018-03-23</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/树莓派/" itemprop="url" rel="index"><span itemprop="name">树莓派</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/post/4fa2931e.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4fa2931e.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计：</span>
-                
-                <span title="字数统计">2.1k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
-                
-                <span title="阅读时长">0:02</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/post/4fa2931e.html#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2310,7 +2377,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2331,7 +2398,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -2374,7 +2443,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -2467,7 +2538,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">20k</span>
+    <span title="站点总字数">25k</span>
   
 
   
@@ -2476,7 +2547,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点总阅读时长">0:20</span>
+    <span title="站点总阅读时长">0:25</span>
   
 </div>
 <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>

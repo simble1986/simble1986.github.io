@@ -120,18 +120,18 @@
 
 
 
-  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
-<meta name="keywords" content="docker">
+  <meta name="description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev  安装  当使用源代码时，需要自己创建configure脚本  1$ ./boot.sh  配置并开启内核模块  1$ ./conf">
+<meta name="keywords" content="ovs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="docker基本操作（一）">
-<meta property="og:url" content="http://blog.simble.xyz/post/493f285a.html">
+<meta property="og:title" content="Ubuntu16.04安装Open vSwitch">
+<meta property="og:url" content="http://blog.simble.xyz/post/b2c6ed30.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta property="og:description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev  安装  当使用源代码时，需要自己创建configure脚本  1$ ./boot.sh  配置并开启内核模块  1$ ./conf">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-04T09:58:13.843Z">
+<meta property="og:updated_time" content="2018-05-30T06:13:54.379Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="docker基本操作（一）">
-<meta name="twitter:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta name="twitter:title" content="Ubuntu16.04安装Open vSwitch">
+<meta name="twitter:description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev  安装  当使用源代码时，需要自己创建configure脚本  1$ ./boot.sh  配置并开启内核模块  1$ ./conf">
 
 
 
@@ -140,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.simble.xyz/post/493f285a.html"/>
+  <link rel="canonical" href="http://blog.simble.xyz/post/b2c6ed30.html"/>
 
 
 
@@ -150,7 +150,7 @@
   };
 </script>
 
-  <title>docker基本操作（一） | Simble的小站</title>
+  <title>Ubuntu16.04安装Open vSwitch | Simble的小站</title>
   
 
 
@@ -369,7 +369,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/493f285a.html">
+    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/b2c6ed30.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
@@ -386,7 +386,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">docker基本操作（一）</h1>
+          <h1 class="post-title" itemprop="name headline">Ubuntu16.04安装Open vSwitch</h1>
         
 
         <div class="post-meta">
@@ -398,7 +398,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T01:14:57+00:00">2018-03-23</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-29T22:11:23+00:00">2018-05-30</time>
             
 
             
@@ -419,7 +419,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/docker/" itemprop="url" rel="index"><span itemprop="name">docker</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cloud/" itemprop="url" rel="index"><span itemprop="name">cloud</span></a></span>
 
                 
                 
@@ -434,8 +434,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/post/493f285a.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/493f285a.html" itemprop="commentCount"></span>
+                <a href="/post/b2c6ed30.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/b2c6ed30.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -465,7 +465,7 @@
                 
                   <span class="post-meta-item-text">字数统计：</span>
                 
-                <span title="字数统计">2.8k</span>
+                <span title="字数统计">4.7k</span>
               
 
               
@@ -479,7 +479,7 @@
                 
                   <span class="post-meta-item-text">阅读时长&asymp;</span>
                 
-                <span title="阅读时长">0:03</span>
+                <span title="阅读时长">0:05</span>
               
             </div>
           
@@ -499,82 +499,78 @@
       
 
       
-        <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
-<p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
-<a id="more"></a>
-<p>为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
-<p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<h2 id="image操作"><a class="markdownIt-Anchor" href="#image操作"></a> image操作</h2>
+        <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
-<li>build image</li>
+<li>获取安装包</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mytest:latest .</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure>
 <ul>
-<li>查看image</li>
+<li>安装必要的依赖</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx                 &lt;none&gt;              73acd1f0cfad        8 days ago          109MB</span><br><span class="line">mongo                 3                   5b1317f8158f        8 days ago          366MB</span><br><span class="line">$ dockeer image ls</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
 <ul>
-<li>删除image</li>
+<li>当使用源代码时，需要自己创建<code>configure</code>脚本</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="从docker-hub上获取image"><a class="markdownIt-Anchor" href="#从docker-hub上获取image"></a> 从docker hub上获取image</h3>
-<p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure>
-<h2 id="continer相关"><a class="markdownIt-Anchor" href="#continer相关"></a> continer相关</h2>
-<h3 id="创建docker"><a class="markdownIt-Anchor" href="#创建docker"></a> 创建docker</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure>
-<p>常用参数说明</p>
-<blockquote>
-<p>–rm 当运行结束（<mark>当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止</mark>）时自动删除docker<br><br>
--it 重定向docker终端<br><br>
--d 在后台执行<br><br>
--e 添加运行时的参数，常被用于docker CMD执行时增加参数</p>
-</blockquote>
-<p><strong>docker支持长id和短id方式索引，亦可通过名称进行索引</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./boot.sh</span><br></pre></td></tr></table></figure>
 <ul>
-<li>stop/start/restart容器</li>
+<li>配置并开启内核模块</li>
 </ul>
-<ol>
-<li>通过docker stop可以停止运行的容器，也可以使用docker kill来快速停止一个容器</li>
-<li>docker start会保留容器的第一次启动时的所有参数</li>
-<li>docker restart可以重启容器</li>
-<li>可以在启动容器时设置–restart来自动重启容器</li>
-</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-linux=/lib/modules/$(uname -r)/build</span><br></pre></td></tr></table></figure>
 <ul>
-<li>删除容器</li>
+<li>安装</li>
 </ul>
-<ol>
-<li>可以使用docker ps列出当前正在运行的容器</li>
-<li>容器停止运行不代表容器已经被删除，可以使用docker ps -a</li>
-<li>使用docker rm来删除一个容器</li>
-<li>使用docker rmi则会删除docker的image</li>
-</ol>
-<h3 id="查看及操作"><a class="markdownIt-Anchor" href="#查看及操作"></a> 查看及操作</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
 <ul>
-<li>查看容器状态</li>
+<li>安装内核模块</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br></pre></td></tr></table></figure>
-<p>使用docker ps -a查看所有容器（包含休眠状态）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br><span class="line">ef58155f9957        registry:2               <span class="string">"/entrypoint.sh /etc…"</span>    2 days ago          Exited (137) 41 hours ago                                sltregistry</span><br></pre></td></tr></table></figure>
+<p>该步骤可能会报错，请参看后文</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br></pre></td></tr></table></figure>
+<p>官方安装文档中提到，你有可能之前已经安装了ovs的模块，为了确保使用的是你刚才编译的，则需要在<code>/etc/depmod.d/</code>中添加如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ config_file=&quot;/etc/depmod.d/openvswitch.conf&quot;</span><br><span class="line">$ for module in datapath/linux/*.ko; do</span><br><span class="line">   modname=&quot;$(basename $&#123;module&#125;)&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * extra&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * weak-updates&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   done</span><br><span class="line">$ depmod -a</span><br></pre></td></tr></table></figure>
 <ul>
-<li>连接到容器的终端</li>
+<li>加载内核模块</li>
 </ul>
-<p><em>尽量使用exec方法，attach连入后可查看当前容器命令运行的日志，但不当的操作容易使运行中的容器退出</em></p>
-<ol>
-<li>使用attach</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker attach &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用exec</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;id/name&gt; /bin/sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/modprobe openvswitch</span><br></pre></td></tr></table></figure>
 <ul>
-<li>查看容器运行的日志</li>
+<li>验证</li>
 </ul>
-<p>容器以<code>-d</code>参数运行时，可以使用docker logs查看运行过程中的日志</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker logs mytest_haproxy</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] Cannot raise FD <span class="built_in">limit</span> to 200000011, <span class="built_in">limit</span> is 1048576.</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] FD <span class="built_in">limit</span> (1048576) too low <span class="keyword">for</span> maxconn=100000000/maxsock=200000011. Please raise <span class="string">'ulimit-n'</span> to 200000011 or more to avoid any trouble.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure>
+<h3 id="启动服务"><a class="markdownIt-Anchor" href="#启动服务"></a> 启动服务</h3>
+<p>官方说明中提到有一个<code>ovs-ctl</code>的命令，然而，我安装完之后并没有这个命令。可能官方文档比较老了吧。</p>
+<h4 id="创建必要的目录"><a class="markdownIt-Anchor" href="#创建必要的目录"></a> 创建必要的目录</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure>
+<h4 id="配置ovsdb-server"><a class="markdownIt-Anchor" href="#配置ovsdb-server"></a> 配置ovsdb-server</h4>
+<ul>
+<li>从源文件目录创建<code>conf.db</code></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ovs$ ovsdb-tool create /etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovsdb-server --remote=punix:/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化数据库</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure>
+<h4 id="启动ovs进程"><a class="markdownIt-Anchor" href="#启动ovs进程"></a> 启动ovs进程</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
+<ul>
+<li>创建bridge</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>为br0添加接口</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看配置</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure>
+<h3 id="问题及解决"><a class="markdownIt-Anchor" href="#问题及解决"></a> 问题及解决</h3>
+<p>安装内核模块时出现如下错误，<strong>忽略即可</strong>（我还以为很严重，搜了一阵，发现不用管）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -607,7 +603,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+            <a href="/tags/ovs/" rel="tag"><i class="fa fa-tag"></i> ovs</a>
           
         </div>
       
@@ -620,8 +616,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/post/4fa2931e.html" rel="next" title="在树莓派上部署nodejs">
-                <i class="fa fa-chevron-left"></i> 在树莓派上部署nodejs
+              <a href="/post/51748f3c.html" rel="next" title="gitbook+gitlab发布私有的图书仓库">
+                <i class="fa fa-chevron-left"></i> gitbook+gitlab发布私有的图书仓库
               </a>
             
           </div>
@@ -629,10 +625,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/post/80ca9385.html" rel="prev" title="使用hexo搭建自己的博客——创建站点">
-                使用hexo搭建自己的博客——创建站点 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -864,7 +856,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text"> 准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image操作"><span class="nav-number">2.</span> <span class="nav-text"> image操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从docker-hub上获取image"><span class="nav-number">2.1.</span> <span class="nav-text"> 从docker hub上获取image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continer相关"><span class="nav-number">3.</span> <span class="nav-text"> continer相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建docker"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看及操作"><span class="nav-number">3.2.</span> <span class="nav-text"> 查看及操作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text"> 环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务"><span class="nav-number">3.</span> <span class="nav-text"> 启动服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建必要的目录"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建必要的目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置ovsdb-server"><span class="nav-number">3.2.</span> <span class="nav-text"> 配置ovsdb-server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动ovs进程"><span class="nav-number">3.3.</span> <span class="nav-text"> 启动ovs进程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证"><span class="nav-number">4.</span> <span class="nav-text"> 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题及解决"><span class="nav-number">5.</span> <span class="nav-text"> 问题及解决</span></a></li></ol></div>
             
 
           </div>
