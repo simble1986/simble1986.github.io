@@ -129,14 +129,8 @@
 <meta property="og:description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/aaa.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/robot2.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/">
-<meta property="og:image" content="http://blog.simble.xyz/post/">
-<meta property="og:image" content="http://blog.simble.xyz/post/">
-<meta property="og:image" content="http://blog.simble.xyz/post/">
-<meta property="og:image" content="http://blog.simble.xyz/post/robot2.png">
-<meta property="og:updated_time" content="2018-06-21T13:51:11.150Z">
+<meta property="og:image" content="http://blog.simble.xyz/post/undefined/ppt1.png">
+<meta property="og:updated_time" content="2018-06-21T13:59:14.068Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用markdown写PPT">
 <meta name="twitter:description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
@@ -512,7 +506,7 @@
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
 <a id="more"></a>
 <p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/" target="_blank" rel="noopener">Marp</a>。</p>
-<h3 id="优点"><a class="header-anchor" href="#优点">null</a>优点</h3>
+<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
 <ul>
 <li>书写简单</li>
 <li>提供两套模版</li>
@@ -520,37 +514,37 @@
 <li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
 <li>支持Mac，Win和Linux</li>
 </ul>
-<h3 id="缺点"><a class="header-anchor" href="#缺点">null</a>缺点</h3>
+<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
 <ul>
 <li>没有动画</li>
 <li>只能导出为pdf格式，不能生成PPT格式</li>
 <li>仅支持基础的markdown语法</li>
 </ul>
 <p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
-<h3 id="用法"><a class="header-anchor" href="#用法">null</a>用法</h3>
+<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
 <p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
 <p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
-<h4 id="设置页码"><a class="header-anchor" href="#设置页码">null</a>设置页码</h4>
+<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
 <p>页码是可以随时开启，随时关闭的。</p>
-<figure class="highlight plain"><figcaption><span>page_number: true -->```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</span><br><span class="line"></span><br><span class="line">#### 背景设置</span><br><span class="line"></span><br><span class="line">因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用`![bg](aaa.png)`的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</span><br><span class="line"></span><br><span class="line">后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</span><br></pre></td></tr></table></figure>
-<p><img src="/post/aaa.png" alt="bg original 70%"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">使用了`original`之后，背景就变成了纯图片，而70%则可以指定图片大小。</span><br><span class="line"></span><br><span class="line">当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</span><br><span class="line"></span><br><span class="line">比如：</span><br><span class="line"></span><br><span class="line">&#123;% asset_img ppt1.png 注册页面 %&#125;</span><br><span class="line"></span><br><span class="line">则是用如下代码完成</span><br></pre></td></tr></table></figure>
-<p><img src="/post/robot2.png" alt="bg 450% original"><br>
-<img src="/post/" alt="bg"><br>
-<img src="/post/" alt="bg"><br>
-<img src="/post/" alt="bg"><br>
-<img src="/post/" alt="bg"><br>
-<img src="/post/robot2.png" alt="bg 450% original"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</span><br><span class="line"></span><br><span class="line">当然，灵活运用这一个特性，也能带来很多意想不到的效果。</span><br><span class="line"></span><br><span class="line">#### emoji</span><br><span class="line"></span><br><span class="line">值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</span><br><span class="line"></span><br><span class="line">比如：</span><br></pre></td></tr></table></figure>
-<h1>🐱</h1>
-<h2 id="🐟"><a class="header-anchor" href="#🐟">null</a>🐟</h2>
-<h3 id="🐯"><a class="header-anchor" href="#🐯">null</a>🐯</h3>
-<h4 id="🐦"><a class="header-anchor" href="#🐦">null</a>🐦</h4>
-<pre><code>
-表情的大小会随着段落比较而变化。还是很不错的。
-
-
-</code></pre>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
+<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
+<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
+<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
+<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
+<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
+<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
+<p>比如：</p>
+<img src="/post/undefined/ppt1.png" title="注册页面">
+<p>则是用如下代码完成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
+<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
+<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
+<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
+<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
+<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
 
       
     </div>
@@ -838,7 +832,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.</span> <span class="nav-text">null优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">2.</span> <span class="nav-text">null缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">3.</span> <span class="nav-text">null用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置页码"><span class="nav-number">3.1.</span> <span class="nav-text">null设置页码</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number"></span> <span class="nav-text">🐱</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#🐟"><span class="nav-number"></span> <span class="nav-text">null🐟</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#🐯"><span class="nav-number">1.</span> <span class="nav-text">null🐯</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#🐦"><span class="nav-number">1.1.</span> <span class="nav-text">null🐦</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.</span> <span class="nav-text"> 优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">2.</span> <span class="nav-text"> 缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">3.</span> <span class="nav-text"> 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置页码"><span class="nav-number">3.1.</span> <span class="nav-text"> 设置页码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背景设置"><span class="nav-number">3.2.</span> <span class="nav-text"> 背景设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#emoji"><span class="nav-number">3.3.</span> <span class="nav-text"> emoji</span></a></li></ol></li></ol></div>
             
 
           </div>
