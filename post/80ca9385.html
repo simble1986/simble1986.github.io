@@ -120,18 +120,18 @@
 
 
 
-  <meta name="description" content="null安装及配置 null简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
+  <meta name="description" content="安装及配置  简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
 <meta name="keywords" content="blog,markdown,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用hexo搭建自己的博客——创建站点">
 <meta property="og:url" content="http://blog.simble.xyz/post/80ca9385.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="null安装及配置 null简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
+<meta property="og:description" content="安装及配置  简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-03-30T02:37:58.749Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用hexo搭建自己的博客——创建站点">
-<meta name="twitter:description" content="null安装及配置 null简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
+<meta name="twitter:description" content="安装及配置  简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
 
 
 
@@ -499,25 +499,25 @@
       
 
       
-        <h2 id="安装及配置"><a class="header-anchor" href="#安装及配置">null</a>安装及配置</h2>
-<h3 id="简介"><a class="header-anchor" href="#简介">null</a>简介</h3>
+        <h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
+<h3 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h3>
 <p><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>是一个快速、简介且高效的博客框架，可以使用<a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>解析文章并生成网站</p>
 <a id="more"></a>
-<h3 id="说明"><a class="header-anchor" href="#说明">null</a>说明</h3>
+<h3 id="说明"><a class="markdownIt-Anchor" href="#说明"></a> 说明</h3>
 <p><span id="inline-blue">站点配置文件</span> <code>$site_dir/_config.xml</code></p>
 <p><span id="inline-yellow">主题配置文件</span><code>$site_dir/theme/$theme_dir/_config</code></p>
-<h3 id="安装hexo"><a class="header-anchor" href="#安装hexo">null</a>安装hexo</h3>
+<h3 id="安装hexo"><a class="markdownIt-Anchor" href="#安装hexo"></a> 安装hexo</h3>
 <p>当环境准备好git以及nodejs后便可以安装hexo</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
-<h3 id="建站"><a class="header-anchor" href="#建站">null</a>建站</h3>
+<h3 id="建站"><a class="markdownIt-Anchor" href="#建站"></a> 建站</h3>
 <p>安装Hexo后，创建站点文件存放的文件夹，如<em>blog</em>，然后执行</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
 <p>完成后，blog目录结构</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── <span class="built_in">source</span></span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure>
-<h3 id="配置"><a class="header-anchor" href="#配置">null</a>配置</h3>
+<h3 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h3>
 <p>修改_config.yml</p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">your</span> <span class="string">site</span> <span class="string">tile</span></span><br><span class="line"><span class="attr">subtitle:</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">your</span> <span class="string">name</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-Hans</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">Asia/Shanghai</span></span><br></pre></td></tr></table></figure>
-<h3 id="常用命令"><a class="header-anchor" href="#常用命令">null</a>常用命令</h3>
+<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
 <ul>
 <li>清除缓存文件及已生成的静态文件</li>
 </ul>
@@ -532,13 +532,13 @@
 可将网站按照_config.yml中的配置直接部署于github等（后续看心情写步骤）</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="主题修改"><a class="header-anchor" href="#主题修改">null</a>主题修改</h3>
+<h3 id="主题修改"><a class="markdownIt-Anchor" href="#主题修改"></a> 主题修改</h3>
 <p>可访问hexo官方<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题库</a>选择自己喜欢的主题，并下载至theme目录下</p>
 <p>修改_config.xml中的theme字段</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: landscape</span><br></pre></td></tr></table></figure>
-<h2 id="写作"><a class="header-anchor" href="#写作">null</a>写作</h2>
+<h2 id="写作"><a class="markdownIt-Anchor" href="#写作"></a> 写作</h2>
 <p>有两种方法创建文章</p>
-<h3 id="创建文章"><a class="header-anchor" href="#创建文章">null</a>创建文章</h3>
+<h3 id="创建文章"><a class="markdownIt-Anchor" href="#创建文章"></a> 创建文章</h3>
 <ul>
 <li>hexo命令行方式</li>
 </ul>
@@ -551,7 +551,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/_post/</span><br><span class="line">$ touch myfirstblog.md</span><br></pre></td></tr></table></figure>
 <p>此时文件内容为空，需要自己添加相关内容</p>
-<h3 id="创建标签页"><a class="header-anchor" href="#创建标签页">null</a>创建标签页</h3>
+<h3 id="创建标签页"><a class="markdownIt-Anchor" href="#创建标签页"></a> 创建标签页</h3>
 <ul>
 <li>配置确认</li>
 </ul>
@@ -565,7 +565,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure>
 <p>修改tags/index.md中的type为&quot;tags&quot;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Tagcloud</span><br><span class="line">date: 2018-03-23 01:18:00</span><br><span class="line">type: "tags"</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-<h3 id="创建分类页面"><a class="header-anchor" href="#创建分类页面">null</a>创建分类页面</h3>
+<h3 id="创建分类页面"><a class="markdownIt-Anchor" href="#创建分类页面"></a> 创建分类页面</h3>
 <p>与创建标签页相似</p>
 <ul>
 <li>确认配置</li>
@@ -871,7 +871,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装及配置"><span class="nav-number">1.</span> <span class="nav-text">null安装及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">null简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.2.</span> <span class="nav-text">null说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">1.3.</span> <span class="nav-text">null安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建站"><span class="nav-number">1.4.</span> <span class="nav-text">null建站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.5.</span> <span class="nav-text">null配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.6.</span> <span class="nav-text">null常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题修改"><span class="nav-number">1.7.</span> <span class="nav-text">null主题修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写作"><span class="nav-number">2.</span> <span class="nav-text">null写作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建文章"><span class="nav-number">2.1.</span> <span class="nav-text">null创建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建标签页"><span class="nav-number">2.2.</span> <span class="nav-text">null创建标签页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建分类页面"><span class="nav-number">2.3.</span> <span class="nav-text">null创建分类页面</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装及配置"><span class="nav-number">1.</span> <span class="nav-text"> 安装及配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text"> 简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#说明"><span class="nav-number">1.2.</span> <span class="nav-text"> 说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装hexo"><span class="nav-number">1.3.</span> <span class="nav-text"> 安装hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#建站"><span class="nav-number">1.4.</span> <span class="nav-text"> 建站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置"><span class="nav-number">1.5.</span> <span class="nav-text"> 配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">1.6.</span> <span class="nav-text"> 常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主题修改"><span class="nav-number">1.7.</span> <span class="nav-text"> 主题修改</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#写作"><span class="nav-number">2.</span> <span class="nav-text"> 写作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建文章"><span class="nav-number">2.1.</span> <span class="nav-text"> 创建文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建标签页"><span class="nav-number">2.2.</span> <span class="nav-text"> 创建标签页</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建分类页面"><span class="nav-number">2.3.</span> <span class="nav-text"> 创建分类页面</span></a></li></ol></li></ol></div>
             
 
           </div>
