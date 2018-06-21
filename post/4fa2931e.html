@@ -258,7 +258,7 @@
           
   <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">5</span>
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">6</span>
       </a>
 </li>
 
@@ -268,7 +268,7 @@
           
   <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">12</span>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">13</span>
       </a>
 </li>
 
@@ -501,14 +501,14 @@
       
         <p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
 <a id="more"></a>
-<h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
+<h2 id="安装nodejs"><a class="header-anchor" href="#安装nodejs">null</a>安装nodejs</h2>
 <p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
-<h3 id="安装包获取"><a class="markdownIt-Anchor" href="#安装包获取"></a> 安装包获取</h3>
+<h3 id="安装包获取"><a class="header-anchor" href="#安装包获取">null</a>安装包获取</h3>
 <p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
 <p>获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz" target="_blank" rel="noopener">安装包</a></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure>
-<h3 id="安装nodejs-2"><a class="markdownIt-Anchor" href="#安装nodejs-2"></a> 安装nodejs</h3>
+<h3 id="安装nodejs-v2"><a class="header-anchor" href="#安装nodejs-v2">null</a>安装nodejs</h3>
 <p>解压缩</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tar -Jxv -f node-v8.10.0-linux-armv7l.tar.xz</span><br><span class="line">node-v8.10.0-linux-armv7l/</span><br><span class="line">node-v8.10.0-linux-armv7l/README.md</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/node</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/npm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>可根据个人喜好重命名文件夹，此处重命名为node，分别验证版本信息</p>
@@ -668,7 +668,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -691,7 +691,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -813,7 +815,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nodejs"><span class="nav-number">1.</span> <span class="nav-text"> 安装nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装包获取"><span class="nav-number">1.1.</span> <span class="nav-text"> 安装包获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nodejs-2"><span class="nav-number">1.2.</span> <span class="nav-text"> 安装nodejs</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nodejs"><span class="nav-number">1.</span> <span class="nav-text">null安装nodejs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装包获取"><span class="nav-number">1.1.</span> <span class="nav-text">null安装包获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装nodejs-v2"><span class="nav-number">1.2.</span> <span class="nav-text">null安装nodejs</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -845,7 +847,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">26k</span>
   
 
   
@@ -854,7 +856,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点总阅读时长">0:25</span>
+    <span title="站点总阅读时长">0:26</span>
   
 </div>
 <p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
