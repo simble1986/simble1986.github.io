@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[美签记录]]></title>
+    <url>%2Fpost%2Ffbe9394a.html</url>
+    <content type="text"><![CDATA[记第一次拿到十年美签 第一次填DS160: 2018-07-06 最终完成并提交DS160: 2018-07-08 预约面签时间: 2018-07-27 前面排队人太多 Issued: 2018-07-30 收到护照:]]></content>
+      <categories>
+        <category>旅行</category>
+      </categories>
+      <tags>
+        <tag>visa</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Openstack学习笔记1]]></title>
     <url>%2Fpost%2F9b5fb1d1.html</url>
     <content type="text"><![CDATA[该系列用来记录本人使用Openstack的一些笔记和心得 Openstack一些理解 服务说明 keystone - 必选 认证服务，是其他所有服务的基础 glance - 必选 镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等 nova - 必选 计算服务，包括计算，调度，管理，api等，是openstack的核心服务 neutron - 必选 网络服务 horizon - 可选（推荐选择） 管理界面，图形化管理界面，方便使用 cinder - 可选 块存储服务，用来创建虚拟机的磁盘 一些理解 openstack可以理解为插件型的，灵活就体现于此。 计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务 同样，可以在任意一个节点上起块存储服务 关于网络 刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起 需要说明的是： 虚拟机的第一个网口是openstack的各个节点用来通信的网卡 第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量） 也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信 如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口 openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch 在openstack的UI上看到的网口，都是代号 测试环境准备 两台虚拟机（当然也可以all in one） 硬件准备 每台虚拟机应包含 虚机可上网 另外包含一张额外的网卡 内存尽量多（8G） CPU尽量多（8 cpus） controller硬盘稍微大一些 基本准备 Ubuntu16.04 + Q版本（Queens） 配置NTP 安装Openstack基础包 准备仓库 12# apt install software-properties-common# add-apt-repository cloud-archive:queens 安装openstack包 123$ apt update$ apt upgrade #经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包$ apt install python-openstackclient controller controller上需要安装的东西最多 依赖 数据库: MariaDB 消息队列: RabbitMQ 服务及身份认证: Memcached etcd openstack服务 认证服务: keystone 镜像服务: glance 计算服务（指计算的调度，管理，api等服务）: nova 网络服务（网络管理，调度等服务）: neutron 管理界面: horizon 块存储服务（可选）: cinder compute 计算节点相对来说简单了很多 openstack服务 计算服务（专指计算服务）: nova-compute 网络服务: neutron 可在controller上同样起计算服务 详细安装过程可参看官方文档]]></content>
@@ -60,8 +71,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>pexpect</tag>
+        <tag>docker</tag>
         <tag>自动化</tag>
       </tags>
   </entry>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-06-28T10:00:04.943Z</updated>
+  <updated>2018-07-30T09:25:50.866Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>美签记录</title>
+    <link href="http://blog.simble.xyz/post/fbe9394a.html"/>
+    <id>http://blog.simble.xyz/post/fbe9394a.html</id>
+    <published>2018-07-30T01:17:21.000Z</published>
+    <updated>2018-07-30T09:25:50.866Z</updated>
+    
+    <content type="html"><![CDATA[<p>记第一次拿到十年美签</p><ul><li>第一次填DS160: 2018-07-06</li><li>最终完成并提交DS160: 2018-07-08</li><li>预约面签时间: 2018-07-27 前面排队人太多</li><li>Issued: 2018-07-30</li><li>收到护照:</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;记第一次拿到十年美签&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;第一次填DS160: 2018-07-06&lt;/li&gt;
+&lt;li&gt;最终完成并提交DS160: 2018-07-08&lt;/li&gt;
+&lt;li&gt;预约面签时间: 2018-07-27 前面排队人太多&lt;/li&gt;
+&lt;li&gt;Issued: 2018
+      
+    
+    </summary>
+    
+      <category term="旅行" scheme="http://blog.simble.xyz/categories/%E6%97%85%E8%A1%8C/"/>
+    
+    
+      <category term="visa" scheme="http://blog.simble.xyz/tags/visa/"/>
+    
+  </entry>
   
   <entry>
     <title>Openstack学习笔记1</title>
@@ -154,9 +184,9 @@
       <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
     
     
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
       <category term="pexpect" scheme="http://blog.simble.xyz/tags/pexpect/"/>
+    
+      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
       <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
     
