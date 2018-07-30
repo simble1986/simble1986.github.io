@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[美签记录]]></title>
     <url>%2Fpost%2Ffbe9394a.html</url>
-    <content type="text"><![CDATA[记第一次拿到十年美签 第一次填DS160: 2018-07-06 最终完成并提交DS160: 2018-07-08 预约面签时间: 2018-07-27 前面排队人太多 Issued: 2018-07-30 收到护照:]]></content>
+    <content type="text"><![CDATA[记第一次拿到十年美签 时间 提交DS160: 2018-07-08 预约面签时间: 2018-07-27 前面排队人太多 Issued: 2018-07-30 收到护照: 面签问题 你去美国干什么？ 要去美国多久？ 你是做什么工作的？ 你们公司是做什么的？ 你是一个人去么？ “你通过了！”]]></content>
       <categories>
         <category>旅行</category>
       </categories>
@@ -71,8 +71,8 @@
         <category>docker</category>
       </categories>
       <tags>
-        <tag>pexpect</tag>
         <tag>docker</tag>
+        <tag>pexpect</tag>
         <tag>自动化</tag>
       </tags>
   </entry>
