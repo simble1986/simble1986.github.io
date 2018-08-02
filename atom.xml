@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-08-02T09:06:41.614Z</updated>
+  <updated>2018-08-02T09:07:02.936Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.simble.xyz/post/fbe9394a.html"/>
     <id>http://blog.simble.xyz/post/fbe9394a.html</id>
     <published>2018-07-30T01:17:21.000Z</published>
-    <updated>2018-08-02T09:06:41.614Z</updated>
+    <updated>2018-08-02T09:07:02.936Z</updated>
     
     <content type="html"><![CDATA[<p>记第一次拿到十年美签</p><h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1><ul><li>提交DS160: 2018-07-08</li><li>预约面签时间: 2018-07-27 前面排队人太多</li><li>Issued: 2018-07-30</li><li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li><li>收到护照: 2018-08-02</li></ul><h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4><ul><li>面签持续时间：1分钟不到</li><li>AP持续时间：2个工作日</li><li>Issued到送到苏州：3个工作日</li></ul><h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1><ol><li>你去美国干什么？</li><li>要去美国多久？</li><li>你是做什么工作的？</li><li>你们公司是做什么的？</li><li>你是一个人去么？</li></ol><p>“你通过了！”</p>]]></content>
     
@@ -185,9 +185,9 @@
     
       <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
-      <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
       <category term="pexpect" scheme="http://blog.simble.xyz/tags/pexpect/"/>
+    
+      <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
     
   </entry>
   
