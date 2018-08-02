@@ -120,18 +120,18 @@
 
 
 
-  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker基本操作（一）">
 <meta property="og:url" content="http://blog.simble.xyz/post/493f285a.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-04T09:58:13.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker基本操作（一）">
-<meta name="twitter:description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta name="twitter:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
 
 
 
@@ -465,7 +465,7 @@
                 
                   <span class="post-meta-item-text">字数统计：</span>
                 
-                <span title="字数统计">2.9k</span>
+                <span title="字数统计">2.8k</span>
               
 
               
@@ -500,13 +500,13 @@
 
       
         <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="header-anchor" href="#准备工作">null</a>准备工作</h2>
+<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
 <p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
 <a id="more"></a>
 <p>为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
 <p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<h2 id="image操作"><a class="header-anchor" href="#image操作">null</a>image操作</h2>
+<h2 id="image操作"><a class="markdownIt-Anchor" href="#image操作"></a> image操作</h2>
 <ul>
 <li>build image</li>
 </ul>
@@ -519,15 +519,15 @@
 <li>删除image</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="从docker-hub上获取image"><a class="header-anchor" href="#从docker-hub上获取image">null</a>从docker hub上获取image</h3>
+<h3 id="从docker-hub上获取image"><a class="markdownIt-Anchor" href="#从docker-hub上获取image"></a> 从docker hub上获取image</h3>
 <p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure>
-<h2 id="continer相关"><a class="header-anchor" href="#continer相关">null</a>continer相关</h2>
-<h3 id="创建docker"><a class="header-anchor" href="#创建docker">null</a>创建docker</h3>
+<h2 id="continer相关"><a class="markdownIt-Anchor" href="#continer相关"></a> continer相关</h2>
+<h3 id="创建docker"><a class="markdownIt-Anchor" href="#创建docker"></a> 创建docker</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure>
 <p>常用参数说明</p>
 <blockquote>
-<p>–rm 当运行结束（==当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止==）时自动删除docker<br><br>
+<p>–rm 当运行结束（<mark>当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止</mark>）时自动删除docker<br><br>
 -it 重定向docker终端<br><br>
 -d 在后台执行<br><br>
 -e 添加运行时的参数，常被用于docker CMD执行时增加参数</p>
@@ -551,7 +551,7 @@
 <li>使用docker rm来删除一个容器</li>
 <li>使用docker rmi则会删除docker的image</li>
 </ol>
-<h3 id="查看及操作"><a class="header-anchor" href="#查看及操作">null</a>查看及操作</h3>
+<h3 id="查看及操作"><a class="markdownIt-Anchor" href="#查看及操作"></a> 查看及操作</h3>
 <ul>
 <li>查看容器状态</li>
 </ul>
@@ -872,7 +872,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">null准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image操作"><span class="nav-number">2.</span> <span class="nav-text">nullimage操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从docker-hub上获取image"><span class="nav-number">2.1.</span> <span class="nav-text">null从docker hub上获取image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continer相关"><span class="nav-number">3.</span> <span class="nav-text">nullcontiner相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建docker"><span class="nav-number">3.1.</span> <span class="nav-text">null创建docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看及操作"><span class="nav-number">3.2.</span> <span class="nav-text">null查看及操作</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text"> 准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image操作"><span class="nav-number">2.</span> <span class="nav-text"> image操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从docker-hub上获取image"><span class="nav-number">2.1.</span> <span class="nav-text"> 从docker hub上获取image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continer相关"><span class="nav-number">3.</span> <span class="nav-text"> continer相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建docker"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看及操作"><span class="nav-number">3.2.</span> <span class="nav-text"> 查看及操作</span></a></li></ol></li></ol></div>
             
 
           </div>
