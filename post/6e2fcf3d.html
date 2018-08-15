@@ -120,16 +120,18 @@
 
 
 
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/tags/dockerpty/index.html">
+  <meta name="description" content="又开始鼓捣flask+mysql了 👶 不成想，又一次踩了好多雷 😂 有一种打怪升级的感觉">
+<meta name="keywords" content="python,sqlalchemy,flask">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sqlalchemy连接docker的mysql问题记录">
+<meta property="og:url" content="http://blog.simble.xyz/post/6e2fcf3d.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="又开始鼓捣flask+mysql了 👶 不成想，又一次踩了好多雷 😂 有一种打怪升级的感觉">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-08-15T03:45:55.563Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="sqlalchemy连接docker的mysql问题记录">
+<meta name="twitter:description" content="又开始鼓捣flask+mysql了 👶 不成想，又一次踩了好多雷 😂 有一种打怪升级的感觉">
 
 
 
@@ -138,7 +140,7 @@
 
 
 
-  <link rel="canonical" href="http://blog.simble.xyz/tags/dockerpty/"/>
+  <link rel="canonical" href="http://blog.simble.xyz/post/6e2fcf3d.html"/>
 
 
 
@@ -148,7 +150,7 @@
   };
 </script>
 
-  <title>标签: dockerpty | Simble的小站</title>
+  <title>sqlalchemy连接docker的mysql问题记录 | Simble的小站</title>
   
 
 
@@ -195,7 +197,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/simble1986"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -347,87 +349,314 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>dockerpty<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.simble.xyz/post/6e2fcf3d.html">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/post/1c49a9aa.html" itemprop="url">
-              
-                <span itemprop="name">dockerpty使用</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">sqlalchemy连接docker的mysql问题记录</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-05-03T10:34:40+08:00"
-              content="2018-05-03" >
-          05-03
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T19:42:30+00:00">2018-08-15</time>
+            
 
-    </header>
-  </article>
+            
+            
 
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/post/6e2fcf3d.html#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/6e2fcf3d.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon"
+            >
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计：</span>
+                
+                <span title="字数统计">4.8k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">0:05</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>又开始鼓捣flask+mysql了 👶</p>
+<p>不成想，又一次踩了好多雷 😂</p>
+<p>有一种打怪升级的感觉</p>
+<a id="more"></a>
+<h3 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h3>
+<ol>
+<li>Mac+flask</li>
+<li>docker+mysql</li>
+</ol>
+<h3 id="问题1-create_engine报错"><a class="markdownIt-Anchor" href="#问题1-create_engine报错"></a> 问题1 create_engine报错</h3>
+<ul>
+<li>错误信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@localhost/beta_monitor'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/__init__.py"</span>, line <span class="number">424</span>, <span class="keyword">in</span> create_engine</span><br><span class="line">    <span class="keyword">return</span> strategy.create(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/strategies.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> create</span><br><span class="line">    dbapi = dialect_cls.dbapi(**dbapi_args)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/dialects/mysql/mysqldb.py"</span>, line <span class="number">102</span>, <span class="keyword">in</span> dbapi</span><br><span class="line">    <span class="keyword">return</span> __import__(<span class="string">'MySQLdb'</span>)</span><br><span class="line">ImportError: No module named MySQLdb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p>没有安装python的mysql包，需要安装<code>mysql-python</code>和/或<code>mysqlclient</code>，然后就遇到了第二个问题</p>
+<h3 id="问题2-pip-install-mysql-python失败"><a class="markdownIt-Anchor" href="#问题2-pip-install-mysql-python失败"></a> 问题2 <code>pip install mysql-python</code>失败</h3>
+<ul>
+<li>错误信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">⇒ pip install mysql-python</span><br><span class="line">Collecting mysql-python</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip (108kB)</span><br><span class="line">    100% |████████████████████████████████| 112kB 153kB/s</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    sh: mysql_config: command not found</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/setup.py", line 17, in &lt;module&gt;</span><br><span class="line">        metadata, options = get_config()</span><br><span class="line">      File "setup_posix.py", line 43, in get_config</span><br><span class="line">        libs = mysql_config("libs_r")</span><br><span class="line">      File "setup_posix.py", line 25, in mysql_config</span><br><span class="line">        raise EnvironmentError("%s not found" % (mysql_config.path,))</span><br><span class="line">    EnvironmentError: mysql_config not found</span><br><span class="line"></span><br><span class="line">    ----------------------------------------</span><br><span class="line">Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p><code>mysql_config</code>不存在，原来是系统必须安装mysql客户端</p>
+<ul>
+<li>解决方法 <code>brew install mysql</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">⇒ brew install mysql</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">==&gt; Pouring mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="问题3-连接mysql服务器失败"><a class="markdownIt-Anchor" href="#问题3-连接mysql服务器失败"></a> 问题3 连接mysql服务器失败</h3>
+<ul>
+<li>错误信息 <code>Authentication plugin 'caching_sha2_password' cannot be loaded</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@127.0.0.1/beta_monitor'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>connection = engine.connect()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/base.py"</span>, line <span class="number">2102</span>, <span class="keyword">in</span> connect</span><br><span class="line">    <span class="keyword">return</span> self._connection_cls(self, **kwargs)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/__init__.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> Connect</span><br><span class="line">    <span class="keyword">return</span> Connection(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/connections.py"</span>, line <span class="number">193</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super(Connection, self).__init__(*args, **kwargs2)</span><br><span class="line">sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (<span class="number">2059</span>, <span class="string">"Authentication plugin 'caching_sha2_password' cannot be loaded: dlopen(/usr/local/Cellar/mysql/5.7.22/lib/plugin/caching_sha2_password.so, 2): image not found"</span>) (Background on this error at: http://sqlalche.me/e/e3q8)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p>上网查了一通，似乎说从某个版本开始，mysql用了一种认证方式导致问题。根据解决方法看，更换了认证方式就可以了</p>
+<ul>
+<li>解决方法</li>
+</ul>
+<ol>
+<li>用docker启动mysql时增加参数 <code>--default-authentication-plugin=mysql_native_password</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~|⇒ docker run -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=beta_monitor -e MYSQL_USER=test -e MYSQL_PASSWORD=123456 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">d8f5e623dc595df19b9d6cce52780381b625c1565622f5867f2ad3aeafdca499</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果安装在服务器上，则在my.cnf中修改相关配置</li>
+</ol>
+<ul>
+<li>测试</li>
+</ul>
+<ol>
+<li>本地连接测试</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">~|⇒ mysql -utest -p123456 -h 127.0.0.1</span><br><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server at &apos;reading initial communication packet&apos;, system error: 0</span><br><span class="line">~|⇒ mysql -utest -p -h 127.0.0.1</span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 8</span><br><span class="line">Server version: 8.0.12 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过<code>connection = engine.connect()</code>无异常</li>
+</ol>
+<blockquote>
+<p>作为一个暗夜精灵玩家，强烈谴责希尔瓦纳斯烧了我老家的卑劣行径，暴雪怎么洗也没用</p>
+</blockquote>
 
       
     </div>
 
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-cc"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+          
+            <a href="/tags/sqlalchemy/" rel="tag"><i class="fa fa-tag"></i> sqlalchemy</a>
+          
+            <a href="/tags/flask/" rel="tag"><i class="fa fa-tag"></i> flask</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/post/fbe9394a.html" rel="next" title="美签记录">
+                <i class="fa fa-chevron-left"></i> 美签记录
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async = "async" ></script>
+</div>
+
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -448,8 +677,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -615,6 +853,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境说明"><span class="nav-number">1.</span> <span class="nav-text"> 环境说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-create_engine报错"><span class="nav-number">2.</span> <span class="nav-text"> 问题1 create_engine报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2-pip-install-mysql-python失败"><span class="nav-number">3.</span> <span class="nav-text"> 问题2 pip install mysql-python失败</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题3-连接mysql服务器失败"><span class="nav-number">4.</span> <span class="nav-text"> 问题3 连接mysql服务器失败</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -791,6 +1045,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
 
   
 
