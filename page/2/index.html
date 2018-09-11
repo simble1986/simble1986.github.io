@@ -2,30 +2,25 @@
 
 
 
+
+
+
+
+
+
+
+
+
   
 
 
-<html class="theme-next gemini use-motion" lang="zh-CN">
+<html class="theme-next muse use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
 <meta name="theme-color" content="#222">
-<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
-<style>
-    .pace .pace-progress {
-        background: #1E92FB; /*进度条颜色*/
-        height: 3px;
-    }
-    .pace .pace-progress-inner {
-         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
-    }
-    .pace .pace-activity {
-        border-top-color: #1E92FB;    /*上边框颜色*/
-        border-left-color: #1E92FB;    /*左边框颜色*/
-    }
-</style>
+
 
 
 
@@ -70,19 +65,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.4.1" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.1">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.4.1">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.4.1">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.1" color="#222">
 
 
 
@@ -96,8 +91,8 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Gemini',
-    version: '6.0.6',
+    scheme: 'Muse',
+    version: '6.4.1',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
     fancybox: false,
     fastclick: false,
@@ -198,11 +193,9 @@
   <div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
-    <a href="https://github.com/simble1986"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> 
 
-<div class="site-brand-wrapper">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
@@ -213,9 +206,11 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
+    
       
         <p class="site-subtitle">晒晒狗vs练练手</p>
       
+    
   </div>
 
   <div class="site-nav-toggle">
@@ -227,116 +222,81 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
         
+        
           
-  <li class="menu-item menu-item-home">
+          <li class="menu-item menu-item-home">
     <a href="/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-home"></i> <br />首页</a>
-</li>
-
-      
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags">
     <a href="/tags/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">20</span>
-      </a>
-</li>
-
-      
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签<span class="badge">20</span></a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-categories">
+          <li class="menu-item menu-item-categories">
     <a href="/categories/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">7</span>
-      </a>
-</li>
-
-      
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类<span class="badge">7</span></a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-archives">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">18</span>
-      </a>
-</li>
-
-      
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档<span class="badge">18</span></a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-about">
+          <li class="menu-item menu-item-about">
     <a href="/about/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
-</li>
-
-      
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-guestbook">
+          <li class="menu-item menu-item-guestbook">
     <a href="/guestbook/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />留言</a>
-</li>
+      <i class="menu-item-icon fa fa-fw fa-comments"></i> <br />guestbook</a>
+  </li>
 
       
-
-      
-        <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            
-              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />搜索</a>
-        </li>
       
     </ul>
   
 
   
+    
 
   
-    <div class="site-search">
-      
-  <div class="popup search-popup local-search-popup">
-  <div class="local-search-header clearfix">
-    <span class="search-icon">
-      <i class="fa fa-search"></i>
-    </span>
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
-    <div class="local-search-input-wrapper">
-      <input autocomplete="off"
-             placeholder="搜索..." spellcheck="false"
-             type="text" id="local-search-input">
-    </div>
-  </div>
-  <div id="local-search-result"></div>
-</div>
 
-
-
-    </div>
   
 </nav>
 
 
+
   
 
 
 
- </div>
+</div>
     </header>
 
     
@@ -345,9 +305,6 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
-            
-
           
           <div id="content" class="content">
             
@@ -372,8 +329,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -387,11 +344,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/1c49a9aa.html" itemprop="url">dockerpty使用</a></h1>
+                <a class="post-title-link" href="/post/1c49a9aa.html" itemprop="url">
+                  dockerpty使用
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -399,12 +366,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T10:34:40+08:00">2018-05-03</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-03 10:34:40" itemprop="dateCreated datePublished" datetime="2018-05-03T10:34:40+08:00">2018-05-03</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-04 17:58:47" itemprop="dateModified" datetime="2018-05-04T17:58:47+08:00">2018-05-04</time>
+              
             
           </span>
 
@@ -436,7 +421,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/1c49a9aa.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/1c49a9aa.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/1c49a9aa.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -456,9 +441,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">1.6k</span>
+                <span title="本文字数">1.6k</span>
               
 
               
@@ -470,9 +455,9 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">0:02</span>
+                <span title="阅读时长">0:01</span>
               
             </div>
           
@@ -521,11 +506,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -565,8 +545,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -580,11 +560,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/70cf198a.html" itemprop="url">Docker中无密码apt安装mysql</a></h1>
+                <a class="post-title-link" href="/post/70cf198a.html" itemprop="url">
+                  Docker中无密码apt安装mysql
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -592,12 +582,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T02:39:33+08:00">2018-03-30</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-30 02:39:33" itemprop="dateCreated datePublished" datetime="2018-03-30T02:39:33+08:00">2018-03-30</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-04 17:57:55" itemprop="dateModified" datetime="2018-05-04T17:57:55+08:00">2018-05-04</time>
+              
             
           </span>
 
@@ -629,7 +637,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/70cf198a.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/70cf198a.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/70cf198a.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -649,9 +657,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">1.7k</span>
+                <span title="本文字数">1.7k</span>
               
 
               
@@ -663,7 +671,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:02</span>
               
@@ -711,11 +719,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -755,8 +758,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -770,11 +773,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/a072bce6.html" itemprop="url">Hexo+Next上开启Valine评论系统</a></h1>
+                <a class="post-title-link" href="/post/a072bce6.html" itemprop="url">
+                  Hexo+Next上开启Valine评论系统
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -782,12 +795,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T21:11:51+08:00">2018-03-27</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-27 21:11:51" itemprop="dateCreated datePublished" datetime="2018-03-27T21:11:51+08:00">2018-03-27</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-30 10:37:58" itemprop="dateModified" datetime="2018-03-30T10:37:58+08:00">2018-03-30</time>
+              
             
           </span>
 
@@ -819,7 +850,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/a072bce6.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/a072bce6.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/a072bce6.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -839,9 +870,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">2.1k</span>
+                <span title="本文字数">2.1k</span>
               
 
               
@@ -853,7 +884,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:02</span>
               
@@ -900,11 +931,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -944,8 +970,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -959,11 +985,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/3e41aa59.html" itemprop="url">在Ubuntu 16.04上开启Docker的Remote API</a></h1>
+                <a class="post-title-link" href="/post/3e41aa59.html" itemprop="url">
+                  在Ubuntu 16.04上开启Docker的Remote API
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -971,12 +1007,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T14:42:58+08:00">2018-03-27</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-27 14:42:58" itemprop="dateCreated datePublished" datetime="2018-03-27T14:42:58+08:00">2018-03-27</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-04 17:59:45" itemprop="dateModified" datetime="2018-05-04T17:59:45+08:00">2018-05-04</time>
+              
             
           </span>
 
@@ -1008,7 +1062,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/3e41aa59.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/3e41aa59.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/3e41aa59.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1028,9 +1082,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">2k</span>
+                <span title="本文字数">2k</span>
               
 
               
@@ -1042,7 +1096,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:02</span>
               
@@ -1093,11 +1147,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -1137,8 +1186,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1152,11 +1201,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/80ca9385.html" itemprop="url">使用hexo搭建自己的博客——创建站点</a></h1>
+                <a class="post-title-link" href="/post/80ca9385.html" itemprop="url">
+                  使用hexo搭建自己的博客——创建站点
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1164,12 +1223,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-25T23:29:30+08:00">2018-03-25</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-25 23:29:30" itemprop="dateCreated datePublished" datetime="2018-03-25T23:29:30+08:00">2018-03-25</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-30 10:37:58" itemprop="dateModified" datetime="2018-03-30T10:37:58+08:00">2018-03-30</time>
+              
             
           </span>
 
@@ -1201,7 +1278,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/80ca9385.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/80ca9385.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/80ca9385.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1221,9 +1298,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">1.4k</span>
+                <span title="本文字数">1.4k</span>
               
 
               
@@ -1235,7 +1312,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:01</span>
               
@@ -1284,11 +1361,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -1328,8 +1400,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1343,11 +1415,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/493f285a.html" itemprop="url">docker基本操作（一）</a></h1>
+                <a class="post-title-link" href="/post/493f285a.html" itemprop="url">
+                  docker基本操作（一）
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1355,12 +1437,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T09:14:57+08:00">2018-03-23</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-23 09:14:57" itemprop="dateCreated datePublished" datetime="2018-03-23T09:14:57+08:00">2018-03-23</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-05-04 17:58:13" itemprop="dateModified" datetime="2018-05-04T17:58:13+08:00">2018-05-04</time>
+              
             
           </span>
 
@@ -1392,7 +1492,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/493f285a.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/493f285a.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/493f285a.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1412,9 +1512,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">2.8k</span>
+                <span title="本文字数">2.8k</span>
               
 
               
@@ -1426,7 +1526,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:03</span>
               
@@ -1475,11 +1575,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -1519,8 +1614,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1534,11 +1629,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/4fa2931e.html" itemprop="url">在树莓派上部署nodejs</a></h1>
+                <a class="post-title-link" href="/post/4fa2931e.html" itemprop="url">
+                  在树莓派上部署nodejs
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1546,12 +1651,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T01:32:39+08:00">2018-03-23</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-23 01:32:39" itemprop="dateCreated datePublished" datetime="2018-03-23T01:32:39+08:00">2018-03-23</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-30 10:37:58" itemprop="dateModified" datetime="2018-03-30T10:37:58+08:00">2018-03-30</time>
+              
             
           </span>
 
@@ -1583,7 +1706,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/4fa2931e.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4fa2931e.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4fa2931e.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1603,9 +1726,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">2.1k</span>
+                <span title="本文字数">2.1k</span>
               
 
               
@@ -1617,7 +1740,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:02</span>
               
@@ -1664,11 +1787,6 @@
 
     
 
-    <div>
-      
-    </div>
-
-
     <footer class="post-footer">
       
 
@@ -1708,8 +1826,8 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+      <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1723,11 +1841,21 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/post/4a17b156.html" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/post/4a17b156.html" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1735,12 +1863,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T19:14:57+08:00">2018-03-22</time>
+
+              
+                
+              
+
+              <time title="创建时间：2018-03-22 19:14:57" itemprop="dateCreated datePublished" datetime="2018-03-22T19:14:57+08:00">2018-03-22</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-03-30 10:37:58" itemprop="dateModified" datetime="2018-03-30T10:37:58+08:00">2018-03-30</time>
+              
             
           </span>
 
@@ -1754,7 +1900,7 @@
                   <i class="fa fa-comment-o"></i>
                 </span>
                 <a href="/post/4a17b156.html#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4a17b156.html" itemprop="commentCount"></span>
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/post/4a17b156.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -1774,9 +1920,9 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">字数统计：</span>
+                  <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="字数统计">441</span>
+                <span title="本文字数">441</span>
               
 
               
@@ -1788,7 +1934,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">0:01</span>
               
@@ -1834,11 +1980,6 @@
     
 
     
-
-    <div>
-      
-    </div>
-
 
     <footer class="post-footer">
       
@@ -1895,10 +2036,6 @@
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image"
-                src="/images/avatar.png"
-                alt="Simble" />
             
               <p class="site-author-name" itemprop="name">Simble</p>
               <p class="site-description motion-element" itemprop="description">记录一些技术的或者旅行的东东</p>
@@ -2073,7 +2210,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love" id="animate"> 
+  <span class="with-love" id="animate">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Simble</span>
@@ -2093,10 +2230,9 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点总阅读时长">0:47</span>
+    <span title="站点阅读时长">0:43</span>
   
 </div>
-<p>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></p>
 
 
 
@@ -2149,7 +2285,18 @@
     
 
     
+	
+    
 
+    
+      <div>
+        <!-- Go to www.addthis.com/dashboard to customize your tools -->
+<div class="addthis_inline_share_toolbox">
+  <script type = "text/javascript" src = "//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async = "async" ></script>
+</div>
+
+      </div>
+    
   </div>
 
   
@@ -2174,9 +2321,6 @@
 
 
 
-
-  
-  
 
 
 
@@ -2203,58 +2347,29 @@
     <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
   
 
-  
-  
-    <script type="text/javascript" src="/lib/three/three.min.js"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
-  
-
 
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.1"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.1"></script>
 
 
 
   
   
 
-
-  <script type="text/javascript" src="/js/src/affix.js?v=6.0.6"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.0.6"></script>
-
-
-
   
 
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.1"></script>
 
 
 
   
-
-
-
-	
-
-
-
-
-
-  
-
-
 
 
 
@@ -2274,7 +2389,7 @@
   
   <script type="text/javascript">
     var GUEST = ['nick','mail','link'];
-    var guest = 'nick';
+    var guest = 'nick,mail,link';
     guest = guest.split(',').filter(function (item) {
       return GUEST.indexOf(item)>-1;
     });
@@ -2286,8 +2401,9 @@
         appKey: 'rMtFld3iasHLea7H7OWG718B',
         placeholder: '(●’◡’●)来呀，快活呀～',
         avatar:'mm',
-        guest_info:guest,
+        meta:guest,
         pageSize:'10' || 10,
+        visitor: false
     });
   </script>
 
@@ -2295,326 +2411,6 @@
 
   
 
-  <script type="text/javascript">
-    // Popup Window;
-    var isfetched = false;
-    var isXml = true;
-    // Search DB path;
-    var search_path = "search.xml";
-    if (search_path.length === 0) {
-      search_path = "search.xml";
-    } else if (/json$/i.test(search_path)) {
-      isXml = false;
-    }
-    var path = "/" + search_path;
-    // monitor main search box;
-
-    var onPopupClose = function (e) {
-      $('.popup').hide();
-      $('#local-search-input').val('');
-      $('.search-result-list').remove();
-      $('#no-result').remove();
-      $(".local-search-pop-overlay").remove();
-      $('body').css('overflow', '');
-    }
-
-    function proceedsearch() {
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
-        .css('overflow', 'hidden');
-      $('.search-popup-overlay').click(onPopupClose);
-      $('.popup').toggle();
-      var $localSearchInput = $('#local-search-input');
-      $localSearchInput.attr("autocapitalize", "none");
-      $localSearchInput.attr("autocorrect", "off");
-      $localSearchInput.focus();
-    }
-
-    // search function;
-    var searchFunc = function(path, search_id, content_id) {
-      'use strict';
-
-      // start loading animation
-      $("body")
-        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
-          '<div id="search-loading-icon">' +
-          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
-          '</div>' +
-          '</div>')
-        .css('overflow', 'hidden');
-      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
-
-      
-
-      $.ajax({
-        url: path,
-        dataType: isXml ? "xml" : "json",
-        async: true,
-        success: function(res) {
-          // get the contents from search data
-          isfetched = true;
-          $('.popup').detach().appendTo('.header-inner');
-          var datas = isXml ? $("entry", res).map(function() {
-            return {
-              title: $("title", this).text(),
-              content: $("content",this).text(),
-              url: $("url" , this).text()
-            };
-          }).get() : res;
-          var input = document.getElementById(search_id);
-          var resultContent = document.getElementById(content_id);
-          var inputEventFunction = function() {
-            var searchText = input.value.trim().toLowerCase();
-            var keywords = searchText.split(/[\s\-]+/);
-            if (keywords.length > 1) {
-              keywords.push(searchText);
-            }
-            var resultItems = [];
-            if (searchText.length > 0) {
-              // perform local searching
-              datas.forEach(function(data) {
-                var isMatch = false;
-                var hitCount = 0;
-                var searchTextCount = 0;
-                var title = data.title.trim();
-                var titleInLowerCase = title.toLowerCase();
-                var content = data.content.trim().replace(/<[^>]+>/g,"");
-                
-                var contentInLowerCase = content.toLowerCase();
-                var articleUrl = decodeURIComponent(data.url);
-                var indexOfTitle = [];
-                var indexOfContent = [];
-                // only match articles with not empty titles
-                if(title != '') {
-                  keywords.forEach(function(keyword) {
-                    function getIndexByWord(word, text, caseSensitive) {
-                      var wordLen = word.length;
-                      if (wordLen === 0) {
-                        return [];
-                      }
-                      var startPosition = 0, position = [], index = [];
-                      if (!caseSensitive) {
-                        text = text.toLowerCase();
-                        word = word.toLowerCase();
-                      }
-                      while ((position = text.indexOf(word, startPosition)) > -1) {
-                        index.push({position: position, word: word});
-                        startPosition = position + wordLen;
-                      }
-                      return index;
-                    }
-
-                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
-                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
-                  });
-                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
-                    isMatch = true;
-                    hitCount = indexOfTitle.length + indexOfContent.length;
-                  }
-                }
-
-                // show search results
-
-                if (isMatch) {
-                  // sort index by position of keyword
-
-                  [indexOfTitle, indexOfContent].forEach(function (index) {
-                    index.sort(function (itemLeft, itemRight) {
-                      if (itemRight.position !== itemLeft.position) {
-                        return itemRight.position - itemLeft.position;
-                      } else {
-                        return itemLeft.word.length - itemRight.word.length;
-                      }
-                    });
-                  });
-
-                  // merge hits into slices
-
-                  function mergeIntoSlice(text, start, end, index) {
-                    var item = index[index.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    var hits = [];
-                    var searchTextCountInSlice = 0;
-                    while (position + word.length <= end && index.length != 0) {
-                      if (word === searchText) {
-                        searchTextCountInSlice++;
-                      }
-                      hits.push({position: position, length: word.length});
-                      var wordEnd = position + word.length;
-
-                      // move to next position of hit
-
-                      index.pop();
-                      while (index.length != 0) {
-                        item = index[index.length - 1];
-                        position = item.position;
-                        word = item.word;
-                        if (wordEnd > position) {
-                          index.pop();
-                        } else {
-                          break;
-                        }
-                      }
-                    }
-                    searchTextCount += searchTextCountInSlice;
-                    return {
-                      hits: hits,
-                      start: start,
-                      end: end,
-                      searchTextCount: searchTextCountInSlice
-                    };
-                  }
-
-                  var slicesOfTitle = [];
-                  if (indexOfTitle.length != 0) {
-                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
-                  }
-
-                  var slicesOfContent = [];
-                  while (indexOfContent.length != 0) {
-                    var item = indexOfContent[indexOfContent.length - 1];
-                    var position = item.position;
-                    var word = item.word;
-                    // cut out 100 characters
-                    var start = position - 20;
-                    var end = position + 80;
-                    if(start < 0){
-                      start = 0;
-                    }
-                    if (end < position + word.length) {
-                      end = position + word.length;
-                    }
-                    if(end > content.length){
-                      end = content.length;
-                    }
-                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
-                  }
-
-                  // sort slices in content by search text's count and hits' count
-
-                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
-                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
-                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
-                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
-                      return sliceRight.hits.length - sliceLeft.hits.length;
-                    } else {
-                      return sliceLeft.start - sliceRight.start;
-                    }
-                  });
-
-                  // select top N slices in content
-
-                  var upperBound = parseInt('1');
-                  if (upperBound >= 0) {
-                    slicesOfContent = slicesOfContent.slice(0, upperBound);
-                  }
-
-                  // highlight title and content
-
-                  function highlightKeyword(text, slice) {
-                    var result = '';
-                    var prevEnd = slice.start;
-                    slice.hits.forEach(function (hit) {
-                      result += text.substring(prevEnd, hit.position);
-                      var end = hit.position + hit.length;
-                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
-                      prevEnd = end;
-                    });
-                    result += text.substring(prevEnd, slice.end);
-                    return result;
-                  }
-
-                  var resultItem = '';
-
-                  if (slicesOfTitle.length != 0) {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
-                  } else {
-                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
-                  }
-
-                  slicesOfContent.forEach(function (slice) {
-                    resultItem += "<a href='" + articleUrl + "'>" +
-                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
-                      "...</p>" + "</a>";
-                  });
-
-                  resultItem += "</li>";
-                  resultItems.push({
-                    item: resultItem,
-                    searchTextCount: searchTextCount,
-                    hitCount: hitCount,
-                    id: resultItems.length
-                  });
-                }
-              })
-            };
-            if (keywords.length === 1 && keywords[0] === "") {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
-            } else if (resultItems.length === 0) {
-              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
-            } else {
-              resultItems.sort(function (resultLeft, resultRight) {
-                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
-                  return resultRight.searchTextCount - resultLeft.searchTextCount;
-                } else if (resultLeft.hitCount !== resultRight.hitCount) {
-                  return resultRight.hitCount - resultLeft.hitCount;
-                } else {
-                  return resultRight.id - resultLeft.id;
-                }
-              });
-              var searchResultList = '<ul class=\"search-result-list\">';
-              resultItems.forEach(function (result) {
-                searchResultList += result.item;
-              })
-              searchResultList += "</ul>";
-              resultContent.innerHTML = searchResultList;
-            }
-          }
-
-          if ('auto' === 'auto') {
-            input.addEventListener('input', inputEventFunction);
-          } else {
-            $('.search-icon').click(inputEventFunction);
-            input.addEventListener('keypress', function (event) {
-              if (event.keyCode === 13) {
-                inputEventFunction();
-              }
-            });
-          }
-
-          // remove loading animation
-          $(".local-search-pop-overlay").remove();
-          $('body').css('overflow', '');
-
-          proceedsearch();
-        }
-      });
-    }
-
-    // handle and trigger popup window;
-    $('.popup-trigger').click(function(e) {
-      e.stopPropagation();
-      if (isfetched === false) {
-        searchFunc(path, 'local-search-input', 'local-search-result');
-      } else {
-        proceedsearch();
-      };
-    });
-
-    $('.popup-btn-close').click(onPopupClose);
-    $('.popup').click(function(e){
-      e.stopPropagation();
-    });
-    $(document).on('keyup', function (event) {
-      var shouldDismissSearchPopup = event.which === 27 &&
-        $('.search-popup').is(':visible');
-      if (shouldDismissSearchPopup) {
-        onPopupClose();
-      }
-    });
-  </script>
-
 
 
 
@@ -2638,7 +2434,7 @@
 
   
 
-  <!-- 小红心 -->
-  <script type="text/javascript" src="/js/src/love.js"></script>
+  
+
 </body>
 </html>
