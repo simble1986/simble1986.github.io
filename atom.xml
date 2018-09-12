@@ -398,9 +398,9 @@
       <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
     
     
-      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
-    
       <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
+    
+      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
     
       <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
     
