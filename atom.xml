@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-09-13T01:56:10.614Z</updated>
+  <updated>2018-09-13T02:02:48.873Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,14 +21,12 @@
     <link href="http://blog.simble.xyz/post/c4780247.html"/>
     <id>http://blog.simble.xyz/post/c4780247.html</id>
     <published>2018-09-12T17:40:20.000Z</published>
-    <updated>2018-09-13T01:56:10.614Z</updated>
+    <updated>2018-09-13T02:02:48.873Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;之前一直使用Hexo的Next主题，开启的是Valine评论系统。有&lt;a href=&quot;http://www.simble.site/post/a072bce6.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;博文&lt;/a&gt;来说明配置过程。然而，一个主
-      
+      &lt;p&gt;之前一直使用Hexo的Next主题，开启的是Valine评论系统。有&lt;a href=&quot;http://www.simble.site/post/a072bce6.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;博文&lt;/a&gt;来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的&lt;a href=&quot;https://github.com/stkevintan/hexo-theme-material-flow&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MaterialFlow&lt;/a&gt;，刚好也换换评论系统&lt;/p&gt;
+&lt;p&gt;相比Valine，disqus开启真的是太简单了&lt;/p&gt;
     
     </summary>
     
@@ -393,9 +391,9 @@
     
       <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
     
-      <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
-    
       <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
+    
+      <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
     
   </entry>
   
