@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-09-13T01:55:55.814Z</updated>
+  <updated>2018-09-13T01:56:10.614Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://blog.simble.xyz/post/c4780247.html"/>
     <id>http://blog.simble.xyz/post/c4780247.html</id>
     <published>2018-09-12T17:40:20.000Z</published>
-    <updated>2018-09-13T01:55:55.814Z</updated>
+    <updated>2018-09-13T01:56:10.614Z</updated>
     
     <summary type="html">
     
@@ -393,9 +393,9 @@
     
       <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
     
-      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
-    
       <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
+    
+      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
     
   </entry>
   
