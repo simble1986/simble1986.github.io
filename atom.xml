@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-09-11T09:57:14.404Z</updated>
+  <updated>2018-09-13T01:55:55.814Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo开启disqus评论系统</title>
+    <link href="http://blog.simble.xyz/post/c4780247.html"/>
+    <id>http://blog.simble.xyz/post/c4780247.html</id>
+    <published>2018-09-12T17:40:20.000Z</published>
+    <updated>2018-09-13T01:55:55.814Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前一直使用Hexo的Next主题，开启的是Valine评论系统。有&lt;a href=&quot;http://www.simble.site/post/a072bce6.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;博文&lt;/a&gt;来说明配置过程。然而，一个主
+      
+    
+    </summary>
+    
+      <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
+    
+    
+      <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>openstack接口状态异常</title>
@@ -368,11 +391,11 @@
       <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
     
     
+      <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
+    
       <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
     
       <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
-    
-      <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
     
   </entry>
   

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: mysql-server | Simble的小站</title>
+  <title>Hexo开启disqus评论系统 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -12,16 +12,22 @@
   <link rel="shortcut icon" href="/images/favicon.png">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/tags/mysql-server/index.html">
+  <meta name="description" content="之前一直使用Hexo的Next主题，开启的是Valine评论系统。有博文来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的MaterialFlow，刚好也换换评论系统 相比Valine，disqus开启真的是太简单了  注册disqus账号 其实我很早之前就注册了账号，直接使用facebook关联过去的.  网站上开启  登陆disqus后，在首页点击右侧设置-Add">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo开启disqus评论系统">
+<meta property="og:url" content="http://blog.simble.xyz/post/c4780247.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="之前一直使用Hexo的Next主题，开启的是Valine评论系统。有博文来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的MaterialFlow，刚好也换换评论系统 相比Valine，disqus开启真的是太简单了  注册disqus账号 其实我很早之前就注册了账号，直接使用facebook关联过去的.  网站上开启  登陆disqus后，在首页点击右侧设置-Add">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.simble.xyz/post/undefined/disqus_1.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/undefined/disqus2.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/undefined/disqus-shortname.png">
+<meta property="og:updated_time" content="2018-09-13T01:55:55.814Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="Hexo开启disqus评论系统">
+<meta name="twitter:description" content="之前一直使用Hexo的Next主题，开启的是Valine评论系统。有博文来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的MaterialFlow，刚好也换换评论系统 相比Valine，disqus开启真的是太简单了  注册disqus账号 其实我很早之前就注册了账号，直接使用facebook关联过去的.  网站上开启  登陆disqus后，在首页点击右侧设置-Add">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/undefined/disqus_1.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -132,60 +138,84 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
-  <script>
-    window.subData= { title:'Tag : mysql-server'}
-  </script>
-
-<section class="post-list">
+        <article id="post-hexo-enable-disqus"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/c4780247.html">
+    	Hexo开启disqus评论系统
+    </a>
+  </h2>
+	<time>
+	  9月 13, 2018
+	</time>
 	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/70cf198a.html">
-        Docker中无密码apt安装mysql
-      </a>
-    </h2>
-    
-    <time>
-      3月 30, 2018
-    </time>
-		
     
     <div class='cats'>
-        <a href="/categories/docker/">docker</a>
+        <a href="/categories/hexo/">hexo</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
-<p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#注册disqus账号"><span class="toc-number">1.</span> <span class="toc-text"> 注册disqus账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网站上开启"><span class="toc-number">2.</span> <span class="toc-text"> 网站上开启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置hexo"><span class="toc-number">3.</span> <span class="toc-text"> 配置Hexo</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
+<p>相比Valine，disqus开启真的是太简单了</p>
+<h3 id="注册disqus账号"><a class="markdownIt-Anchor" href="#注册disqus账号"></a> 注册disqus账号</h3>
+<p>其实我很早之前就注册了账号，直接使用facebook关联过去的.</p>
+<h3 id="网站上开启"><a class="markdownIt-Anchor" href="#网站上开启"></a> 网站上开启</h3>
+<ol>
+<li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
+</ol>
+<img src="/post/undefined/disqus_1.png" title="Add Disqus To Site">
+<ol start="2">
+<li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
+</ol>
+<img src="/post/undefined/disqus2.png" title="Install">
+<img src="/post/undefined/disqus-shortname.png" title="Shortname">
+<h3 id="配置hexo"><a class="markdownIt-Anchor" href="#配置hexo"></a> 配置Hexo</h3>
+<p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>大功告成</p>
+</blockquote>
+<p><strong>欢迎大家留言</strong></p>
 
-    
-	  <div class="readmore">
-      <a href="/post/70cf198a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+  	</div>
+	  
+	  <div class="article-tags tags">
       
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/DockerFile/">DockerFile</a>
-      
-        <a href="/tags/mysql-server/">mysql-server</a>
+        <a href="/tags/hexo/">hexo</a>
       
 	  </div>
     
-  </section>
+		
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/257b0787.html" rel="next"  title="openstack接口状态异常">
+						openstack接口状态异常
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-</section>
-
+<script>
+	window.subData = {
+		title: 'Hexo开启disqus评论系统',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -300,11 +330,13 @@
 <script>
   var disqus_shortname = 'simble';
   
+  var disqus_url = 'http://blog.simble.xyz/post/c4780247.html';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
