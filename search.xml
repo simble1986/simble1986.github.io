@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[OpenvSwitch学习笔记1]]></title>
+    <url>%2Fpost%2F775edb62.html</url>
+    <content type="text"><![CDATA[功能支持 VLAN with trunk and access ports 绑定NIC(with/without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发 主要组成部分 ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching ovsdb-server: 用以保存ovs配置信息的轻量级的数据库 ovs-dpctl: 用以配置交换机内核模块的工具 ovs-vsctl: 查看和更新ovs配置信息的工具 ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表 场景 多服务器虚拟化部署场景 高动态的end-points 维护的是逻辑抽象 状态迁移 响应网络动态修改 维护逻辑标签 包处理流程 如上图 当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。 ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作 当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作 包处理流程 因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action 如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步 若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。 将匹配的流表项通过netlink下发到内核的Flow-table中 通过reinject，使用netlink将包重新送回内核 匹配流表项并根据相应的动作执行]]></content>
+      <categories>
+        <category>network</category>
+      </categories>
+      <tags>
+        <tag>ovs</tag>
+        <tag>openvswitch</tag>
+        <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo开启disqus评论系统]]></title>
     <url>%2Fpost%2Fc4780247.html</url>
     <content type="text"><![CDATA[之前一直使用Hexo的Next主题，开启的是Valine评论系统。有博文来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的MaterialFlow，刚好也换换评论系统 相比Valine，disqus开启真的是太简单了 注册disqus账号 其实我很早之前就注册了账号，直接使用facebook关联过去的. 网站上开启 登陆disqus后，在首页点击右侧设置-Add Disqus To Site 在随后弹出的页面点击Start - I want to install Disqus on my site 配置Hexo 修改hexo的_config.yml，增加disqus_shortname 1disqus_shortname: your_shortname 大功告成 欢迎大家留言]]></content>

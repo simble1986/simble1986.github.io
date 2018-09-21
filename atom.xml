@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-09-13T02:02:48.873Z</updated>
+  <updated>2018-09-21T05:53:35.313Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>OpenvSwitch学习笔记1</title>
+    <link href="http://blog.simble.xyz/post/775edb62.html"/>
+    <id>http://blog.simble.xyz/post/775edb62.html</id>
+    <published>2018-09-20T21:46:41.000Z</published>
+    <updated>2018-09-21T05:53:35.313Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;功能支持&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#功能支持&quot;&gt;&lt;/a&gt; 功能支持&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;VLAN with trunk and access ports&lt;/li&gt;
+&lt;li&gt;绑定NIC(with/without LAC)&lt;/li&gt;
+&lt;li&gt;可见性：NetFlow, sFlow®, and mirroring&lt;/li&gt;
+&lt;li&gt;QoS&lt;/li&gt;
+&lt;li&gt;Geneve, GRE, VXLAN, STT, and LISP 隧道&lt;/li&gt;
+&lt;li&gt;连接故障管理&lt;/li&gt;
+&lt;li&gt;openflow 1.0及其扩展&lt;/li&gt;
+&lt;li&gt;使用Linux内核进行高性能转发&lt;/li&gt;
+&lt;/ol&gt;
+    
+    </summary>
+    
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
+    
+    
+      <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+    
+      <category term="openvswitch" scheme="http://blog.simble.xyz/tags/openvswitch/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+  </entry>
   
   <entry>
     <title>Hexo开启disqus评论系统</title>

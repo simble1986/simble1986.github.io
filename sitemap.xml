@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.simble.xyz/post/775edb62.html</loc>
+    
+    <lastmod>2018-09-21T05:53:35.313Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.simble.xyz/post/c4780247.html</loc>
     
     <lastmod>2018-09-13T02:02:48.873Z</lastmod>
@@ -142,14 +149,14 @@
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/categories/index.html</loc>
+    <loc>http://blog.simble.xyz/guestbook/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/guestbook/index.html</loc>
+    <loc>http://blog.simble.xyz/categories/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     

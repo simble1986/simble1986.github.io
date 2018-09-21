@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>dockerpty使用 | Simble的小站</title>
+  <title>OpenvSwitch学习笔记1 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -13,18 +13,21 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
-<meta name="keywords" content="docker,dockerpty">
+  <meta name="description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with/without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
+<meta name="keywords" content="ovs,openvswitch,network">
 <meta property="og:type" content="article">
-<meta property="og:title" content="dockerpty使用">
-<meta property="og:url" content="http://blog.simble.xyz/post/1c49a9aa.html">
+<meta property="og:title" content="OpenvSwitch学习笔记1">
+<meta property="og:url" content="http://blog.simble.xyz/post/775edb62.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
+<meta property="og:description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with/without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-04T09:58:47.000Z">
+<meta property="og:image" content="http://blog.simble.xyz/post/775edb62/ovs-arch.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/775edb62/ovs-module.png">
+<meta property="og:updated_time" content="2018-09-21T05:53:35.313Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dockerpty使用">
-<meta name="twitter:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
+<meta name="twitter:title" content="OpenvSwitch学习笔记1">
+<meta name="twitter:description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with/without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/775edb62/ovs-arch.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -135,83 +138,99 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        <article id="post-dockerpty-usage"
+        <article id="post-ovs-study-overview"
   class="post white-box article-type-post"
   itemscope itemprop="blogPost">
 	<section class='meta'>
 	<h2 class="title">
-  	<a href="/post/1c49a9aa.html">
-    	dockerpty使用
+  	<a href="/post/775edb62.html">
+    	OpenvSwitch学习笔记1
     </a>
   </h2>
 	<time>
-	  5月 3, 2018
+	  9月 21, 2018
 	</time>
 	
     
     <div class='cats'>
-        <a href="/categories/docker/">docker</a>
+        <a href="/categories/network/">network</a>
     </div>
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题引入"><span class="toc-number">1.</span> <span class="toc-text"> 问题引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text"> 环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text"> 依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装步骤"><span class="toc-number">2.0.2.</span> <span class="toc-text"> 安装步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关api"><span class="toc-number">3.</span> <span class="toc-text"> 相关API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本使用"><span class="toc-number">4.</span> <span class="toc-text"> 基本使用</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#功能支持"><span class="toc-number">1.</span> <span class="toc-text"> 功能支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#主要组成部分"><span class="toc-number">2.</span> <span class="toc-text"> 主要组成部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景"><span class="toc-number">3.</span> <span class="toc-text"> 场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#包处理流程"><span class="toc-number">3.1.</span> <span class="toc-text"> 包处理流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#包处理流程-2"><span class="toc-number">3.2.</span> <span class="toc-text"> 包处理流程</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
-<p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
-<p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
-<p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
+    	<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
+<ol>
+<li>VLAN with trunk and access ports</li>
+<li>绑定NIC(with/without LAC)</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
+<li>QoS</li>
+<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
+<li>连接故障管理</li>
+<li>openflow 1.0及其扩展</li>
+<li>使用Linux内核进行高性能转发</li>
+</ol>
 <a id="more"></a>
-<h2 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h2>
-<p>根据<a href="https://github.com/d11wtq/dockerpty" target="_blank" rel="noopener">dockerpty</a>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
-<p>但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作</p>
-<p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<a href="https://github.com/simble1986/dockerpty" target="_blank" rel="noopener">simble1986/dockerpty</a></p>
-<h4 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h4>
-<p>原有的project上提到依赖的docker api为<code>docker-py&gt;=0.3.2</code>，但docker的python API已经更新</p>
+<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
 <ul>
-<li>安装docker API</li>
+<li>
+<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
+</li>
+<li>
+<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
+</li>
+<li>
+<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
+</li>
+<li>
+<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
+</li>
+<li>
+<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
+</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install docker</span><br></pre></td></tr></table></figure>
-<h4 id="安装步骤"><a class="markdownIt-Anchor" href="#安装步骤"></a> 安装步骤</h4>
+<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
+<p>多服务器虚拟化部署场景</p>
 <ul>
-<li>获取源码</li>
+<li>高动态的end-points</li>
+<li>维护的是逻辑抽象</li>
+<li>状态迁移</li>
+<li>响应网络动态修改</li>
+<li>维护逻辑标签</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/simble1986/dockerpty.git</span><br></pre></td></tr></table></figure>
-<ul>
-<li>安装</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
-<h2 id="相关api"><a class="markdownIt-Anchor" href="#相关api"></a> 相关API</h2>
-<p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener">API文档</a>，以下主要对container相关参数加以说明</p>
-<ul>
-<li>tty (bool) – Allocate a pseudo-TTY.</li>
-<li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
-</ul>
-<h2 id="基本使用"><a class="markdownIt-Anchor" href="#基本使用"></a> 基本使用</h2>
-<ul>
-<li>连接client</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@slt-docker:/home/bqi<span class="comment"># python</span></span><br><span class="line">Python <span class="number">2.7</span><span class="number">.12</span> (default, Dec  <span class="number">4</span> <span class="number">2017</span>, <span class="number">14</span>:<span class="number">50</span>:<span class="number">18</span>)</span><br><span class="line">[GCC <span class="number">5.4</span><span class="number">.0</span> <span class="number">20160609</span>] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dockerpty</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.from_env()</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>： 支持远程API</p>
-<ul>
-<li>创建container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>test1 = client.containers.create(<span class="string">"ubuntu"</span>,<span class="string">"/bin/bash"</span>,tty=<span class="keyword">True</span>,stdin_open=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用dockerpty</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>dockerpty.start(client,test1)</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># ls</span></span><br><span class="line">bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># exit</span></span><br><span class="line">exit</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
+<img src="/post/775edb62/ovs-arch.png" title="arch">
+<p>如上图</p>
+<ol>
+<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
+<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
+<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
+<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
+</ol>
+<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
+<img src="/post/775edb62/ovs-module.png" title="module">
+<ol>
+<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
+<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
+<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
+<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
+<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
+<li>通过reinject，使用netlink将包重新送回内核</li>
+<li>匹配流表项并根据相应的动作执行</li>
+</ol>
 
   	</div>
 	  
 	  <div class="article-tags tags">
       
-        <a href="/tags/docker/">docker</a>
+        <a href="/tags/ovs/">ovs</a>
       
-        <a href="/tags/dockerpty/">dockerpty</a>
+        <a href="/tags/openvswitch/">openvswitch</a>
+      
+        <a href="/tags/network/">network</a>
       
 	  </div>
     
@@ -219,13 +238,9 @@
 	
 		<div class="art-item-footer">
 				
-					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/post/b18ab8ad.html" rel="prev"  title="Docker API一种连接到PTY的交互方法">
-						Docker API一种连接到PTY的交互方法 
-					</a></span>
 				
-				
-					<span class="art-item-right">next：<a href="/post/70cf198a.html" rel="next"  title="Docker中无密码apt安装mysql">
-						Docker中无密码apt安装mysql
+					<span class="art-item-right">next：<a href="/post/c4780247.html" rel="next"  title="Hexo开启disqus评论系统">
+						Hexo开启disqus评论系统
 					</a><i class="icon icon-chevron-thin-right"></i></span>
 				
 		</div>
@@ -239,7 +254,7 @@
 </article>
 <script>
 	window.subData = {
-		title: 'dockerpty使用',
+		title: 'OpenvSwitch学习笔记1',
 		tools: true
 	}
 </script>
@@ -359,7 +374,7 @@
 <script>
   var disqus_shortname = 'simble';
   
-  var disqus_url = 'http://blog.simble.xyz/post/1c49a9aa.html';
+  var disqus_url = 'http://blog.simble.xyz/post/775edb62.html';
   
   (function(){
     var dsq = document.createElement('script');
