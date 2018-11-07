@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-07T03:02:43.189Z</updated>
+  <updated>2018-11-07T03:09:12.588Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,15 +21,13 @@
     <link href="http://blog.simble.xyz/post/46d30180.html"/>
     <id>http://blog.simble.xyz/post/46d30180.html</id>
     <published>2018-11-06T19:00:33.000Z</published>
-    <updated>2018-11-07T03:02:43.189Z</updated>
+    <updated>2018-11-07T03:09:12.588Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;mininet基础使用&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet基础使用&quot;&gt;&lt;/a&gt; Mininet基础使用&lt;/h1&gt;
-&lt;h2 id=&quot;mininet是什么&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot;
-      
+      &lt;h2 id=&quot;mininet是什么&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet是什么&quot;&gt;&lt;/a&gt; Mininet是什么&lt;/h2&gt;
+&lt;p&gt;Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。&lt;/p&gt;
+&lt;p&gt;Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境&lt;/p&gt;
     
     </summary>
     

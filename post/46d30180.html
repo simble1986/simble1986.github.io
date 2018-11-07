@@ -13,18 +13,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Mininet基础使用  Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境  Mininet用途  为开发OpenFlow应用程序提供简单而廉价的网络测试平台 允许多个并发开发人员在同一拓扑上独立工作 支持系统级回归测试，这些测试可重">
+  <meta name="description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
 <meta name="keywords" content="sdn,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mininet基础使用">
 <meta property="og:url" content="http://blog.simble.xyz/post/46d30180.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="Mininet基础使用  Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境  Mininet用途  为开发OpenFlow应用程序提供简单而廉价的网络测试平台 允许多个并发开发人员在同一拓扑上独立工作 支持系统级回归测试，这些测试可重">
+<meta property="og:description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-07T03:02:43.189Z">
+<meta property="og:updated_time" content="2018-11-07T03:09:12.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mininet基础使用">
-<meta name="twitter:description" content="Mininet基础使用  Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境  Mininet用途  为开发OpenFlow应用程序提供简单而廉价的网络测试平台 允许多个并发开发人员在同一拓扑上独立工作 支持系统级回归测试，这些测试可重">
+<meta name="twitter:description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -155,14 +155,14 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#mininet基础使用"><span class="toc-number">1.</span> <span class="toc-text"> Mininet基础使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet是什么"><span class="toc-number">1.1.</span> <span class="toc-text"> Mininet是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet用途"><span class="toc-number">1.2.</span> <span class="toc-text"> Mininet用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">1.3.</span> <span class="toc-text"> 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu1604"><span class="toc-number">1.3.1.</span> <span class="toc-text"> Ubuntu16.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">1.3.2.</span> <span class="toc-text"> 测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">1.4.</span> <span class="toc-text"> 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用命令"><span class="toc-number">1.4.1.</span> <span class="toc-text"> 常用命令</span></a></li></ol></li></ol></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet是什么"><span class="toc-number">1.</span> <span class="toc-text"> Mininet是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet用途"><span class="toc-number">2.</span> <span class="toc-text"> Mininet用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.</span> <span class="toc-text"> 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu1604"><span class="toc-number">3.1.</span> <span class="toc-text"> Ubuntu16.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">3.2.</span> <span class="toc-text"> 测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">4.</span> <span class="toc-text"> 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用命令"><span class="toc-number">4.1.</span> <span class="toc-text"> 常用命令</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<h1 id="mininet基础使用"><a class="markdownIt-Anchor" href="#mininet基础使用"></a> Mininet基础使用</h1>
-<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
+    	<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
 <p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
 <p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
+<a id="more"></a>
 <h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
 <ul>
 <li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
