@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: openstack | Simble的小站</title>
+  <title>Tag: opendaylight | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -16,7 +16,7 @@
   <meta name="description" content="记录一些技术的或者旅行的东东">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/tags/openstack/index.html">
+<meta property="og:url" content="http://blog.simble.xyz/tags/opendaylight/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="记录一些技术的或者旅行的东东">
 <meta property="og:locale" content="zh-CN">
@@ -135,7 +135,7 @@
       <div class='l_main'>
         
   <script>
-    window.subData= { title:'Tag : openstack'}
+    window.subData= { title:'Tag : opendaylight'}
   </script>
 
 <section class="post-list">
@@ -145,120 +145,55 @@
   <section class="meta">
     
     <h2 class="title">
-      <a href="/post/257b0787.html">
-        openstack接口状态异常
+      <a href="/post/5594d322.html">
+        Opendaylight Oxygen环境准备
       </a>
     </h2>
     
     <time>
-      9月 11, 2018
+      11月 7, 2018
     </time>
 		
     
     <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
+        <a href="/categories/sdn/">sdn</a>
     </div>
 
   </section>
   <section class="article typo">
-	  <h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
-<p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
-<h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
-<blockquote>
-<p>openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于<code>build</code>状态</p>
-</blockquote>
+	  <h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2>
+<ul>
+<li>
+<p>环境准备</p>
+<ol>
+<li>
+<p>基础包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装jdk</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>设置<code>JAVA_HOME</code></p>
+<p>在<code>/etc/environment</code>的末尾添加<code>JAVA_HOME=&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</code>，需要退出当前终端重新登陆</p>
+</li>
+</ol></li></ul>
 
     
 	  <div class="readmore">
-      <a href="/post/257b0787.html">Read More</a>
+      <a href="/post/5594d322.html">Read More</a>
     </div>
     
     
     
 	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/openstack/">openstack</a>
+        <a href="/tags/sdn/">sdn</a>
       
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/c2a7a06a.html">
-        Ubuntu在Openstack中启动密码注入不生效问题定位1
-      </a>
-    </h2>
-    
-    <time>
-      9月 11, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
-<p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/c2a7a06a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+        <a href="/tags/network/">network</a>
       
-        <a href="/tags/openstack/">openstack</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/9b5fb1d1.html">
-        Openstack学习笔记1
-      </a>
-    </h2>
-    
-    <time>
-      6月 28, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/9b5fb1d1.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/openstack/">openstack</a>
+        <a href="/tags/opendaylight/">opendaylight</a>
       
 	  </div>
     

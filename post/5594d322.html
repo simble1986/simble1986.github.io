@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: openstack | Simble的小站</title>
+  <title>Opendaylight Oxygen环境准备 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -13,16 +13,20 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/tags/openstack/index.html">
+  <meta name="description" content="安装Opendaylight   环境准备   基础包 1$ apt-get install unzip lrzsz   安装jdk 1$ apt-get install openjdk-8-jdk   设置JAVA_HOME 在/etc/environment的末尾添加JAVA_HOME=&amp;quot;/usr/lib/jvm/java-8-openjdk-amd64&amp;quot;，需要退出当前终">
+<meta name="keywords" content="sdn,network,opendaylight">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Opendaylight Oxygen环境准备">
+<meta property="og:url" content="http://blog.simble.xyz/post/5594d322.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="安装Opendaylight   环境准备   基础包 1$ apt-get install unzip lrzsz   安装jdk 1$ apt-get install openjdk-8-jdk   设置JAVA_HOME 在/etc/environment的末尾添加JAVA_HOME=&amp;quot;/usr/lib/jvm/java-8-openjdk-amd64&amp;quot;，需要退出当前终">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.simble.xyz/post/5594d322/opendaylight_login.png">
+<meta property="og:updated_time" content="2018-11-07T15:00:12.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="Opendaylight Oxygen环境准备">
+<meta name="twitter:description" content="安装Opendaylight   环境准备   基础包 1$ apt-get install unzip lrzsz   安装jdk 1$ apt-get install openjdk-8-jdk   设置JAVA_HOME 在/etc/environment的末尾添加JAVA_HOME=&amp;quot;/usr/lib/jvm/java-8-openjdk-amd64&amp;quot;，需要退出当前终">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/5594d322/opendaylight_login.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -133,141 +137,115 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
-  <script>
-    window.subData= { title:'Tag : openstack'}
-  </script>
-
-<section class="post-list">
+        <article id="post-odl-setup"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/5594d322.html">
+    	Opendaylight Oxygen环境准备
+    </a>
+  </h2>
+	<time>
+	  11月 7, 2018
+	</time>
 	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/257b0787.html">
-        openstack接口状态异常
-      </a>
-    </h2>
-    
-    <time>
-      9月 11, 2018
-    </time>
-		
     
     <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
+        <a href="/categories/sdn/">sdn</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
-<p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
-<h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装opendaylight"><span class="toc-number">1.</span> <span class="toc-text"> 安装Opendaylight</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2>
+<ul>
+<li>
+<p>环境准备</p>
+<ol>
+<li>
+<p>基础包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装jdk</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>设置<code>JAVA_HOME</code></p>
+<p>在<code>/etc/environment</code>的末尾添加<code>JAVA_HOME=&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</code>，需要退出当前终端重新登陆</p>
+</li>
+</ol>
+<a id="more"></a>
+</li>
+<li>
+<p>获取安装包</p>
+</li>
+</ul>
 <blockquote>
-<p>openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于<code>build</code>状态</p>
+<p><a href="https://docs.opendaylight.org/en/latest/downloads.html" target="_blank" rel="noopener">https://docs.opendaylight.org/en/latest/downloads.html</a></p>
 </blockquote>
+<ul>
+<li>运行karaf</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ unzip karaf-0.8.3.zip</span><br><span class="line">   ...</span><br><span class="line">$ <span class="built_in">cd</span> karaf-0.8.3/</span><br><span class="line">$ ./bin/karaf</span><br><span class="line">Apache Karaf starting up. Press Enter to open the shell now...</span><br><span class="line">100% [========================================================================]</span><br><span class="line">Karaf started <span class="keyword">in</span> 1s. Bundle stats: 54 active, 55 total</span><br><span class="line"></span><br><span class="line">    ________                       ________                .__  .__       .__     __</span><br><span class="line">    \_____  \ ______   ____   ____ \______ \ _____  ___.__.|  | |__| ____ |  |___/  |_</span><br><span class="line">     /   |   \\____ \_/ __ \ /    \ |    |  \\__  \&lt;   |  ||  | |  |/ ___\|  |  \   __\</span><br><span class="line">    /    |    \  |_&gt; &gt;  ___/|   |  \|    `   \/ __ \\___  ||  |_|  / /_/  &gt;   Y  \  |</span><br><span class="line">    \_______  /   __/ \___  &gt;___|  /_______  (____  / ____||____/__\___  /|___|  /__|</span><br><span class="line">            \/|__|        \/     \/        \/     \/\/            /_____/      \/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hit <span class="string">'&lt;tab&gt;'</span> <span class="keyword">for</span> a list of available commands</span><br><span class="line">and <span class="string">'[cmd] --help'</span> <span class="keyword">for</span> <span class="built_in">help</span> on a specific <span class="built_in">command</span>.</span><br><span class="line">Hit <span class="string">'&lt;ctrl-d&gt;'</span> or <span class="built_in">type</span> <span class="string">'system:shutdown'</span> or <span class="string">'logout'</span> to shutdown OpenDaylight.</span><br><span class="line"></span><br><span class="line">opendaylight-user@root&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>安装feature</p>
+<blockquote>
+<p>说起来，这真的是一件让人崩溃的事情，不同的版本，安装feature不同，在什么都还不懂的情况下安装feature，遇到了无数的问题，终于当我将要换到更老的版本之前（0.7.3），让我找到了**Oxygen（0.8.3）**的feature</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opendaylight-user@root&gt;feature:install odl-restconf odl-l2switch-switch odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui odl-dluxapps-yangvisualizer odl-dluxapps-yangman</span><br></pre></td></tr></table></figure>
+<p>我有必要把这些feature再次列出来</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">feature:install odl-restconf</span><br><span class="line">feature:install odl-l2switch-switch </span><br><span class="line">feature:install odl-dlux-core </span><br><span class="line">feature:install odl-dluxapps-nodes </span><br><span class="line">feature:install odl-dluxapps-topology </span><br><span class="line">feature:install odl-dluxapps-yangui </span><br><span class="line">feature:install odl-dluxapps-yangvisualizer </span><br><span class="line">feature:install odl-dluxapps-yangman</span><br></pre></td></tr></table></figure>
+<p><strong>务必按照顺序安装，如果出现错误，删了目录重新来过吧</strong></p>
+<ul>
+<li>页面终于来了</li>
+</ul>
+<p>使用<code>admin:admin</code>登陆即可</p>
+<img src="/post/5594d322/opendaylight_login.png" title="ODL WebUI">
 
-    
-	  <div class="readmore">
-      <a href="/post/257b0787.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+  	</div>
+	  
+	  <div class="article-tags tags">
       
-        <a href="/tags/openstack/">openstack</a>
+        <a href="/tags/sdn/">sdn</a>
+      
+        <a href="/tags/network/">network</a>
+      
+        <a href="/tags/opendaylight/">opendaylight</a>
       
 	  </div>
     
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/c2a7a06a.html">
-        Ubuntu在Openstack中启动密码注入不生效问题定位1
-      </a>
-    </h2>
-    
-    <time>
-      9月 11, 2018
-    </time>
 		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
-<p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/c2a7a06a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/openstack/">openstack</a>
-      
-	  </div>
-    
-  </section>
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/46d30180.html" rel="next"  title="Mininet基础使用">
+						Mininet基础使用
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/9b5fb1d1.html">
-        Openstack学习笔记1
-      </a>
-    </h2>
-    
-    <time>
-      6月 28, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/9b5fb1d1.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/openstack/">openstack</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-</section>
-
+<script>
+	window.subData = {
+		title: 'Opendaylight Oxygen环境准备',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -386,11 +364,13 @@
 <script>
   var disqus_shortname = 'simble';
   
+  var disqus_url = 'http://blog.simble.xyz/post/5594d322.html';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

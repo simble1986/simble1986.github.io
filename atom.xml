@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-07T03:09:12.588Z</updated>
+  <updated>2018-11-07T15:00:12.290Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,47 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Opendaylight Oxygen环境准备</title>
+    <link href="http://blog.simble.xyz/post/5594d322.html"/>
+    <id>http://blog.simble.xyz/post/5594d322.html</id>
+    <published>2018-11-07T06:53:08.000Z</published>
+    <updated>2018-11-07T15:00:12.290Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;安装opendaylight&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#安装opendaylight&quot;&gt;&lt;/a&gt; 安装Opendaylight&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;环境准备&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;基础包&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ apt-get install unzip lrzsz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装jdk&lt;/p&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ apt-get install openjdk-8-jdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设置&lt;code&gt;JAVA_HOME&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在&lt;code&gt;/etc/environment&lt;/code&gt;的末尾添加&lt;code&gt;JAVA_HOME=&amp;quot;/usr/lib/jvm/java-8-openjdk-amd64&amp;quot;&lt;/code&gt;，需要退出当前终端重新登陆&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;&lt;/li&gt;&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/categories/sdn/"/>
+    
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="opendaylight" scheme="http://blog.simble.xyz/tags/opendaylight/"/>
+    
+  </entry>
   
   <entry>
     <title>Mininet基础使用</title>
@@ -474,30 +515,6 @@
     
     
       <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在树莓派上部署nodejs</title>
-    <link href="http://blog.simble.xyz/post/4fa2931e.html"/>
-    <id>http://blog.simble.xyz/post/4fa2931e.html</id>
-    <published>2018-03-22T17:32:39.000Z</published>
-    <updated>2018-03-30T02:37:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="树莓派" scheme="http://blog.simble.xyz/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-    
-      <category term="树莓派" scheme="http://blog.simble.xyz/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-      <category term="nodejs" scheme="http://blog.simble.xyz/tags/nodejs/"/>
-    
-      <category term="pi" scheme="http://blog.simble.xyz/tags/pi/"/>
     
   </entry>
   
