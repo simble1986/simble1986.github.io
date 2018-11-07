@@ -145,6 +145,105 @@
   <section class="meta">
     
     <h2 class="title">
+      <a href="/post/46d30180.html">
+        Mininet基础使用
+      </a>
+    </h2>
+    
+    <time>
+      11月 7, 2018
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/sdn/">sdn</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h1 id="mininet基础使用"><a class="markdownIt-Anchor" href="#mininet基础使用"></a> Mininet基础使用</h1>
+<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
+<p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
+<p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
+<h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
+<ul>
+<li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
+<li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
+<li>支持<strong>系统级回归测试</strong>，这些<strong>测试</strong>可重复且易于打包</li>
+<li>支持<strong>复杂的拓扑测试</strong>，无需连接物理网络</li>
+<li>包括具有拓扑感知和OpenFlow感知的<strong>CLI</strong>，用于调试或运行网络范围的测试</li>
+<li>支持<strong>任意自定义拓扑</strong>，并包括一组基本的<strong>参数化拓扑</strong></li>
+<li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
+<li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
+</ul>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="ubuntu1604"><a class="markdownIt-Anchor" href="#ubuntu1604"></a> Ubuntu16.04</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
+<ul>
+<li>进入mininet命令行模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn</span></span><br><span class="line">*** No default OpenFlow controller found <span class="keyword">for</span> default switch!</span><br><span class="line">*** Falling back to OVS Bridge</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s1)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2</span><br><span class="line">*** Starting controller</span><br><span class="line"></span><br><span class="line">*** Starting 1 switches</span><br><span class="line">s1 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; nodes</span><br><span class="line">available nodes are:</span><br><span class="line">h1 h2 s1</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到当前包含3个节点，包括两个host，一个switch</p>
+</blockquote>
+<ul>
+<li>查看连接状况</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; net</span><br><span class="line">h1 h1-eth0:s1-eth1</span><br><span class="line">h2 h2-eth0:s1-eth2</span><br><span class="line">s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>h1的eth0与s1的eth1相连<br>
+h2的eth0与s1的eth2相连</p>
+</blockquote>
+<ul>
+<li>查看详细信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; dump</span><br><span class="line">&lt;Host h1: h1-eth0:10.0.0.1 pid=6896&gt;</span><br><span class="line">&lt;Host h2: h2-eth0:10.0.0.2 pid=6899&gt;</span><br><span class="line">&lt;OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=6905&gt;</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>环境清理</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mn -c</span></span><br><span class="line">*** Removing excess controllers/ofprotocols/ofdatapaths/pings/noxes</span><br><span class="line">killall controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">killall -9 controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">pkill -9 -f <span class="string">"sudo mnexec"</span></span><br><span class="line">*** Removing junk from /tmp</span><br><span class="line">rm -f /tmp/vconn* /tmp/vlogs* /tmp/*.out /tmp/*.<span class="built_in">log</span></span><br><span class="line">*** Removing old X11 tunnels</span><br><span class="line">*** Removing excess kernel datapaths</span><br><span class="line">ps ax | egrep -o <span class="string">'dp[0-9]+'</span> | sed <span class="string">'s/dp/nl:/'</span></span><br><span class="line">***  Removing OVS datapaths</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">*** Removing all links of the pattern foo-ethX</span><br><span class="line">ip link show | egrep -o <span class="string">'([-_.[:alnum:]]+-eth[[:digit:]]+)'</span></span><br><span class="line">ip link show</span><br><span class="line">*** Killing stale mininet node processes</span><br><span class="line">pkill -9 -f mininet:</span><br><span class="line">*** Shutting down stale tunnels</span><br><span class="line">pkill -9 -f Tunnel=Ethernet</span><br><span class="line">pkill -9 -f .ssh/mn</span><br><span class="line">rm -f ~/.ssh/mn/*</span><br><span class="line">*** Cleanup complete.</span><br><span class="line">root@mininet:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>节点命令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 ifconfig</span><br><span class="line">h1-eth0   Link encap:Ethernet  HWaddr a2:5f:da:ed:6a:74</span><br><span class="line">          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: fe80::a05f:daff:feed:6a74/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1206 (1.2 KB)  TX bytes:648 (648.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Run http server</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 python -m SimpleHTTPServer 80 &amp;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Http client</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h2 wget h1</span><br><span class="line">--2018-11-07 10:52:29--  http://10.0.0.1/</span><br><span class="line">Connecting to 10.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 370 [text/html]</span><br><span class="line">Saving to: <span class="string">'index.html'</span></span><br><span class="line"></span><br><span class="line">index.html          100%[===================&gt;]     370  --.-KB/s    <span class="keyword">in</span> 0s</span><br><span class="line"></span><br><span class="line">2018-11-07 10:52:29 (62.3 MB/s) - <span class="string">'index.html'</span> saved [370/370]</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/sdn/">sdn</a>
+      
+        <a href="/tags/network/">network</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
       <a href="/post/775edb62.html">
         OpenvSwitch学习笔记1
       </a>
@@ -182,11 +281,11 @@
     
 	  <div class="full-width auto-padding tags">
       
+        <a href="/tags/network/">network</a>
+      
         <a href="/tags/ovs/">ovs</a>
       
         <a href="/tags/openvswitch/">openvswitch</a>
-      
-        <a href="/tags/network/">network</a>
       
 	  </div>
     
@@ -244,6 +343,8 @@
     
         <li><a class="flat-box" href="/categories/python/"><div class='name'>python</div><div class='badget'>2</div></a></li>
     
+        <li><a class="flat-box" href="/categories/sdn/"><div class='name'>sdn</div><div class='badget'>1</div></a></li>
+    
         <li><a class="flat-box" href="/categories/工具/"><div class='name'>工具</div><div class='badget'>1</div></a></li>
     
         <li><a class="flat-box" href="/categories/旅行/"><div class='name'>旅行</div><div class='badget'>1</div></a></li>
@@ -259,7 +360,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 16px; color: #555">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 16px; color: #555">hexo</a> <a href="/tags/markdown/" style="font-size: 16px; color: #555">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 14px; color: #808080">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/openstack/" style="font-size: 18px; color: #2b2b2b">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 16px; color: #555">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 16px; color: #555">python</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 16px; color: #555">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 16px; color: #555">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 16px; color: #555">hexo</a> <a href="/tags/markdown/" style="font-size: 16px; color: #555">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 16px; color: #555">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/openstack/" style="font-size: 18px; color: #2b2b2b">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 16px; color: #555">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 16px; color: #555">python</a> <a href="/tags/sdn/" style="font-size: 14px; color: #808080">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 16px; color: #555">自动化</a>
     </div>
 </div>
 

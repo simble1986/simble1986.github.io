@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-09-21T05:53:35.313Z</updated>
+  <updated>2018-11-07T03:02:43.189Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mininet基础使用</title>
+    <link href="http://blog.simble.xyz/post/46d30180.html"/>
+    <id>http://blog.simble.xyz/post/46d30180.html</id>
+    <published>2018-11-06T19:00:33.000Z</published>
+    <updated>2018-11-07T03:02:43.189Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;mininet基础使用&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet基础使用&quot;&gt;&lt;/a&gt; Mininet基础使用&lt;/h1&gt;
+&lt;h2 id=&quot;mininet是什么&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot;
+      
+    
+    </summary>
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/categories/sdn/"/>
+    
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+  </entry>
   
   <entry>
     <title>OpenvSwitch学习笔记1</title>
@@ -42,11 +68,11 @@
       <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
     
     
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
       <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
     
       <category term="openvswitch" scheme="http://blog.simble.xyz/tags/openvswitch/"/>
-    
-      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
     
   </entry>
   
@@ -474,22 +500,6 @@
       <category term="nodejs" scheme="http://blog.simble.xyz/tags/nodejs/"/>
     
       <category term="pi" scheme="http://blog.simble.xyz/tags/pi/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://blog.simble.xyz/post/4a17b156.html"/>
-    <id>http://blog.simble.xyz/post/4a17b156.html</id>
-    <published>2018-03-22T11:14:57.000Z</published>
-    <updated>2018-03-30T02:37:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
-    
-    </summary>
-    
     
   </entry>
   
