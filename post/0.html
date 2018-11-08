@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>Simble的小站</title>
+  <meta name="description" content="记录一些技术的或者旅行的东东" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="google-site-verification" content="vzXcODQkWEVd_olwKjKVItikA7cOGVMuwcxf-oEpEyU" />
+  <link rel="shortcut icon" href="/images/favicon.ico">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title: Mininet自定义topo date: 2018-11-08 09:04:26 tags:  sdn network categories: sdn    mininet自带topo 通过mn -h可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simble的小站">
+<meta property="og:url" content="http://blog.simble.xyz/post/0.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="title: Mininet自定义topo date: 2018-11-08 09:04:26 tags:  sdn network categories: sdn    mininet自带topo 通过mn -h可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-08T09:05:47.208Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Simble的小站">
+<meta name="twitter:description" content="title: Mininet自定义topo date: 2018-11-08 09:04:26 tags:  sdn network categories: sdn    mininet自带topo 通过mn -h可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自">
+    
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+  <script>setLoadingBarProgress(20)</script> 
+  <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/' >
+				Simble的小站
+			</a>
+			<div class='menu'>
+				<ul class='h-list'>
+					
+						<li>
+							<a class='flat-box nav-home' href='/'>
+								首页
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-archives' href='/archives'>
+								归档
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-guestbook' href='/guestbook'>
+								留言板
+							</a>
+						</li>
+					
+						<li>
+							<a class='flat-box nav-about' href='/about'>
+								关于我
+							</a>
+						</li>
+					
+				</ul>
+				<div class='underline'></div>
+			</div>
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon icon-search"></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a href='javascript:void(0)'><span class="icon icon-search flat-box"></span></a></li>
+				
+				<li class='s-menu'><a href='javascript:void(0)'><span class="icon icon-menu flat-box"></span></a></li>
+			</ul>
+		</div>
+		
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				Word of Forks
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a href='javascript:void(0)'><span class="icon icon-chat_bubble_outline flat-box"></span></a></li>
+				<li class='s-top'><a href='javascript:void(0)'><span class="icon icon-arrow_upward flat-box"></span></a></li>
+				<li class='s-toc'><a href='javascript:void(0)'><span class="icon icon-format_list_numbered flat-box"></span></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+<aside class="menu-phone">
+	<nav>
+		
+			<a href="/" class="nav-home nav">
+				首页
+			</a>
+		
+			<a href="/archives" class="nav-archives nav">
+				归档
+			</a>
+		
+			<a href="/guestbook" class="nav-guestbook nav">
+				留言板
+			</a>
+		
+			<a href="/about" class="nav-about nav">
+				关于我
+			</a>
+		
+	</nav>
+</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+  <div class="l_body">
+    <div class='container clearfix'>
+      <div class='l_main'>
+        <article id="post-mininet-user-define-topo"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/0.html">
+    	
+    </a>
+  </h2>
+	<time>
+	  11月 8, 2018
+	</time>
+	
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet自带topo"><span class="toc-number">1.</span> <span class="toc-text"> mininet自带topo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取示例"><span class="toc-number">2.</span> <span class="toc-text"> 获取示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义topo"><span class="toc-number">3.</span> <span class="toc-text"> 自定义topo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用自定义topo"><span class="toc-number">4.</span> <span class="toc-text"> 使用自定义topo</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<hr>
+<p>title: Mininet自定义topo<br>
+date: 2018-11-08 09:04:26<br>
+tags:</p>
+<ul>
+<li>sdn</li>
+<li>network<br>
+categories: sdn</li>
+</ul>
+<hr>
+<h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
+<p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mn --<span class="built_in">help</span></span><br><span class="line">Usage: mn [options]</span><br><span class="line">(<span class="built_in">type</span> mn -h <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  --topo=TOPO           linear|minimal|reversed|single|torus|tree[,param=value</span><br><span class="line">                        ...] linear=LinearTopo torus=TorusTopo tree=TreeTopo</span><br><span class="line">                        single=SingleSwitchTopo</span><br><span class="line">                        reversed=SingleSwitchReversedTopo minimal=MinimalTopo</span><br></pre></td></tr></table></figure>
+<h2 id="获取示例"><a class="markdownIt-Anchor" href="#获取示例"></a> 获取示例</h2>
+<p>Mininet提供了topo-2sw-2host的示例，可以通过<a href="https://github.com/mininet/mininet" target="_blank" rel="noopener">Mininet github</a>的custom目录下获取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""Custom topology example</span></span><br><span class="line"><span class="string">Two directly connected switches plus a host for each switch:</span></span><br><span class="line"><span class="string">   host --- switch --- switch --- host</span></span><br><span class="line"><span class="string">Adding the 'topos' dict with a key/value pair to generate our newly defined</span></span><br><span class="line"><span class="string">topology enables one to pass in '--topo=mytopo' from the command line.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        leftHost = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        rightHost = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        leftSwitch = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line">        rightSwitch = self.addSwitch( <span class="string">'s4'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( leftHost, leftSwitch )</span><br><span class="line">        self.addLink( leftSwitch, rightSwitch )</span><br><span class="line">        self.addLink( rightSwitch, rightHost )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义topo"><a class="markdownIt-Anchor" href="#自定义topo"></a> 自定义topo</h2>
+<p>如要创建如下topo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">                         +------------+</span><br><span class="line">              +----------+     s3     +---------+</span><br><span class="line">              |          +------------+         |</span><br><span class="line">              |                                 |</span><br><span class="line">         +----+----+                       +----+----+</span><br><span class="line">   +-----+    s1   +-----+           +-----+   s2    +-----+</span><br><span class="line">   |     +---------+     |           |     +---------+     |</span><br><span class="line">   |                     |           |                     |</span><br><span class="line">+--+--+               +--+--+     +--+--+               +--+--+</span><br><span class="line">| h1  |               | h2  |     | h3  |               | h4  |</span><br><span class="line">+-----+               +-----+     +-----+               +-----+</span><br></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        h1 = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        h2 = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        h3 = self.addHost( <span class="string">'h3'</span> )</span><br><span class="line">        h4 = self.addHost( <span class="string">'h4'</span> )</span><br><span class="line">        s1 = self.addSwitch( <span class="string">'s1'</span> )</span><br><span class="line">        s2 = self.addSwitch( <span class="string">'s2'</span> )</span><br><span class="line">        s3 = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( h1, s1 )</span><br><span class="line">        self.addLink( s1, h2 )</span><br><span class="line">        self.addLink( s1, s3 )</span><br><span class="line">        self.addLink( s3, s2 )</span><br><span class="line">        self.addLink( h3, s2 )</span><br><span class="line">        self.addLink( s2, h4 )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用自定义topo"><a class="markdownIt-Anchor" href="#使用自定义topo"></a> 使用自定义topo</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn --custom ./testtopo.py --topo mytopo --controller=remote,ip=127.0.0.1,port=6633</span></span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1 s2 s3</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h3, s2) (s1, h2) (s1, s3) (s2, h4) (s3, s2)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Starting controller</span><br><span class="line">c0</span><br><span class="line">*** Starting 3 switches</span><br><span class="line">s1 s2 s3 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<p>查看连接状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; links</span><br><span class="line">h1-eth0&lt;-&gt;s1-eth1 (OK OK)</span><br><span class="line">h3-eth0&lt;-&gt;s2-eth2 (OK OK)</span><br><span class="line">s1-eth2&lt;-&gt;h2-eth0 (OK OK)</span><br><span class="line">s1-eth3&lt;-&gt;s3-eth1 (OK OK)</span><br><span class="line">s2-eth3&lt;-&gt;h4-eth0 (OK OK)</span><br><span class="line">s3-eth2&lt;-&gt;s2-eth1 (OK OK)</span><br><span class="line">mininet&gt; pingall</span><br><span class="line">*** Ping: testing ping reachability</span><br><span class="line">h1 -&gt; h2 h3 h4</span><br><span class="line">h2 -&gt; h1 h3 h4</span><br><span class="line">h3 -&gt; h1 h2 h4</span><br><span class="line">h4 -&gt; h1 h2 h3</span><br><span class="line">*** Results: 0% dropped (12/12 received)</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+
+  	</div>
+	  
+		
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/5594d322.html" rel="next"  title="Opendaylight Oxygen环境准备">
+						Opendaylight Oxygen环境准备
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
+</article>
+<script>
+	window.subData = {
+		title: '',
+		tools: true
+	}
+</script>
+
+      </div>
+      <aside class='l_side'>
+        
+  <section class='m_widget about'>
+
+<img class='avatar waves-image' src='/images/avatar.png' />
+
+<div class='header'>Simble</div>
+<div class='content'>
+<div class='desc'>记录一些技术的或者旅行的东东</div>
+</div>
+</section>
+
+
+  <section class='m_widget links'>
+<div class='header'>Links</div>
+<div class='content'>
+    <ul class="entry">
+    
+        <li><a class="flat-box" target="_blank" href="https://hexo.io/">
+            <div class='name'>Hexo</div>
+        </a></li>
+    
+        <li><a class="flat-box" target="_blank" href="https://github.com/stkevintan/hexo-theme-material-flow">
+            <div class='name'>Theme MaterialFlow</div>
+        </a></li>
+    
+    </ul>
+</div>
+</section>
+
+  <section class='m_widget categories'>
+<div class='header'>Categories</div>
+<div class='content'>
+    
+    <ul class="entry">
+    
+        <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/network/"><div class='name'>network</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/python/"><div class='name'>python</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/sdn/"><div class='name'>sdn</div><div class='badget'>2</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/工具/"><div class='name'>工具</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/旅行/"><div class='name'>旅行</div><div class='badget'>1</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/树莓派/"><div class='name'>树莓派</div><div class='badget'>1</div></a></li>
+    
+    </ul>
+    
+</div>
+</section>
+
+  
+<div class="m_widget tagcloud">
+    <div class="header">Tags</div>
+    <div class='content'>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 16px; color: #555">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 16px; color: #555">hexo</a> <a href="/tags/markdown/" style="font-size: 16px; color: #555">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18px; color: #2b2b2b">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 18px; color: #2b2b2b">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 16px; color: #555">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 16px; color: #555">python</a> <a href="/tags/sdn/" style="font-size: 16px; color: #555">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 16px; color: #555">自动化</a>
+    </div>
+</div>
+
+
+
+      </aside>
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+  </div>
+  <footer id="footer" class="clearfix">
+
+	<div class="social-wrapper">
+  	
+      
+        <a href="https://github.com/simble1986" class="social github"
+          target="_blank" rel="external">
+          <span class="icon icon-github"></span>
+        </a>
+      
+        <a href="mailto:simble1986@gmail.com" class="social envelope"
+          target="_blank" rel="external">
+          <span class="icon icon-envelope"></span>
+        </a>
+      
+        <a href="https://www.facebook.com/simble1987" class="social facebook"
+          target="_blank" rel="external">
+          <span class="icon icon-facebook"></span>
+        </a>
+      
+        <a href="https://www.linkedin.com/in/simble1986" class="social linkedin"
+          target="_blank" rel="external">
+          <span class="icon icon-linkedin"></span>
+        </a>
+      
+        <a href="https://instagram.com/simble1986" class="social instagram"
+          target="_blank" rel="external">
+          <span class="icon icon-instagram"></span>
+        </a>
+      
+    
+  </div>
+  
+  <div>Theme <a href='https://github.com/stkevintan/hexo-theme-material-flow' class="codename">MaterialFlow</a> designed by <a href="http://keyin.me/" target="_blank">Kevin Tan</a>.</div>
+  
+</footer>
+
+
+  <script>setLoadingBarProgress(80);</script>
+  
+<script>
+  var disqus_shortname = 'simble';
+  
+  var disqus_url = 'http://blog.simble.xyz/post/0.html';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<script src="/js/jquery.fitvids.js"></script>
+<script>
+	var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+	var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+	var ALGOLIA_API_KEY = "";
+	var ALGOLIA_APP_ID = "";
+	var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "hexo";
+  var ROOT = "/"||"/";
+  if(!ROOT.endsWith('/'))ROOT += '/';
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-07T15:12:37.548Z</updated>
+  <updated>2018-11-08T09:05:47.208Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://blog.simble.xyz/post/0.html"/>
+    <id>http://blog.simble.xyz/post/0.html</id>
+    <published>2018-11-08T09:05:47.218Z</published>
+    <updated>2018-11-08T09:05:47.208Z</updated>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;title: Mininet自定义topo&lt;br&gt;
+date: 2018-11-08 09:04:26&lt;br&gt;
+tags:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sdn&lt;/li&gt;
+&lt;li&gt;network&lt;br&gt;
+categories: sdn&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;mininet自带topo&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet自带topo&quot;&gt;&lt;/a&gt; mininet自带topo&lt;/h2&gt;
+&lt;p&gt;通过&lt;code&gt;mn -h&lt;/code&gt;可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Opendaylight Oxygen环境准备</title>
@@ -486,33 +513,11 @@
       <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
     
     
-      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
-    
       <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
     
+      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
+    
       <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>docker基本操作（一）</title>
-    <link href="http://blog.simble.xyz/post/493f285a.html"/>
-    <id>http://blog.simble.xyz/post/493f285a.html</id>
-    <published>2018-03-23T01:14:57.000Z</published>
-    <updated>2018-05-04T09:58:13.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本文作为docker使用笔记供小伙伴们参考&lt;/p&gt;
-&lt;h2 id=&quot;准备工作&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#准备工作&quot;&gt;&lt;/a&gt; 准备工作&lt;/h2&gt;
-&lt;p&gt;安装最新版的docker-ce，会将自动命令行补齐安装在&lt;code&gt;/usr/share/bash-completion/completions/docker&lt;/code&gt;目录&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
   </entry>
   
