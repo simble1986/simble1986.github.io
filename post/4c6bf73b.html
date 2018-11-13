@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Simble的小站</title>
+  <title>OVS学习笔记——常用命令练习 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -13,16 +13,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/index.html">
+  <meta name="description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
+<meta name="keywords" content="network,ovs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OVS学习笔记——常用命令练习">
+<meta property="og:url" content="http://blog.simble.xyz/post/4c6bf73b.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-13T08:11:17.963Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="OVS学习笔记——常用命令练习">
+<meta name="twitter:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -133,31 +135,31 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
-<section class="post-list">
+        <article id="post-ovs-study2"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/4c6bf73b.html">
+    	OVS学习笔记——常用命令练习
+    </a>
+  </h2>
+	<time>
+	  11月 13, 2018
+	</time>
 	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/4c6bf73b.html">
-        OVS学习笔记——常用命令练习
-      </a>
-    </h2>
-    
-    <time>
-      11月 13, 2018
-    </time>
-		
     
     <div class='cats'>
         <a href="/categories/network/">network</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#控制管理"><span class="toc-number">1.</span> <span class="toc-text"> 控制管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流表类"><span class="toc-number">2.</span> <span class="toc-text"> 流表类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#流表操作"><span class="toc-number">2.1.</span> <span class="toc-text"> 流表操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看流表"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 查看流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通流表"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 添加普通流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按照匹配删除流表"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 按照匹配删除流表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用匹配项"><span class="toc-number">2.2.</span> <span class="toc-text"> 常用匹配项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vlan-tag"><span class="toc-number">2.2.1.</span> <span class="toc-text"> VLAN Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mac"><span class="toc-number">2.2.2.</span> <span class="toc-text"> MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ip"><span class="toc-number">2.2.3.</span> <span class="toc-text"> IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些速记符"><span class="toc-number">2.2.5.</span> <span class="toc-text"> 一些速记符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令动作actions"><span class="toc-number">2.3.</span> <span class="toc-text"> 指令动作（actions）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础动作"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 基础动作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改vlan-id"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 修改VLAN ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#剥除vlan"><span class="toc-number">2.3.3.</span> <span class="toc-text"> 剥除VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弹出最外层vlan"><span class="toc-number">2.3.4.</span> <span class="toc-text"> 弹出最外层VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源目的mac"><span class="toc-number">2.3.5.</span> <span class="toc-text"> 修改源/目的MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源目的ip"><span class="toc-number">2.3.6.</span> <span class="toc-text"> 修改源/目的IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改tcpudp端口"><span class="toc-number">2.3.7.</span> <span class="toc-text"> 修改TCP/UDP端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vxlan"><span class="toc-number">2.3.8.</span> <span class="toc-text"> VxLan</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实验"><span class="toc-number">3.</span> <span class="toc-text"> 实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#拓扑"><span class="toc-number">3.1.</span> <span class="toc-text"> 拓扑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">3.2.</span> <span class="toc-text"> 实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体操作"><span class="toc-number">3.3.</span> <span class="toc-text"> 具体操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h1-h3流表"><span class="toc-number">3.4.</span> <span class="toc-text"> h1-h3流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h2-h4流表"><span class="toc-number">3.5.</span> <span class="toc-text"> h2-h4流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列表"><span class="toc-number">3.6.</span> <span class="toc-text"> 命令列表</span></a></li></ol></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
 <ul>
 <li>创建网桥</li>
 </ul>
@@ -438,11 +440,9 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s2 in_port=2,dl_vlan=2000,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s2 in_port=1,dl_vlan=2000,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s3 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s3 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br><span class="line">ovs-ofctl add-flow s4 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s4 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
 
-
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+  	</div>
+	  
+	  <div class="article-tags tags">
       
         <a href="/tags/network/">network</a>
       
@@ -450,456 +450,30 @@
       
 	  </div>
     
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/dd7d5c81.html">
-        Mininet自定义topo
-      </a>
-    </h2>
-    
-    <time>
-      11月 8, 2018
-    </time>
 		
-    
-    <div class='cats'>
-        <a href="/categories/sdn/">sdn</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
-<p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/dd7d5c81.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/sdn/">sdn</a>
-      
-        <a href="/tags/network/">network</a>
-      
-	  </div>
-    
-  </section>
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/dd7d5c81.html" rel="next"  title="Mininet自定义topo">
+						Mininet自定义topo
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/5594d322.html">
-        Opendaylight Oxygen环境准备
-      </a>
-    </h2>
-    
-    <time>
-      11月 7, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/sdn/">sdn</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2>
-<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
-<ol>
-<li>
-<p>基础包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>安装jdk</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p>设置<code>JAVA_HOME</code></p>
-<p>在<code>/etc/environment</code>的末尾添加<code>JAVA_HOME=&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</code>，需要退出当前终端重新登陆</p>
-</li>
-</ol>
-
-    
-	  <div class="readmore">
-      <a href="/post/5594d322.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/sdn/">sdn</a>
-      
-        <a href="/tags/network/">network</a>
-      
-        <a href="/tags/opendaylight/">opendaylight</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/46d30180.html">
-        Mininet基础使用
-      </a>
-    </h2>
-    
-    <time>
-      11月 7, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/sdn/">sdn</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
-<p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
-<p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/46d30180.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/sdn/">sdn</a>
-      
-        <a href="/tags/network/">network</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/775edb62.html">
-        OpenvSwitch学习笔记1
-      </a>
-    </h2>
-    
-    <time>
-      9月 21, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/network/">network</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
-<ol>
-<li>VLAN with trunk and access ports</li>
-<li>绑定NIC(with/without LAC)</li>
-<li>可见性：NetFlow, sFlow®, and mirroring</li>
-<li>QoS</li>
-<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
-<li>连接故障管理</li>
-<li>openflow 1.0及其扩展</li>
-<li>使用Linux内核进行高性能转发</li>
-</ol>
-
-    
-	  <div class="readmore">
-      <a href="/post/775edb62.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/network/">network</a>
-      
-        <a href="/tags/ovs/">ovs</a>
-      
-        <a href="/tags/openvswitch/">openvswitch</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/c4780247.html">
-        Hexo开启disqus评论系统
-      </a>
-    </h2>
-    
-    <time>
-      9月 13, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/hexo/">hexo</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
-<p>相比Valine，disqus开启真的是太简单了</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/c4780247.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/hexo/">hexo</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/257b0787.html">
-        openstack接口状态异常
-      </a>
-    </h2>
-    
-    <time>
-      9月 11, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
-<p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
-<h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
-<blockquote>
-<p>openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于<code>build</code>状态</p>
-</blockquote>
-
-    
-	  <div class="readmore">
-      <a href="/post/257b0787.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/openstack/">openstack</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/c2a7a06a.html">
-        Ubuntu在Openstack中启动密码注入不生效问题定位1
-      </a>
-    </h2>
-    
-    <time>
-      9月 11, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/cloud/">cloud</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
-<p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/c2a7a06a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/openstack/">openstack</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/6e2fcf3d.html">
-        sqlalchemy连接docker的mysql问题记录
-      </a>
-    </h2>
-    
-    <time>
-      8月 15, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/python/">python</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>又开始鼓捣flask+mysql了 👶</p>
-<p>不成想，又一次踩了好多雷 😂</p>
-<p>有一种打怪升级的感觉</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/6e2fcf3d.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/python/">python</a>
-      
-        <a href="/tags/sqlalchemy/">sqlalchemy</a>
-      
-        <a href="/tags/flask/">flask</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/fbe9394a.html">
-        美签记录
-      </a>
-    </h2>
-    
-    <time>
-      7月 30, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/旅行/">旅行</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>记第一次拿到十年美签</p>
-<h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
-<ul>
-<li>提交DS160: 2018-07-08</li>
-<li>预约面签时间: 2018-07-27 前面排队人太多</li>
-<li>Issued: 2018-07-30</li>
-<li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li>
-<li>收到护照: 2018-08-02</li>
-</ul>
-<h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4>
-<ul>
-<li>面签持续时间：1分钟不到</li>
-<li>AP持续时间：2个工作日</li>
-<li>Issued到送到苏州：3个工作日</li>
-</ul>
-<h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1>
-<ol>
-<li>你去美国干什么？</li>
-<li>要去美国多久？</li>
-<li>你是做什么工作的？</li>
-<li>你们公司是做什么的？</li>
-<li>你是一个人去么？</li>
-</ol>
-<p>“你通过了！”</p>
-
-
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/visa/">visa</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-</section>
-
-
-  <nav id="page-nav">
-    
-    
-    <a class="next" rel="next" href="/page/2/">
-      <span class="text">Next</span>
-      <span class="icon icon-chevron-right"></span>
-    </a>
-    
-  </nav>
-  
+<script>
+	window.subData = {
+		title: 'OVS学习笔记——常用命令练习',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -1018,11 +592,13 @@
 <script>
   var disqus_shortname = 'simble';
   
+  var disqus_url = 'http://blog.simble.xyz/post/4c6bf73b.html';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

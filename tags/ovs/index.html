@@ -145,6 +145,324 @@
   <section class="meta">
     
     <h2 class="title">
+      <a href="/post/4c6bf73b.html">
+        OVS学习笔记——常用命令练习
+      </a>
+    </h2>
+    
+    <time>
+      11月 13, 2018
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/network/">network</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
+<ul>
+<li>创建网桥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br testbr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看网桥和端口</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">b66c0897-27c9-441a-9486-42cfb65a4649</span><br><span class="line">    Bridge testbr</span><br><span class="line">        Port testbr</span><br><span class="line">            Interface testbr</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.5.5"</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>网桥端口操作</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br><span class="line">$ ovs-vsctl del-port br0 eth1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看流表</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows testbr</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=364.789s, table=0, n_packets=0, n_bytes=0, idle_age=364, priority=0 actions=NORMAL</span><br></pre></td></tr></table></figure>
+<ul>
+<li>控制器设置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置控制器</span></span><br><span class="line">$ ovs-vsctl <span class="built_in">set</span>-controller testbr tcp:10.180.9.62:6633</span><br><span class="line">$ ovs-vsctl show</span><br><span class="line">b66c0897-27c9-441a-9486-42cfb65a4649</span><br><span class="line">    Bridge testbr</span><br><span class="line">        Controller <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line">        Port testbr</span><br><span class="line">            Interface testbr</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.5.5"</span></span><br><span class="line"><span class="comment"># 查看控制器列表</span></span><br><span class="line">$ ovs-vsctl list controller</span><br><span class="line">_uuid               : 2fe35662-3f4f-446b-9296-6f1eae38ba5e</span><br><span class="line">connection_mode     : []</span><br><span class="line">controller_burst_limit: []</span><br><span class="line">controller_rate_limit: []</span><br><span class="line">enable_async_messages: []</span><br><span class="line">external_ids        : &#123;&#125;</span><br><span class="line">inactivity_probe    : []</span><br><span class="line">is_connected        : <span class="literal">true</span></span><br><span class="line">local_gateway       : []</span><br><span class="line">local_ip            : []</span><br><span class="line">local_netmask       : []</span><br><span class="line">max_backoff         : []</span><br><span class="line">other_config        : &#123;&#125;</span><br><span class="line">role                : other</span><br><span class="line">status              : &#123;sec_since_connect=<span class="string">"4"</span>, state=ACTIVE&#125;</span><br><span class="line">target              : <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line"><span class="comment"># 删除控制器</span></span><br><span class="line">$ ovs-vsctl del-controller testbr</span><br></pre></td></tr></table></figure>
+<ul>
+<li>接口相关</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports s1</span><br><span class="line">OFPST_PORT reply (xid=0x2): 3 ports</span><br><span class="line">  port LOCAL: rx pkts=0, bytes=0, drop=94, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=0, coll=0</span><br><span class="line">  port  1: rx pkts=124, bytes=8418, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8898, drop=0, errs=0, coll=0</span><br><span class="line">  port  2: rx pkts=123, bytes=8340, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8886, drop=0, errs=0, coll=0</span><br><span class="line">$ ovs-appctl dpif/show</span><br><span class="line">system@ovs-system: hit:318465 missed:735</span><br><span class="line">    s1:</span><br><span class="line">        s1 65534/3: (internal)</span><br><span class="line">        s1-eth1 1/2: (system)</span><br><span class="line">        s1-eth2 2/1: (system)</span><br></pre></td></tr></table></figure>
+<h1 id="流表类"><a class="markdownIt-Anchor" href="#流表类"></a> 流表类</h1>
+<h2 id="流表操作"><a class="markdownIt-Anchor" href="#流表操作"></a> 流表操作</h2>
+<h3 id="查看流表"><a class="markdownIt-Anchor" href="#查看流表"></a> 查看流表</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=356.689s, table=0, n_packets=708, n_bytes=42480, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=356.699s, table=0, n_packets=94, n_bytes=7488, idle_age=346, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+<h3 id="添加普通流表"><a class="markdownIt-Anchor" href="#添加普通流表"></a> 添加普通流表</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=drop</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=441.879s, table=0, n_packets=878, n_bytes=52680, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=2.861s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=1 actions=drop</span><br><span class="line"> cookie=0x0, duration=441.889s, table=0, n_packets=94, n_bytes=7488, idle_age=432, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+<h3 id="按照匹配删除流表"><a class="markdownIt-Anchor" href="#按照匹配删除流表"></a> 按照匹配删除流表</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl del-flows s1 <span class="string">"in_port=1"</span></span><br><span class="line">mininet&gt; sh ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=521.249s, table=0, n_packets=1036, n_bytes=62160, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=521.259s, table=0, n_packets=94, n_bytes=7488, idle_age=511, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+<h2 id="常用匹配项"><a class="markdownIt-Anchor" href="#常用匹配项"></a> 常用匹配项</h2>
+<h3 id="vlan-tag"><a class="markdownIt-Anchor" href="#vlan-tag"></a> VLAN Tag</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vs-ofctl add-flow s1 priority=401,in_port=1,dl_vlan=777,actions=output:2</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=663.043s, table=0, n_packets=1318, n_bytes=79080, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=3.022s, table=0, n_packets=0, n_bytes=0, idle_age=3, priority=401,in_port=1,dl_vlan=777 actions=output:2</span><br><span class="line"> cookie=0x0, duration=663.053s, table=0, n_packets=94, n_bytes=7488, idle_age=653, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+<h3 id="mac"><a class="markdownIt-Anchor" href="#mac"></a> MAC</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a,action=output:3</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1,action=output:2</span><br><span class="line">$ sh ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=69.067s, table=0, n_packets=0, n_bytes=0, idle_age=69, in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a actions=output:3</span><br><span class="line"> cookie=0x0, duration=14.496s, table=0, n_packets=0, n_bytes=0, idle_age=14, in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1 actions=output:2</span><br></pre></td></tr></table></figure>
+<h3 id="ip"><a class="markdownIt-Anchor" href="#ip"></a> IP</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_src=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=119.033s, table=0, n_packets=119, n_bytes=7140, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=28.864s, table=0, n_packets=0, n_bytes=0, idle_age=28, ip,in_port=1,nw_src=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=10.036s, table=0, n_packets=0, n_bytes=0, idle_age=10, ip,in_port=1,nw_dst=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=119.057s, table=0, n_packets=90, n_bytes=7164, idle_age=109, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
+<h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
+<table>
+<thead>
+<tr>
+<th>匹配项</th>
+<th>关键字</th>
+<th>条件</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>以太网类型</td>
+<td>dl_type</td>
+<td></td>
+<td><code>in_port=1,dl_type=0x0806,actions=output:2</code></td>
+</tr>
+<tr>
+<td>协议号</td>
+<td>nw_proto</td>
+<td>指定dl_type=0x0800或者ip</td>
+<td><code>ip,in_port=1,nw_proto=1,actions=output:2</code></td>
+</tr>
+<tr>
+<td>TCP flags</td>
+<td>tcp_flags</td>
+<td>指定TCP</td>
+<td><code>tcp,tcp_flags=ack,actions=output:2</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="一些速记符"><a class="markdownIt-Anchor" href="#一些速记符"></a> 一些速记符</h3>
+<table>
+<thead>
+<tr>
+<th>速记符</th>
+<th>匹配项</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ip</td>
+<td>dl_type=0x800</td>
+</tr>
+<tr>
+<td>ipv6</td>
+<td>dl_type=0x86dd</td>
+</tr>
+<tr>
+<td>icmp</td>
+<td>dl_type=0x0800,nw_proto=1</td>
+</tr>
+<tr>
+<td>icmp6</td>
+<td>dl_type=0x86dd,nw_proto=58</td>
+</tr>
+<tr>
+<td>tcp</td>
+<td>dl_type=0x0800,nw_proto=6</td>
+</tr>
+<tr>
+<td>tcp6</td>
+<td>dl_type=0x86dd,nw_proto=6</td>
+</tr>
+<tr>
+<td>udp</td>
+<td>dl_type=0x0800,nw_proto=17</td>
+</tr>
+<tr>
+<td>udp6</td>
+<td>dl_type=0x86dd,nw_proto=17</td>
+</tr>
+<tr>
+<td>arp</td>
+<td>dl_type=0x0806</td>
+</tr>
+</tbody>
+</table>
+<h2 id="指令动作actions"><a class="markdownIt-Anchor" href="#指令动作actions"></a> 指令动作（actions）</h2>
+<h3 id="基础动作"><a class="markdownIt-Anchor" href="#基础动作"></a> 基础动作</h3>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>说明</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>normal</td>
+<td>L2/L3处理</td>
+<td><code>actions=normal</code></td>
+</tr>
+<tr>
+<td>output</td>
+<td>出接口</td>
+<td><code>actions=output:2</code></td>
+</tr>
+<tr>
+<td>group</td>
+<td>指定的group</td>
+<td><code>actions=group:1</code></td>
+</tr>
+<tr>
+<td>flood</td>
+<td>从所有物理接口转发出去，除了入接口和已关闭flooding的接口</td>
+<td><code>actions=flood</code></td>
+</tr>
+<tr>
+<td>all</td>
+<td>从所有物理接口转发出去，除了入接口</td>
+<td><code>actions=all</code></td>
+</tr>
+<tr>
+<td>local</td>
+<td>转发给本地网桥</td>
+<td><code>actions=local</code></td>
+</tr>
+<tr>
+<td>in_port</td>
+<td>从入接口转发出去</td>
+<td><code>actions=in_port</code></td>
+</tr>
+<tr>
+<td>controller</td>
+<td>以packet-in消息上送给控制器</td>
+<td><code>actions=controller</code></td>
+</tr>
+<tr>
+<td>drop</td>
+<td>丢弃数据包</td>
+<td><code>actions=drop</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="修改vlan-id"><a class="markdownIt-Anchor" href="#修改vlan-id"></a> 修改VLAN ID</h3>
+<ul>
+<li>
+<p>关键字： <code>mod_vlan_vid</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_vlan_vid:1034,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="剥除vlan"><a class="markdownIt-Anchor" href="#剥除vlan"></a> 剥除VLAN</h3>
+<ul>
+<li>
+<p>关键字： <code>strip_vlan</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="弹出最外层vlan"><a class="markdownIt-Anchor" href="#弹出最外层vlan"></a> 弹出最外层VLAN</h3>
+<ul>
+<li>
+<p>关键字： <code>pop_vlan</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow br0 in_port=1,dl_type=0x8100,dl_vlan=777,actions=pop_vlan,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="修改源目的mac"><a class="markdownIt-Anchor" href="#修改源目的mac"></a> 修改源/目的MAC</h3>
+<ul>
+<li>
+<p>关键字：<code>mod_dl_src</code> / <code>mod_dl_dst</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_src:01:80:c2:00:00:0e,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_dst:01:80:c2:00:00:0e,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="修改源目的ip"><a class="markdownIt-Anchor" href="#修改源目的ip"></a> 修改源/目的IP</h3>
+<ul>
+<li>
+<p>关键字： <code>mod_nw_src</code>/<code>mod_nw_dst</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_src:192.168.0.10,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_dst:192.168.0.10,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="修改tcpudp端口"><a class="markdownIt-Anchor" href="#修改tcpudp端口"></a> 修改TCP/UDP端口</h3>
+<ul>
+<li>
+<p>关键字：<code>mod_tp_src</code>/<code>mod_tp_dst</code></p>
+</li>
+<li>
+<p>举例</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_dst:21,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_dst:53,output:2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="vxlan"><a class="markdownIt-Anchor" href="#vxlan"></a> VxLan</h3>
+<ul>
+<li>
+<p>创建VxLAN接口</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port s3 vxlan1 -- <span class="built_in">set</span> Interface vxlan1 <span class="built_in">type</span>=vxlan options:remote_ip=1.1.1.1 ofport_request=2000</span><br><span class="line">$ ovs-vsctl show</span><br><span class="line">    Bridge <span class="string">"s3"</span></span><br><span class="line">        Controller <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line">        Controller <span class="string">"ptcp:6636"</span></span><br><span class="line">        fail_mode: secure</span><br><span class="line">        Port <span class="string">"s3-eth2"</span></span><br><span class="line">            Interface <span class="string">"s3-eth2"</span></span><br><span class="line">        Port <span class="string">"vxlan1"</span></span><br><span class="line">            Interface <span class="string">"vxlan1"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;remote_ip=<span class="string">"1.1.1.1"</span>&#125;</span><br><span class="line">        Port <span class="string">"s3-eth3"</span></span><br><span class="line">            Interface <span class="string">"s3-eth3"</span></span><br><span class="line">        Port <span class="string">"s3-eth1"</span></span><br><span class="line">            Interface <span class="string">"s3-eth1"</span></span><br><span class="line">        Port <span class="string">"s3"</span></span><br><span class="line">            Interface <span class="string">"s3"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>VxLAN流表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,actions=output:2000</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=2000,actions=output:1</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=35.227s, table=0, n_packets=0, n_bytes=0, idle_age=35, ip,in_port=1,nw_dst=192.168.0.0/16 actions=output:2000</span><br><span class="line"> cookie=0x0, duration=2.469s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=2000 actions=output:1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="实验"><a class="markdownIt-Anchor" href="#实验"></a> 实验</h1>
+<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">                <span class="string">+------------+</span></span><br><span class="line">                <span class="string">|     s2     |</span></span><br><span class="line"><span class="string">                +---+----+---+</span></span><br><span class="line"><span class="string">                    |    |</span></span><br><span class="line"><span class="string">         +----------+    +----------+</span></span><br><span class="line"><span class="string">         |                          |</span></span><br><span class="line"><span class="string">+--------+--------+        +--------+--------+</span></span><br><span class="line"><span class="string">|       s3        |        |        s4       |</span></span><br><span class="line"><span class="string">+---+---------+---+        +---+---------+---+</span></span><br><span class="line"><span class="string">    |         |                |         |</span></span><br><span class="line"><span class="string">+---+--+   +--+---+        +---+--+   +--+---+</span></span><br><span class="line"><span class="string">|  h1  |   |  h2  |        |  h3  |   |  h4  |</span></span><br><span class="line"><span class="string">+------+   +------+        +------+   +------+</span></span><br></pre></td></tr></table></figure>
+<h2 id="实验要求"><a class="markdownIt-Anchor" href="#实验要求"></a> 实验要求</h2>
+<ol>
+<li>h1可以与h3通信，但不可以与h2和h4通信</li>
+<li>h2可以与h4通信，但不可以与h1和h3通信</li>
+</ol>
+<h2 id="具体操作"><a class="markdownIt-Anchor" href="#具体操作"></a> 具体操作</h2>
+<ol>
+<li>由h1送出的报文，在s3上打上vlan tag 1000</li>
+<li>随后s3将报文送往s2</li>
+<li>s2收到s3的vlan1000的报文，直接转送s4</li>
+<li>s4收到vlan1000的报文后，剥离vlan，送到h3</li>
+<li>h3收到请求报文后，返回响应报文，送往s4</li>
+<li>s4收到h3的报文后，打上vlan tag 1000</li>
+<li>随后s4将报文送往s2</li>
+<li>s2收到s4的vlan1000的报文，直接送往s3</li>
+<li>s3收到s2的vlan1000报文后，剥离vlan，送往h1</li>
+</ol>
+<h2 id="h1-h3流表"><a class="markdownIt-Anchor" href="#h1-h3流表"></a> h1-h3流表</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1664.027s, table=0, n_packets=79, n_bytes=4026, idle_age=803, in_port=1,dl_vlan=1000 actions=output:2</span><br><span class="line"> cookie=0x0, duration=1642.112s, table=0, n_packets=10, n_bytes=852, idle_age=803, in_port=2,dl_vlan=1000 actions=output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2826.459s, table=0, n_packets=330, n_bytes=14700, idle_age=807, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1895.062s, table=0, n_packets=10, n_bytes=852, idle_age=807, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2776.175s, table=0, n_packets=229, n_bytes=10010, idle_age=810, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1507.500s, table=0, n_packets=10, n_bytes=852, idle_age=810, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br></pre></td></tr></table></figure>
+<h2 id="h2-h4流表"><a class="markdownIt-Anchor" href="#h2-h4流表"></a> h2-h4流表</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=827.167s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=2,dl_vlan=2000 actions=output:1</span><br><span class="line"> cookie=0x0, duration=812.342s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=1,dl_vlan=2000 actions=output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1347.703s, table=0, n_packets=60, n_bytes=2576, idle_age=702, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=710.639s, table=0, n_packets=3, n_bytes=194, idle_age=702, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1133.570s, table=0, n_packets=60, n_bytes=2576, idle_age=705, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=1088.590s, table=0, n_packets=60, n_bytes=2816, idle_age=705, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
+<h2 id="命令列表"><a class="markdownIt-Anchor" href="#命令列表"></a> 命令列表</h2>
+<ul>
+<li>h1-h3</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s2 in_port=1,dl_vlan=1000,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s2 in_port=2,dl_vlan=1000,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s3 in_port=1,actions=mod_vlan_vid:1000,output:3</span><br><span class="line">ovs-ofctl add-flow s3 in_port=3,dl_vlan=1000,actions=strip_vlan,output:1</span><br><span class="line">ovs-ofctl add-flow s4 in_port=1,actions=mod_vlan_vid:1000,output:3</span><br><span class="line">ovs-ofctl add-flow s4 in_port=3,dl_vlan=1000,actions=strip_vlan,output:1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>h2-h4</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s2 in_port=2,dl_vlan=2000,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s2 in_port=1,dl_vlan=2000,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s3 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s3 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br><span class="line">ovs-ofctl add-flow s4 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s4 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
+
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/network/">network</a>
+      
+        <a href="/tags/ovs/">ovs</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
       <a href="/post/775edb62.html">
         OpenvSwitch学习笔记1
       </a>
@@ -288,7 +606,7 @@
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
-        <li><a class="flat-box" href="/categories/network/"><div class='name'>network</div><div class='badget'>1</div></a></li>
+        <li><a class="flat-box" href="/categories/network/"><div class='name'>network</div><div class='badget'>2</div></a></li>
     
         <li><a class="flat-box" href="/categories/python/"><div class='name'>python</div><div class='badget'>2</div></a></li>
     
@@ -309,7 +627,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.5px; color: #202020">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 15.5px; color: #606060">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 15.5px; color: #606060">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 16px; color: #555">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 16px; color: #555">hexo</a> <a href="/tags/markdown/" style="font-size: 16px; color: #555">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 18px; color: #2b2b2b">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 18px; color: #2b2b2b">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 16px; color: #555">python</a> <a href="/tags/sdn/" style="font-size: 18px; color: #2b2b2b">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 16px; color: #555">自动化</a>
     </div>
 </div>
 

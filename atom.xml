@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-08T09:09:07.163Z</updated>
+  <updated>2018-11-13T08:11:17.963Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -17,11 +17,40 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>OVS学习笔记——常用命令练习</title>
+    <link href="http://blog.simble.xyz/post/4c6bf73b.html"/>
+    <id>http://blog.simble.xyz/post/4c6bf73b.html</id>
+    <published>2018-11-13T00:05:36.000Z</published>
+    <updated>2018-11-13T08:11:17.963Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;控制管理&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#控制管理&quot;&gt;&lt;/a&gt; 控制管理&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;创建网桥&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;t
+      
+    
+    </summary>
+    
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
+    
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mininet自定义topo</title>
     <link href="http://blog.simble.xyz/post/dd7d5c81.html"/>
     <id>http://blog.simble.xyz/post/dd7d5c81.html</id>
     <published>2018-11-08T01:04:26.000Z</published>
-    <updated>2018-11-08T09:09:07.163Z</updated>
+    <updated>2018-11-08T09:09:23.533Z</updated>
     
     <summary type="html">
     
@@ -488,32 +517,6 @@
       <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
       <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用hexo搭建自己的博客——创建站点</title>
-    <link href="http://blog.simble.xyz/post/80ca9385.html"/>
-    <id>http://blog.simble.xyz/post/80ca9385.html</id>
-    <published>2018-03-25T15:29:30.000Z</published>
-    <updated>2018-03-30T02:37:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;安装及配置&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#安装及配置&quot;&gt;&lt;/a&gt; 安装及配置&lt;/h2&gt;
-&lt;h3 id=&quot;简介&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#简介&quot;&gt;&lt;/a&gt; 简介&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;https://hexo.io&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;是一个快速、简介且高效的博客框架，可以使用&lt;a href=&quot;https://daringfireball.net/projects/markdown/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Markdown&lt;/a&gt;解析文章并生成网站&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
-    
-    
-      <category term="hexo" scheme="http://blog.simble.xyz/tags/hexo/"/>
-    
-      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
-    
-      <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
     
   </entry>
   
