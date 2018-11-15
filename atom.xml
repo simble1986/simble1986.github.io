@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-13T08:12:58.760Z</updated>
+  <updated>2018-11-15T05:51:00.492Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu16.04上安装DPDK</title>
+    <link href="http://blog.simble.xyz/post/879abefb.html"/>
+    <id>http://blog.simble.xyz/post/879abefb.html</id>
+    <published>2018-11-14T21:47:28.000Z</published>
+    <updated>2018-11-15T05:51:00.492Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;dpdk安装&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#dpdk安装&quot;&gt;&lt;/a&gt; DPDK安装&lt;/h1&gt;
+&lt;blockquote&gt;
+&lt;p&gt;DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的
+      
+    
+    </summary>
+    
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
+    
+    
+      <category term="dpdk" scheme="http://blog.simble.xyz/tags/dpdk/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+  </entry>
   
   <entry>
     <title>OVS学习笔记——常用命令练习</title>
@@ -63,9 +90,9 @@
       <category term="sdn" scheme="http://blog.simble.xyz/categories/sdn/"/>
     
     
-      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
-    
       <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
     
   </entry>
   
@@ -100,9 +127,9 @@
       <category term="sdn" scheme="http://blog.simble.xyz/categories/sdn/"/>
     
     
-      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
-    
       <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
     
       <category term="opendaylight" scheme="http://blog.simble.xyz/tags/opendaylight/"/>
     
@@ -126,9 +153,9 @@
       <category term="sdn" scheme="http://blog.simble.xyz/categories/sdn/"/>
     
     
-      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
-    
       <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="sdn" scheme="http://blog.simble.xyz/tags/sdn/"/>
     
   </entry>
   
@@ -311,7 +338,7 @@
     <link href="http://blog.simble.xyz/post/4f712e63.html"/>
     <id>http://blog.simble.xyz/post/4f712e63.html</id>
     <published>2018-06-21T05:42:00.000Z</published>
-    <updated>2018-06-21T14:19:33.000Z</updated>
+    <updated>2018-11-15T05:46:30.039Z</updated>
     
     <summary type="html">
     
@@ -360,7 +387,7 @@
     <link href="http://blog.simble.xyz/post/51748f3c.html"/>
     <id>http://blog.simble.xyz/post/51748f3c.html</id>
     <published>2018-05-10T22:28:34.000Z</published>
-    <updated>2018-05-11T06:33:39.000Z</updated>
+    <updated>2018-11-15T05:46:30.039Z</updated>
     
     <summary type="html">
     
@@ -379,7 +406,7 @@
     <link href="http://blog.simble.xyz/post/4926e490.html"/>
     <id>http://blog.simble.xyz/post/4926e490.html</id>
     <published>2018-05-06T18:32:01.000Z</published>
-    <updated>2018-05-07T02:40:31.000Z</updated>
+    <updated>2018-11-15T05:46:30.039Z</updated>
     
     <summary type="html">
     
@@ -451,7 +478,7 @@
     <link href="http://blog.simble.xyz/post/70cf198a.html"/>
     <id>http://blog.simble.xyz/post/70cf198a.html</id>
     <published>2018-03-29T18:39:33.000Z</published>
-    <updated>2018-05-04T09:57:55.000Z</updated>
+    <updated>2018-11-15T05:46:30.039Z</updated>
     
     <summary type="html">
     
@@ -492,32 +519,6 @@
       <category term="Next" scheme="http://blog.simble.xyz/tags/Next/"/>
     
       <category term="Valine" scheme="http://blog.simble.xyz/tags/Valine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在Ubuntu 16.04上开启Docker的Remote API</title>
-    <link href="http://blog.simble.xyz/post/3e41aa59.html"/>
-    <id>http://blog.simble.xyz/post/3e41aa59.html</id>
-    <published>2018-03-27T06:42:58.000Z</published>
-    <updated>2018-05-04T09:59:45.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法&lt;/p&gt;
-&lt;h3 id=&quot;可行的方法&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#可行的方法&quot;&gt;&lt;/a&gt; 可行的方法&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;编辑/lib/systemd/system/docker.service&lt;/li&gt;
-&lt;/ul&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
-      <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
     
   </entry>
   
