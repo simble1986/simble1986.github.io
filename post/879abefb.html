@@ -13,18 +13,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk  创建环境变量 1234$ cd ~/dpdk$ export RTE_SDK=`pwd`$ export DESTDIR=`pwd`$ export RTE_TARGET=x86_64-de">
+  <meta name="description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk">
 <meta name="keywords" content="dpdk,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu16.04上安装DPDK">
 <meta property="og:url" content="http://blog.simble.xyz/post/879abefb.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk  创建环境变量 1234$ cd ~/dpdk$ export RTE_SDK=`pwd`$ export DESTDIR=`pwd`$ export RTE_TARGET=x86_64-de">
+<meta property="og:description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-11-15T05:51:16.403Z">
+<meta property="og:updated_time" content="2018-11-15T05:55:46.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16.04上安装DPDK">
-<meta name="twitter:description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk  创建环境变量 1234$ cd ~/dpdk$ export RTE_SDK=`pwd`$ export DESTDIR=`pwd`$ export RTE_TARGET=x86_64-de">
+<meta name="twitter:description" content="DPDK安装  DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库   从git获取源码 1$ git clone git://dpdk.org/dpdk">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -165,6 +165,7 @@
 </blockquote>
 <h2 id="从git获取源码"><a class="markdownIt-Anchor" href="#从git获取源码"></a> 从git获取源码</h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://dpdk.org/dpdk</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="创建环境变量"><a class="markdownIt-Anchor" href="#创建环境变量"></a> 创建环境变量</h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ <span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br></pre></td></tr></table></figure>
 <p>因为这些环境变量总是会用到，可以将其放入一个文件，如<code>env.source</code>，使用<code>source env.source</code></p>

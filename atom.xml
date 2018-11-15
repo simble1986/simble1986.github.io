@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-15T05:51:16.403Z</updated>
+  <updated>2018-11-15T05:55:46.719Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,16 +21,16 @@
     <link href="http://blog.simble.xyz/post/879abefb.html"/>
     <id>http://blog.simble.xyz/post/879abefb.html</id>
     <published>2018-11-14T21:47:28.000Z</published>
-    <updated>2018-11-15T05:51:16.403Z</updated>
+    <updated>2018-11-15T05:55:46.719Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;dpdk安装&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#dpdk安装&quot;&gt;&lt;/a&gt; DPDK安装&lt;/h1&gt;
+      &lt;h1 id=&quot;dpdk安装&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#dpdk安装&quot;&gt;&lt;/a&gt; DPDK安装&lt;/h1&gt;
 &lt;blockquote&gt;
-&lt;p&gt;DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的
-      
+&lt;p&gt;DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;从git获取源码&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#从git获取源码&quot;&gt;&lt;/a&gt; 从git获取源码&lt;/h2&gt;
+&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; git://dpdk.org/dpdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
