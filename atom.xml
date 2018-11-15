@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-15T05:55:46.719Z</updated>
+  <updated>2018-11-15T08:42:04.273Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Ubuntu16.04 VPP环境搭建</title>
+    <link href="http://blog.simble.xyz/post/c80fffe0.html"/>
+    <id>http://blog.simble.xyz/post/c80fffe0.html</id>
+    <published>2018-11-15T00:31:50.000Z</published>
+    <updated>2018-11-15T08:42:04.273Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;环境&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境&quot;&gt;&lt;/a&gt; 环境&lt;/h1&gt;
+&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;VmWare虚拟环境&lt;/li&gt;
+&lt;li&gt;Host需求：2cpu，4G内存，3块网卡&lt;/li&gt;
+&lt;li&gt;Ubuntu16.04&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;拓扑&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#拓扑&quot;&gt;&lt;/a&gt; 拓扑&lt;/h2&gt;
+&lt;p&gt;搭建典型的c2s拓扑&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
+    
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="vpp" scheme="http://blog.simble.xyz/tags/vpp/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu16.04上安装DPDK</title>
@@ -495,30 +525,6 @@
       <category term="DockerFile" scheme="http://blog.simble.xyz/tags/DockerFile/"/>
     
       <category term="mysql-server" scheme="http://blog.simble.xyz/tags/mysql-server/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hexo+Next上开启Valine评论系统</title>
-    <link href="http://blog.simble.xyz/post/a072bce6.html"/>
-    <id>http://blog.simble.xyz/post/a072bce6.html</id>
-    <published>2018-03-27T13:11:51.000Z</published>
-    <updated>2018-03-30T02:37:58.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="hexo" scheme="http://blog.simble.xyz/categories/hexo/"/>
-    
-    
-      <category term="blog" scheme="http://blog.simble.xyz/tags/blog/"/>
-    
-      <category term="Next" scheme="http://blog.simble.xyz/tags/Next/"/>
-    
-      <category term="Valine" scheme="http://blog.simble.xyz/tags/Valine/"/>
     
   </entry>
   

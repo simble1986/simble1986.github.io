@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>dockerpty使用 | Simble的小站</title>
+  <title>Tag: vpp | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -13,18 +13,16 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
-<meta name="keywords" content="docker,dockerpty">
-<meta property="og:type" content="article">
-<meta property="og:title" content="dockerpty使用">
-<meta property="og:url" content="http://blog.simble.xyz/post/1c49a9aa.html">
+  <meta name="description" content="记录一些技术的或者旅行的东东">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simble的小站">
+<meta property="og:url" content="http://blog.simble.xyz/tags/vpp/index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
+<meta property="og:description" content="记录一些技术的或者旅行的东东">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-04T09:58:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="dockerpty使用">
-<meta name="twitter:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
+<meta name="twitter:title" content="Simble的小站">
+<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -135,114 +133,65 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        <article id="post-dockerpty-usage"
-  class="post white-box article-type-post"
-  itemscope itemprop="blogPost">
-	<section class='meta'>
-	<h2 class="title">
-  	<a href="/post/1c49a9aa.html">
-    	dockerpty使用
-    </a>
-  </h2>
-	<time>
-	  5月 3, 2018
-	</time>
+        
+  <script>
+    window.subData= { title:'Tag : vpp'}
+  </script>
+
+<section class="post-list">
 	
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
+      <a href="/post/c80fffe0.html">
+        Ubuntu16.04 VPP环境搭建
+      </a>
+    </h2>
+    
+    <time>
+      11月 15, 2018
+    </time>
+		
     
     <div class='cats'>
-        <a href="/categories/docker/">docker</a>
+        <a href="/categories/network/">network</a>
     </div>
 
-	</section>
-	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题引入"><span class="toc-number">1.</span> <span class="toc-text"> 问题引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text"> 环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text"> 依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装步骤"><span class="toc-number">2.0.2.</span> <span class="toc-text"> 安装步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关api"><span class="toc-number">3.</span> <span class="toc-text"> 相关API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本使用"><span class="toc-number">4.</span> <span class="toc-text"> 基本使用</span></a></li></ol></section>
-	
-	<section class="article typo">
-  	<div class="article-entry" itemprop="articleBody">
-    	<p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
-<p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
-<p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
-<p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
-<a id="more"></a>
-<h2 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h2>
-<p>根据<a href="https://github.com/d11wtq/dockerpty" target="_blank" rel="noopener">dockerpty</a>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
-<p>但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作</p>
-<p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<a href="https://github.com/simble1986/dockerpty" target="_blank" rel="noopener">simble1986/dockerpty</a></p>
-<h4 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h4>
-<p>原有的project上提到依赖的docker api为<code>docker-py&gt;=0.3.2</code>，但docker的python API已经更新</p>
-<ul>
-<li>安装docker API</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install docker</span><br></pre></td></tr></table></figure>
-<h4 id="安装步骤"><a class="markdownIt-Anchor" href="#安装步骤"></a> 安装步骤</h4>
-<ul>
-<li>获取源码</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/simble1986/dockerpty.git</span><br></pre></td></tr></table></figure>
-<ul>
-<li>安装</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
-<h2 id="相关api"><a class="markdownIt-Anchor" href="#相关api"></a> 相关API</h2>
-<p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener">API文档</a>，以下主要对container相关参数加以说明</p>
-<ul>
-<li>tty (bool) – Allocate a pseudo-TTY.</li>
-<li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
-</ul>
-<h2 id="基本使用"><a class="markdownIt-Anchor" href="#基本使用"></a> 基本使用</h2>
-<ul>
-<li>连接client</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@slt-docker:/home/bqi<span class="comment"># python</span></span><br><span class="line">Python <span class="number">2.7</span><span class="number">.12</span> (default, Dec  <span class="number">4</span> <span class="number">2017</span>, <span class="number">14</span>:<span class="number">50</span>:<span class="number">18</span>)</span><br><span class="line">[GCC <span class="number">5.4</span><span class="number">.0</span> <span class="number">20160609</span>] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dockerpty</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.from_env()</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>： 支持远程API</p>
-<ul>
-<li>创建container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>test1 = client.containers.create(<span class="string">"ubuntu"</span>,<span class="string">"/bin/bash"</span>,tty=<span class="keyword">True</span>,stdin_open=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用dockerpty</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>dockerpty.start(client,test1)</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># ls</span></span><br><span class="line">bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># exit</span></span><br><span class="line">exit</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+  </section>
+  <section class="article typo">
+	  <h1 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h1>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<ol>
+<li>VmWare虚拟环境</li>
+<li>Host需求：2cpu，4G内存，3块网卡</li>
+<li>Ubuntu16.04</li>
+</ol>
+<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
+<p>搭建典型的c2s拓扑</p>
 
-  	</div>
-	  
-	  <div class="article-tags tags">
+    
+	  <div class="readmore">
+      <a href="/post/c80fffe0.html">Read More</a>
+    </div>
+    
+    
+    
+	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/docker/">docker</a>
+        <a href="/tags/network/">network</a>
       
-        <a href="/tags/dockerpty/">dockerpty</a>
+        <a href="/tags/vpp/">vpp</a>
       
 	  </div>
     
-		
-	
-		<div class="art-item-footer">
-				
-					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/post/b18ab8ad.html" rel="prev"  title="Docker API一种连接到PTY的交互方法">
-						Docker API一种连接到PTY的交互方法 
-					</a></span>
-				
-				
-					<span class="art-item-right">next：<a href="/post/70cf198a.html" rel="next"  title="Docker中无密码apt安装mysql">
-						Docker中无密码apt安装mysql
-					</a><i class="icon icon-chevron-thin-right"></i></span>
-				
-		</div>
-	
-	</section>
-	
-		<section id="comments">
-			<div id="disqus_thread"></div>
-		</section>
-	
+  </section>
 </article>
-<script>
-	window.subData = {
-		title: 'dockerpty使用',
-		tools: true
-	}
-</script>
+    </div>
+  
+</section>
+
 
       </div>
       <aside class='l_side'>
@@ -361,13 +310,11 @@
 <script>
   var disqus_shortname = 'simble';
   
-  var disqus_url = 'http://blog.simble.xyz/post/1c49a9aa.html';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

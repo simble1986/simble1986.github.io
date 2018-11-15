@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.simble.xyz/post/c80fffe0.html</loc>
+    
+    <lastmod>2018-11-15T08:42:04.273Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.simble.xyz/post/879abefb.html</loc>
     
     <lastmod>2018-11-15T05:55:46.719Z</lastmod>
@@ -149,14 +156,14 @@
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/post/4fa2931e.html</loc>
+    <loc>http://blog.simble.xyz/post/80ca9385.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/post/80ca9385.html</loc>
+    <loc>http://blog.simble.xyz/post/4fa2931e.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -184,6 +191,13 @@
   </url>
   
   <url>
+    <loc>http://blog.simble.xyz/categories/index.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.simble.xyz/guestbook/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
@@ -192,13 +206,6 @@
   
   <url>
     <loc>http://blog.simble.xyz/tags/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.simble.xyz/categories/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
