@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://blog.simble.xyz/baidu_verify_N1SqwCDq9o.html</loc>
-    
-    <lastmod>2018-12-30T04:44:02.667Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://blog.simble.xyz/post/c80fffe0.html</loc>
     
     <lastmod>2018-11-15T08:42:11.503Z</lastmod>
@@ -163,6 +156,13 @@
   </url>
   
   <url>
+    <loc>http://blog.simble.xyz/post/80ca9385.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.simble.xyz/post/4fa2931e.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
@@ -170,7 +170,7 @@
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/post/80ca9385.html</loc>
+    <loc>http://blog.simble.xyz/post/a072bce6.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -184,7 +184,7 @@
   </url>
   
   <url>
-    <loc>http://blog.simble.xyz/post/a072bce6.html</loc>
+    <loc>http://blog.simble.xyz/about/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -199,13 +199,6 @@
   
   <url>
     <loc>http://blog.simble.xyz/guestbook/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.simble.xyz/about/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
