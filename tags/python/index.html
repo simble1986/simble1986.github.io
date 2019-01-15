@@ -160,6 +160,82 @@
   <section class="meta">
     
     <h2 class="title">
+      <a href="/post/10bbcec0.html">
+        使用阿里云资源（备忘）
+      </a>
+    </h2>
+    
+    <time>
+      1月 15, 2019
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/tech/">tech</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
+<blockquote>
+<p>docker.com越来越难访问了</p>
+</blockquote>
+<ol>
+<li>
+<p>安装必要工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装阿里云的GPG证书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>添加软件源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>拉取更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装docker-ce</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="使用阿里云的pip源"><a class="markdownIt-Anchor" href="#使用阿里云的pip源"></a> 使用阿里云的pip源</h2>
+<ol>
+<li>
+<p>安装pip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">$ python get-pip.py</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改pip源为阿里云（永久修改）</p>
+<p>在用户根目录创建 <code>.pip/pip.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/docker/">docker</a>
+      
+        <a href="/tags/python/">python</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
       <a href="/post/6e2fcf3d.html">
         sqlalchemy连接docker的mysql问题记录
       </a>
@@ -298,6 +374,8 @@
     
         <li><a class="flat-box" href="/categories/sdn/"><div class='name'>sdn</div><div class='badget'>3</div></a></li>
     
+        <li><a class="flat-box" href="/categories/tech/"><div class='name'>tech</div><div class='badget'>1</div></a></li>
+    
         <li><a class="flat-box" href="/categories/工具/"><div class='name'>工具</div><div class='badget'>1</div></a></li>
     
         <li><a class="flat-box" href="/categories/旅行/"><div class='name'>旅行</div><div class='badget'>1</div></a></li>
@@ -313,7 +391,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 18.5px; color: #202020">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 15.5px; color: #606060">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 18.5px; color: #202020">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17px; color: #404040">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
     </div>
 </div>
 

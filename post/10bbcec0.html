@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Archives: 2018/3 | Simble的小站</title>
+  <title>使用阿里云资源（备忘） | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -14,16 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/archives/2018/03/index.html">
+  <meta name="description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了    安装必要工具 1$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common   安装阿里云的GPG证书 1$ curl -fsSL http://m">
+<meta name="keywords" content="docker,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用阿里云资源（备忘）">
+<meta property="og:url" content="http://blog.simble.xyz/post/10bbcec0.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了    安装必要工具 1$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common   安装阿里云的GPG证书 1$ curl -fsSL http://m">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-15T05:36:41.880Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="使用阿里云资源（备忘）">
+<meta name="twitter:description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了    安装必要工具 1$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common   安装阿里云的GPG证书 1$ curl -fsSL http://m">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -148,313 +150,103 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
+        <article id="post-aliyun-resources"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/10bbcec0.html">
+    	使用阿里云资源（备忘）
+    </a>
+  </h2>
+	<time>
+	  1月 15, 2019
+	</time>
 	
-  <script>
-    window.subData= { title:'Year : 2018.3'}
-  </script>
+    
+    <div class='cats'>
+        <a href="/categories/tech/">tech</a>
+    </div>
 
-<section class="post-list">
+	</section>
 	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/70cf198a.html">
-        Docker中无密码apt安装mysql
-      </a>
-    </h2>
-    
-    <time>
-      3月 30, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/docker/">docker</a>
-    </div>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用阿里云镜像安装docker-ce"><span class="toc-number">1.</span> <span class="toc-text"> 使用阿里云镜像安装Docker-CE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用阿里云的pip源"><span class="toc-number">2.</span> <span class="toc-text"> 使用阿里云的pip源</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
+<blockquote>
+<p>docker.com越来越难访问了</p>
+</blockquote>
+<ol>
+<li>
+<p>安装必要工具</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装阿里云的GPG证书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>添加软件源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>拉取更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>安装docker-ce</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="使用阿里云的pip源"><a class="markdownIt-Anchor" href="#使用阿里云的pip源"></a> 使用阿里云的pip源</h2>
+<ol>
+<li>
+<p>安装pip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">$ python get-pip.py</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>修改pip源为阿里云（永久修改）</p>
+<p>在用户根目录创建 <code>.pip/pip.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
 
-  </section>
-  <section class="article typo">
-	  <h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
-<p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/70cf198a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+  	</div>
+	  
+	  <div class="article-tags tags">
       
         <a href="/tags/docker/">docker</a>
       
-        <a href="/tags/DockerFile/">DockerFile</a>
-      
-        <a href="/tags/mysql-server/">mysql-server</a>
+        <a href="/tags/python/">python</a>
       
 	  </div>
     
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/a072bce6.html">
-        Hexo+Next上开启Valine评论系统
-      </a>
-    </h2>
-    
-    <time>
-      3月 27, 2018
-    </time>
 		
-    
-    <div class='cats'>
-        <a href="/categories/hexo/">hexo</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/a072bce6.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/blog/">blog</a>
-      
-        <a href="/tags/Next/">Next</a>
-      
-        <a href="/tags/Valine/">Valine</a>
-      
-	  </div>
-    
-  </section>
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/c80fffe0.html" rel="next"  title="Ubuntu16.04 VPP环境搭建">
+						Ubuntu16.04 VPP环境搭建
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/3e41aa59.html">
-        在Ubuntu 16.04上开启Docker的Remote API
-      </a>
-    </h2>
-    
-    <time>
-      3月 27, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/docker/">docker</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
-<h3 id="可行的方法"><a class="markdownIt-Anchor" href="#可行的方法"></a> 可行的方法</h3>
-<ul>
-<li>编辑/lib/systemd/system/docker.service</li>
-</ul>
-
-    
-	  <div class="readmore">
-      <a href="/post/3e41aa59.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/自动化/">自动化</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/80ca9385.html">
-        使用hexo搭建自己的博客——创建站点
-      </a>
-    </h2>
-    
-    <time>
-      3月 25, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/hexo/">hexo</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
-<h3 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h3>
-<p><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>是一个快速、简介且高效的博客框架，可以使用<a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>解析文章并生成网站</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/80ca9385.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/hexo/">hexo</a>
-      
-        <a href="/tags/blog/">blog</a>
-      
-        <a href="/tags/markdown/">markdown</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/493f285a.html">
-        docker基本操作（一）
-      </a>
-    </h2>
-    
-    <time>
-      3月 23, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/docker/">docker</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
-<p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/493f285a.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/docker/">docker</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/4fa2931e.html">
-        在树莓派上部署nodejs
-      </a>
-    </h2>
-    
-    <time>
-      3月 23, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/树莓派/">树莓派</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/4fa2931e.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/树莓派/">树莓派</a>
-      
-        <a href="/tags/nodejs/">nodejs</a>
-      
-        <a href="/tags/pi/">pi</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/4a17b156.html">
-        Hello World
-      </a>
-    </h2>
-    
-    <time>
-      3月 22, 2018
-    </time>
-		
-  </section>
-  <section class="article typo">
-	  <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/4a17b156.html">Read More</a>
-    </div>
-    
-    
-    
-  </section>
-</article>
-    </div>
-  
-</section>
-
-
+<script>
+	window.subData = {
+		title: '使用阿里云资源（备忘）',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -579,11 +371,13 @@
 <script>
   var disqus_shortname = 'simble';
   
+  var disqus_url = 'http://blog.simble.xyz/post/10bbcec0.html';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

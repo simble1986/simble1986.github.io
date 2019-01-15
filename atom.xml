@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2018-11-15T08:42:11.503Z</updated>
+  <updated>2019-01-15T05:36:41.880Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用阿里云资源（备忘）</title>
+    <link href="http://blog.simble.xyz/post/10bbcec0.html"/>
+    <id>http://blog.simble.xyz/post/10bbcec0.html</id>
+    <published>2019-01-14T21:34:00.000Z</published>
+    <updated>2019-01-15T05:36:41.880Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;使用阿里云镜像安装docker-ce&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#使用阿里云镜像安装docker-ce&quot;&gt;&lt;/a&gt; 使用阿里云镜像安装Docker-CE&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;docker.com越
+      
+    
+    </summary>
+    
+      <category term="tech" scheme="http://blog.simble.xyz/categories/tech/"/>
+    
+    
+      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
+    
+      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu16.04 VPP环境搭建</title>
@@ -500,31 +527,6 @@
       <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
       <category term="dockerpty" scheme="http://blog.simble.xyz/tags/dockerpty/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker中无密码apt安装mysql</title>
-    <link href="http://blog.simble.xyz/post/70cf198a.html"/>
-    <id>http://blog.simble.xyz/post/70cf198a.html</id>
-    <published>2018-03-29T18:39:33.000Z</published>
-    <updated>2018-11-15T05:46:30.039Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;问题出现&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#问题出现&quot;&gt;&lt;/a&gt; 问题出现&lt;/h3&gt;
-&lt;p&gt;Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
-      <category term="DockerFile" scheme="http://blog.simble.xyz/tags/DockerFile/"/>
-    
-      <category term="mysql-server" scheme="http://blog.simble.xyz/tags/mysql-server/"/>
     
   </entry>
   
