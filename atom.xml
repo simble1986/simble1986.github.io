@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-01-15T05:36:41.880Z</updated>
+  <updated>2019-01-15T05:45:41.595Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>使用阿里云资源（备忘）</title>
-    <link href="http://blog.simble.xyz/post/10bbcec0.html"/>
-    <id>http://blog.simble.xyz/post/10bbcec0.html</id>
+    <title>使用国内资源（备忘）</title>
+    <link href="http://blog.simble.xyz/post/612ebe35.html"/>
+    <id>http://blog.simble.xyz/post/612ebe35.html</id>
     <published>2019-01-14T21:34:00.000Z</published>
-    <updated>2019-01-15T05:36:41.880Z</updated>
+    <updated>2019-01-15T05:45:41.595Z</updated>
     
     <summary type="html">
     
@@ -37,9 +37,13 @@
       <category term="tech" scheme="http://blog.simble.xyz/categories/tech/"/>
     
     
+      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+    
       <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
-      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+      <category term="Linux" scheme="http://blog.simble.xyz/tags/Linux/"/>
+    
+      <category term="Mac" scheme="http://blog.simble.xyz/tags/Mac/"/>
     
   </entry>
   
