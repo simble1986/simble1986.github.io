@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-01-15T05:52:09.907Z</updated>
+  <updated>2019-02-05T16:04:22.063Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pyenv使用笔记</title>
+    <link href="http://blog.simble.xyz/post/72a09cbb.html"/>
+    <id>http://blog.simble.xyz/post/72a09cbb.html</id>
+    <published>2019-02-05T08:01:10.000Z</published>
+    <updated>2019-02-05T16:04:22.063Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;pyenv使用笔记&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#pyenv使用笔记&quot;&gt;&lt;/a&gt; pyenv使用笔记&lt;/h1&gt;
+&lt;p&gt;OSX上的python版本纷繁复杂。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;有系统自带的: /System/Library/Frameworks/Python.framework/Versions/&lt;/li&gt;
+&lt;li&gt;有后来安装的: /Library/Frameworks/Python.framework/Versions/&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="python" scheme="http://blog.simble.xyz/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>使用国内资源（备忘）</title>
@@ -503,32 +528,6 @@
       <category term="pexpect" scheme="http://blog.simble.xyz/tags/pexpect/"/>
     
       <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>dockerpty使用</title>
-    <link href="http://blog.simble.xyz/post/1c49a9aa.html"/>
-    <id>http://blog.simble.xyz/post/1c49a9aa.html</id>
-    <published>2018-05-03T02:34:40.000Z</published>
-    <updated>2018-05-04T09:58:47.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互&lt;/p&gt;
-&lt;h2 id=&quot;问题引入&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#问题引入&quot;&gt;&lt;/a&gt; 问题引入&lt;/h2&gt;
-&lt;p&gt;docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于&lt;code&gt;-it&lt;/code&gt;的方式来完成交互操作。&lt;/p&gt;
-&lt;p&gt;经过几天的学习和测试，发现其实docker的&lt;code&gt;containers.run()&lt;/code&gt;和&lt;code&gt;containers.exec_run()&lt;/code&gt;都是可以设置&lt;code&gt;stdin=True&lt;/code&gt;, &lt;code&gt;tty=True&lt;/code&gt;。但开启这些之后，将返回一个socket，需要自己来进行处理。&lt;/p&gt;
-&lt;p&gt;google大法后，找到了一个&lt;strong&gt;dockerpty&lt;/strong&gt;的python lib，可以完成这件事情&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
-      <category term="dockerpty" scheme="http://blog.simble.xyz/tags/dockerpty/"/>
     
   </entry>
   

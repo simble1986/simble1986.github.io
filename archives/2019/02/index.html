@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: dockerpty | Simble的小站</title>
+  <title>Archives: 2019/2 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -17,7 +17,7 @@
   <meta name="description" content="记录一些技术的或者旅行的东东">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/tags/dockerpty/index.html">
+<meta property="og:url" content="http://blog.simble.xyz/archives/2019/02/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="记录一些技术的或者旅行的东东">
 <meta property="og:locale" content="zh-CN">
@@ -149,8 +149,9 @@
     <div class='container clearfix'>
       <div class='l_main'>
         
+	
   <script>
-    window.subData= { title:'Tag : dockerpty'}
+    window.subData= { title:'Year : 2019.2'}
   </script>
 
 <section class="post-list">
@@ -160,40 +161,39 @@
   <section class="meta">
     
     <h2 class="title">
-      <a href="/post/1c49a9aa.html">
-        dockerpty使用
+      <a href="/post/72a09cbb.html">
+        pyenv使用笔记
       </a>
     </h2>
     
     <time>
-      5月 3, 2018
+      2月 5, 2019
     </time>
 		
     
     <div class='cats'>
-        <a href="/categories/docker/">docker</a>
+        <a href="/categories/python/">python</a>
     </div>
 
   </section>
   <section class="article typo">
-	  <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
-<p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
-<p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
-<p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
+	  <h1 id="pyenv使用笔记"><a class="markdownIt-Anchor" href="#pyenv使用笔记"></a> pyenv使用笔记</h1>
+<p>OSX上的python版本纷繁复杂。</p>
+<ul>
+<li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
+<li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
+</ul>
 
     
 	  <div class="readmore">
-      <a href="/post/1c49a9aa.html">Read More</a>
+      <a href="/post/72a09cbb.html">Read More</a>
     </div>
     
     
     
 	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/dockerpty/">dockerpty</a>
+        <a href="/tags/python/">python</a>
       
 	  </div>
     
@@ -202,6 +202,7 @@
     </div>
   
 </section>
+
 
 
       </div>
