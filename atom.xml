@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-07-19T03:26:27.598Z</updated>
+  <updated>2019-07-19T03:28:28.296Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,15 +21,12 @@
     <link href="http://blog.simble.xyz/post/d0b629f4.html"/>
     <id>http://blog.simble.xyz/post/d0b629f4.html</id>
     <published>2019-07-18T19:23:45.000Z</published>
-    <updated>2019-07-19T03:26:27.598Z</updated>
+    <updated>2019-07-19T03:28:28.296Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。&lt;br&gt;
-在行将放弃之际，&lt;a href=&quot;https://github.com/easzlab/kubeas
-      
+      &lt;p&gt;尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。&lt;br&gt;
+在行将放弃之际，&lt;a href=&quot;https://github.com/easzlab/kubeasz&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;kubeasz&lt;/a&gt;挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境&lt;/p&gt;
     
     </summary>
     
