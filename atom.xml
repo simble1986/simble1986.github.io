@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-02-05T16:06:30.170Z</updated>
+  <updated>2019-07-19T03:26:27.598Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>k8s环境安装之差点儿我就放弃了</title>
+    <link href="http://blog.simble.xyz/post/d0b629f4.html"/>
+    <id>http://blog.simble.xyz/post/d0b629f4.html</id>
+    <published>2019-07-18T19:23:45.000Z</published>
+    <updated>2019-07-19T03:26:27.598Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。&lt;br&gt;
+在行将放弃之际，&lt;a href=&quot;https://github.com/easzlab/kubeas
+      
+    
+    </summary>
+    
+      <category term="k8s" scheme="http://blog.simble.xyz/categories/k8s/"/>
+    
+    
+      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
+    
+      <category term="Kubernetes" scheme="http://blog.simble.xyz/tags/Kubernetes/"/>
+    
+      <category term="k8s" scheme="http://blog.simble.xyz/tags/k8s/"/>
+    
+  </entry>
   
   <entry>
     <title>pyenv使用笔记</title>
@@ -502,31 +530,6 @@
     
     
       <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker API一种连接到PTY的交互方法</title>
-    <link href="http://blog.simble.xyz/post/b18ab8ad.html"/>
-    <id>http://blog.simble.xyz/post/b18ab8ad.html</id>
-    <published>2018-05-04T01:35:45.000Z</published>
-    <updated>2018-05-04T09:51:16.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。&lt;/p&gt;
-&lt;p&gt;当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
-    
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
-      <category term="pexpect" scheme="http://blog.simble.xyz/tags/pexpect/"/>
-    
-      <category term="自动化" scheme="http://blog.simble.xyz/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/"/>
     
   </entry>
   

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>在树莓派上部署nodejs | Simble的小站</title>
+  <title>Tag: Kubernetes | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -14,18 +14,16 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点">
-<meta name="keywords" content="树莓派,nodejs,pi">
-<meta property="og:type" content="article">
-<meta property="og:title" content="在树莓派上部署nodejs">
-<meta property="og:url" content="http://blog.simble.xyz/post/4fa2931e.html">
+  <meta name="description" content="记录一些技术的或者旅行的东东">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Simble的小站">
+<meta property="og:url" content="http://blog.simble.xyz/tags/Kubernetes/index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点">
+<meta property="og:description" content="记录一些技术的或者旅行的东东">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-30T02:37:58.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在树莓派上部署nodejs">
-<meta name="twitter:description" content="终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点">
+<meta name="twitter:title" content="Simble的小站">
+<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -150,92 +148,109 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        <article id="post-nodejs-setup-pi"
-  class="post white-box article-type-post"
-  itemscope itemprop="blogPost">
-	<section class='meta'>
-	<h2 class="title">
-  	<a href="/post/4fa2931e.html">
-    	在树莓派上部署nodejs
-    </a>
-  </h2>
-	<time>
-	  3月 23, 2018
-	</time>
+        
+  <script>
+    window.subData= { title:'Tag : Kubernetes'}
+  </script>
+
+<section class="post-list">
 	
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
+      <a href="/post/d0b629f4.html">
+        k8s环境安装之差点儿我就放弃了
+      </a>
+    </h2>
+    
+    <time>
+      7月 19, 2019
+    </time>
+		
     
     <div class='cats'>
-        <a href="/categories/树莓派/">树莓派</a>
+        <a href="/categories/k8s/">k8s</a>
     </div>
 
-	</section>
-	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装nodejs"><span class="toc-number">1.</span> <span class="toc-text"> 安装nodejs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装包获取"><span class="toc-number">1.1.</span> <span class="toc-text"> 安装包获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装nodejs-2"><span class="toc-number">1.2.</span> <span class="toc-text"> 安装nodejs</span></a></li></ol></li></ol></section>
-	
-	<section class="article typo">
-  	<div class="article-entry" itemprop="articleBody">
-    	<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
-<a id="more"></a>
-<h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
-<p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
-<h3 id="安装包获取"><a class="markdownIt-Anchor" href="#安装包获取"></a> 安装包获取</h3>
-<p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
-<p>获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz" target="_blank" rel="noopener">安装包</a></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure>
-<h3 id="安装nodejs-2"><a class="markdownIt-Anchor" href="#安装nodejs-2"></a> 安装nodejs</h3>
-<p>解压缩</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tar -Jxv -f node-v8.10.0-linux-armv7l.tar.xz</span><br><span class="line">node-v8.10.0-linux-armv7l/</span><br><span class="line">node-v8.10.0-linux-armv7l/README.md</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/node</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/npm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>可根据个人喜好重命名文件夹，此处重命名为node，分别验证版本信息</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ ./bin/node -v</span><br><span class="line">v8.10.0</span><br><span class="line">pi@raspberrypi:~/node $ ./bin/npm -v</span><br><span class="line">5.6.0</span><br></pre></td></tr></table></figure>
-<p>配置node和npm为全局命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ sudo ln /home/pi/node/bin/node /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">pi@raspberrypi:~/node $ sudo ln -s /home/pi/node/lib/node_modules/npm/bin/npm /usr/<span class="built_in">local</span>/bin/npm</span><br></pre></td></tr></table></figure>
-<p>此时执行npm会报错</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ npm -v</span><br><span class="line">module.js:471</span><br><span class="line">    throw err;</span><br><span class="line">    ^</span><br><span class="line"></span><br><span class="line">Error: Cannot find module <span class="string">'/usr/local/bin/node_modules/npm/bin/npm-cli.js'</span></span><br></pre></td></tr></table></figure>
-<p>需要修改/usr/local/bin/目录下的npm文件，将$basedir替换为绝对路径，此处为/home/pi/node/</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/<span class="keyword">sh</span></span><br><span class="line">(set -o igncr) 2&gt;/dev/null &amp;&amp; set -o igncr; # cygwin encoding fix</span><br><span class="line"></span><br><span class="line">basedir=`dirname <span class="string">"$0"</span>`</span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">NODE_EXE=<span class="string">"/home/pi/node/bin/node.exe"</span></span><br><span class="line">if ! [ -x "$NODE_EXE" ]; then</span><br><span class="line">  NODE_EXE=node</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">NPM_CLI_JS=<span class="string">"/home/pi/node/lib/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">  *MINGW*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">  *CYGWIN*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line"><span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> <span class="string">"$@"</span></span><br></pre></td></tr></table></figure>
-<p>再次验证，npm已经可以正常工作</p>
+  </section>
+  <section class="article typo">
+	  <p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
+在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<a href="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md" target="_blank" rel="noopener">官方文档</a></p>
+<ol>
+<li>一台Linux虚拟机(Ubuntu16.04 server或CentOS 7 Minimal)</li>
+<li>内存需要2G</li>
+<li>硬盘30G</li>
+</ol>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="下载文件"><a class="markdownIt-Anchor" href="#下载文件"></a> 下载文件</h3>
+<p>github的说明文档提供的下载方式，我其实都疑惑了，因为有一个<code>${release}</code>，并非开箱即食。可以这样做</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/easzlab/kubeasz.git</span><br></pre></td></tr></table></figure>
+<p>随后，进入kubeasz目录，使用工具脚本下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> kubeasz</span><br><span class="line">$ bash tools/easzup -D</span><br></pre></td></tr></table></figure>
+<h3 id="安装-2"><a class="markdownIt-Anchor" href="#安装-2"></a> 安装</h3>
+<p>下面就是按部就班的运行了，注意，你也不需要提前安装docker，所有的都是自动下载及安装的</p>
+<ol>
+<li>容器化运行 kubeasz</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./easzup -S</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用默认配置安装 aio 集群</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it kubeasz easzctl start-aio</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如遇到失败，可再次尝试执行</p>
+</blockquote>
+<h3 id="验证安装"><a class="markdownIt-Anchor" href="#验证安装"></a> 验证安装</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl version                   <span class="comment"># 验证集群版本     </span></span><br><span class="line">$ kubectl get componentstatus       <span class="comment"># 验证 scheduler/controller-manager/etcd等组件状态</span></span><br><span class="line">$ kubectl get node                  <span class="comment"># 验证节点就绪 (Ready) 状态</span></span><br><span class="line">$ kubectl get pod --all-namespaces  <span class="comment"># 验证集群pod状态，默认已安装网络插件、coredns、metrics-server等</span></span><br><span class="line">$ kubectl get svc --all-namespaces  <span class="comment"># 验证集群服务状态</span></span><br></pre></td></tr></table></figure>
+<h3 id="登陆dashboard"><a class="markdownIt-Anchor" href="#登陆dashboard"></a> 登陆dashboard</h3>
+<p>安装完成后，dashboard已经准备好了，只需要获取登陆方式即可。</p>
+<p>按照官方文档的说法，登陆dashboard有好几种方式，选择一种即可。如token方式</p>
+<h4 id="获取port"><a class="markdownIt-Anchor" href="#获取port"></a> 获取port</h4>
+<p>按照以上方式安装完成后，默认的port应该是34980，所以，可以访问<code>https://当前IP:34980</code>，即可登陆dashboard</p>
+<p>也可以查看dashboard的端口开放状况</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc --all-namespaces</span><br><span class="line">NAMESPACE     NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE</span><br><span class="line">default       kubernetes                ClusterIP   10.68.0.1       &lt;none&gt;        443/TCP                       30m</span><br><span class="line">kube-system   heapster                  ClusterIP   10.68.91.148    &lt;none&gt;        80/TCP                        114s</span><br><span class="line">kube-system   kube-dns                  ClusterIP   10.68.0.2       &lt;none&gt;        53/UDP,53/TCP,9153/TCP        2m20s</span><br><span class="line">kube-system   kubernetes-dashboard      NodePort    10.68.23.76     &lt;none&gt;        443:34980/TCP                 118s</span><br><span class="line">kube-system   metrics-server            ClusterIP   10.68.29.183    &lt;none&gt;        443/TCP                       2m13s</span><br><span class="line">kube-system   traefik-ingress-service   NodePort    10.68.226.239   &lt;none&gt;        80:23456/TCP,8080:38858/TCP   105s</span><br></pre></td></tr></table></figure>
+<h4 id="获取token"><a class="markdownIt-Anchor" href="#获取token"></a> 获取token</h4>
+<ul>
+<li>查看如下文件是否存在</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取token</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">====</span><br><span class="line">ca.crt:     1350 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWRoNjYyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmZDdjZjc4Mi1hOTM0LTExZTktOTA1Zi0wMDBjMjlhMzc1YmYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.KXFNuuibxRpF7AJHZBRkGgvpiVl4axfGA0A8haLIR3coX0HHPrQph8sO9GKl7C0KP6YXN-43VIxlpDXy-i_UkimxDJRVS08IW4r39Z4HhD-rKFYafQJROMrFG9lcbn1pZWTLBRGsO3lFCI1DyRDC7W_HSb63mgO2IoiQXGhgdhEWc7OnyNfxovkbtQA5xfsVqWqeWE-Dn4Jeo0lFe630I-iREMXPQvF5I7UNJFMJLCgFV0fG8J7__MYBf8xVnYL3ryaMBwKjQxQVsD3IOGS6TAk7RLZzjevySl-pXE1CcE8fosQQwJsOjOoKn5u1LGK3XUkIJR2rOf3jVMoQYYqe1Q</span><br></pre></td></tr></table></figure>
+<h2 id="踩过的坑"><a class="markdownIt-Anchor" href="#踩过的坑"></a> 踩过的坑</h2>
+<h3 id="node出于notready状态"><a class="markdownIt-Anchor" href="#node出于notready状态"></a> node出于NotReady状态</h3>
+<ul>
+<li>排查思路</li>
+</ul>
+<p>查看服务状态及相关错误信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ journalctl -f -u kubelet</span><br></pre></td></tr></table></figure>
+<p>最终发现我的内存因为是1G导致运行失败</p>
 
-  	</div>
-	  
-	  <div class="article-tags tags">
+
+    
+    
+    
+	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/树莓派/">树莓派</a>
+        <a href="/tags/docker/">docker</a>
       
-        <a href="/tags/nodejs/">nodejs</a>
+        <a href="/tags/Kubernetes/">Kubernetes</a>
       
-        <a href="/tags/pi/">pi</a>
+        <a href="/tags/k8s/">k8s</a>
       
 	  </div>
     
-		
-	
-		<div class="art-item-footer">
-				
-					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/post/493f285a.html" rel="prev"  title="docker基本操作（一）">
-						docker基本操作（一） 
-					</a></span>
-				
-				
-					<span class="art-item-right">next：<a href="/post/4a17b156.html" rel="next"  title="Hello World">
-						Hello World
-					</a><i class="icon icon-chevron-thin-right"></i></span>
-				
-		</div>
-	
-	</section>
-	
-		<section id="comments">
-			<div id="disqus_thread"></div>
-		</section>
-	
+  </section>
 </article>
-<script>
-	window.subData = {
-		title: '在树莓派上部署nodejs',
-		tools: true
-	}
-</script>
+    </div>
+  
+</section>
+
 
       </div>
       <aside class='l_side'>
@@ -362,13 +377,11 @@
 <script>
   var disqus_shortname = 'simble';
   
-  var disqus_url = 'http://blog.simble.xyz/post/4fa2931e.html';
-  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>
