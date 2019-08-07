@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-07T07:09:31.967Z</updated>
+  <updated>2019-08-07T09:08:40.655Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linux虚拟网络学习笔记</title>
+    <link href="http://blog.simble.xyz/post/575b6208.html"/>
+    <id>http://blog.simble.xyz/post/575b6208.html</id>
+    <published>2019-08-07T01:05:40.000Z</published>
+    <updated>2019-08-07T09:08:40.655Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。&lt;/p&gt;
+&lt;p&gt;本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
+    
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
+    
+      <category term="linux" scheme="http://blog.simble.xyz/tags/linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Docker + ovs，原来如此简单</title>
@@ -512,25 +535,6 @@
     
     
       <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>gitbook+gitlab发布私有的图书仓库</title>
-    <link href="http://blog.simble.xyz/post/51748f3c.html"/>
-    <id>http://blog.simble.xyz/post/51748f3c.html</id>
-    <published>2018-05-10T22:28:34.000Z</published>
-    <updated>2018-11-15T05:46:30.039Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。&lt;/p&gt;
-&lt;p&gt;另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
-    
     
   </entry>
   
