@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法 null可行的方法  编辑/lib/systemd/system/docker.service">
+  <meta name="description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法  可行的方法  编辑/lib/systemd/system/docker.service">
 <meta name="keywords" content="docker,自动化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="在Ubuntu 16.04上开启Docker的Remote API">
 <meta property="og:url" content="http://blog.simble.xyz/post/3e41aa59.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法 null可行的方法  编辑/lib/systemd/system/docker.service">
+<meta property="og:description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法  可行的方法  编辑/lib/systemd/system/docker.service">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-04T09:59:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Ubuntu 16.04上开启Docker的Remote API">
-<meta name="twitter:description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法 null可行的方法  编辑/lib/systemd/system/docker.service">
+<meta name="twitter:description" content="由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法  可行的方法  编辑/lib/systemd/system/docker.service">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,12 +170,12 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#可行的方法"><span class="toc-number">1.</span> <span class="toc-text">null可行的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不可行的方法"><span class="toc-number">2.</span> <span class="toc-text">null不可行的方法</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#可行的方法"><span class="toc-number">1.</span> <span class="toc-text"> 可行的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#不可行的方法"><span class="toc-number">2.</span> <span class="toc-text"> 不可行的方法</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
-<h3 id="可行的方法"><a class="header-anchor" href="#可行的方法">null</a>可行的方法</h3>
+<h3 id="可行的方法"><a class="markdownIt-Anchor" href="#可行的方法"></a> 可行的方法</h3>
 <ul>
 <li>编辑/lib/systemd/system/docker.service</li>
 </ul>
@@ -197,7 +197,7 @@
 <li>测试是否成功</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:2375/containers/json</span><br><span class="line">[&#123;<span class="string">"Id"</span>:<span class="string">"30c8e35f1292421d11f6b09385a4fc980d6abaca591d0f52b18dbad8e4f5be04"</span>,<span class="string">"Names"</span>:[<span class="string">"/clever_murdock"</span>],<span class="string">"Image"</span>:<span class="string">"portainer/portainer"</span>,<span class="string">"ImageID"</span>:<span class="string">"sha256:a8f2aeb34cf69178be1d152759fb17ccff7915faf750c82cd7d1851b12ec7b37"</span>,<span class="string">"Command"</span>:<span class="string">"/portainer"</span>,<span class="string">"Created"</span>:1520845664,<span class="string">"Ports"</span>:[&#123;<span class="string">"IP"</span>:<span class="string">"0.0.0.0"</span>,<span class="string">"PrivatePort"</span>:9000,<span class="string">"PublicPort"</span>:9000,<span class="string">"Type"</span>:<span class="string">"tcp"</span>&#125;],<span class="string">"Labels"</span>:&#123;&#125;,<span class="string">"State"</span>:<span class="string">"running"</span>,<span class="string">"Status"</span>:<span class="string">"Up 13 minutes"</span>,<span class="string">"HostConfig"</span>:&#123;<span class="string">"NetworkMode"</span>:<span class="string">"default"</span>&#125;,<span class="string">"NetworkSettings"</span>:&#123;<span class="string">"Networks"</span>:&#123;<span class="string">"bridge"</span>:&#123;<span class="string">"IPAMConfig"</span>:null,<span class="string">"Links"</span>:null,<span class="string">"Aliases"</span>:null,<span class="string">"NetworkID"</span>:<span class="string">"78fa057306e70838bab1e18359c86bd8eff7de2285c351784ad951cd7a73f8d1"</span>,<span class="string">"EndpointID"</span>:<span class="string">"e99ca98169320155c8833a8746be7d0e1c8d98186c75fba9d9bf2486367a4e00"</span>,<span class="string">"Gateway"</span>:<span class="string">"172.17.0.1"</span>,<span class="string">"IPAddress"</span>:<span class="string">"172.17.0.2"</span>,<span class="string">"IPPrefixLen"</span>:16,<span class="string">"IPv6Gateway"</span>:<span class="string">""</span>,<span class="string">"GlobalIPv6Address"</span>:<span class="string">""</span>,<span class="string">"GlobalIPv6PrefixLen"</span>:0,<span class="string">"MacAddress"</span>:<span class="string">"02:42:ac:11:00:02"</span>,<span class="string">"DriverOpts"</span>:null&#125;&#125;&#125;,<span class="string">"Mounts"</span>:[&#123;<span class="string">"Type"</span>:<span class="string">"bind"</span>,<span class="string">"Source"</span>:<span class="string">"/opt/portainer"</span>,<span class="string">"Destination"</span>:<span class="string">"/data"</span>,<span class="string">"Mode"</span>:<span class="string">""</span>,<span class="string">"RW"</span>:<span class="literal">true</span>,<span class="string">"Propagation"</span>:<span class="string">"rprivate"</span>&#125;,&#123;<span class="string">"Type"</span>:<span class="string">"bind"</span>,<span class="string">"Source"</span>:<span class="string">"/var/run/docker.sock"</span>,<span class="string">"Destination"</span>:<span class="string">"/var/run/docker.sock"</span>,<span class="string">"Mode"</span>:<span class="string">""</span>,<span class="string">"RW"</span>:<span class="literal">true</span>,<span class="string">"Propagation"</span>:<span class="string">"rprivate"</span>&#125;]&#125;]</span><br></pre></td></tr></table></figure>
-<h3 id="不可行的方法"><a class="header-anchor" href="#不可行的方法">null</a>不可行的方法</h3>
+<h3 id="不可行的方法"><a class="markdownIt-Anchor" href="#不可行的方法"></a> 不可行的方法</h3>
 <p>同时列出在Ubuntu上不可行的方法</p>
 <ul>
 <li>修改<code>/etc/default/docker</code>中的<code>DOCKER_OPTS</code></li>
@@ -291,7 +291,7 @@
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -320,7 +320,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 

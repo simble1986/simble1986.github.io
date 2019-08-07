@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: python | Simble的小站</title>
+  <title>Archives: 2019/8 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -17,7 +17,7 @@
   <meta name="description" content="记录一些技术的或者旅行的东东">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/categories/python/index.html">
+<meta property="og:url" content="http://blog.simble.xyz/archives/2019/08/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="记录一些技术的或者旅行的东东">
 <meta property="og:locale" content="zh-CN">
@@ -149,8 +149,9 @@
     <div class='container clearfix'>
       <div class='l_main'>
         
+	
   <script>
-    window.subData= { title:'Category : python'}
+    window.subData= { title:'Year : 2019.8'}
   </script>
 
 <section class="post-list">
@@ -160,125 +161,100 @@
   <section class="meta">
     
     <h2 class="title">
-      <a href="/post/72a09cbb.html">
-        pyenv使用笔记
+      <a href="/post/56e1f957.html">
+        Docker + ovs，原来如此简单
       </a>
     </h2>
     
     <time>
-      2月 5, 2019
+      8月 7, 2019
     </time>
 		
     
     <div class='cats'>
-        <a href="/categories/python/">python</a>
+        <a href="/categories/docker/">docker</a>
     </div>
 
   </section>
   <section class="article typo">
-	  <p>OSX上的python版本纷繁复杂。</p>
+	  <p>一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。</p>
+<blockquote>
+<p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
+</blockquote>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<h3 id="安装docker"><a class="markdownIt-Anchor" href="#安装docker"></a> 安装docker</h3>
+<p>在我的其他博文里有国内源安装docker的内容，原样照搬</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update &amp;&amp; sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">$ apt update</span><br><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure>
+<h3 id="安装ovs"><a class="markdownIt-Anchor" href="#安装ovs"></a> 安装ovs</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install openvswitch-switch</span><br></pre></td></tr></table></figure>
+<h3 id="安装ovs-docker"><a class="markdownIt-Anchor" href="#安装ovs-docker"></a> 安装ovs-docker</h3>
+<p>简单介绍一下，ovs-docker实际上是一个shell脚本，封装了ovs和docker的一些操作。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/bin</span><br><span class="line">$ wget https://raw.githubusercontent.com/openvswitch/ovs/master/utilities/ovs-docker</span><br><span class="line">$ chmod a+rwx ovs-docker</span><br></pre></td></tr></table></figure>
+<h2 id="实验"><a class="markdownIt-Anchor" href="#实验"></a> 实验</h2>
+<p>两个docker容器经过ovs网桥进行访问及访问外部网络</p>
+<h3 id="容器互访"><a class="markdownIt-Anchor" href="#容器互访"></a> 容器互访</h3>
 <ul>
-<li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
-<li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
+<li>创建ovs网桥</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建两个容器</li>
+</ul>
+<blockquote>
+<p>注：实验使用了busybox的镜像，需要提前pull到本地</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; docker pull busybox</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote></blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --net=none --privileged=<span class="literal">true</span> --name=h1 busybox</span><br></pre></td></tr></table></figure>
+<p>在另外一个shell中执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --net=none --privileged=<span class="literal">true</span> --name=h2 busybox</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看当前网络</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/ <span class="comment"># ifconfig</span></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+<p>可以看到当前仅有一个loopback接口</p>
+<ul>
+<li>连接容器到网桥</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-docker add-port br0 eth0 h1</span><br><span class="line">$ ovs-docker add-port br0 eth0 h2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>配置IP地址</li>
+</ul>
+<p>分别在两个docker容器中配置eth0的IP地址为同一个网段</p>
+<p><strong>h1</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig eth0 192.168.1.2</span><br></pre></td></tr></table></figure>
+<p><strong>h2</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig eth0 192.168.1.3</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试连通性</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ping 192.168.1.3</span><br><span class="line">PING 192.168.1.2 (192.168.1.3): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.3: seq=0 ttl=64 time=1.065 ms</span><br><span class="line">64 bytes from 192.168.1.3: seq=1 ttl=64 time=0.139 ms</span><br></pre></td></tr></table></figure>
+<p><strong>没错</strong>，就是这么简单</p>
+<h3 id="访问外部网络"><a class="markdownIt-Anchor" href="#访问外部网络"></a> 访问外部网络</h3>
+<p>当我解决了<strong>混杂模式</strong>的问题之后，原来一切都是那么简单</p>
+<blockquote>
+<p>在外部另外一个PC上配置了192.168.1.1</p>
+</blockquote>
+<ul>
+<li>为br0增加物理接口</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 ens192</span><br></pre></td></tr></table></figure>
+<ul>
+<li>测试</li>
+</ul>
+<p>从容器中ping 192.168.1.1</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ping 192.168.1.1</span><br><span class="line">PING 192.168.1.1 (192.168.1.1): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.1: seq=30 ttl=64 time=1.319 ms</span><br><span class="line">64 bytes from 192.168.1.1: seq=31 ttl=64 time=0.461 ms</span><br></pre></td></tr></table></figure>
+<p><strong>大功告成</strong></p>
 
-    
-	  <div class="readmore">
-      <a href="/post/72a09cbb.html">Read More</a>
-    </div>
+
     
     
     
 	  <div class="full-width auto-padding tags">
       
-        <a href="/tags/python/">python</a>
+        <a href="/tags/docker/">docker</a>
       
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/6e2fcf3d.html">
-        sqlalchemy连接docker的mysql问题记录
-      </a>
-    </h2>
-    
-    <time>
-      8月 15, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/python/">python</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>又开始鼓捣flask+mysql了 👶</p>
-<p>不成想，又一次踩了好多雷 😂</p>
-<p>有一种打怪升级的感觉</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/6e2fcf3d.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/python/">python</a>
-      
-        <a href="/tags/sqlalchemy/">sqlalchemy</a>
-      
-        <a href="/tags/flask/">flask</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/4926e490.html">
-        python virtenv环境搭建
-      </a>
-    </h2>
-    
-    <time>
-      5月 7, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/python/">python</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
-<p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/4926e490.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/python/">python</a>
+        <a href="/tags/ovs/">ovs</a>
       
 	  </div>
     
@@ -287,6 +263,7 @@
     </div>
   
 </section>
+
 
 
       </div>

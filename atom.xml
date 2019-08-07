@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-07-19T03:30:28.053Z</updated>
+  <updated>2019-08-07T07:08:21.890Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker + ovs，原来如此简单</title>
+    <link href="http://blog.simble.xyz/post/56e1f957.html"/>
+    <id>http://blog.simble.xyz/post/56e1f957.html</id>
+    <published>2019-08-06T23:05:29.000Z</published>
+    <updated>2019-08-07T07:08:21.890Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡&lt;strong&gt;混杂模式&lt;/strong&gt;惹的祸&lt;/p
+      
+    
+    </summary>
+    
+      <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
+    
+    
+      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
+    
+      <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+    
+  </entry>
   
   <entry>
     <title>k8s环境安装之差点儿我就放弃了</title>
@@ -74,7 +101,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;使用阿里云镜像安装docker-ce&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#使用阿里云镜像安装docker-ce&quot;&gt;null&lt;/a&gt;使用阿里云镜像安装Docker-CE&lt;/h2&gt;
+      &lt;h2 id=&quot;使用阿里云镜像安装docker-ce&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#使用阿里云镜像安装docker-ce&quot;&gt;&lt;/a&gt; 使用阿里云镜像安装Docker-CE&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;docker.com越来越难访问了&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -103,14 +130,14 @@
     
     <summary type="html">
     
-      &lt;h1&gt;环境&lt;/h1&gt;
-&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#环境准备&quot;&gt;null&lt;/a&gt;环境准备&lt;/h2&gt;
+      &lt;h1 id=&quot;环境&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境&quot;&gt;&lt;/a&gt; 环境&lt;/h1&gt;
+&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;VmWare虚拟环境&lt;/li&gt;
 &lt;li&gt;Host需求：2cpu，4G内存，3块网卡&lt;/li&gt;
 &lt;li&gt;Ubuntu16.04&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&quot;拓扑&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#拓扑&quot;&gt;null&lt;/a&gt;拓扑&lt;/h2&gt;
+&lt;h2 id=&quot;拓扑&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#拓扑&quot;&gt;&lt;/a&gt; 拓扑&lt;/h2&gt;
 &lt;p&gt;搭建典型的c2s拓扑&lt;/p&gt;
     
     </summary>
@@ -133,11 +160,11 @@
     
     <summary type="html">
     
-      &lt;h1&gt;DPDK安装&lt;/h1&gt;
+      &lt;h1 id=&quot;dpdk安装&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#dpdk安装&quot;&gt;&lt;/a&gt; DPDK安装&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&quot;从git获取源码&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#从git获取源码&quot;&gt;null&lt;/a&gt;从git获取源码&lt;/h2&gt;
+&lt;h2 id=&quot;从git获取源码&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#从git获取源码&quot;&gt;&lt;/a&gt; 从git获取源码&lt;/h2&gt;
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; git://dpdk.org/dpdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
@@ -160,7 +187,7 @@
     
     <summary type="html">
     
-      &lt;h1&gt;控制管理&lt;/h1&gt;
+      &lt;h1 id=&quot;控制管理&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#控制管理&quot;&gt;&lt;/a&gt; 控制管理&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;创建网桥&lt;/li&gt;
 &lt;/ul&gt;
@@ -175,9 +202,9 @@
       <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
     
     
-      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
-    
       <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
     
   </entry>
   
@@ -190,7 +217,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;mininet自带topo&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#mininet自带topo&quot;&gt;null&lt;/a&gt;mininet自带topo&lt;/h2&gt;
+      &lt;h2 id=&quot;mininet自带topo&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet自带topo&quot;&gt;&lt;/a&gt; mininet自带topo&lt;/h2&gt;
 &lt;p&gt;通过&lt;code&gt;mn -h&lt;/code&gt;可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo&lt;/p&gt;
     
     </summary>
@@ -213,8 +240,8 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;安装opendaylight&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#安装opendaylight&quot;&gt;null&lt;/a&gt;安装Opendaylight&lt;/h2&gt;
-&lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#环境准备&quot;&gt;null&lt;/a&gt;环境准备&lt;/h3&gt;
+      &lt;h2 id=&quot;安装opendaylight&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#安装opendaylight&quot;&gt;&lt;/a&gt; 安装Opendaylight&lt;/h2&gt;
+&lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h3&gt;
 &lt;ol&gt;
 &lt;li&gt;
 &lt;p&gt;基础包&lt;/p&gt;
@@ -252,7 +279,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;mininet是什么&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#mininet是什么&quot;&gt;null&lt;/a&gt;Mininet是什么&lt;/h2&gt;
+      &lt;h2 id=&quot;mininet是什么&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#mininet是什么&quot;&gt;&lt;/a&gt; Mininet是什么&lt;/h2&gt;
 &lt;p&gt;Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。&lt;/p&gt;
 &lt;p&gt;Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境&lt;/p&gt;
     
@@ -276,7 +303,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;功能支持&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#功能支持&quot;&gt;null&lt;/a&gt;功能支持&lt;/h2&gt;
+      &lt;h2 id=&quot;功能支持&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#功能支持&quot;&gt;&lt;/a&gt; 功能支持&lt;/h2&gt;
 &lt;ol&gt;
 &lt;li&gt;VLAN with trunk and access ports&lt;/li&gt;
 &lt;li&gt;绑定NIC(with/without LAC)&lt;/li&gt;
@@ -293,9 +320,9 @@
       <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
     
     
-      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
-    
       <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+    
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
     
       <category term="openvswitch" scheme="http://blog.simble.xyz/tags/openvswitch/"/>
     
@@ -331,9 +358,9 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;错误信息&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#错误信息&quot;&gt;null&lt;/a&gt;错误信息&lt;/h2&gt;
+      &lt;h2 id=&quot;错误信息&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#错误信息&quot;&gt;&lt;/a&gt; 错误信息&lt;/h2&gt;
 &lt;p&gt;neutron错误日志&lt;code&gt;Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&quot;问题现象&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#问题现象&quot;&gt;null&lt;/a&gt;问题现象&lt;/h2&gt;
+&lt;h2 id=&quot;问题现象&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#问题现象&quot;&gt;&lt;/a&gt; 问题现象&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于&lt;code&gt;build&lt;/code&gt;状态&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -356,7 +383,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;问题说明&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#问题说明&quot;&gt;null&lt;/a&gt;问题说明&lt;/h2&gt;
+      &lt;h2 id=&quot;问题说明&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#问题说明&quot;&gt;&lt;/a&gt; 问题说明&lt;/h2&gt;
 &lt;p&gt;使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码&lt;/p&gt;
     
     </summary>
@@ -406,12 +433,10 @@
       
       
         &lt;p&gt;记第一次拿到十年美签&lt;/p&gt;
-&lt;h1&gt;时间&lt;/h1&gt;
+&lt;h1 id=&quot;时间&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#时间&quot;&gt;&lt;/a&gt; 时间&lt;/h1&gt;
 &lt;ul&gt;
 &lt;li&gt;提交DS160: 2018-07-08&lt;/li&gt;
-&lt;li&gt;预约面签时间: 2018-07-27 前面排队人太多&lt;/li&gt;
-&lt;li&gt;Issued: 2018-07-30&lt;/li&gt;
-&lt;li&gt;护照已从领事馆那
+&lt;li&gt;预约面签时间: 2018-07-27 
       
     
     </summary>
@@ -473,7 +498,7 @@
     
     <summary type="html">
     
-      &lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;header-anchor&quot; href=&quot;#环境准备&quot;&gt;null&lt;/a&gt;环境准备&lt;/h3&gt;
+      &lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;获取安装包&lt;/li&gt;
 &lt;/ul&gt;
@@ -508,27 +533,6 @@
     
       <category term="docker" scheme="http://blog.simble.xyz/categories/docker/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>python virtenv环境搭建</title>
-    <link href="http://blog.simble.xyz/post/4926e490.html"/>
-    <id>http://blog.simble.xyz/post/4926e490.html</id>
-    <published>2018-05-06T18:32:01.000Z</published>
-    <updated>2018-11-15T05:46:30.039Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。&lt;/p&gt;
-&lt;p&gt;virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="python" scheme="http://blog.simble.xyz/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
     
   </entry>
   

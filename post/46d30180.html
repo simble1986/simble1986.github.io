@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="nullMininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
+  <meta name="description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
 <meta name="keywords" content="network,sdn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mininet基础使用">
 <meta property="og:url" content="http://blog.simble.xyz/post/46d30180.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="nullMininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
+<meta property="og:description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-11-07T03:09:12.588Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mininet基础使用">
-<meta name="twitter:description" content="nullMininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
+<meta name="twitter:description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,15 +170,15 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet是什么"><span class="toc-number">1.</span> <span class="toc-text">nullMininet是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet用途"><span class="toc-number">2.</span> <span class="toc-text">nullMininet用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.</span> <span class="toc-text">null安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu16-04"><span class="toc-number">3.1.</span> <span class="toc-text">nullUbuntu16.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">3.2.</span> <span class="toc-text">null测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">4.</span> <span class="toc-text">null使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用命令"><span class="toc-number">4.1.</span> <span class="toc-text">null常用命令</span></a></li></ol></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet是什么"><span class="toc-number">1.</span> <span class="toc-text"> Mininet是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mininet用途"><span class="toc-number">2.</span> <span class="toc-text"> Mininet用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装"><span class="toc-number">3.</span> <span class="toc-text"> 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ubuntu1604"><span class="toc-number">3.1.</span> <span class="toc-text"> Ubuntu16.04</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-number">3.2.</span> <span class="toc-text"> 测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-number">4.</span> <span class="toc-text"> 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#常用命令"><span class="toc-number">4.1.</span> <span class="toc-text"> 常用命令</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<h2 id="mininet是什么"><a class="header-anchor" href="#mininet是什么">null</a>Mininet是什么</h2>
+    	<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
 <p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
 <p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
 <a id="more"></a>
-<h2 id="mininet用途"><a class="header-anchor" href="#mininet用途">null</a>Mininet用途</h2>
+<h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
 <ul>
 <li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
 <li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
@@ -189,13 +189,13 @@
 <li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
 <li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
 </ul>
-<h2 id="安装"><a class="header-anchor" href="#安装">null</a>安装</h2>
-<h3 id="ubuntu16-04"><a class="header-anchor" href="#ubuntu16-04">null</a>Ubuntu16.04</h3>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="ubuntu1604"><a class="markdownIt-Anchor" href="#ubuntu1604"></a> Ubuntu16.04</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure>
-<h3 id="测试"><a class="header-anchor" href="#测试">null</a>测试</h3>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a class="header-anchor" href="#使用">null</a>使用</h2>
-<h3 id="常用命令"><a class="header-anchor" href="#常用命令">null</a>常用命令</h3>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
 <ul>
 <li>进入mininet命令行模式</li>
 </ul>
@@ -318,7 +318,7 @@ h2的eth0与s1的eth2相连</p>
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -347,7 +347,7 @@ h2的eth0与s1的eth2相连</p>
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 

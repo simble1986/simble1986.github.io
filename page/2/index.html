@@ -156,6 +156,51 @@
   <section class="meta">
     
     <h2 class="title">
+      <a href="/post/257b0787.html">
+        openstack接口状态异常
+      </a>
+    </h2>
+    
+    <time>
+      9月 11, 2018
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/cloud/">cloud</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
+<p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
+<h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
+<blockquote>
+<p>openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于<code>build</code>状态</p>
+</blockquote>
+
+    
+	  <div class="readmore">
+      <a href="/post/257b0787.html">Read More</a>
+    </div>
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/openstack/">openstack</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
       <a href="/post/c2a7a06a.html">
         Ubuntu在Openstack中启动密码注入不生效问题定位1
       </a>
@@ -172,7 +217,7 @@
 
   </section>
   <section class="article typo">
-	  <h2 id="问题说明"><a class="header-anchor" href="#问题说明">null</a>问题说明</h2>
+	  <h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
 <p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
 
     
@@ -260,7 +305,7 @@
   </section>
   <section class="article typo">
 	  <p>记第一次拿到十年美签</p>
-<h1>时间</h1>
+<h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
 <ul>
 <li>提交DS160: 2018-07-08</li>
 <li>预约面签时间: 2018-07-27 前面排队人太多</li>
@@ -268,13 +313,13 @@
 <li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li>
 <li>收到护照: 2018-08-02</li>
 </ul>
-<h4 id="持续时间"><a class="header-anchor" href="#持续时间">null</a>持续时间</h4>
+<h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4>
 <ul>
 <li>面签持续时间：1分钟不到</li>
 <li>AP持续时间：2个工作日</li>
 <li>Issued到送到苏州：3个工作日</li>
 </ul>
-<h1>面签问题</h1>
+<h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1>
 <ol>
 <li>你去美国干什么？</li>
 <li>要去美国多久？</li>
@@ -400,7 +445,7 @@
 
   </section>
   <section class="article typo">
-	  <h3 id="环境准备"><a class="header-anchor" href="#环境准备">null</a>环境准备</h3>
+	  <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
 </ul>
@@ -570,7 +615,7 @@
   </section>
   <section class="article typo">
 	  <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="header-anchor" href="#问题引入">null</a>问题引入</h2>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
 <p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
@@ -615,7 +660,7 @@
 
   </section>
   <section class="article typo">
-	  <h3 id="问题出现"><a class="header-anchor" href="#问题出现">null</a>问题出现</h3>
+	  <h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
 <p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
 
     
@@ -632,50 +677,6 @@
         <a href="/tags/DockerFile/">DockerFile</a>
       
         <a href="/tags/mysql-server/">mysql-server</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/a072bce6.html">
-        Hexo+Next上开启Valine评论系统
-      </a>
-    </h2>
-    
-    <time>
-      3月 27, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/hexo/">hexo</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/a072bce6.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/blog/">blog</a>
-      
-        <a href="/tags/Next/">Next</a>
-      
-        <a href="/tags/Valine/">Valine</a>
       
 	  </div>
     
@@ -745,7 +746,7 @@
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -774,7 +775,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 

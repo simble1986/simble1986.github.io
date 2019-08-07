@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker基本操作（一）">
 <meta property="og:url" content="http://blog.simble.xyz/post/493f285a.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-04T09:58:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="docker基本操作（一）">
-<meta name="twitter:description" content="本文作为docker使用笔记供小伙伴们参考 null准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
+<meta name="twitter:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在/usr/share/bash-completion/completions/docker目录">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,18 +170,18 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text">null准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#image操作"><span class="toc-number">2.</span> <span class="toc-text">nullimage操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从docker-hub上获取image"><span class="toc-number">2.1.</span> <span class="toc-text">null从docker hub上获取image</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#continer相关"><span class="toc-number">3.</span> <span class="toc-text">nullcontiner相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建docker"><span class="toc-number">3.1.</span> <span class="toc-text">null创建docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看及操作"><span class="toc-number">3.2.</span> <span class="toc-text">null查看及操作</span></a></li></ol></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#准备工作"><span class="toc-number">1.</span> <span class="toc-text"> 准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#image操作"><span class="toc-number">2.</span> <span class="toc-text"> image操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#从docker-hub上获取image"><span class="toc-number">2.1.</span> <span class="toc-text"> 从docker hub上获取image</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#continer相关"><span class="toc-number">3.</span> <span class="toc-text"> continer相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建docker"><span class="toc-number">3.1.</span> <span class="toc-text"> 创建docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看及操作"><span class="toc-number">3.2.</span> <span class="toc-text"> 查看及操作</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="header-anchor" href="#准备工作">null</a>准备工作</h2>
+<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
 <p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
 <a id="more"></a>
 <p>为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
 <p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<h2 id="image操作"><a class="header-anchor" href="#image操作">null</a>image操作</h2>
+<h2 id="image操作"><a class="markdownIt-Anchor" href="#image操作"></a> image操作</h2>
 <ul>
 <li>build image</li>
 </ul>
@@ -194,15 +194,15 @@
 <li>删除image</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="从docker-hub上获取image"><a class="header-anchor" href="#从docker-hub上获取image">null</a>从docker hub上获取image</h3>
+<h3 id="从docker-hub上获取image"><a class="markdownIt-Anchor" href="#从docker-hub上获取image"></a> 从docker hub上获取image</h3>
 <p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure>
-<h2 id="continer相关"><a class="header-anchor" href="#continer相关">null</a>continer相关</h2>
-<h3 id="创建docker"><a class="header-anchor" href="#创建docker">null</a>创建docker</h3>
+<h2 id="continer相关"><a class="markdownIt-Anchor" href="#continer相关"></a> continer相关</h2>
+<h3 id="创建docker"><a class="markdownIt-Anchor" href="#创建docker"></a> 创建docker</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure>
 <p>常用参数说明</p>
 <blockquote>
-<p>–rm 当运行结束（==当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止==）时自动删除docker<br><br>
+<p>–rm 当运行结束（<mark>当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止</mark>）时自动删除docker<br><br>
 -it 重定向docker终端<br><br>
 -d 在后台执行<br><br>
 -e 添加运行时的参数，常被用于docker CMD执行时增加参数</p>
@@ -226,7 +226,7 @@
 <li>使用docker rm来删除一个容器</li>
 <li>使用docker rmi则会删除docker的image</li>
 </ol>
-<h3 id="查看及操作"><a class="header-anchor" href="#查看及操作">null</a>查看及操作</h3>
+<h3 id="查看及操作"><a class="markdownIt-Anchor" href="#查看及操作"></a> 查看及操作</h3>
 <ul>
 <li>查看容器状态</li>
 </ul>
@@ -331,7 +331,7 @@
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -360,7 +360,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 

@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="null环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
+  <meta name="description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
 <meta name="keywords" content="ovs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu16.04安装Open vSwitch">
 <meta property="og:url" content="http://blog.simble.xyz/post/b2c6ed30.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="null环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
+<meta property="og:description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-30T06:19:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu16.04安装Open vSwitch">
-<meta name="twitter:description" content="null环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
+<meta name="twitter:description" content="环境准备  获取安装包  1git clone https://github.com/openvswitch/ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,11 +170,11 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">null环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text">null安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务"><span class="toc-number">3.</span> <span class="toc-text">null启动服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建必要的目录"><span class="toc-number">3.1.</span> <span class="toc-text">null创建必要的目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置ovsdb-server"><span class="toc-number">3.2.</span> <span class="toc-text">null配置ovsdb-server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动ovs进程"><span class="toc-number">3.3.</span> <span class="toc-text">null启动ovs进程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证"><span class="toc-number">4.</span> <span class="toc-text">null验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题及解决"><span class="toc-number">5.</span> <span class="toc-text">null问题及解决</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装"><span class="toc-number">2.</span> <span class="toc-text"> 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#启动服务"><span class="toc-number">3.</span> <span class="toc-text"> 启动服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#创建必要的目录"><span class="toc-number">3.1.</span> <span class="toc-text"> 创建必要的目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置ovsdb-server"><span class="toc-number">3.2.</span> <span class="toc-text"> 配置ovsdb-server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动ovs进程"><span class="toc-number">3.3.</span> <span class="toc-text"> 启动ovs进程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#验证"><span class="toc-number">4.</span> <span class="toc-text"> 验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#问题及解决"><span class="toc-number">5.</span> <span class="toc-text"> 问题及解决</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<h3 id="环境准备"><a class="header-anchor" href="#环境准备">null</a>环境准备</h3>
+    	<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
 </ul>
@@ -184,7 +184,7 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
-<h3 id="安装"><a class="header-anchor" href="#安装">null</a>安装</h3>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
 <ul>
 <li>当使用源代码时，需要自己创建<code>configure</code>脚本</li>
 </ul>
@@ -212,11 +212,11 @@
 <li>验证</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure>
-<h3 id="启动服务"><a class="header-anchor" href="#启动服务">null</a>启动服务</h3>
+<h3 id="启动服务"><a class="markdownIt-Anchor" href="#启动服务"></a> 启动服务</h3>
 <p>官方说明中提到有一个<code>ovs-ctl</code>的命令，然而，我安装完之后并没有这个命令。可能官方文档比较老了吧。</p>
-<h4 id="创建必要的目录"><a class="header-anchor" href="#创建必要的目录">null</a>创建必要的目录</h4>
+<h4 id="创建必要的目录"><a class="markdownIt-Anchor" href="#创建必要的目录"></a> 创建必要的目录</h4>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure>
-<h4 id="配置ovsdb-server"><a class="header-anchor" href="#配置ovsdb-server">null</a>配置ovsdb-server</h4>
+<h4 id="配置ovsdb-server"><a class="markdownIt-Anchor" href="#配置ovsdb-server"></a> 配置ovsdb-server</h4>
 <ul>
 <li>从源文件目录创建<code>conf.db</code></li>
 </ul>
@@ -229,9 +229,9 @@
 <li>初始化数据库</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure>
-<h4 id="启动ovs进程"><a class="header-anchor" href="#启动ovs进程">null</a>启动ovs进程</h4>
+<h4 id="启动ovs进程"><a class="markdownIt-Anchor" href="#启动ovs进程"></a> 启动ovs进程</h4>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
-<h3 id="验证"><a class="header-anchor" href="#验证">null</a>验证</h3>
+<h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
 <ul>
 <li>创建bridge</li>
 </ul>
@@ -244,7 +244,7 @@
 <li>查看配置</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure>
-<h3 id="问题及解决"><a class="header-anchor" href="#问题及解决">null</a>问题及解决</h3>
+<h3 id="问题及解决"><a class="markdownIt-Anchor" href="#问题及解决"></a> 问题及解决</h3>
 <p>安装内核模块时出现如下错误，<strong>忽略即可</strong>（我还以为很严重，搜了一阵，发现不用管）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure>
 
@@ -328,7 +328,7 @@
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -357,7 +357,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 

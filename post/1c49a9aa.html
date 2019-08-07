@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互 null问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学">
+  <meta name="description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
 <meta name="keywords" content="docker,dockerpty">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dockerpty使用">
 <meta property="og:url" content="http://blog.simble.xyz/post/1c49a9aa.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互 null问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学">
+<meta property="og:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-04T09:58:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dockerpty使用">
-<meta name="twitter:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互 null问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学">
+<meta name="twitter:description" content="本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互  问题引入 docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于-it的方式来完成交互操作。 经过几天的学习和测">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,27 +170,27 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题引入"><span class="toc-number">1.</span> <span class="toc-text">null问题引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text">null环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text">null依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装步骤"><span class="toc-number">2.0.2.</span> <span class="toc-text">null安装步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关api"><span class="toc-number">3.</span> <span class="toc-text">null相关API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本使用"><span class="toc-number">4.</span> <span class="toc-text">null基本使用</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题引入"><span class="toc-number">1.</span> <span class="toc-text"> 问题引入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境搭建"><span class="toc-number">2.</span> <span class="toc-text"> 环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#依赖"><span class="toc-number">2.0.1.</span> <span class="toc-text"> 依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装步骤"><span class="toc-number">2.0.2.</span> <span class="toc-text"> 安装步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#相关api"><span class="toc-number">3.</span> <span class="toc-text"> 相关API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本使用"><span class="toc-number">4.</span> <span class="toc-text"> 基本使用</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="header-anchor" href="#问题引入">null</a>问题引入</h2>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
 <p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
 <a id="more"></a>
-<h2 id="环境搭建"><a class="header-anchor" href="#环境搭建">null</a>环境搭建</h2>
+<h2 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h2>
 <p>根据<a href="https://github.com/d11wtq/dockerpty" target="_blank" rel="noopener">dockerpty</a>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
 <p>但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作</p>
 <p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<a href="https://github.com/simble1986/dockerpty" target="_blank" rel="noopener">simble1986/dockerpty</a></p>
-<h4 id="依赖"><a class="header-anchor" href="#依赖">null</a>依赖</h4>
+<h4 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h4>
 <p>原有的project上提到依赖的docker api为<code>docker-py&gt;=0.3.2</code>，但docker的python API已经更新</p>
 <ul>
 <li>安装docker API</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install docker</span><br></pre></td></tr></table></figure>
-<h4 id="安装步骤"><a class="header-anchor" href="#安装步骤">null</a>安装步骤</h4>
+<h4 id="安装步骤"><a class="markdownIt-Anchor" href="#安装步骤"></a> 安装步骤</h4>
 <ul>
 <li>获取源码</li>
 </ul>
@@ -199,13 +199,13 @@
 <li>安装</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
-<h2 id="相关api"><a class="header-anchor" href="#相关api">null</a>相关API</h2>
+<h2 id="相关api"><a class="markdownIt-Anchor" href="#相关api"></a> 相关API</h2>
 <p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener">API文档</a>，以下主要对container相关参数加以说明</p>
 <ul>
 <li>tty (bool) – Allocate a pseudo-TTY.</li>
 <li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
 </ul>
-<h2 id="基本使用"><a class="header-anchor" href="#基本使用">null</a>基本使用</h2>
+<h2 id="基本使用"><a class="markdownIt-Anchor" href="#基本使用"></a> 基本使用</h2>
 <ul>
 <li>连接client</li>
 </ul>
@@ -302,7 +302,7 @@
     
         <li><a class="flat-box" href="/categories/cloud/"><div class='name'>cloud</div><div class='badget'>4</div></a></li>
     
-        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/docker/"><div class='name'>docker</div><div class='badget'>7</div></a></li>
     
         <li><a class="flat-box" href="/categories/hexo/"><div class='name'>hexo</div><div class='badget'>3</div></a></li>
     
@@ -331,7 +331,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.5px; color: #606060">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.5px; color: #606060">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.5px; color: #606060">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17px; color: #404040">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17px; color: #404040">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 18.5px; color: #202020">python</a> <a href="/tags/sdn/" style="font-size: 17px; color: #404040">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.5px; color: #606060">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 18.8px; color: #1a1a1a">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 
