@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-07T07:08:21.890Z</updated>
+  <updated>2019-08-07T07:09:31.967Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,16 +21,14 @@
     <link href="http://blog.simble.xyz/post/56e1f957.html"/>
     <id>http://blog.simble.xyz/post/56e1f957.html</id>
     <published>2019-08-06T23:05:29.000Z</published>
-    <updated>2019-08-07T07:08:21.890Z</updated>
+    <updated>2019-08-07T07:09:31.967Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。&lt;/p&gt;
+      &lt;p&gt;一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡&lt;strong&gt;混杂模式&lt;/strong&gt;惹的祸&lt;/p
-      
+&lt;p&gt;我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡&lt;strong&gt;混杂模式&lt;/strong&gt;惹的祸&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     

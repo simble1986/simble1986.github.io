@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸   环境准备  安装docker 在我的其他博文里有国内源安装docker的内容，原样照搬 12345$ sudo apt-get update &amp;amp;&amp;amp; sudo apt-get -y i">
+  <meta name="description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸">
 <meta name="keywords" content="docker,ovs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Docker + ovs，原来如此简单">
 <meta property="og:url" content="http://blog.simble.xyz/post/56e1f957.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸   环境准备  安装docker 在我的其他博文里有国内源安装docker的内容，原样照搬 12345$ sudo apt-get update &amp;amp;&amp;amp; sudo apt-get -y i">
+<meta property="og:description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-07T07:08:21.890Z">
+<meta property="og:updated_time" content="2019-08-07T07:09:31.967Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Docker + ovs，原来如此简单">
-<meta name="twitter:description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸   环境准备  安装docker 在我的其他博文里有国内源安装docker的内容，原样照搬 12345$ sudo apt-get update &amp;amp;&amp;amp; sudo apt-get -y i">
+<meta name="twitter:description" content="一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。  我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡混杂模式惹的祸">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -178,6 +178,7 @@
 <blockquote>
 <p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
 </blockquote>
+<a id="more"></a>
 <h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <h3 id="安装docker"><a class="markdownIt-Anchor" href="#安装docker"></a> 安装docker</h3>
 <p>在我的其他博文里有国内源安装docker的内容，原样照搬</p>
