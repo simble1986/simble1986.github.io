@@ -14,19 +14,19 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
+  <meta name="description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建">
 <meta name="keywords" content="ovs,openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack安全组基于ovs的学习笔记">
 <meta property="og:url" content="http://blog.simble.xyz/post/1a57d569.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
+<meta property="og:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://blog.simble.xyz/post/1a57d569/rule_list.png">
-<meta property="og:updated_time" content="2019-08-09T09:42:23.003Z">
+<meta property="og:updated_time" content="2019-08-09T09:43:40.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Openstack安全组基于ovs的学习笔记">
-<meta name="twitter:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
+<meta name="twitter:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建">
 <meta name="twitter:image" content="http://blog.simble.xyz/post/1a57d569/rule_list.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
@@ -178,6 +178,7 @@
   	<div class="article-entry" itemprop="articleBody">
     	<p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
 <p>实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建</p>
+<a id="more"></a>
 <h2 id="openstack安全组"><a class="markdownIt-Anchor" href="#openstack安全组"></a> Openstack安全组</h2>
 <p><strong>1. 安全组</strong></p>
 <p>在Openstack中，安全组是做哦那个在neutron port上的一组策略，这些策略可以理解为一些防火墙的规则集合。</p>
