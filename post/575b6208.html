@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-09T02:04:18.970Z">
+<meta property="og:updated_time" content="2019-08-09T02:06:52.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux虚拟网络学习笔记">
 <meta name="twitter:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
@@ -274,7 +274,7 @@
 <p><strong>7. 查看路由表项</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">192.168.60.10   0.0.0.0         255.255.255.255 UH    0      0        0 tun1</span><br><span class="line">192.168.100.0   0.0.0.0         255.255.255.0   U     0      0        0 tap1</span><br><span class="line">192.168.200.0   192.168.100.1   255.255.255.0   UG    0      0        0 tap1</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>可以看到，ns1中自动创建了一条指向192.168.60.10的路由，吓一跳是tun1</p>
+<p>可以看到，ns1中自动创建了一条指向192.168.60.10的路由，下一跳是tun1</p>
 </blockquote>
 
   	</div>
