@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-09T02:06:52.248Z</updated>
+  <updated>2019-08-09T09:28:37.572Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,20 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>openstack_security_group_ovs_1</title>
+    <link href="http://blog.simble.xyz/post/1a57d569.html"/>
+    <id>http://blog.simble.xyz/post/1a57d569.html</id>
+    <published>2019-08-09T01:28:37.000Z</published>
+    <updated>2019-08-09T09:28:37.572Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Linux虚拟网络学习笔记</title>
@@ -507,34 +521,6 @@
     
     
       <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Ubuntu16.04安装Open vSwitch</title>
-    <link href="http://blog.simble.xyz/post/b2c6ed30.html"/>
-    <id>http://blog.simble.xyz/post/b2c6ed30.html</id>
-    <published>2018-05-29T22:11:23.000Z</published>
-    <updated>2018-05-30T06:19:38.000Z</updated>
-    
-    <summary type="html">
-    
-      &lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;获取安装包&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;git clone https://github.com/openvswitch/ovs.git&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ul&gt;
-&lt;li&gt;安装必要的依赖&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;apt install autoconf libtool make libssl-dev libcap-ng-dev&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-      <category term="cloud" scheme="http://blog.simble.xyz/categories/cloud/"/>
-    
-    
-      <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
     
   </entry>
   

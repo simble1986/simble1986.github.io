@@ -156,6 +156,60 @@
   <section class="meta">
     
     <h2 class="title">
+      <a href="/post/775edb62.html">
+        OpenvSwitch学习笔记1
+      </a>
+    </h2>
+    
+    <time>
+      9月 21, 2018
+    </time>
+		
+    
+    <div class='cats'>
+        <a href="/categories/network/">network</a>
+    </div>
+
+  </section>
+  <section class="article typo">
+	  <h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
+<ol>
+<li>VLAN with trunk and access ports</li>
+<li>绑定NIC(with/without LAC)</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
+<li>QoS</li>
+<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
+<li>连接故障管理</li>
+<li>openflow 1.0及其扩展</li>
+<li>使用Linux内核进行高性能转发</li>
+</ol>
+
+    
+	  <div class="readmore">
+      <a href="/post/775edb62.html">Read More</a>
+    </div>
+    
+    
+    
+	  <div class="full-width auto-padding tags">
+      
+        <a href="/tags/ovs/">ovs</a>
+      
+        <a href="/tags/network/">network</a>
+      
+        <a href="/tags/openvswitch/">openvswitch</a>
+      
+	  </div>
+    
+  </section>
+</article>
+    </div>
+  
+    <div class='post-wrapper'>
+      <article class="post reveal">
+  <section class="meta">
+    
+    <h2 class="title">
       <a href="/post/c4780247.html">
         Hexo开启disqus评论系统
       </a>
@@ -627,52 +681,6 @@
         <a href="/tags/pexpect/">pexpect</a>
       
         <a href="/tags/自动化/">自动化</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/1c49a9aa.html">
-        dockerpty使用
-      </a>
-    </h2>
-    
-    <time>
-      5月 3, 2018
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/docker/">docker</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
-<p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
-<p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
-<p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/1c49a9aa.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/dockerpty/">dockerpty</a>
       
 	  </div>
     
