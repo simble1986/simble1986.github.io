@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-09T09:43:40.735Z</updated>
+  <updated>2019-08-12T03:30:40.363Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -17,25 +17,25 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Openstack安全组基于ovs的学习笔记</title>
-    <link href="http://blog.simble.xyz/post/1a57d569.html"/>
-    <id>http://blog.simble.xyz/post/1a57d569.html</id>
-    <published>2019-08-09T01:28:37.000Z</published>
-    <updated>2019-08-09T09:43:40.735Z</updated>
+    <title>Linux虚拟网络学习笔记</title>
+    <link href="http://blog.simble.xyz/post/575b6208.html"/>
+    <id>http://blog.simble.xyz/post/575b6208.html</id>
+    <published>2019-08-07T01:05:40.000Z</published>
+    <updated>2019-08-12T03:30:40.363Z</updated>
     
     <summary type="html">
     
-      &lt;p&gt;本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。&lt;/p&gt;
-&lt;p&gt;实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建&lt;/p&gt;
+      &lt;p&gt;Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。&lt;/p&gt;
+&lt;p&gt;本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router&lt;/p&gt;
     
     </summary>
     
-      <category term="openstack" scheme="http://blog.simble.xyz/categories/openstack/"/>
+      <category term="network" scheme="http://blog.simble.xyz/categories/network/"/>
     
     
-      <category term="ovs" scheme="http://blog.simble.xyz/tags/ovs/"/>
+      <category term="network" scheme="http://blog.simble.xyz/tags/network/"/>
     
-      <category term="openstack" scheme="http://blog.simble.xyz/tags/openstack/"/>
+      <category term="linux" scheme="http://blog.simble.xyz/tags/linux/"/>
     
   </entry>
   
