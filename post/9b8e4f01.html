@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Archives: 2019 | Simble的小站</title>
+  <title>Openstack安全组基于ovs的学习笔记 | Simble的小站</title>
   <meta name="description" content="记录一些技术的或者旅行的东东" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -14,16 +14,20 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记录一些技术的或者旅行的东东">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Simble的小站">
-<meta property="og:url" content="http://blog.simble.xyz/archives/2019/index.html">
+  <meta name="description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
+<meta name="keywords" content="ovs,openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack安全组基于ovs的学习笔记">
+<meta property="og:url" content="http://blog.simble.xyz/post/9b8e4f01.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="记录一些技术的或者旅行的东东">
+<meta property="og:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.simble.xyz/post/undefined/rule_list.png">
+<meta property="og:updated_time" content="2019-08-12T03:48:59.626Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Simble的小站">
-<meta name="twitter:description" content="记录一些技术的或者旅行的东东">
+<meta name="twitter:title" content="Openstack安全组基于ovs的学习笔记">
+<meta name="twitter:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建  Openstack安全组 1. 安全组 在Openstack中，安全组是做哦那个在neutron port上的一组策略">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/undefined/rule_list.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -148,36 +152,31 @@
   <div class="l_body">
     <div class='container clearfix'>
       <div class='l_main'>
-        
+        <article id="post-openstack-security-group-ovs-1"
+  class="post white-box article-type-post"
+  itemscope itemprop="blogPost">
+	<section class='meta'>
+	<h2 class="title">
+  	<a href="/post/9b8e4f01.html">
+    	Openstack安全组基于ovs的学习笔记
+    </a>
+  </h2>
+	<time>
+	  8月 8, 2019
+	</time>
 	
-  <script>
-    window.subData= { title:'Year : 2019'}
-  </script>
-
-<section class="post-list">
-	
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/9b8e4f01.html">
-        Openstack安全组基于ovs的学习笔记
-      </a>
-    </h2>
-    
-    <time>
-      8月 8, 2019
-    </time>
-		
     
     <div class='cats'>
         <a href="/categories/openstack/">openstack</a>
     </div>
 
-  </section>
-  <section class="article typo">
-	  <p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
+	</section>
+	
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#openstack安全组"><span class="toc-number">1.</span> <span class="toc-text"> Openstack安全组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验准备"><span class="toc-number">2.</span> <span class="toc-text"> 实验准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全组实验"><span class="toc-number">3.</span> <span class="toc-text"> 安全组实验</span></a></li></ol></section>
+	
+	<section class="article typo">
+  	<div class="article-entry" itemprop="articleBody">
+    	<p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
 <p>实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建</p>
 <h2 id="openstack安全组"><a class="markdownIt-Anchor" href="#openstack安全组"></a> Openstack安全组</h2>
 <p><strong>1. 安全组</strong></p>
@@ -273,11 +272,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=3, n_bytes=126, priority=100,arp,reg5=0xe actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=130 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=135 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=136 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=2, n_bytes=729, priority=95,udp,reg5=0xe,tp_src=67,tp_dst=68 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=95,udp6,reg5=0xe,tp_src=547,tp_dst=546 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=5, n_bytes=490, priority=90,ct_state=-trk,ip,reg5=0xe actions=ct(table=82,zone=NXM_NX_REG6[0..15])</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=90,ct_state=-trk,ipv6,reg5=0xe actions=ct(table=82,zone=NXM_NX_REG6[0..15])</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=80,ct_state=+trk,reg5=0xe actions=resubmit(,82)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.606s, table=81, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br></pre></td></tr></table></figure>
 <p><strong>由上可看到，送往<code>199.0.0.0/24</code>，目的端口为<code>80</code>的<code>TCP</code>报文大多数情况将正常转发出去</strong></p>
 
-
-    
-    
-    
-	  <div class="full-width auto-padding tags">
+  	</div>
+	  
+	  <div class="article-tags tags">
       
         <a href="/tags/ovs/">ovs</a>
       
@@ -285,239 +282,30 @@
       
 	  </div>
     
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/575b6208.html">
-        Linux虚拟网络学习笔记
-      </a>
-    </h2>
-    
-    <time>
-      8月 7, 2019
-    </time>
 		
-    
-    <div class='cats'>
-        <a href="/categories/network/">network</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。</p>
-<p>本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/575b6208.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/network/">network</a>
-      
-        <a href="/tags/linux/">linux</a>
-      
-	  </div>
-    
-  </section>
+	
+		<div class="art-item-footer">
+				
+				
+					<span class="art-item-right">next：<a href="/post/575b6208.html" rel="next"  title="Linux虚拟网络学习笔记">
+						Linux虚拟网络学习笔记
+					</a><i class="icon icon-chevron-thin-right"></i></span>
+				
+		</div>
+	
+	</section>
+	
+		<section id="comments">
+			<div id="disqus_thread"></div>
+		</section>
+	
 </article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/56e1f957.html">
-        Docker + ovs，原来如此简单
-      </a>
-    </h2>
-    
-    <time>
-      8月 7, 2019
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/docker/">docker</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。</p>
-<blockquote>
-<p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
-</blockquote>
-
-    
-	  <div class="readmore">
-      <a href="/post/56e1f957.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/ovs/">ovs</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/d0b629f4.html">
-        k8s环境安装之差点儿我就放弃了
-      </a>
-    </h2>
-    
-    <time>
-      7月 19, 2019
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/k8s/">k8s</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
-在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
-
-    
-	  <div class="readmore">
-      <a href="/post/d0b629f4.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/Kubernetes/">Kubernetes</a>
-      
-        <a href="/tags/k8s/">k8s</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/72a09cbb.html">
-        pyenv使用笔记
-      </a>
-    </h2>
-    
-    <time>
-      2月 5, 2019
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/python/">python</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <p>OSX上的python版本纷繁复杂。</p>
-<ul>
-<li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
-<li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
-</ul>
-
-    
-	  <div class="readmore">
-      <a href="/post/72a09cbb.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/python/">python</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-    <div class='post-wrapper'>
-      <article class="post reveal">
-  <section class="meta">
-    
-    <h2 class="title">
-      <a href="/post/612ebe35.html">
-        使用国内资源（备忘）
-      </a>
-    </h2>
-    
-    <time>
-      1月 15, 2019
-    </time>
-		
-    
-    <div class='cats'>
-        <a href="/categories/tech/">tech</a>
-    </div>
-
-  </section>
-  <section class="article typo">
-	  <h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
-<blockquote>
-<p>docker.com越来越难访问了</p>
-</blockquote>
-
-    
-	  <div class="readmore">
-      <a href="/post/612ebe35.html">Read More</a>
-    </div>
-    
-    
-    
-	  <div class="full-width auto-padding tags">
-      
-        <a href="/tags/python/">python</a>
-      
-        <a href="/tags/docker/">docker</a>
-      
-        <a href="/tags/Linux/">Linux</a>
-      
-        <a href="/tags/Mac/">Mac</a>
-      
-	  </div>
-    
-  </section>
-</article>
-    </div>
-  
-</section>
-
-
+<script>
+	window.subData = {
+		title: 'Openstack安全组基于ovs的学习笔记',
+		tools: true
+	}
+</script>
 
       </div>
       <aside class='l_side'>
@@ -646,11 +434,13 @@
 <script>
   var disqus_shortname = 'simble';
   
+  var disqus_url = 'http://blog.simble.xyz/post/9b8e4f01.html';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

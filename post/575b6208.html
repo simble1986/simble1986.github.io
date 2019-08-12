@@ -22,10 +22,14 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-09T02:06:52.248Z">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/bridge.jpg">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/router.jpg">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/tunnel.jpg">
+<meta property="og:updated_time" content="2019-08-12T03:42:30.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux虚拟网络学习笔记">
 <meta name="twitter:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/575b6208/bridge.jpg">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,7 +174,7 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap设备"><span class="toc-number">2.</span> <span class="toc-text"> tap设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#veth-pair"><span class="toc-number">3.</span> <span class="toc-text"> veth pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bridge"><span class="toc-number">4.</span> <span class="toc-text"> bridge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router"><span class="toc-number">5.</span> <span class="toc-text"> router</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tun"><span class="toc-number">6.</span> <span class="toc-text"> tun</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap设备"><span class="toc-number">2.</span> <span class="toc-text"> tap设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#veth-pair"><span class="toc-number">3.</span> <span class="toc-text"> veth pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bridge"><span class="toc-number">4.</span> <span class="toc-text"> bridge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router"><span class="toc-number">5.</span> <span class="toc-text"> router</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tun"><span class="toc-number">6.</span> <span class="toc-text"> tun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">7.</span> <span class="toc-text"> 小结</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
@@ -217,6 +221,7 @@
 <p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
 </blockquote>
 <p>下面的实验模拟4个namespace中的接口通过bridge互通</p>
+<img src="/post/575b6208/bridge.jpg" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip link add tap3 <span class="built_in">type</span> veth peer name tap3_peer</span><br><span class="line">$ ip link add tap4 <span class="built_in">type</span> veth peer name tap4_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -240,6 +245,7 @@
 <p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
 <p>临时修改： <code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
 </blockquote>
+<img src="/post/575b6208/router.jpg" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap5 <span class="built_in">type</span> veth peer name tap5_peer</span><br><span class="line">$ ip link add tap6 <span class="built_in">type</span> veth peer name tap6_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -255,7 +261,8 @@
 <p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
 <p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
 </blockquote>
-<p>先按照<a href="#router">router</a>章节创建两个ns及配置</p>
+<img src="/post/575b6208/tunnel.jpg" title="Rule List">
+<p>忽略上图中的tun1和tun2后，整个topo与router中的一样。那么先按照<a href="#router">router</a>章节创建两个ns及配置</p>
 <p><strong>1. 创建veth pair并分别迁移到对应的namespace</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure>
 <p><strong>2. 配置IP和路由</strong></p>
@@ -276,6 +283,10 @@
 <blockquote>
 <p>可以看到，ns1中自动创建了一条指向192.168.60.10的路由，下一跳是tun1</p>
 </blockquote>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>Openstack的neutron组件正是基于这些Linux虚拟网络功能实现了虚拟机之间的网络通道。</p>
+<p>其中，tap、tun、veth pair被用于bridge之间的连接、bridge与vm的连接、bridge与router之间的连接。</p>
+<p>而bridge提供二层转发功能，router提供三层转发功能。</p>
 
   	</div>
 	  
@@ -291,8 +302,8 @@
 	
 		<div class="art-item-footer">
 				
-					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/post/575b6208.html" rel="prev"  title="Linux虚拟网络学习笔记">
-						Linux虚拟网络学习笔记 
+					<span class="art-item-left"><i class="icon icon-chevron-thin-left"></i>prev：<a href="/post/9b8e4f01.html" rel="prev"  title="Openstack安全组基于ovs的学习笔记">
+						Openstack安全组基于ovs的学习笔记 
 					</a></span>
 				
 				
@@ -365,7 +376,9 @@
     
         <li><a class="flat-box" href="/categories/k8s/"><div class='name'>k8s</div><div class='badget'>1</div></a></li>
     
-        <li><a class="flat-box" href="/categories/network/"><div class='name'>network</div><div class='badget'>6</div></a></li>
+        <li><a class="flat-box" href="/categories/network/"><div class='name'>network</div><div class='badget'>5</div></a></li>
+    
+        <li><a class="flat-box" href="/categories/openstack/"><div class='name'>openstack</div><div class='badget'>1</div></a></li>
     
         <li><a class="flat-box" href="/categories/python/"><div class='name'>python</div><div class='badget'>3</div></a></li>
     
@@ -388,7 +401,7 @@
 <div class="m_widget tagcloud">
     <div class="header">Tags</div>
     <div class='content'>
-        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 18.8px; color: #1a1a1a">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/linux/" style="font-size: 15.2px; color: #666">linux</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.4px; color: #4d4d4d">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 17.6px; color: #333">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
+        <a href="/tags/DockerFile/" style="font-size: 14px; color: #808080">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 14px; color: #808080">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 14px; color: #808080">Linux</a> <a href="/tags/Mac/" style="font-size: 14px; color: #808080">Mac</a> <a href="/tags/Next/" style="font-size: 14px; color: #808080">Next</a> <a href="/tags/Valine/" style="font-size: 14px; color: #808080">Valine</a> <a href="/tags/blog/" style="font-size: 15.2px; color: #666">blog</a> <a href="/tags/docker/" style="font-size: 20px; color: #000">docker</a> <a href="/tags/dockerpty/" style="font-size: 14px; color: #808080">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 14px; color: #808080">dpdk</a> <a href="/tags/flask/" style="font-size: 14px; color: #808080">flask</a> <a href="/tags/hexo/" style="font-size: 15.2px; color: #666">hexo</a> <a href="/tags/k8s/" style="font-size: 14px; color: #808080">k8s</a> <a href="/tags/linux/" style="font-size: 14px; color: #808080">linux</a> <a href="/tags/markdown/" style="font-size: 15.2px; color: #666">markdown</a> <a href="/tags/mysql-server/" style="font-size: 14px; color: #808080">mysql-server</a> <a href="/tags/network/" style="font-size: 20px; color: #000">network</a> <a href="/tags/nodejs/" style="font-size: 14px; color: #808080">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 14px; color: #808080">opendaylight</a> <a href="/tags/openstack/" style="font-size: 17.6px; color: #333">openstack</a> <a href="/tags/openvswitch/" style="font-size: 14px; color: #808080">openvswitch</a> <a href="/tags/ovs/" style="font-size: 18.8px; color: #1a1a1a">ovs</a> <a href="/tags/pexpect/" style="font-size: 14px; color: #808080">pexpect</a> <a href="/tags/pi/" style="font-size: 14px; color: #808080">pi</a> <a href="/tags/python/" style="font-size: 17.6px; color: #333">python</a> <a href="/tags/sdn/" style="font-size: 16.4px; color: #4d4d4d">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 14px; color: #808080">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 14px; color: #808080">visa</a> <a href="/tags/vpp/" style="font-size: 14px; color: #808080">vpp</a> <a href="/tags/树莓派/" style="font-size: 14px; color: #808080">树莓派</a> <a href="/tags/自动化/" style="font-size: 15.2px; color: #666">自动化</a>
     </div>
 </div>
 
