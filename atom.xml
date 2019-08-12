@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-12T03:48:59.626Z</updated>
+  <updated>2019-08-12T04:36:36.842Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -21,15 +21,12 @@
     <link href="http://blog.simble.xyz/post/9b8e4f01.html"/>
     <id>http://blog.simble.xyz/post/9b8e4f01.html</id>
     <published>2019-08-08T01:05:40.000Z</published>
-    <updated>2019-08-12T03:48:59.626Z</updated>
+    <updated>2019-08-12T04:36:36.842Z</updated>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。&lt;/p&gt;
-&lt;p&gt;实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.0
-      
+      &lt;p&gt;本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。&lt;/p&gt;
+&lt;p&gt;实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建&lt;/p&gt;
     
     </summary>
     
