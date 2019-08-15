@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-12T04:36:36.842Z</updated>
+  <updated>2019-08-15T01:30:54.709Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,38 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>西班牙申根签证快速攻略</title>
+    <link href="http://blog.simble.xyz/post/29ce55ae.html"/>
+    <id>http://blog.simble.xyz/post/29ce55ae.html</id>
+    <published>2019-08-14T17:22:22.000Z</published>
+    <updated>2019-08-15T01:30:54.709Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;适用对象&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#适用对象&quot;&gt;&lt;/a&gt; 适用对象&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;北京领区&lt;/li&gt;
+&lt;li&gt;在职人员&lt;/li&gt;
+&lt;li&gt;旅游签证&lt;/li&gt;
+&lt;li&gt;2019年&lt;/li&gt;
+&lt;/ol&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="旅行" scheme="http://blog.simble.xyz/categories/%E6%97%85%E8%A1%8C/"/>
+    
+    
+      <category term="旅行" scheme="http://blog.simble.xyz/tags/%E6%97%85%E8%A1%8C/"/>
+    
+      <category term="visa" scheme="http://blog.simble.xyz/tags/visa/"/>
+    
+  </entry>
   
   <entry>
     <title>Openstack安全组基于ovs的学习笔记</title>
@@ -509,27 +541,6 @@
     
     
       <category term="openstack" scheme="http://blog.simble.xyz/tags/openstack/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用markdown写PPT</title>
-    <link href="http://blog.simble.xyz/post/4f712e63.html"/>
-    <id>http://blog.simble.xyz/post/4f712e63.html</id>
-    <published>2018-06-21T05:42:00.000Z</published>
-    <updated>2018-11-15T05:46:30.039Z</updated>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="工具" scheme="http://blog.simble.xyz/categories/%E5%B7%A5%E5%85%B7/"/>
-    
-    
-      <category term="markdown" scheme="http://blog.simble.xyz/tags/markdown/"/>
     
   </entry>
   
