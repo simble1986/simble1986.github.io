@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
   <title>Linux虚拟网络学习笔记 | Simble的小站</title>
-  <meta name="description" content="记录一些技术的或者旅行的东东" />
-  <meta name="keywords" content="" />
-  <meta name="HandheldFriendly" content="True" />
+  <meta name="description" content="记录一些技术的或者旅行的东东">
+  <meta name="keywords" content>
+  <meta name="HandheldFriendly" content="True">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="google-site-verification" content="vzXcODQkWEVd_olwKjKVItikA7cOGVMuwcxf-oEpEyU" />
-  <meta name="baidu-site-verification" content="N1SqwCDq9o" />
+  <meta name="google-site-verification" content="vzXcODQkWEVd_olwKjKVItikA7cOGVMuwcxf-oEpEyU">
+  <meta name="baidu-site-verification" content="N1SqwCDq9o">
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,18 +22,18 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/bridge.jpg">
-<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/router.jpg">
-<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/tunnel.jpg">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/575b6208/bridge.jpg">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/575b6208/router.jpg">
+<meta property="og:image" content="http://blog.simble.xyz/post/575b6208/575b6208/tunnel.jpg">
 <meta property="og:updated_time" content="2019-08-12T03:42:30.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux虚拟网络学习笔记">
 <meta name="twitter:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
-<meta name="twitter:image" content="http://blog.simble.xyz/post/575b6208/bridge.jpg">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/575b6208/575b6208/bridge.jpg">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link href="//cdn.bootcss.com/node-waves/0.7.5/waves.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script>
     function setLoadingBarProgress(num) {
@@ -55,7 +55,7 @@
 })();
 </script>
 </head>
-
+</html>
 <body>
   <div id="loading-bar-wrapper">
   <div id="loading-bar"></div>
@@ -221,7 +221,7 @@
 <p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
 </blockquote>
 <p>下面的实验模拟4个namespace中的接口通过bridge互通</p>
-<img src="/post/575b6208/bridge.jpg" title="Rule List">
+<img src="/post/575b6208/575b6208/bridge.jpg" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip link add tap3 <span class="built_in">type</span> veth peer name tap3_peer</span><br><span class="line">$ ip link add tap4 <span class="built_in">type</span> veth peer name tap4_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -245,7 +245,7 @@
 <p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
 <p>临时修改： <code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
 </blockquote>
-<img src="/post/575b6208/router.jpg" title="Rule List">
+<img src="/post/575b6208/575b6208/router.jpg" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap5 <span class="built_in">type</span> veth peer name tap5_peer</span><br><span class="line">$ ip link add tap6 <span class="built_in">type</span> veth peer name tap6_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -261,7 +261,7 @@
 <p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
 <p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
 </blockquote>
-<img src="/post/575b6208/tunnel.jpg" title="Rule List">
+<img src="/post/575b6208/575b6208/tunnel.jpg" title="Rule List">
 <p>忽略上图中的tun1和tun2后，整个topo与router中的一样。那么先按照<a href="#router">router</a>章节创建两个ns及配置</p>
 <p><strong>1. 创建veth pair并分别迁移到对应的namespace</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure>

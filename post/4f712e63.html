@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
   <title>使用markdown写PPT | Simble的小站</title>
-  <meta name="description" content="记录一些技术的或者旅行的东东" />
-  <meta name="keywords" content="" />
-  <meta name="HandheldFriendly" content="True" />
+  <meta name="description" content="记录一些技术的或者旅行的东东">
+  <meta name="keywords" content>
+  <meta name="HandheldFriendly" content="True">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="google-site-verification" content="vzXcODQkWEVd_olwKjKVItikA7cOGVMuwcxf-oEpEyU" />
-  <meta name="baidu-site-verification" content="N1SqwCDq9o" />
+  <meta name="google-site-verification" content="vzXcODQkWEVd_olwKjKVItikA7cOGVMuwcxf-oEpEyU">
+  <meta name="baidu-site-verification" content="N1SqwCDq9o">
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -23,7 +23,7 @@
 <meta property="og:description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/4f712e63/ppt1.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/4f712e63/4f712e63/ppt1.png">
 <meta property="og:updated_time" content="2018-11-15T05:46:30.039Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用markdown写PPT">
@@ -32,7 +32,7 @@
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link href="//cdn.bootcss.com/node-waves/0.7.5/waves.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
   <script>
     function setLoadingBarProgress(num) {
@@ -54,7 +54,7 @@
 })();
 </script>
 </head>
-
+</html>
 <body>
   <div id="loading-bar-wrapper">
   <div id="loading-bar"></div>
@@ -177,7 +177,7 @@
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt=""></p>
+    	<p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
 <a id="more"></a>
 <p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/" target="_blank" rel="noopener">Marp</a>。</p>
@@ -210,7 +210,7 @@
 <p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
 <p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
 <p>比如：</p>
-<img src="/post/4f712e63/ppt1.png" title="效果">
+<img src="/post/4f712e63/4f712e63/ppt1.png" title="效果">
 <p>则是用如下代码完成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
 <p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
