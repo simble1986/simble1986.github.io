@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
+  <meta name="description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: intern">
 <meta name="keywords" content="ovs,network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OVS学习笔记——常用命令练习">
 <meta property="og:url" content="http://blog.simble.xyz/post/4c6bf73b.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
+<meta property="og:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: intern">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-11-13T08:12:58.760Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OVS学习笔记——常用命令练习">
-<meta name="twitter:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: inter">
+<meta name="twitter:description" content="控制管理  创建网桥  1$ ovs-vsctl add-br testbr  查看网桥和端口  1234567$ ovs-vsctl showb66c0897-27c9-441a-9486-42cfb65a4649    Bridge testbr        Port testbr            Interface testbr                type: intern">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,11 +170,11 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#控制管理"><span class="toc-number">1.</span> <span class="toc-text"> 控制管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#流表类"><span class="toc-number">2.</span> <span class="toc-text"> 流表类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#流表操作"><span class="toc-number">2.1.</span> <span class="toc-text"> 流表操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看流表"><span class="toc-number">2.1.1.</span> <span class="toc-text"> 查看流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通流表"><span class="toc-number">2.1.2.</span> <span class="toc-text"> 添加普通流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按照匹配删除流表"><span class="toc-number">2.1.3.</span> <span class="toc-text"> 按照匹配删除流表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用匹配项"><span class="toc-number">2.2.</span> <span class="toc-text"> 常用匹配项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vlan-tag"><span class="toc-number">2.2.1.</span> <span class="toc-text"> VLAN Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mac"><span class="toc-number">2.2.2.</span> <span class="toc-text"> MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ip"><span class="toc-number">2.2.3.</span> <span class="toc-text"> IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">2.2.4.</span> <span class="toc-text"> 其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些速记符"><span class="toc-number">2.2.5.</span> <span class="toc-text"> 一些速记符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令动作actions"><span class="toc-number">2.3.</span> <span class="toc-text"> 指令动作（actions）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础动作"><span class="toc-number">2.3.1.</span> <span class="toc-text"> 基础动作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改vlan-id"><span class="toc-number">2.3.2.</span> <span class="toc-text"> 修改VLAN ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#剥除vlan"><span class="toc-number">2.3.3.</span> <span class="toc-text"> 剥除VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弹出最外层vlan"><span class="toc-number">2.3.4.</span> <span class="toc-text"> 弹出最外层VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源目的mac"><span class="toc-number">2.3.5.</span> <span class="toc-text"> 修改源/目的MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源目的ip"><span class="toc-number">2.3.6.</span> <span class="toc-text"> 修改源/目的IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改tcpudp端口"><span class="toc-number">2.3.7.</span> <span class="toc-text"> 修改TCP/UDP端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vxlan"><span class="toc-number">2.3.8.</span> <span class="toc-text"> VxLan</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实验"><span class="toc-number">3.</span> <span class="toc-text"> 实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#拓扑"><span class="toc-number">3.1.</span> <span class="toc-text"> 拓扑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">3.2.</span> <span class="toc-text"> 实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体操作"><span class="toc-number">3.3.</span> <span class="toc-text"> 具体操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h1-h3流表"><span class="toc-number">3.4.</span> <span class="toc-text"> h1-h3流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h2-h4流表"><span class="toc-number">3.5.</span> <span class="toc-text"> h2-h4流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列表"><span class="toc-number">3.6.</span> <span class="toc-text"> 命令列表</span></a></li></ol></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">控制管理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">2.</span> <span class="toc-text">流表类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#流表操作"><span class="toc-number">2.1.</span> <span class="toc-text">null流表操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#查看流表"><span class="toc-number">2.1.1.</span> <span class="toc-text">null查看流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加普通流表"><span class="toc-number">2.1.2.</span> <span class="toc-text">null添加普通流表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#按照匹配删除流表"><span class="toc-number">2.1.3.</span> <span class="toc-text">null按照匹配删除流表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用匹配项"><span class="toc-number">2.2.</span> <span class="toc-text">null常用匹配项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vlan-tag"><span class="toc-number">2.2.1.</span> <span class="toc-text">nullVLAN Tag</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mac"><span class="toc-number">2.2.2.</span> <span class="toc-text">nullMAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ip"><span class="toc-number">2.2.3.</span> <span class="toc-text">nullIP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他"><span class="toc-number">2.2.4.</span> <span class="toc-text">null其他</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一些速记符"><span class="toc-number">2.2.5.</span> <span class="toc-text">null一些速记符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#指令动作-actions"><span class="toc-number">2.3.</span> <span class="toc-text">null指令动作（actions）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基础动作"><span class="toc-number">2.3.1.</span> <span class="toc-text">null基础动作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改vlan-id"><span class="toc-number">2.3.2.</span> <span class="toc-text">null修改VLAN ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#剥除vlan"><span class="toc-number">2.3.3.</span> <span class="toc-text">null剥除VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#弹出最外层vlan"><span class="toc-number">2.3.4.</span> <span class="toc-text">null弹出最外层VLAN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源-目的mac"><span class="toc-number">2.3.5.</span> <span class="toc-text">null修改源/目的MAC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改源-目的ip"><span class="toc-number">2.3.6.</span> <span class="toc-text">null修改源/目的IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改tcp-udp端口"><span class="toc-number">2.3.7.</span> <span class="toc-text">null修改TCP/UDP端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vxlan"><span class="toc-number">2.3.8.</span> <span class="toc-text">nullVxLan</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">3.</span> <span class="toc-text">实验</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#拓扑"><span class="toc-number">3.1.</span> <span class="toc-text">null拓扑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验要求"><span class="toc-number">3.2.</span> <span class="toc-text">null实验要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#具体操作"><span class="toc-number">3.3.</span> <span class="toc-text">null具体操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h1-h3流表"><span class="toc-number">3.4.</span> <span class="toc-text">nullh1-h3流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#h2-h4流表"><span class="toc-number">3.5.</span> <span class="toc-text">nullh2-h4流表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#命令列表"><span class="toc-number">3.6.</span> <span class="toc-text">null命令列表</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
+    	<h1>控制管理</h1>
 <ul>
 <li>创建网桥</li>
 </ul>
@@ -200,22 +200,22 @@
 <li>接口相关</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports s1</span><br><span class="line">OFPST_PORT reply (xid=0x2): 3 ports</span><br><span class="line">  port LOCAL: rx pkts=0, bytes=0, drop=94, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=0, coll=0</span><br><span class="line">  port  1: rx pkts=124, bytes=8418, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8898, drop=0, errs=0, coll=0</span><br><span class="line">  port  2: rx pkts=123, bytes=8340, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8886, drop=0, errs=0, coll=0</span><br><span class="line">$ ovs-appctl dpif/show</span><br><span class="line">system@ovs-system: hit:318465 missed:735</span><br><span class="line">    s1:</span><br><span class="line">        s1 65534/3: (internal)</span><br><span class="line">        s1-eth1 1/2: (system)</span><br><span class="line">        s1-eth2 2/1: (system)</span><br></pre></td></tr></table></figure>
-<h1 id="流表类"><a class="markdownIt-Anchor" href="#流表类"></a> 流表类</h1>
-<h2 id="流表操作"><a class="markdownIt-Anchor" href="#流表操作"></a> 流表操作</h2>
-<h3 id="查看流表"><a class="markdownIt-Anchor" href="#查看流表"></a> 查看流表</h3>
+<h1>流表类</h1>
+<h2 id="流表操作"><a class="header-anchor" href="#流表操作">null</a>流表操作</h2>
+<h3 id="查看流表"><a class="header-anchor" href="#查看流表">null</a>查看流表</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=356.689s, table=0, n_packets=708, n_bytes=42480, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=356.699s, table=0, n_packets=94, n_bytes=7488, idle_age=346, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-<h3 id="添加普通流表"><a class="markdownIt-Anchor" href="#添加普通流表"></a> 添加普通流表</h3>
+<h3 id="添加普通流表"><a class="header-anchor" href="#添加普通流表">null</a>添加普通流表</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=drop</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=441.879s, table=0, n_packets=878, n_bytes=52680, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=2.861s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=1 actions=drop</span><br><span class="line"> cookie=0x0, duration=441.889s, table=0, n_packets=94, n_bytes=7488, idle_age=432, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-<h3 id="按照匹配删除流表"><a class="markdownIt-Anchor" href="#按照匹配删除流表"></a> 按照匹配删除流表</h3>
+<h3 id="按照匹配删除流表"><a class="header-anchor" href="#按照匹配删除流表">null</a>按照匹配删除流表</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl del-flows s1 <span class="string">"in_port=1"</span></span><br><span class="line">mininet&gt; sh ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=521.249s, table=0, n_packets=1036, n_bytes=62160, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=521.259s, table=0, n_packets=94, n_bytes=7488, idle_age=511, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-<h2 id="常用匹配项"><a class="markdownIt-Anchor" href="#常用匹配项"></a> 常用匹配项</h2>
-<h3 id="vlan-tag"><a class="markdownIt-Anchor" href="#vlan-tag"></a> VLAN Tag</h3>
+<h2 id="常用匹配项"><a class="header-anchor" href="#常用匹配项">null</a>常用匹配项</h2>
+<h3 id="vlan-tag"><a class="header-anchor" href="#vlan-tag">null</a>VLAN Tag</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vs-ofctl add-flow s1 priority=401,in_port=1,dl_vlan=777,actions=output:2</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=663.043s, table=0, n_packets=1318, n_bytes=79080, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=3.022s, table=0, n_packets=0, n_bytes=0, idle_age=3, priority=401,in_port=1,dl_vlan=777 actions=output:2</span><br><span class="line"> cookie=0x0, duration=663.053s, table=0, n_packets=94, n_bytes=7488, idle_age=653, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-<h3 id="mac"><a class="markdownIt-Anchor" href="#mac"></a> MAC</h3>
+<h3 id="mac"><a class="header-anchor" href="#mac">null</a>MAC</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a,action=output:3</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1,action=output:2</span><br><span class="line">$ sh ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=69.067s, table=0, n_packets=0, n_bytes=0, idle_age=69, in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a actions=output:3</span><br><span class="line"> cookie=0x0, duration=14.496s, table=0, n_packets=0, n_bytes=0, idle_age=14, in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1 actions=output:2</span><br></pre></td></tr></table></figure>
-<h3 id="ip"><a class="markdownIt-Anchor" href="#ip"></a> IP</h3>
+<h3 id="ip"><a class="header-anchor" href="#ip">null</a>IP</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_src=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=119.033s, table=0, n_packets=119, n_bytes=7140, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=28.864s, table=0, n_packets=0, n_bytes=0, idle_age=28, ip,in_port=1,nw_src=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=10.036s, table=0, n_packets=0, n_bytes=0, idle_age=10, ip,in_port=1,nw_dst=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=119.057s, table=0, n_packets=90, n_bytes=7164, idle_age=109, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure>
-<h3 id="其他"><a class="markdownIt-Anchor" href="#其他"></a> 其他</h3>
+<h3 id="其他"><a class="header-anchor" href="#其他">null</a>其他</h3>
 <table>
 <thead>
 <tr>
@@ -246,7 +246,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="一些速记符"><a class="markdownIt-Anchor" href="#一些速记符"></a> 一些速记符</h3>
+<h3 id="一些速记符"><a class="header-anchor" href="#一些速记符">null</a>一些速记符</h3>
 <table>
 <thead>
 <tr>
@@ -293,8 +293,8 @@
 </tr>
 </tbody>
 </table>
-<h2 id="指令动作actions"><a class="markdownIt-Anchor" href="#指令动作actions"></a> 指令动作（actions）</h2>
-<h3 id="基础动作"><a class="markdownIt-Anchor" href="#基础动作"></a> 基础动作</h3>
+<h2 id="指令动作-actions"><a class="header-anchor" href="#指令动作-actions">null</a>指令动作（actions）</h2>
+<h3 id="基础动作"><a class="header-anchor" href="#基础动作">null</a>基础动作</h3>
 <table>
 <thead>
 <tr>
@@ -351,7 +351,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="修改vlan-id"><a class="markdownIt-Anchor" href="#修改vlan-id"></a> 修改VLAN ID</h3>
+<h3 id="修改vlan-id"><a class="header-anchor" href="#修改vlan-id">null</a>修改VLAN ID</h3>
 <ul>
 <li>
 <p>关键字： <code>mod_vlan_vid</code></p>
@@ -361,7 +361,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_vlan_vid:1034,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="剥除vlan"><a class="markdownIt-Anchor" href="#剥除vlan"></a> 剥除VLAN</h3>
+<h3 id="剥除vlan"><a class="header-anchor" href="#剥除vlan">null</a>剥除VLAN</h3>
 <ul>
 <li>
 <p>关键字： <code>strip_vlan</code></p>
@@ -371,7 +371,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="弹出最外层vlan"><a class="markdownIt-Anchor" href="#弹出最外层vlan"></a> 弹出最外层VLAN</h3>
+<h3 id="弹出最外层vlan"><a class="header-anchor" href="#弹出最外层vlan">null</a>弹出最外层VLAN</h3>
 <ul>
 <li>
 <p>关键字： <code>pop_vlan</code></p>
@@ -381,7 +381,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow br0 in_port=1,dl_type=0x8100,dl_vlan=777,actions=pop_vlan,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="修改源目的mac"><a class="markdownIt-Anchor" href="#修改源目的mac"></a> 修改源/目的MAC</h3>
+<h3 id="修改源-目的mac"><a class="header-anchor" href="#修改源-目的mac">null</a>修改源/目的MAC</h3>
 <ul>
 <li>
 <p>关键字：<code>mod_dl_src</code> / <code>mod_dl_dst</code></p>
@@ -391,7 +391,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_src:01:80:c2:00:00:0e,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_dst:01:80:c2:00:00:0e,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="修改源目的ip"><a class="markdownIt-Anchor" href="#修改源目的ip"></a> 修改源/目的IP</h3>
+<h3 id="修改源-目的ip"><a class="header-anchor" href="#修改源-目的ip">null</a>修改源/目的IP</h3>
 <ul>
 <li>
 <p>关键字： <code>mod_nw_src</code>/<code>mod_nw_dst</code></p>
@@ -401,7 +401,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_src:192.168.0.10,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_dst:192.168.0.10,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="修改tcpudp端口"><a class="markdownIt-Anchor" href="#修改tcpudp端口"></a> 修改TCP/UDP端口</h3>
+<h3 id="修改tcp-udp端口"><a class="header-anchor" href="#修改tcp-udp端口">null</a>修改TCP/UDP端口</h3>
 <ul>
 <li>
 <p>关键字：<code>mod_tp_src</code>/<code>mod_tp_dst</code></p>
@@ -411,7 +411,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_dst:21,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_dst:53,output:2</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="vxlan"><a class="markdownIt-Anchor" href="#vxlan"></a> VxLan</h3>
+<h3 id="vxlan"><a class="header-anchor" href="#vxlan">null</a>VxLan</h3>
 <ul>
 <li>
 <p>创建VxLAN接口</p>
@@ -422,15 +422,15 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,actions=output:2000</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=2000,actions=output:1</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=35.227s, table=0, n_packets=0, n_bytes=0, idle_age=35, ip,in_port=1,nw_dst=192.168.0.0/16 actions=output:2000</span><br><span class="line"> cookie=0x0, duration=2.469s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=2000 actions=output:1</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h1 id="实验"><a class="markdownIt-Anchor" href="#实验"></a> 实验</h1>
-<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
+<h1>实验</h1>
+<h2 id="拓扑"><a class="header-anchor" href="#拓扑">null</a>拓扑</h2>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">                <span class="string">+------------+</span></span><br><span class="line">                <span class="string">|     s2     |</span></span><br><span class="line"><span class="string">                +---+----+---+</span></span><br><span class="line"><span class="string">                    |    |</span></span><br><span class="line"><span class="string">         +----------+    +----------+</span></span><br><span class="line"><span class="string">         |                          |</span></span><br><span class="line"><span class="string">+--------+--------+        +--------+--------+</span></span><br><span class="line"><span class="string">|       s3        |        |        s4       |</span></span><br><span class="line"><span class="string">+---+---------+---+        +---+---------+---+</span></span><br><span class="line"><span class="string">    |         |                |         |</span></span><br><span class="line"><span class="string">+---+--+   +--+---+        +---+--+   +--+---+</span></span><br><span class="line"><span class="string">|  h1  |   |  h2  |        |  h3  |   |  h4  |</span></span><br><span class="line"><span class="string">+------+   +------+        +------+   +------+</span></span><br></pre></td></tr></table></figure>
-<h2 id="实验要求"><a class="markdownIt-Anchor" href="#实验要求"></a> 实验要求</h2>
+<h2 id="实验要求"><a class="header-anchor" href="#实验要求">null</a>实验要求</h2>
 <ol>
 <li>h1可以与h3通信，但不可以与h2和h4通信</li>
 <li>h2可以与h4通信，但不可以与h1和h3通信</li>
 </ol>
-<h2 id="具体操作"><a class="markdownIt-Anchor" href="#具体操作"></a> 具体操作</h2>
+<h2 id="具体操作"><a class="header-anchor" href="#具体操作">null</a>具体操作</h2>
 <ol>
 <li>由h1送出的报文，在s3上打上vlan tag 1000</li>
 <li>随后s3将报文送往s2</li>
@@ -442,11 +442,11 @@
 <li>s2收到s4的vlan1000的报文，直接送往s3</li>
 <li>s3收到s2的vlan1000报文后，剥离vlan，送往h1</li>
 </ol>
-<h2 id="h1-h3流表"><a class="markdownIt-Anchor" href="#h1-h3流表"></a> h1-h3流表</h2>
+<h2 id="h1-h3流表"><a class="header-anchor" href="#h1-h3流表">null</a>h1-h3流表</h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1664.027s, table=0, n_packets=79, n_bytes=4026, idle_age=803, in_port=1,dl_vlan=1000 actions=output:2</span><br><span class="line"> cookie=0x0, duration=1642.112s, table=0, n_packets=10, n_bytes=852, idle_age=803, in_port=2,dl_vlan=1000 actions=output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2826.459s, table=0, n_packets=330, n_bytes=14700, idle_age=807, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1895.062s, table=0, n_packets=10, n_bytes=852, idle_age=807, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2776.175s, table=0, n_packets=229, n_bytes=10010, idle_age=810, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1507.500s, table=0, n_packets=10, n_bytes=852, idle_age=810, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br></pre></td></tr></table></figure>
-<h2 id="h2-h4流表"><a class="markdownIt-Anchor" href="#h2-h4流表"></a> h2-h4流表</h2>
+<h2 id="h2-h4流表"><a class="header-anchor" href="#h2-h4流表">null</a>h2-h4流表</h2>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=827.167s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=2,dl_vlan=2000 actions=output:1</span><br><span class="line"> cookie=0x0, duration=812.342s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=1,dl_vlan=2000 actions=output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1347.703s, table=0, n_packets=60, n_bytes=2576, idle_age=702, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=710.639s, table=0, n_packets=3, n_bytes=194, idle_age=702, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1133.570s, table=0, n_packets=60, n_bytes=2576, idle_age=705, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=1088.590s, table=0, n_packets=60, n_bytes=2816, idle_age=705, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure>
-<h2 id="命令列表"><a class="markdownIt-Anchor" href="#命令列表"></a> 命令列表</h2>
+<h2 id="命令列表"><a class="header-anchor" href="#命令列表">null</a>命令列表</h2>
 <ul>
 <li>h1-h3</li>
 </ul>

@@ -14,24 +14,24 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。  环境准备  系统： Ubuntu 16.04.6 LTS">
+  <meta name="description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。 null环境准备  系统： Ubuntu 16.04.6 LTS">
 <meta name="keywords" content="network,linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux虚拟网络之虚拟机">
 <meta property="og:url" content="http://blog.simble.xyz/post/13a44dc5.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。  环境准备  系统： Ubuntu 16.04.6 LTS">
+<meta property="og:description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。 null环境准备  系统： Ubuntu 16.04.6 LTS">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_topo.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_vnc_example.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_tap.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_bridge.png">
-<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_nat.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_topo.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_vnc_example.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_tap.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_bridge.png">
+<meta property="og:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_nat.png">
 <meta property="og:updated_time" content="2019-08-16T07:15:29.564Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux虚拟网络之虚拟机">
-<meta name="twitter:description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。  环境准备  系统： Ubuntu 16.04.6 LTS">
-<meta name="twitter:image" content="http://blog.simble.xyz/post/13a44dc5/13a44dc5/qemu_topo.png">
+<meta name="twitter:description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。 null环境准备  系统： Ubuntu 16.04.6 LTS">
+<meta name="twitter:image" content="http://blog.simble.xyz/post/13a44dc5/qemu_topo.png">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -176,19 +176,19 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验topo"><span class="toc-number">1.1.</span> <span class="toc-text"> 实验topo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件包"><span class="toc-number">1.2.</span> <span class="toc-text"> 软件包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap接口使用"><span class="toc-number">2.</span> <span class="toc-text"> tap接口使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机通信"><span class="toc-number">3.</span> <span class="toc-text"> 虚拟机通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nat模式"><span class="toc-number">4.</span> <span class="toc-text"> NAT模式</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">null环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实验topo"><span class="toc-number">1.1.</span> <span class="toc-text">null实验topo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#软件包"><span class="toc-number">1.2.</span> <span class="toc-text">null软件包</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap接口使用"><span class="toc-number">2.</span> <span class="toc-text">nulltap接口使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#虚拟机通信"><span class="toc-number">3.</span> <span class="toc-text">null虚拟机通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nat模式"><span class="toc-number">4.</span> <span class="toc-text">nullNAT模式</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。</p>
-<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<h2 id="环境准备"><a class="header-anchor" href="#环境准备">null</a>环境准备</h2>
 <blockquote>
 <p>系统： Ubuntu 16.04.6 LTS</p>
 </blockquote>
 <a id="more"></a>
-<h3 id="实验topo"><a class="markdownIt-Anchor" href="#实验topo"></a> 实验topo</h3>
-<img src="/post/13a44dc5/13a44dc5/qemu_topo.png" title="TOPO">
-<h3 id="软件包"><a class="markdownIt-Anchor" href="#软件包"></a> 软件包</h3>
+<h3 id="实验topo"><a class="header-anchor" href="#实验topo">null</a>实验topo</h3>
+<img src="/post/13a44dc5/qemu_topo.png" title="TOPO">
+<h3 id="软件包"><a class="header-anchor" href="#软件包">null</a>软件包</h3>
 <p><strong>1. qemu</strong></p>
 <p>由于整套实验环境都是在虚拟机上完成，在没有开启诸如Intel-VTx技术的情况下，使用<code>qemu</code>作为虚拟机模拟器</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apt install qemu</span><br><span class="line">$ apt install uml-utilities</span><br><span class="line">$ apt install bridge-utils</span><br></pre></td></tr></table></figure>
@@ -203,8 +203,8 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试</strong></p>
 <p>用vnc viewer连接当前虚拟机</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_vnc_example.png" title="vnc viewer">
-<h2 id="tap接口使用"><a class="markdownIt-Anchor" href="#tap接口使用"></a> tap接口使用</h2>
+<img src="/post/13a44dc5/qemu_vnc_example.png" title="vnc viewer">
+<h2 id="tap接口使用"><a class="header-anchor" href="#tap接口使用">null</a>tap接口使用</h2>
 <p><strong>1. 创建虚拟机</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img -netdev tap,id=mynet0,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet0</span><br></pre></td></tr></table></figure>
 <p>创建成功后，可以看到，自动创建了一个<code>tap1</code>的接口，但没有up</p>
@@ -225,8 +225,8 @@
 <p><strong>3. 小结</strong></p>
 <p>使用tap类型的netdev创建qemu虚拟机时，会自动创建一个tap接口，而这个tap接口与VM的接口相连。</p>
 <p>连接图如下：</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_tap.png" title="tap">
-<h2 id="虚拟机通信"><a class="markdownIt-Anchor" href="#虚拟机通信"></a> 虚拟机通信</h2>
+<img src="/post/13a44dc5/qemu_tap.png" title="tap">
+<h2 id="虚拟机通信"><a class="header-anchor" href="#虚拟机通信">null</a>虚拟机通信</h2>
 <p>理解了虚拟机使用tap接口之后，就可以考虑使用网桥方式进行2个甚至多个虚拟机之间通信了。</p>
 <p><strong>1. 创建虚拟机</strong></p>
 <p>先拉起4个VM，分别指定网络</p>
@@ -250,7 +250,7 @@
 <p>现在，可以两个VM相互ping一下了</p>
 <p><strong>4. 访问外部PC</strong></p>
 <p>虚拟机需要访问外部网络，则需要添加物理接口，如下图</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_bridge.png" title="bridge">
+<img src="/post/13a44dc5/qemu_bridge.png" title="bridge">
 <p><strong>Host</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig ens192 up</span><br><span class="line">(host)$ brctl addif br0 ens192</span><br></pre></td></tr></table></figure>
 <p><strong>VM1</strong></p>
@@ -259,14 +259,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(host)$ tcpdump -i ens192</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">11:15:02.317164 IP 192.168.1.11 &gt; 192.168.1.3: ICMP <span class="built_in">echo</span> request, id 47873, seq 0, length 64</span><br><span class="line">11:15:02.317527 IP 192.168.1.3 &gt; 192.168.1.11: ICMP <span class="built_in">echo</span> reply, id 47873, seq 0, length 64</span><br></pre></td></tr></table></figure>
 <p><strong>5. 小结</strong></p>
 <p>本节主要实验了虚拟机通过网桥进行相互通信及访问外网。对应了qemu网络的<strong>基于网桥的虚拟网卡</strong></p>
-<h2 id="nat模式"><a class="markdownIt-Anchor" href="#nat模式"></a> NAT模式</h2>
+<h2 id="nat模式"><a class="header-anchor" href="#nat模式">null</a>NAT模式</h2>
 <blockquote>
 <p>Host需要开启转发功能</p>
 <p>临时修改：<code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
 </blockquote>
 <p>NAT模式主要通过iptables来实现。通过将虚拟机发出的报文的源地址转换为物理接口的IP，实现与外网的通信</p>
 <p>拓扑图如下：</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_nat.png" title="nat">
+<img src="/post/13a44dc5/qemu_nat.png" title="nat">
 <p><strong>1. 为网桥配置IP地址</strong></p>
 <p>用网桥的br0接口作为192.168.1.0/24网段的网关</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig br0 192.168.1.1/24</span><br></pre></td></tr></table></figure>

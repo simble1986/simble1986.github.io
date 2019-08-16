@@ -302,7 +302,7 @@
   </section>
   <section class="article typo">
 	  <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
+<h2 id="问题引入"><a class="header-anchor" href="#问题引入">null</a>问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
 <p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
@@ -347,7 +347,7 @@
 
   </section>
   <section class="article typo">
-	  <h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
+	  <h3 id="问题出现"><a class="header-anchor" href="#问题出现">null</a>问题出现</h3>
 <p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
 
     
@@ -393,7 +393,7 @@
   </section>
   <section class="article typo">
 	  <p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
-<h3 id="可行的方法"><a class="markdownIt-Anchor" href="#可行的方法"></a> 可行的方法</h3>
+<h3 id="可行的方法"><a class="header-anchor" href="#可行的方法">null</a>可行的方法</h3>
 <ul>
 <li>编辑/lib/systemd/system/docker.service</li>
 </ul>
@@ -439,7 +439,7 @@
   </section>
   <section class="article typo">
 	  <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
+<h2 id="准备工作"><a class="header-anchor" href="#准备工作">null</a>准备工作</h2>
 <p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
 
     
