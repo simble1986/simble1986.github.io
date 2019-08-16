@@ -170,7 +170,7 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">null环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装docker"><span class="toc-number">1.1.</span> <span class="toc-text">null安装docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装ovs"><span class="toc-number">1.2.</span> <span class="toc-text">null安装ovs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装ovs-docker"><span class="toc-number">1.3.</span> <span class="toc-text">null安装ovs-docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验"><span class="toc-number">2.</span> <span class="toc-text">null实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#容器互访"><span class="toc-number">2.1.</span> <span class="toc-text">null容器互访</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问外部网络"><span class="toc-number">2.2.</span> <span class="toc-text">null访问外部网络</span></a></li></ol></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装docker"><span class="toc-number">1.1.</span> <span class="toc-text"> 安装docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装ovs"><span class="toc-number">1.2.</span> <span class="toc-text"> 安装ovs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装ovs-docker"><span class="toc-number">1.3.</span> <span class="toc-text"> 安装ovs-docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验"><span class="toc-number">2.</span> <span class="toc-text"> 实验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#容器互访"><span class="toc-number">2.1.</span> <span class="toc-text"> 容器互访</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#访问外部网络"><span class="toc-number">2.2.</span> <span class="toc-text"> 访问外部网络</span></a></li></ol></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
@@ -179,18 +179,18 @@
 <p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
 </blockquote>
 <a id="more"></a>
-<h2 id="环境准备"><a class="header-anchor" href="#环境准备">null</a>环境准备</h2>
-<h3 id="安装docker"><a class="header-anchor" href="#安装docker">null</a>安装docker</h3>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<h3 id="安装docker"><a class="markdownIt-Anchor" href="#安装docker"></a> 安装docker</h3>
 <p>在我的其他博文里有国内源安装docker的内容，原样照搬</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update &amp;&amp; sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">$ apt update</span><br><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure>
-<h3 id="安装ovs"><a class="header-anchor" href="#安装ovs">null</a>安装ovs</h3>
+<h3 id="安装ovs"><a class="markdownIt-Anchor" href="#安装ovs"></a> 安装ovs</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install openvswitch-switch</span><br></pre></td></tr></table></figure>
-<h3 id="安装ovs-docker"><a class="header-anchor" href="#安装ovs-docker">null</a>安装ovs-docker</h3>
+<h3 id="安装ovs-docker"><a class="markdownIt-Anchor" href="#安装ovs-docker"></a> 安装ovs-docker</h3>
 <p>简单介绍一下，ovs-docker实际上是一个shell脚本，封装了ovs和docker的一些操作。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/bin</span><br><span class="line">$ wget https://raw.githubusercontent.com/openvswitch/ovs/master/utilities/ovs-docker</span><br><span class="line">$ chmod a+rwx ovs-docker</span><br></pre></td></tr></table></figure>
-<h2 id="实验"><a class="header-anchor" href="#实验">null</a>实验</h2>
+<h2 id="实验"><a class="markdownIt-Anchor" href="#实验"></a> 实验</h2>
 <p>两个docker容器经过ovs网桥进行访问及访问外部网络</p>
-<h3 id="容器互访"><a class="header-anchor" href="#容器互访">null</a>容器互访</h3>
+<h3 id="容器互访"><a class="markdownIt-Anchor" href="#容器互访"></a> 容器互访</h3>
 <ul>
 <li>创建ovs网桥</li>
 </ul>
@@ -228,7 +228,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ping 192.168.1.3</span><br><span class="line">PING 192.168.1.2 (192.168.1.3): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.3: seq=0 ttl=64 time=1.065 ms</span><br><span class="line">64 bytes from 192.168.1.3: seq=1 ttl=64 time=0.139 ms</span><br></pre></td></tr></table></figure>
 <p><strong>没错</strong>，就是这么简单</p>
-<h3 id="访问外部网络"><a class="header-anchor" href="#访问外部网络">null</a>访问外部网络</h3>
+<h3 id="访问外部网络"><a class="markdownIt-Anchor" href="#访问外部网络"></a> 访问外部网络</h3>
 <p>当我解决了<strong>混杂模式</strong>的问题之后，原来一切都是那么简单</p>
 <blockquote>
 <p>在外部另外一个PC上配置了192.168.1.1</p>

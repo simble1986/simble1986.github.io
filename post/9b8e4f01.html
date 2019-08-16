@@ -172,14 +172,14 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#openstack安全组"><span class="toc-number">1.</span> <span class="toc-text">nullOpenstack安全组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验准备"><span class="toc-number">2.</span> <span class="toc-text">null实验准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全组实验"><span class="toc-number">3.</span> <span class="toc-text">null安全组实验</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#openstack安全组"><span class="toc-number">1.</span> <span class="toc-text"> Openstack安全组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验准备"><span class="toc-number">2.</span> <span class="toc-text"> 实验准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全组实验"><span class="toc-number">3.</span> <span class="toc-text"> 安全组实验</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
 <p>实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建</p>
 <a id="more"></a>
-<h2 id="openstack安全组"><a class="header-anchor" href="#openstack安全组">null</a>Openstack安全组</h2>
+<h2 id="openstack安全组"><a class="markdownIt-Anchor" href="#openstack安全组"></a> Openstack安全组</h2>
 <p><strong>1. 安全组</strong></p>
 <p>在Openstack中，安全组是做哦那个在neutron port上的一组策略，这些策略可以理解为一些防火墙的规则集合。</p>
 <p><strong>2. 安全组的实现</strong></p>
@@ -190,14 +190,14 @@
 <li>linuxbridge + iptables + connection track</li>
 </ul>
 <p>由于本文实验环境基于devstack（stein），因此，仅基于第二种情况进行说明</p>
-<h2 id="实验准备"><a class="header-anchor" href="#实验准备">null</a>实验准备</h2>
+<h2 id="实验准备"><a class="markdownIt-Anchor" href="#实验准备"></a> 实验准备</h2>
 <p><strong>1. 创建项目及用户（非必须）</strong></p>
 <p>创建一个test的project和user</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openstack project create --domain default --description <span class="string">"Security Group Test Project"</span> <span class="built_in">test</span></span><br><span class="line">$ openstack user create --domain default --password-prompt <span class="built_in">test</span></span><br><span class="line">$ openstack role add --project <span class="built_in">test</span> --user <span class="built_in">test</span> admin</span><br></pre></td></tr></table></figure>
 <p><strong>2. 查看test租户的默认安全组下的规则</strong></p>
 <p>以test用户登陆openstack的dashboard，在<strong>网络</strong> &gt; <strong>安全组</strong> 下找到default安全组，查看对应的规则</p>
 <img src="/post/9b8e4f01/rule_list.png" title="Rule List">
-<h2 id="安全组实验"><a class="header-anchor" href="#安全组实验">null</a>安全组实验</h2>
+<h2 id="安全组实验"><a class="markdownIt-Anchor" href="#安全组实验"></a> 安全组实验</h2>
 <blockquote>
 <p>需要事先创建一个虚拟机示例，默认关联default的安全组</p>
 </blockquote>

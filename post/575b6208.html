@@ -174,19 +174,19 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text">null环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap设备"><span class="toc-number">2.</span> <span class="toc-text">nulltap设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#veth-pair"><span class="toc-number">3.</span> <span class="toc-text">nullveth pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bridge"><span class="toc-number">4.</span> <span class="toc-text">nullbridge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router"><span class="toc-number">5.</span> <span class="toc-text">nullrouter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tun"><span class="toc-number">6.</span> <span class="toc-text">nulltun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">7.</span> <span class="toc-text">null小结</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#环境准备"><span class="toc-number">1.</span> <span class="toc-text"> 环境准备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tap设备"><span class="toc-number">2.</span> <span class="toc-text"> tap设备</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#veth-pair"><span class="toc-number">3.</span> <span class="toc-text"> veth pair</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bridge"><span class="toc-number">4.</span> <span class="toc-text"> bridge</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#router"><span class="toc-number">5.</span> <span class="toc-text"> router</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tun"><span class="toc-number">6.</span> <span class="toc-text"> tun</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小结"><span class="toc-number">7.</span> <span class="toc-text"> 小结</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
     	<p>Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。</p>
 <p>本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router</p>
 <a id="more"></a>
-<h2 id="环境准备"><a class="header-anchor" href="#环境准备">null</a>环境准备</h2>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <blockquote>
 <p>注：本实验基于Ubuntu16.04</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt install uml-utilities</span><br><span class="line">$ apt install bridge-utils</span><br></pre></td></tr></table></figure>
-<h2 id="tap设备"><a class="header-anchor" href="#tap设备">null</a>tap设备</h2>
+<h2 id="tap设备"><a class="markdownIt-Anchor" href="#tap设备"></a> tap设备</h2>
 <blockquote>
 <p>Linux的tun/tap驱动实现了虚拟网卡的功能，tun表示虚拟的是点对点设备，tap表示虚拟的是以太网设备</p>
 <p>tap位于网络OSI模型的二层（数据链路层），tun位于网络的三层。</p>
@@ -202,7 +202,7 @@
 </blockquote>
 <p><strong>4. 进入namespace并查看接口信息</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns_test /bin/bash</span><br><span class="line">$ ifconfig tap_test 192.168.50.1/24</span><br><span class="line">$ ifconfig</span><br><span class="line">tap_test  Link encap:Ethernet  HWaddr 76:71:70:f2:ac:f6</span><br><span class="line">          inet addr:192.168.50.1  Bcast:192.168.50.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
-<h2 id="veth-pair"><a class="header-anchor" href="#veth-pair">null</a>veth pair</h2>
+<h2 id="veth-pair"><a class="markdownIt-Anchor" href="#veth-pair"></a> veth pair</h2>
 <blockquote>
 <p>Veth pair是一对虚拟网卡，从一个veth网卡发出的数据包可以直接到达它的peer veth。相当于两个接口之间接着一根网线</p>
 </blockquote>
@@ -216,7 +216,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig tap1 192.168.40.1/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig tap2 192.168.40.2/24</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试连通性</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ping 192.168.40.2</span><br><span class="line">PING 192.168.40.2 (192.168.40.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.40.2: icmp_seq=1 ttl=64 time=0.096 ms</span><br><span class="line">64 bytes from 192.168.40.2: icmp_seq=2 ttl=64 time=0.049 ms</span><br></pre></td></tr></table></figure>
-<h2 id="bridge"><a class="header-anchor" href="#bridge">null</a>bridge</h2>
+<h2 id="bridge"><a class="markdownIt-Anchor" href="#bridge"></a> bridge</h2>
 <blockquote>
 <p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
 </blockquote>
@@ -239,7 +239,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig br1 up</span><br><span class="line">$ ifconfig tap1_peer up</span><br><span class="line">$ ifconfig tap2_peer up</span><br><span class="line">$ ifconfig tap3_peer up</span><br><span class="line">$ ifconfig tap4_peer up</span><br></pre></td></tr></table></figure>
 <p><strong>7. 测试连通性</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns4 ping 192.168.50.1 -c 1</span><br><span class="line">PING 192.168.50.1 (192.168.50.1) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.50.1: icmp_seq=1 ttl=64 time=0.095 ms</span><br><span class="line"></span><br><span class="line">--- 192.168.50.1 ping statistics ---</span><br><span class="line">1 packets transmitted, 1 received, 0% packet loss, time 0ms</span><br><span class="line">rtt min/avg/max/mdev = 0.095/0.095/0.095/0.000 ms</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns4 ping 192.168.50.2 -c 1</span><br><span class="line">PING 192.168.50.2 (192.168.50.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.50.2: icmp_seq=1 ttl=64 time=0.106 ms</span><br><span class="line"></span><br><span class="line">--- 192.168.50.2 ping statistics ---</span><br><span class="line">1 packets transmitted, 1 received, 0% packet loss, time 0ms</span><br><span class="line">rtt min/avg/max/mdev = 0.106/0.106/0.106/0.000 ms</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<h2 id="router"><a class="header-anchor" href="#router">null</a>router</h2>
+<h2 id="router"><a class="markdownIt-Anchor" href="#router"></a> router</h2>
 <blockquote>
 <p>注：Linux默认不开启转发功能，实验前需要先打开</p>
 <p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
@@ -256,7 +256,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns5 route add -net 192.168.200.0/24 gw 192.168.100.1</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns6 route add -net 192.168.100.0/24 gw 192.168.200.1</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns5 ping 192.168.200.2</span><br><span class="line">PING 192.168.200.2 (192.168.200.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.200.2: icmp_seq=1 ttl=63 time=0.077 ms</span><br><span class="line">64 bytes from 192.168.200.2: icmp_seq=2 ttl=63 time=0.087 ms</span><br></pre></td></tr></table></figure>
-<h2 id="tun"><a class="header-anchor" href="#tun">null</a>tun</h2>
+<h2 id="tun"><a class="markdownIt-Anchor" href="#tun"></a> tun</h2>
 <blockquote>
 <p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
 <p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
@@ -283,7 +283,7 @@
 <blockquote>
 <p>可以看到，ns1中自动创建了一条指向192.168.60.10的路由，下一跳是tun1</p>
 </blockquote>
-<h2 id="小结"><a class="header-anchor" href="#小结">null</a>小结</h2>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
 <p>Openstack的neutron组件正是基于这些Linux虚拟网络功能实现了虚拟机之间的网络通道。</p>
 <p>其中，tap、tun、veth pair被用于bridge之间的连接、bridge与vm的连接、bridge与router之间的连接。</p>
 <p>而bridge提供二层转发功能，router提供三层转发功能。</p>

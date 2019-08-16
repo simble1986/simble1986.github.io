@@ -14,18 +14,18 @@
   <link rel="shortcut icon" href="/images/favicon.ico">
   <link rel="alternate" href="/atom.xml" title="Simble的小站">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="null问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
+  <meta name="description" content="问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu在Openstack中启动密码注入不生效问题定位1">
 <meta property="og:url" content="http://blog.simble.xyz/post/c2a7a06a.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="null问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
+<meta property="og:description" content="问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-09-11T06:20:19.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu在Openstack中启动密码注入不生效问题定位1">
-<meta name="twitter:description" content="null问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
+<meta name="twitter:description" content="问题说明 使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码">
     
   <link href="https://fonts.googleapis.com/css?family=Inconsolata|Titillium+Web" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -170,18 +170,18 @@
 
 	</section>
 	
-		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题说明"><span class="toc-number">1.</span> <span class="toc-text">null问题说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位思路"><span class="toc-number">2.</span> <span class="toc-text">null定位思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-by-step"><span class="toc-number">3.</span> <span class="toc-text">nullstep by step</span></a></li></ol></section>
+		<section class="toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题说明"><span class="toc-number">1.</span> <span class="toc-text"> 问题说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#定位思路"><span class="toc-number">2.</span> <span class="toc-text"> 定位思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step-by-step"><span class="toc-number">3.</span> <span class="toc-text"> step by step</span></a></li></ol></section>
 	
 	<section class="article typo">
   	<div class="article-entry" itemprop="articleBody">
-    	<h2 id="问题说明"><a class="header-anchor" href="#问题说明">null</a>问题说明</h2>
+    	<h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
 <p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">passwd ubuntu&lt;&lt;EOF</span><br><span class="line">ubuntu</span><br><span class="line">ubuntu</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
 <p>系统启动后，发现密码修改未成功</p>
-<h2 id="定位思路"><a class="header-anchor" href="#定位思路">null</a>定位思路</h2>
+<h2 id="定位思路"><a class="markdownIt-Anchor" href="#定位思路"></a> 定位思路</h2>
 <p>查看实例启动日志 ➡️ 查看openstack的neutron agent状态 ➡️ 查看meta-data服务日志</p>
-<h2 id="step-by-step"><a class="header-anchor" href="#step-by-step">null</a>step by step</h2>
+<h2 id="step-by-step"><a class="markdownIt-Anchor" href="#step-by-step"></a> step by step</h2>
 <ul>
 <li>查看实例启动日志</li>
 </ul>
