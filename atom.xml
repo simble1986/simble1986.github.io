@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.simble.xyz/"/>
-  <updated>2019-08-16T07:15:29.564Z</updated>
+  <updated>2019-09-02T09:04:03.245Z</updated>
   <id>http://blog.simble.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Openstack网络——虚拟机通信实验1</title>
+    <link href="http://blog.simble.xyz/post/62511fc2.html"/>
+    <id>http://blog.simble.xyz/post/62511fc2.html</id>
+    <published>2019-09-02T00:58:49.000Z</published>
+    <updated>2019-09-02T09:04:03.245Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。&lt;/p&gt;
+&lt;p&gt;计划将分多篇博文，掰开来详细分析openstack中的各种流量路径。&lt;/p&gt;
+&lt;p&gt;本文以最简单的单节点为例，介绍在同子网下，虚拟机之间相互访问的流量路径&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="openstack" scheme="http://blog.simble.xyz/categories/openstack/"/>
+    
+    
+      <category term="linux" scheme="http://blog.simble.xyz/tags/linux/"/>
+    
+      <category term="openstack" scheme="http://blog.simble.xyz/tags/openstack/"/>
+    
+      <category term="neutron" scheme="http://blog.simble.xyz/tags/neutron/"/>
+    
+  </entry>
   
   <entry>
     <title>Linux虚拟网络之虚拟机</title>
@@ -525,33 +551,6 @@
       <category term="sqlalchemy" scheme="http://blog.simble.xyz/tags/sqlalchemy/"/>
     
       <category term="flask" scheme="http://blog.simble.xyz/tags/flask/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>美签记录</title>
-    <link href="http://blog.simble.xyz/post/fbe9394a.html"/>
-    <id>http://blog.simble.xyz/post/fbe9394a.html</id>
-    <published>2018-07-30T01:17:21.000Z</published>
-    <updated>2018-08-02T09:07:02.000Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;记第一次拿到十年美签&lt;/p&gt;
-&lt;h1 id=&quot;时间&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#时间&quot;&gt;&lt;/a&gt; 时间&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;提交DS160: 2018-07-08&lt;/li&gt;
-&lt;li&gt;预约面签时间: 2018-07-27 
-      
-    
-    </summary>
-    
-      <category term="旅行" scheme="http://blog.simble.xyz/categories/%E6%97%85%E8%A1%8C/"/>
-    
-    
-      <category term="visa" scheme="http://blog.simble.xyz/tags/visa/"/>
     
   </entry>
   
