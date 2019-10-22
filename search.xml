@@ -105,8 +105,8 @@
         <category>tech</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>python</tag>
+        <tag>docker</tag>
         <tag>Linux</tag>
         <tag>Mac</tag>
       </tags>
@@ -377,8 +377,8 @@
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
         <tag>blog</tag>
+        <tag>hexo</tag>
         <tag>markdown</tag>
       </tags>
   </entry>

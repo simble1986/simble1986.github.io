@@ -244,9 +244,9 @@
       <category term="tech" scheme="http://blog.simble.xyz/categories/tech/"/>
     
     
-      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
-    
       <category term="python" scheme="http://blog.simble.xyz/tags/python/"/>
+    
+      <category term="docker" scheme="http://blog.simble.xyz/tags/docker/"/>
     
       <category term="Linux" scheme="http://blog.simble.xyz/tags/Linux/"/>
     
