@@ -271,9 +271,9 @@
       <category term="tech" scheme="http://www.isimble.com/categories/tech/"/>
     
     
-      <category term="docker" scheme="http://www.isimble.com/tags/docker/"/>
-    
       <category term="python" scheme="http://www.isimble.com/tags/python/"/>
+    
+      <category term="docker" scheme="http://www.isimble.com/tags/docker/"/>
     
       <category term="Linux" scheme="http://www.isimble.com/tags/Linux/"/>
     
