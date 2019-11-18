@@ -388,7 +388,7 @@
 </blockquote>
 <a id="more"></a>
 <h2 id="主要网站"><a class="markdownIt-Anchor" href="#主要网站"></a> 主要网站</h2>
-<p>西班牙签证申请中心：<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvaW5kZXgucGhw" title="https://china.blsspainvisa.com/chinese/index.php">https://china.blsspainvisa.com/chinese/index.php<i class="fa fa-external-link"></i></span></p>
+<p>西班牙签证申请中心：<a href="https://china.blsspainvisa.com/chinese/index.php">https://china.blsspainvisa.com/chinese/index.php</a></p>
 <h2 id="流程"><a class="markdownIt-Anchor" href="#流程"></a> 流程</h2>
 <ol>
 <li>准备资料</li>
@@ -399,8 +399,8 @@
 <h2 id="资料清单"><a class="markdownIt-Anchor" href="#资料清单"></a> 资料清单</h2>
 <h3 id="官网文件"><a class="markdownIt-Anchor" href="#官网文件"></a> 官网文件</h3>
 <blockquote>
-<p>来源：<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvaW5kZXgucGhw" title="https://china.blsspainvisa.com/chinese/index.php">西班牙签证申请中心官网<i class="fa fa-external-link"></i></span></p>
-<p>获取：首页 -&gt; 签证类型 -&gt; 短期 -&gt; 旅游。或直接点击<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2Uvc2hvcnRfdGVybV92aXNhX3RvdXJpc20ucGhw" title="https://china.blsspainvisa.com/chinese/short_term_visa_tourism.php">这里<i class="fa fa-external-link"></i></span></p>
+<p>来源：<a href="https://china.blsspainvisa.com/chinese/index.php">西班牙签证申请中心官网</a></p>
+<p>获取：首页 -&gt; 签证类型 -&gt; 短期 -&gt; 旅游。或直接点击<a href="https://china.blsspainvisa.com/chinese/short_term_visa_tourism.php">这里</a></p>
 </blockquote>
 <ol>
 <li>检查清单（Checklist）</li>
@@ -449,7 +449,7 @@
 <li>机动车产权证</li>
 </ol>
 <h2 id="预约"><a class="markdownIt-Anchor" href="#预约"></a> 预约</h2>
-<p>在西班牙签证申请中心官网： 申请预约 -&gt; BLS签证中心 -&gt; 网上预约，或直接点击<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvYm9va19hcHBvaW50bWVudC5waHA=" title="https://china.blsspainvisa.com/chinese/book_appointment.php">这里<i class="fa fa-external-link"></i></span></p>
+<p>在西班牙签证申请中心官网： 申请预约 -&gt; BLS签证中心 -&gt; 网上预约，或直接点击<a href="https://china.blsspainvisa.com/chinese/book_appointment.php">这里</a></p>
 <h3 id="预约表单填写"><a class="markdownIt-Anchor" href="#预约表单填写"></a> 预约表单填写</h3>
 <p><strong>基本信息</strong></p>
 <img src="/post/29ce55ae/29ce55ae/booking_1.png" class title="Booking form">
@@ -495,7 +495,7 @@
 <h2 id="坐等快递"><a class="markdownIt-Anchor" href="#坐等快递"></a> 坐等快递</h2>
 <p>提交完所有资料后，你只需要在家等待签证的快递，是否通过，已经由不得你了。</p>
 <h3 id="查询进度"><a class="markdownIt-Anchor" href="#查询进度"></a> 查询进度</h3>
-<p>可以登陆<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvaW5kZXgucGhw" title="https://china.blsspainvisa.com/chinese/index.php">西班牙签证申请中心官网<i class="fa fa-external-link"></i></span>，通过<strong>受理号</strong>在线查询您的申请</p>
+<p>可以登陆<a href="https://china.blsspainvisa.com/chinese/index.php">西班牙签证申请中心官网</a>，通过<strong>受理号</strong>在线查询您的申请</p>
 <img src="/post/29ce55ae/29ce55ae/status.png" class title="Status">
 <h2 id="在职证明模版"><a class="markdownIt-Anchor" href="#在职证明模版"></a> 在职证明模版</h2>
 <blockquote>
@@ -832,10 +832,10 @@
     <title>k8s环境安装之差点儿我就放弃了</title>
     <url>/post/d0b629f4.html</url>
     <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
-在行将放弃之际，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Vhc3psYWIva3ViZWFzeg==" title="https://github.com/easzlab/kubeasz">kubeasz<i class="fa fa-external-link"></i></span>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
+在行将放弃之际，<a href="https://github.com/easzlab/kubeasz">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
 <a id="more"></a>
 <h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
-<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Vhc3psYWIva3ViZWFzei9ibG9iL21hc3Rlci9kb2NzL3NldHVwL3F1aWNrU3RhcnQubWQ=" title="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md">官方文档<i class="fa fa-external-link"></i></span></p>
+<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<a href="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md">官方文档</a></p>
 <ol>
 <li>一台Linux虚拟机(Ubuntu16.04 server或CentOS 7 Minimal)</li>
 <li>内存需要2G</li>
@@ -912,10 +912,10 @@
 </blockquote>
 <ul>
 <li>
-<p>pyenv当前在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B5ZW52L3B5ZW52" title="https://github.com/pyenv/pyenv">github<i class="fa fa-external-link"></i></span>上有14k的关注量</p>
+<p>pyenv当前在<a href="https://github.com/pyenv/pyenv">github</a>上有14k的关注量</p>
 </li>
 <li>
-<p>安装说明参看github上的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B5ZW52L3B5ZW52I2luc3RhbGxhdGlvbg==" title="https://github.com/pyenv/pyenv#installation">安装文档<i class="fa fa-external-link"></i></span></p>
+<p>安装说明参看github上的<a href="https://github.com/pyenv/pyenv#installation">安装文档</a></p>
 </li>
 </ul>
 <h2 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h2>
@@ -929,7 +929,7 @@
 <h4 id="安装指定版本"><a class="markdownIt-Anchor" href="#安装指定版本"></a> 安装指定版本</h4>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv install 2.7.15</span><br><span class="line">python-build: use openssl from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-2.7.15...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installed Python-2.7.15 to /Users/xxx/.pyenv/versions/2.7.15</span><br></pre></td></tr></table></figure>
 <p><strong>注</strong>：Mac上安装可能会遇到<code>The Python zlib extension was not compiled. Missing the zlib?</code>的错误，可以尝试<code>CFLAGS=&quot;-I$(xcrun --show-sdk-path)/usr/include&quot; pyenv install 2.7.15</code></p>
-<p><em>更多错误，可查看项目的wiki中的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B5ZW52L3B5ZW52L3dpa2kvQ29tbW9uLWJ1aWxkLXByb2JsZW1z" title="https://github.com/pyenv/pyenv/wiki/Common-build-problems">常见问题<i class="fa fa-external-link"></i></span></em></p>
+<p><em>更多错误，可查看项目的wiki中的<a href="https://github.com/pyenv/pyenv/wiki/Common-build-problems">常见问题</a></em></p>
 <blockquote>
 <p>安装完毕一个python版本后，需要执行<code>pyenv rehash</code>来更新后，才能看到已安装的版本</p>
 </blockquote>
@@ -1009,7 +1009,7 @@
 </ol>
 <h2 id="mac使用清华homebrew源"><a class="markdownIt-Anchor" href="#mac使用清华homebrew源"></a> MAC使用清华homebrew源</h2>
 <blockquote>
-<p>可直接访问<span class="exturl" data-url="aHR0cHM6Ly9taXJyb3IudHVuYS50c2luZ2h1YS5lZHUuY24vaGVscC9ob21lYnJldy8=" title="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/">清华大学开源软件镜像站<i class="fa fa-external-link"></i></span>获取</p>
+<p>可直接访问<a href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/">清华大学开源软件镜像站</a>获取</p>
 </blockquote>
 <ul>
 <li>
@@ -1486,7 +1486,7 @@
 <a id="more"></a>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mn --<span class="built_in">help</span></span><br><span class="line">Usage: mn [options]</span><br><span class="line">(<span class="built_in">type</span> mn -h <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  --topo=TOPO           linear|minimal|reversed|single|torus|tree[,param=value</span><br><span class="line">                        ...] linear=LinearTopo torus=TorusTopo tree=TreeTopo</span><br><span class="line">                        single=SingleSwitchTopo</span><br><span class="line">                        reversed=SingleSwitchReversedTopo minimal=MinimalTopo</span><br></pre></td></tr></table></figure>
 <h2 id="获取示例"><a class="markdownIt-Anchor" href="#获取示例"></a> 获取示例</h2>
-<p>Mininet提供了topo-2sw-2host的示例，可以通过<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL21pbmluZXQvbWluaW5ldA==" title="https://github.com/mininet/mininet">Mininet github<i class="fa fa-external-link"></i></span>的custom目录下获取</p>
+<p>Mininet提供了topo-2sw-2host的示例，可以通过<a href="https://github.com/mininet/mininet">Mininet github</a>的custom目录下获取</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""Custom topology example</span></span><br><span class="line"><span class="string">Two directly connected switches plus a host for each switch:</span></span><br><span class="line"><span class="string">   host --- switch --- switch --- host</span></span><br><span class="line"><span class="string">Adding the 'topos' dict with a key/value pair to generate our newly defined</span></span><br><span class="line"><span class="string">topology enables one to pass in '--topo=mytopo' from the command line.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        leftHost = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        rightHost = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        leftSwitch = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line">        rightSwitch = self.addSwitch( <span class="string">'s4'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( leftHost, leftSwitch )</span><br><span class="line">        self.addLink( leftSwitch, rightSwitch )</span><br><span class="line">        self.addLink( rightSwitch, rightHost )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
 <h2 id="自定义topo"><a class="markdownIt-Anchor" href="#自定义topo"></a> 自定义topo</h2>
 <p>如要创建如下topo</p>
@@ -1528,7 +1528,7 @@
 <a id="more"></a>
 <h3 id="获取安装包"><a class="markdownIt-Anchor" href="#获取安装包"></a> 获取安装包</h3>
 <blockquote>
-<p><span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm9wZW5kYXlsaWdodC5vcmcvZW4vbGF0ZXN0L2Rvd25sb2Fkcy5odG1s" title="https://docs.opendaylight.org/en/latest/downloads.html">https://docs.opendaylight.org/en/latest/downloads.html<i class="fa fa-external-link"></i></span></p>
+<p><a href="https://docs.opendaylight.org/en/latest/downloads.html">https://docs.opendaylight.org/en/latest/downloads.html</a></p>
 </blockquote>
 <ul>
 <li>运行karaf</li>
@@ -1703,7 +1703,7 @@ h2的eth0与s1的eth2相连</p>
   <entry>
     <title>Hexo开启disqus评论系统</title>
     <url>/post/c4780247.html</url>
-    <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<span class="exturl" data-url="aHR0cDovL3d3dy5zaW1ibGUuc2l0ZS9wb3N0L2EwNzJiY2U2Lmh0bWw=" title="http://www.simble.site/post/a072bce6.html">博文<i class="fa fa-external-link"></i></span>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0a2V2aW50YW4vaGV4by10aGVtZS1tYXRlcmlhbC1mbG93" title="https://github.com/stkevintan/hexo-theme-material-flow">MaterialFlow<i class="fa fa-external-link"></i></span>，刚好也换换评论系统</p>
+    <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow">MaterialFlow</a>，刚好也换换评论系统</p>
 <p>相比Valine，disqus开启真的是太简单了</p>
 <a id="more"></a>
 <h3 id="注册disqus账号"><a class="markdownIt-Anchor" href="#注册disqus账号"></a> 注册disqus账号</h3>
@@ -2045,7 +2045,7 @@ h2的eth0与s1的eth2相连</p>
 <li>网络服务: neutron</li>
 </ul>
 <p><strong>可在controller上同样起计算服务</strong></p>
-<p>详细安装过程可参看<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm9wZW5zdGFjay5vcmcvaW5zdGFsbC1ndWlkZS9vcGVuc3RhY2stc2VydmljZXMuaHRtbA==" title="https://docs.openstack.org/install-guide/openstack-services.html">官方文档<i class="fa fa-external-link"></i></span></p>
+<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html">官方文档</a></p>
 ]]></content>
       <categories>
         <category>cloud</category>
@@ -2060,7 +2060,7 @@ h2的eth0与s1的eth2相连</p>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
 <a id="more"></a>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<span class="exturl" data-url="aHR0cHM6Ly95aGF0dC5naXRodWIuaW8vbWFycC8=" title="https://yhatt.github.io/marp/">Marp<i class="fa fa-external-link"></i></span>。</p>
+<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/">Marp</a>。</p>
 <h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
 <ul>
 <li>书写简单</li>
@@ -2202,7 +2202,7 @@ h2的eth0与s1的eth2相连</p>
 <a id="more"></a>
 <h2 id="gitbookdocker"><a class="markdownIt-Anchor" href="#gitbookdocker"></a> gitbook+docker</h2>
 <h3 id="本地安装"><a class="markdownIt-Anchor" href="#本地安装"></a> 本地安装</h3>
-<p>可参看gitbook的<span class="exturl" data-url="aHR0cHM6Ly90b29sY2hhaW4uZ2l0Ym9vay5jb20vc2V0dXAuaHRtbA==" title="https://toolchain.gitbook.com/setup.html">官方文档<i class="fa fa-external-link"></i></span></p>
+<p>可参看gitbook的<a href="https://toolchain.gitbook.com/setup.html">官方文档</a></p>
 <ul>
 <li>
 <p>环境需求</p>
@@ -2258,7 +2258,7 @@ h2的eth0与s1的eth2相连</p>
 <p>当使用<code>gitbook init</code>后会在当前目录生成两个文件：<code>README.md</code>和<code>SUMMARY.md</code>.</p>
 <p>其中，<code>README.md</code>用来对本书进行一些说明</p>
 <p>而<code>SUMMARY.md</code>则用来创建目录结构。</p>
-<h3 id="summarymd"><a class="markdownIt-Anchor" href="#summarymd"></a> <span class="exturl" data-url="aHR0cDovL1NVTU1BUlkubWQ=" title="http://SUMMARY.md">SUMMARY.md<i class="fa fa-external-link"></i></span></h3>
+<h3 id="summarymd"><a class="markdownIt-Anchor" href="#summarymd"></a> <a href="http://SUMMARY.md">SUMMARY.md</a></h3>
 <figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line"><span class="section"># Summary</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>[<span class="string">介绍</span>](<span class="link">README.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Git使用</span>](<span class="link">gitSetup.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Python基础</span>](<span class="link">part1/README.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习1-列表</span>](<span class="link">part1/1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习2-字典</span>](<span class="link">part1/2.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习3-数据结构嵌套</span>](<span class="link">part1/3.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习4-运算符</span>](<span class="link">part1/4.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习5-逻辑控制</span>](<span class="link">part1/5.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习6-异常处理</span>](<span class="link">part1/6.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习7-函数</span>](<span class="link">part1/7.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习8-文件操作</span>](<span class="link">part1/8.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">轻松一刻-猜数字游戏</span>](<span class="link">part1/happy1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习9-类.1</span>](<span class="link">part1/9.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习10-类.2</span>](<span class="link">part1/10.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习11-类的继承</span>](<span class="link">part1/11.md</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="bookjson"><a class="markdownIt-Anchor" href="#bookjson"></a> book.json</h3>
 <p>需要自己创建book.json</p>
@@ -2272,7 +2272,7 @@ h2的eth0与s1的eth2相连</p>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -d -p 80:4000 -v /mybook:/book mygitbook</span><br></pre></td></tr></table></figure>
 <h2 id="插件及说明"><a class="markdownIt-Anchor" href="#插件及说明"></a> 插件及说明</h2>
-<p>非常感谢<span class="exturl" data-url="aHR0cDovL2dpdGJvb2suemhhbmdqaWthaS5jb20vcGx1Z2lucy5odG1s" title="http://gitbook.zhangjikai.com/plugins.html">Zhangjikai的插件说明文档<i class="fa fa-external-link"></i></span>，然后我发现<span class="exturl" data-url="aHR0cDovL2Jsb2cuemhhbmdqaWthaS5jb20v" title="http://blog.zhangjikai.com/">Zhangjikai<i class="fa fa-external-link"></i></span>和我一样使用了Hexo搭建了自己的blog，并且同样适用了Next的主题</p>
+<p>非常感谢<a href="http://gitbook.zhangjikai.com/plugins.html">Zhangjikai的插件说明文档</a>，然后我发现<a href="http://blog.zhangjikai.com/">Zhangjikai</a>和我一样使用了Hexo搭建了自己的blog，并且同样适用了Next的主题</p>
 ]]></content>
       <categories>
         <category>docker</category>
@@ -2391,9 +2391,9 @@ h2的eth0与s1的eth2相连</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
 <a id="more"></a>
 <h2 id="环境搭建"><a class="markdownIt-Anchor" href="#环境搭建"></a> 环境搭建</h2>
-<p>根据<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2QxMXd0cS9kb2NrZXJwdHk=" title="https://github.com/d11wtq/dockerpty">dockerpty<i class="fa fa-external-link"></i></span>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
+<p>根据<a href="https://github.com/d11wtq/dockerpty">dockerpty</a>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
 <p>但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作</p>
-<p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NpbWJsZTE5ODYvZG9ja2VycHR5" title="https://github.com/simble1986/dockerpty">simble1986/dockerpty<i class="fa fa-external-link"></i></span></p>
+<p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<a href="https://github.com/simble1986/dockerpty">simble1986/dockerpty</a></p>
 <h4 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h4>
 <p>原有的project上提到依赖的docker api为<code>docker-py&gt;=0.3.2</code>，但docker的python API已经更新</p>
 <ul>
@@ -2410,7 +2410,7 @@ h2的eth0与s1的eth2相连</p>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure>
 <h2 id="相关api"><a class="markdownIt-Anchor" href="#相关api"></a> 相关API</h2>
-<p>参看docker官方<span class="exturl" data-url="aHR0cHM6Ly9kb2NrZXItcHkucmVhZHRoZWRvY3MuaW8vZW4vc3RhYmxlL2luZGV4Lmh0bWw=" title="https://docker-py.readthedocs.io/en/stable/index.html">API文档<i class="fa fa-external-link"></i></span>，以下主要对container相关参数加以说明</p>
+<p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html">API文档</a>，以下主要对container相关参数加以说明</p>
 <ul>
 <li>tty (bool) – Allocate a pseudo-TTY.</li>
 <li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
@@ -2494,24 +2494,24 @@ h2的eth0与s1的eth2相连</p>
 <a id="more"></a>
 <h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
 <h3 id="valine"><a class="markdownIt-Anchor" href="#valine"></a> Valine</h3>
-<p><span class="exturl" data-url="aHR0cHM6Ly92YWxpbmUuanMub3JnLw==" title="https://valine.js.org/">Valine<i class="fa fa-external-link"></i></span>是一款基于<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24v" title="https://leancloud.cn/">Leancloud<i class="fa fa-external-link"></i></span>的快速、简洁且高效的无后端评论系统。</p>
+<p><a href="https://valine.js.org/">Valine</a>是一款基于<a href="https://leancloud.cn/">Leancloud</a>的快速、简洁且高效的无后端评论系统。</p>
 <h3 id="leancloud"><a class="markdownIt-Anchor" href="#leancloud"></a> Leancloud</h3>
-<p>我的理解，<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24v" title="https://leancloud.cn/">Leancloud<i class="fa fa-external-link"></i></span>相当于是一个数据托管平台，可以帮助应用存储相关数据。Valine主要用到的是其中的数据存储——comments</p>
+<p>我的理解，<a href="https://leancloud.cn/">Leancloud</a>相当于是一个数据托管平台，可以帮助应用存储相关数据。Valine主要用到的是其中的数据存储——comments</p>
 <h2 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h2>
-<p>使用了最新版的<span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==" title="https://hexo.io/">Hexo<i class="fa fa-external-link"></i></span>以及最新版的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3RoZW1lLW5leHQvaGV4by10aGVtZS1uZXh0" title="https://github.com/theme-next/hexo-theme-next">Next主题<i class="fa fa-external-link"></i></span></p>
+<p>使用了最新版的<a href="https://hexo.io/">Hexo</a>以及最新版的<a href="https://github.com/theme-next/hexo-theme-next">Next主题</a></p>
 <h2 id="获取appid"><a class="markdownIt-Anchor" href="#获取appid"></a> 获取AppID</h2>
 <h3 id="注册leancloud"><a class="markdownIt-Anchor" href="#注册leancloud"></a> 注册Leancloud</h3>
-<p>访问<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24v" title="https://leancloud.cn/">Leancloud<i class="fa fa-external-link"></i></span>，点击<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vZGFzaGJvYXJkL2xvZ2luLmh0bWwjL3NpZ251cA==" title="https://leancloud.cn/dashboard/login.html#/signup">免费试用<i class="fa fa-external-link"></i></span>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
+<p>访问<a href="https://leancloud.cn/">Leancloud</a>，点击<a href="https://leancloud.cn/dashboard/login.html#/signup">免费试用</a>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
 <img src="/post/a072bce6/a072bce6/leancloud_signup.png" class title="注册页面">
 <p><em>注册完后需要验证邮箱</em></p>
 <h3 id="创建应用"><a class="markdownIt-Anchor" href="#创建应用"></a> 创建应用</h3>
-<p>访问<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vYXBwbGlzdC5odG1s" title="https://leancloud.cn/applist.html">控制台<i class="fa fa-external-link"></i></span>，在控制台中创建新应用</p>
+<p>访问<a href="https://leancloud.cn/applist.html">控制台</a>，在控制台中创建新应用</p>
 <img src="/post/a072bce6/a072bce6/leancloud_new_app.png" class title="创建应用">
 <h3 id="获取应用key"><a class="markdownIt-Anchor" href="#获取应用key"></a> 获取应用Key</h3>
 <p>点击新创建的应用——设置——应用Key，保存页面上的App ID以及App Key以备后续使用</p>
 <img src="/post/a072bce6/a072bce6/leancloud_appkey.png" class title="应用Key">
 <h2 id="配置valine"><a class="markdownIt-Anchor" href="#配置valine"></a> 配置Valine</h2>
-<p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<span class="exturl" data-url="aHR0cHM6Ly92YWxpbmUuanMub3JnLyMvaGV4bz9pZD1oZXhvLXRoZW1lLW5leHQ=" title="https://valine.js.org/#/hexo?id=hexo-theme-next">Hexo中使用Valine<i class="fa fa-external-link"></i></span>，点击<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lpc3NuYW4vaGV4by10aGVtZS1uZXh0L3B1bGwvMTk4Mw==" title="https://github.com/iissnan/hexo-theme-next/pull/1983">merged<i class="fa fa-external-link"></i></span>，会跳转到Next主题的merge历史</p>
+<p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<a href="https://valine.js.org/#/hexo?id=hexo-theme-next">Hexo中使用Valine</a>，点击<a href="https://github.com/iissnan/hexo-theme-next/pull/1983">merged</a>，会跳转到Next主题的merge历史</p>
 <h3 id="检查相关文件"><a class="markdownIt-Anchor" href="#检查相关文件"></a> 检查相关文件</h3>
 <p>可以再次检查并确认<span id="inline-yellow">主题配置文件</span>_config.xml，<code>layout/_macro/post.swig</code>和<code>layout/_third-party/comments/valine.swig</code>是否都已经合入了相关代码</p>
 <h3 id="配置appkey"><a class="markdownIt-Anchor" href="#配置appkey"></a> 配置AppKey</h3>
@@ -2531,7 +2531,7 @@ h2的eth0与s1的eth2相连</p>
 </ul>
 <p>在<span id="inline-yellow">主题配置文件</span>_config.xml的menu字段新增guestbook字段</p>
 <figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> /<span class="keyword">tags</span>/ || <span class="keyword">tags</span></span><br><span class="line">  categorie<span class="variable">s:</span> /categories/ || <span class="keyword">th</span></span><br><span class="line">  archive<span class="variable">s:</span> /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonwea<span class="variable">l:</span> /<span class="number">404</span>/ || heartbeat</span><br><span class="line">  abou<span class="variable">t:</span> /about/ || user</span><br><span class="line">  guestbook: /guestbook/ || comments</span><br></pre></td></tr></table></figure>
-<p><em>可以访问<span class="exturl" data-url="aHR0cHM6Ly9mb250YXdlc29tZS5jb20vdjQuNy4wL2ljb25zLw==" title="https://fontawesome.com/v4.7.0/icons/">fontawesome<i class="fa fa-external-link"></i></span>选择自己喜欢的图标来作为留言板的图标</em></p>
+<p><em>可以访问<a href="https://fontawesome.com/v4.7.0/icons/">fontawesome</a>选择自己喜欢的图标来作为留言板的图标</em></p>
 <ul>
 <li>本地化处理</li>
 </ul>
@@ -2542,7 +2542,7 @@ h2的eth0与s1的eth2相连</p>
 <figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 留言板</span><br><span class="line">date: <span class="number">2018</span>-<span class="number">03</span>-<span class="number">26</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">19</span></span><br><span class="line">comment<span class="variable">s:</span> true</span><br><span class="line">---</span><br><span class="line"><span class="symbol">&lt;center&gt;</span>既然来了，就是一种缘分，留下点什么吧:<span class="keyword">ca</span><span class="variable">t:</span>&lt;/<span class="keyword">center</span>&gt;</span><br></pre></td></tr></table></figure>
 <p>重新部署之后就可以看到留言板了 😃</p>
 <h2 id="清除测试留言"><a class="markdownIt-Anchor" href="#清除测试留言"></a> 清除测试留言</h2>
-<p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vZGFzaGJvYXJkL2FwcGxpc3QuaHRtbCMvYXBwcw==" title="https://leancloud.cn/dashboard/applist.html#/apps">控制台<i class="fa fa-external-link"></i></span>清除测试数据</p>
+<p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<a href="https://leancloud.cn/dashboard/applist.html#/apps">控制台</a>清除测试数据</p>
 <p>点击<em>myblog</em>——存储——Comments，即可查看当前留言，选中测试时的留言，删除即可</p>
 <img src="/post/a072bce6/a072bce6/leancloud_cleancomments.png" class title="清除测试留言">
 ]]></content>
@@ -2606,7 +2606,7 @@ h2的eth0与s1的eth2相连</p>
     <url>/post/80ca9385.html</url>
     <content><![CDATA[<h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
 <h3 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h3>
-<p><span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv" title="https://hexo.io">Hexo<i class="fa fa-external-link"></i></span>是一个快速、简介且高效的博客框架，可以使用<span class="exturl" data-url="aHR0cHM6Ly9kYXJpbmdmaXJlYmFsbC5uZXQvcHJvamVjdHMvbWFya2Rvd24v" title="https://daringfireball.net/projects/markdown/">Markdown<i class="fa fa-external-link"></i></span>解析文章并生成网站</p>
+<p><a href="https://hexo.io">Hexo</a>是一个快速、简介且高效的博客框架，可以使用<a href="https://daringfireball.net/projects/markdown/">Markdown</a>解析文章并生成网站</p>
 <a id="more"></a>
 <h3 id="说明"><a class="markdownIt-Anchor" href="#说明"></a> 说明</h3>
 <p><span id="inline-blue">站点配置文件</span> <code>$site_dir/_config.xml</code></p>
@@ -2638,7 +2638,7 @@ h2的eth0与s1的eth2相连</p>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <h3 id="主题修改"><a class="markdownIt-Anchor" href="#主题修改"></a> 主题修改</h3>
-<p>可访问hexo官方<span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL3RoZW1lcy8=" title="https://hexo.io/themes/">主题库<i class="fa fa-external-link"></i></span>选择自己喜欢的主题，并下载至theme目录下</p>
+<p>可访问hexo官方<a href="https://hexo.io/themes/">主题库</a>选择自己喜欢的主题，并下载至theme目录下</p>
 <p>修改_config.xml中的theme字段</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">theme: landscape</span><br></pre></td></tr></table></figure>
 <h2 id="写作"><a class="markdownIt-Anchor" href="#写作"></a> 写作</h2>
@@ -2784,11 +2784,11 @@ h2的eth0与s1的eth2相连</p>
     <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
 <a id="more"></a>
 <h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
-<p><span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3Jn" title="https://nodejs.org">nodejs<i class="fa fa-external-link"></i></span>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
+<p><a href="https://nodejs.org">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
 <h3 id="安装包获取"><a class="markdownIt-Anchor" href="#安装包获取"></a> 安装包获取</h3>
 <p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
-<p>获取<span class="exturl" data-url="aHR0cHM6Ly9ub2RlanMub3JnL2Rpc3QvdjguMTAuMC9ub2RlLXY4LjEwLjAtbGludXgtYXJtdjdsLnRhci54eg==" title="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz">安装包<i class="fa fa-external-link"></i></span></p>
+<p>获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz">安装包</a></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure>
 <h3 id="安装nodejs-2"><a class="markdownIt-Anchor" href="#安装nodejs-2"></a> 安装nodejs</h3>
 <p>解压缩</p>
@@ -2815,21 +2815,21 @@ h2的eth0与s1的eth2相连</p>
   <entry>
     <title>Hello World</title>
     <url>/post/4a17b156.html</url>
-    <content><![CDATA[<p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==" title="https://hexo.io/">Hexo<i class="fa fa-external-link"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv" title="https://hexo.io/docs/">documentation<i class="fa fa-external-link"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=" title="https://hexo.io/docs/troubleshooting.html">troubleshooting<i class="fa fa-external-link"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==" title="https://github.com/hexojs/hexo/issues">GitHub<i class="fa fa-external-link"></i></span>.</p>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <a id="more"></a>
 <h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
 <h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvd3JpdGluZy5odG1s" title="https://hexo.io/docs/writing.html">Writing<i class="fa fa-external-link"></i></span></p>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mvc2VydmVyLmh0bWw=" title="https://hexo.io/docs/server.html">Server<i class="fa fa-external-link"></i></span></p>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
 <h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZ2VuZXJhdGluZy5odG1s" title="https://hexo.io/docs/generating.html">Generating<i class="fa fa-external-link"></i></span></p>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
 <h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvZGVwbG95bWVudC5odG1s" title="https://hexo.io/docs/deployment.html">Deployment<i class="fa fa-external-link"></i></span></p>
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
 ]]></content>
   </entry>
 </search>
