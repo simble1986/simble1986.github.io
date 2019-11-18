@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Ubuntu16.04 VPP环境搭建 | Simble的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="环境  环境准备  VmWare虚拟环境 Host需求：2cpu，4G内存，3块网卡 Ubuntu16.04   拓扑 搭建典型的c2s拓扑">
+<meta name="keywords" content="network,vpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu16.04 VPP环境搭建">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;11&#x2F;15&#x2F;vpp-setup&#x2F;index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="环境  环境准备  VmWare虚拟环境 Host需求：2cpu，4G内存，3块网卡 Ubuntu16.04   拓扑 搭建典型的c2s拓扑">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;11&#x2F;15&#x2F;vpp-setup&#x2F;vpp_setup_topo.png">
+<meta property="og:updated_time" content="2018-11-15T08:42:11.503Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;11&#x2F;15&#x2F;vpp-setup&#x2F;vpp_setup_topo.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Simble的小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晒晒狗 vs 练练手</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.isimble.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-vpp-setup" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/15/vpp-setup/" class="article-date">
+  <time datetime="2018-11-15T00:31:50.000Z" itemprop="datePublished">2018-11-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/network/">network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Ubuntu16.04 VPP环境搭建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h1>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<ol>
+<li>VmWare虚拟环境</li>
+<li>Host需求：2cpu，4G内存，3块网卡</li>
+<li>Ubuntu16.04</li>
+</ol>
+<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
+<p>搭建典型的c2s拓扑</p>
+<a id="more"></a>
+<img src="/.com//11/15/vpp-setup/vpp_setup_topo.png" class title="topo">
+<ul>
+<li>通过vsphere创建两个虚拟交换机</li>
+<li>host1的第二个接口与vpp的第二个接口连在同一个交换机上</li>
+<li>host2的第二个接口与vpp的第三个接口连在同一个交换机上</li>
+</ul>
+<h2 id="vpp安装先决条件"><a class="markdownIt-Anchor" href="#vpp安装先决条件"></a> VPP安装先决条件</h2>
+<ol>
+<li>Ubuntu安装git（git默认安装）</li>
+<li>Ubuntu安装dpdk，并绑定PCI的另外两个接口到dpdk</li>
+</ol>
+<h1 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h1>
+<p>官方文档提供了多种安装方式，并且推荐使用vagrant包，由于这里使用的是虚拟环境，则使用直接安装的方式</p>
+<h2 id="获取源码"><a class="markdownIt-Anchor" href="#获取源码"></a> 获取源码</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://gerrit.fd.io/r/vpp</span><br></pre></td></tr></table></figure>
+<h2 id="安装vpp"><a class="markdownIt-Anchor" href="#安装vpp"></a> 安装vpp</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> vpp</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step1</li>
+</ul>
+<p>可以先执行一下<code>make</code>查看可以执行哪些操作</p>
+<ul>
+<li>Step2 - make</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ make build-release</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">by executing <span class="string">"make install-dep"</span></span><br><span class="line"></span><br><span class="line">Makefile:262: recipe <span class="keyword">for</span> target <span class="string">'/root/vpp/build-root/.deps.ok'</span> failed</span><br><span class="line">make: *** [/root/vpp/build-root/.deps.ok] Error 1</span><br></pre></td></tr></table></figure>
+<p>如果遇到以上错误，则意味着缺少依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make install-dep</span><br></pre></td></tr></table></figure>
+<p>依赖包安装完成后，再次执行<code>make build-release</code></p>
+<ul>
+<li>Step3 - Build deb包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make pkg-deb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step4 - 安装VPP packages</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg -i /vpp/build-root/*.deb</span><br></pre></td></tr></table></figure>
+<p>中间可能会遇到<code>vpp-api-python</code>的错误，使用apt安装后重新安装packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install vpp-api-python</span><br></pre></td></tr></table></figure>
+<h1 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/vpp</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/vpp/startup.conf /etc/vpp/</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/sysctl.d/80-vpp.conf /etc/sysctl.d/</span><br></pre></td></tr></table></figure>
+<p>修改<code>/etc/vpp/startup.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">unix &#123;</span><br><span class="line">  nodaemon</span><br><span class="line">  <span class="built_in">log</span> /var/<span class="built_in">log</span>/vpp/vpp.log</span><br><span class="line">  full-coredump</span><br><span class="line">  <span class="comment">#cli-listen /run/vpp/cli.sock</span></span><br><span class="line">  cli-listen 0.0.0.0:5002</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-trace &#123;</span><br><span class="line">  on</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-segment &#123;</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">socksvr &#123;</span><br><span class="line">  default</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cpu &#123;</span><br><span class="line">    main-core 0</span><br><span class="line">    workers 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dpdk &#123;</span><br><span class="line">    dev 0000:0b:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    dev 0000:13:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    num-mbufs 128000</span><br><span class="line">    socket-mem 1024,1024</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    path /root/vpp/build-root/install-vpp-native/vpp/lib/vpp_plugins</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="启动vpp"><a class="markdownIt-Anchor" href="#启动vpp"></a> 启动VPP</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service vpp start</span><br></pre></td></tr></table></figure>
+<p>查看状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status vpp.service</span><br><span class="line">● vpp.service - vector packet processing engine</span><br><span class="line">   Loaded: loaded (/lib/systemd/system/vpp.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Thu 2018-11-15 16:00:09 CST; 4min 52s ago</span><br><span class="line">  Process: 19959 ExecStopPost=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19985 ExecStartPre=/sbin/modprobe uio_pci_generic (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19981 ExecStartPre=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 19989 (vpp_main)</span><br><span class="line">    Tasks: 6</span><br><span class="line">   Memory: 55.9M</span><br><span class="line">      CPU: 9min 46.890s</span><br><span class="line">   CGroup: /system.slice/vpp.service</span><br><span class="line">           └─19989 /usr/bin/vpp -c /etc/vpp/startup.conf</span><br><span class="line"></span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: nat_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: lb_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: gtpu_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: avf_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: acl_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: memif_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: stn_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio vpp[19989]: /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcor</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcore 0 --socket</span><br><span class="line">Nov 15 16:00:10 fdio vnet[19989]: dpdk_ipsec_process:1015: not enough DPDK crypto resources, default to OpenSSL</span><br></pre></td></tr></table></figure>
+<p>虽然有警告信息，但似乎不影响使用</p>
+<h1 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h1>
+<blockquote>
+<p>根据<code>startup.conf</code>中的配置不同，选择不同的连接vpp方式</p>
+</blockquote>
+<h2 id="登陆vpp-cli"><a class="markdownIt-Anchor" href="#登陆vpp-cli"></a> 登陆VPP CLI</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ telnet 127.0.0.1 5002</span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">    _______    _        _   _____  ___</span><br><span class="line"> __/ __/ _ \  (_)__    | | / / _ \/ _ \</span><br><span class="line"> _/ _// // / / / _ \   | |/ / ___/ ___/</span><br><span class="line"> /_/ /____(_)_/\___/   |___/_/  /_/</span><br><span class="line"></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2     down         9000/0/0/0</span><br><span class="line">GigabitEthernetb/0/0              1     down         9000/0/0/0</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="开启端口"><a class="markdownIt-Anchor" href="#开启端口"></a> 开启端口</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface state GigabitEthernet13/0/0 up</span></span><br><span class="line">vpp<span class="comment"># set interface state GigabitEthernetb/0/0 up</span></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2      up          9000/0/0/0     rx packets                     1</span><br><span class="line">                                                                    rx bytes                      60</span><br><span class="line">                                                                    drops                          1</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">GigabitEthernetb/0/0              1      up          9000/0/0/0     rx packets                     4</span><br><span class="line">                                                                    rx bytes                     240</span><br><span class="line">                                                                    drops                          4</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置为switch模式"><a class="markdownIt-Anchor" href="#配置为switch模式"></a> 配置为switch模式</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernet13/0/0 1</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernetb/0/0 1</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off        N/A</span><br></pre></td></tr></table></figure>
+<h2 id="测试连通性"><a class="markdownIt-Anchor" href="#测试连通性"></a> 测试连通性</h2>
+<ul>
+<li>c2s</li>
+</ul>
+<ol>
+<li>Host1: 192.168.0.2/24</li>
+<li>Host2: 192.168.0.3/24</li>
+</ol>
+<p>通过host1 ping host2</p>
+<ul>
+<li>配置loopback口测试连通性</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># create loopback interface</span></span><br><span class="line">loop0</span><br><span class="line">vpp<span class="comment"># set interface ip address loop0 192.168.0.1/24</span></span><br><span class="line">vpp<span class="comment"># set interface state loop0 up</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge loop0 1 bvi</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off       loop0</span><br><span class="line">vpp<span class="comment"># ping 192.168.0.2</span></span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=.8704 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=3 ttl=64 time=.2564 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=4 ttl=64 time=.2653 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=5 ttl=64 time=.3413 ms</span><br><span class="line"></span><br><span class="line">Statistics: 5 sent, 4 received, 20% packet loss</span><br></pre></td></tr></table></figure>
+<p><code>set interface l2 bridge loop0 1 bvi</code>中的<strong>bvi</strong>意味着这个接口将用来接收、发送以及转发该bridge domain的报文</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.isimble.com/2018/11/15/vpp-setup/" data-id="ck34ae1hc002xecs11i8d9znc" class="article-share-link">Share</a>
+      
+        <a href="http://www.isimble.com/2018/11/15/vpp-setup/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network/" rel="tag">network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vpp/" rel="tag">vpp</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/14/cn_resources/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用国内资源（备忘）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/11/14/dpdk-setup/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Ubuntu16.04上安装DPDK</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud/">cloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/k8s/">k8s</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/openstack/">openstack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sdn/">sdn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%85%E8%A1%8C/">旅行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DockerFile/" rel="tag">DockerFile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Next/" rel="tag">Next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Valine/" rel="tag">Valine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dockerpty/" rel="tag">dockerpty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dpdk/" rel="tag">dpdk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-server/" rel="tag">mysql-server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/" rel="tag">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/neutron/" rel="tag">neutron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opendaylight/" rel="tag">opendaylight</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/" rel="tag">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvswitch/" rel="tag">openvswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ovs/" rel="tag">ovs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pexpect/" rel="tag">pexpect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pi/" rel="tag">pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdn/" rel="tag">sdn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/" rel="tag">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/visa/" rel="tag">visa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpp/" rel="tag">vpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%85%E8%A1%8C/" rel="tag">旅行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">自动化</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DockerFile/" style="font-size: 10px;">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Next/" style="font-size: 10px;">Next</a> <a href="/tags/Valine/" style="font-size: 10px;">Valine</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/docker/" style="font-size: 18.33px;">docker</a> <a href="/tags/dockerpty/" style="font-size: 10px;">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 10px;">dpdk</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/mysql-server/" style="font-size: 10px;">mysql-server</a> <a href="/tags/network/" style="font-size: 20px;">network</a> <a href="/tags/neutron/" style="font-size: 10px;">neutron</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 10px;">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.67px;">openstack</a> <a href="/tags/openvswitch/" style="font-size: 10px;">openvswitch</a> <a href="/tags/ovs/" style="font-size: 16.67px;">ovs</a> <a href="/tags/pexpect/" style="font-size: 10px;">pexpect</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/sdn/" style="font-size: 13.33px;">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 11.67px;">visa</a> <a href="/tags/vpp/" style="font-size: 10px;">vpp</a> <a href="/tags/%E6%97%85%E8%A1%8C/" style="font-size: 10px;">旅行</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 10px;">树莓派</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 11.67px;">自动化</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/02/openstack-vm-traffic1/">Openstack网络——虚拟机通信实验1</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/15/linux-virtual-vm/">Linux虚拟网络之虚拟机</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/14/spain-visa/">西班牙申根签证快速攻略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/08/openstack-security-group-ovs-1/">Openstack安全组基于ovs的学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/07/linux-virtual-network-basic/">Linux虚拟网络学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Simble<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'simble';
+  
+  var disqus_url = 'http://www.isimble.com/2018/11/15/vpp-setup/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

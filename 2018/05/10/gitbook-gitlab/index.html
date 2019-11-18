@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>gitbook+gitlab发布私有的图书仓库 | Simble的小站</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。 另一方面，由于最近痴迷于Docker，所以，也同样将gitb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="gitbook+gitlab发布私有的图书仓库">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;05&#x2F;10&#x2F;gitbook-gitlab&#x2F;index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。 另一方面，由于最近痴迷于Docker，所以，也同样将gitb">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-15T05:46:30.039Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Simble的小站</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">晒晒狗 vs 练练手</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://www.isimble.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-gitbook-gitlab" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/10/gitbook-gitlab/" class="article-date">
+  <time datetime="2018-05-10T22:28:34.000Z" itemprop="datePublished">2018-05-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/docker/">docker</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      gitbook+gitlab发布私有的图书仓库
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
+<p>另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。</p>
+<a id="more"></a>
+<h2 id="gitbookdocker"><a class="markdownIt-Anchor" href="#gitbookdocker"></a> gitbook+docker</h2>
+<h3 id="本地安装"><a class="markdownIt-Anchor" href="#本地安装"></a> 本地安装</h3>
+<p>可参看gitbook的<a href="https://toolchain.gitbook.com/setup.html" target="_blank" rel="noopener">官方文档</a></p>
+<ul>
+<li>
+<p>环境需求</p>
+<p>gitbook需要nodejs环境</p>
+<ul>
+<li>NodeJS (v4.0.0 and above is recommended)</li>
+</ul>
+</li>
+<li>
+<p>安装gitbook-cli</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gitbook-cli -g</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>创建一本书</p>
+<p><strong>当使用gitlab时，可跳过此步骤</strong></p>
+<ul>
+<li>创建存放书籍的目录</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mybook</span><br></pre></td></tr></table></figure>
+<ul>
+<li>初始化</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook init</span><br></pre></td></tr></table></figure>
+<p>初始化完成后，将生成<code>SUMMARY.md</code>和<code>README.md</code></p>
+<ul>
+<li>插件安装</li>
+</ul>
+<p>如果没有生成book.json，可自行创建</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;root&quot;: &quot;./&quot;,</span><br><span class="line">&quot;title&quot;: &quot;mybook&quot;,</span><br><span class="line">&quot;head_title&quot;: &quot;My first book&quot;,</span><br><span class="line">&quot;description&quot;: &quot;test with gitbook&quot;,</span><br><span class="line">&quot;author&quot;: &quot;myname&quot;,</span><br><span class="line">&quot;output.name&quot;: &quot;practice&quot;,</span><br><span class="line"></span><br><span class="line">&quot;gitbook&quot;: &quot;&gt;= 3.0.0&quot;,</span><br><span class="line"></span><br><span class="line">&quot;language&quot;: &quot;zh-hans&quot;,</span><br><span class="line">&quot;plugins&quot;: [</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure>
+<p>将插件在<code>plugins</code>字段中进行声明后，执行以下命令进行安装</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook install</span><br></pre></td></tr></table></figure>
+<ul>
+<li>预览和发布自己的书</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook serve</span><br></pre></td></tr></table></figure>
+<p>随后可登陆http://localhost:4000来预览自己的书</p>
+</li>
+</ul>
+<h3 id="docker镜像"><a class="markdownIt-Anchor" href="#docker镜像"></a> docker镜像</h3>
+<p>其实在docker hub上搜索便可以得到gitbook的镜像，但本着学习的态度，还是自己动手练习制作自己的docker镜像。</p>
+<p>由于nodejs有官方提供的docker镜像，所以，一切变得很简单</p>
+<ul>
+<li>Dockerfile</li>
+</ul>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">8</span>-alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> Bo Qi &lt;simble1986@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install gitbook-cli -g &amp;&amp; npm install &amp;&amp; gitbook install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /book</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4000</span> <span class="number">35729</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> gitbook install &amp;&amp; gitbook serve</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>编译docker镜像</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build --tag mygitbook .</span><br></pre></td></tr></table></figure>
+<h2 id="书的结构"><a class="markdownIt-Anchor" href="#书的结构"></a> 书的结构</h2>
+<p>当使用<code>gitbook init</code>后会在当前目录生成两个文件：<code>README.md</code>和<code>SUMMARY.md</code>.</p>
+<p>其中，<code>README.md</code>用来对本书进行一些说明</p>
+<p>而<code>SUMMARY.md</code>则用来创建目录结构。</p>
+<h3 id="summarymd"><a class="markdownIt-Anchor" href="#summarymd"></a> <a href="http://SUMMARY.md" target="_blank" rel="noopener">SUMMARY.md</a></h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Summary</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>[<span class="string">介绍</span>](<span class="link">README.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Git使用</span>](<span class="link">gitSetup.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Python基础</span>](<span class="link">part1/README.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习1-列表</span>](<span class="link">part1/1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习2-字典</span>](<span class="link">part1/2.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习3-数据结构嵌套</span>](<span class="link">part1/3.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习4-运算符</span>](<span class="link">part1/4.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习5-逻辑控制</span>](<span class="link">part1/5.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习6-异常处理</span>](<span class="link">part1/6.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习7-函数</span>](<span class="link">part1/7.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习8-文件操作</span>](<span class="link">part1/8.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">轻松一刻-猜数字游戏</span>](<span class="link">part1/happy1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习9-类.1</span>](<span class="link">part1/9.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习10-类.2</span>](<span class="link">part1/10.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习11-类的继承</span>](<span class="link">part1/11.md</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="bookjson"><a class="markdownIt-Anchor" href="#bookjson"></a> book.json</h3>
+<p>需要自己创建book.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"root"</span>: <span class="string">"./"</span>,</span><br><span class="line">    <span class="attr">"title"</span>: <span class="string">"练习python"</span>,</span><br><span class="line">    <span class="attr">"head_title"</span>: <span class="string">"通过练习的方式来学习python"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"通过小练习一点一点熟悉python"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: <span class="string">"myname(simble1986@gmail.com)"</span>,</span><br><span class="line">    <span class="attr">"output.name"</span>: <span class="string">"通过练习学脚本"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"gitbook"</span>: <span class="string">"3.2.3"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"language"</span>: <span class="string">"zh-hans"</span>,</span><br><span class="line">    <span class="attr">"links"</span> : &#123;</span><br><span class="line">    <span class="attr">"sidebar"</span> : &#123;</span><br><span class="line">        <span class="attr">"Home"</span> : <span class="string">"http://www.simble.site"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"plugins"</span>: [</span><br><span class="line">        <span class="string">"autotheme"</span>,</span><br><span class="line">        <span class="string">"prism"</span>,</span><br><span class="line">        <span class="string">"prism-themes"</span>,</span><br><span class="line">        <span class="string">"-highlight"</span>,</span><br><span class="line">        <span class="string">"-search"</span>,</span><br><span class="line">        <span class="string">"search-pro"</span>,</span><br><span class="line">        <span class="string">"emphasize"</span>,</span><br><span class="line">        <span class="string">"splitter"</span>,</span><br><span class="line">        <span class="string">"tbfed-pagefooter"</span>,</span><br><span class="line">        <span class="string">"toggle-chapters"</span>,</span><br><span class="line">        <span class="string">"codeblock-filename"</span>,</span><br><span class="line">        <span class="string">"ace"</span>,</span><br><span class="line">        <span class="string">"simple-page-toc"</span>,</span><br><span class="line">        <span class="string">"edit-link"</span>,</span><br><span class="line">        <span class="string">"copy-code-button"</span>,</span><br><span class="line">        <span class="string">"alerts"</span>,</span><br><span class="line">        <span class="string">"anchor-navigation-ex"</span>,</span><br><span class="line">        <span class="string">"theme-comscore"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="git-lab归档"><a class="markdownIt-Anchor" href="#git-lab归档"></a> git-lab归档</h3>
+<p>在gitlab上创建自己的project并归档</p>
+<h2 id="在服务器上用docker启动预览"><a class="markdownIt-Anchor" href="#在服务器上用docker启动预览"></a> 在服务器上用docker启动预览</h2>
+<ul>
+<li>从gitlab上clone书的结构</li>
+<li>启动docker并挂载gitbook的目录到docker中</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 80:4000 -v /mybook:/book mygitbook</span><br></pre></td></tr></table></figure>
+<h2 id="插件及说明"><a class="markdownIt-Anchor" href="#插件及说明"></a> 插件及说明</h2>
+<p>非常感谢<a href="http://gitbook.zhangjikai.com/plugins.html" target="_blank" rel="noopener">Zhangjikai的插件说明文档</a>，然后我发现<a href="http://blog.zhangjikai.com/" target="_blank" rel="noopener">Zhangjikai</a>和我一样使用了Hexo搭建了自己的blog，并且同样适用了Next的主题</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://www.isimble.com/2018/05/10/gitbook-gitlab/" data-id="ck34ae1f9000jecs1af1ka5zg" class="article-share-link">Share</a>
+      
+        <a href="http://www.isimble.com/2018/05/10/gitbook-gitlab/#disqus_thread" class="article-comment-link">留言</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/29/ovs-install/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Ubuntu16.04安装Open vSwitch
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/06/python-virtenv/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">python virtenv环境搭建</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/cloud/">cloud</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/docker/">docker</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/hexo/">hexo</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/k8s/">k8s</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/network/">network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/openstack/">openstack</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/sdn/">sdn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tech/">tech</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%85%E8%A1%8C/">旅行</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/DockerFile/" rel="tag">DockerFile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Kubernetes/" rel="tag">Kubernetes</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mac/" rel="tag">Mac</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Next/" rel="tag">Next</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Valine/" rel="tag">Valine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dockerpty/" rel="tag">dockerpty</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dpdk/" rel="tag">dpdk</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flask/" rel="tag">flask</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/k8s/" rel="tag">k8s</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown/" rel="tag">markdown</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql-server/" rel="tag">mysql-server</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network/" rel="tag">network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/neutron/" rel="tag">neutron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opendaylight/" rel="tag">opendaylight</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openstack/" rel="tag">openstack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/openvswitch/" rel="tag">openvswitch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ovs/" rel="tag">ovs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pexpect/" rel="tag">pexpect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pi/" rel="tag">pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sdn/" rel="tag">sdn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlalchemy/" rel="tag">sqlalchemy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/visa/" rel="tag">visa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vpp/" rel="tag">vpp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%85%E8%A1%8C/" rel="tag">旅行</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag">自动化</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/DockerFile/" style="font-size: 10px;">DockerFile</a> <a href="/tags/Kubernetes/" style="font-size: 10px;">Kubernetes</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Next/" style="font-size: 10px;">Next</a> <a href="/tags/Valine/" style="font-size: 10px;">Valine</a> <a href="/tags/blog/" style="font-size: 11.67px;">blog</a> <a href="/tags/docker/" style="font-size: 18.33px;">docker</a> <a href="/tags/dockerpty/" style="font-size: 10px;">dockerpty</a> <a href="/tags/dpdk/" style="font-size: 10px;">dpdk</a> <a href="/tags/flask/" style="font-size: 10px;">flask</a> <a href="/tags/hexo/" style="font-size: 11.67px;">hexo</a> <a href="/tags/k8s/" style="font-size: 10px;">k8s</a> <a href="/tags/linux/" style="font-size: 13.33px;">linux</a> <a href="/tags/markdown/" style="font-size: 11.67px;">markdown</a> <a href="/tags/mysql-server/" style="font-size: 10px;">mysql-server</a> <a href="/tags/network/" style="font-size: 20px;">network</a> <a href="/tags/neutron/" style="font-size: 10px;">neutron</a> <a href="/tags/nodejs/" style="font-size: 10px;">nodejs</a> <a href="/tags/opendaylight/" style="font-size: 10px;">opendaylight</a> <a href="/tags/openstack/" style="font-size: 16.67px;">openstack</a> <a href="/tags/openvswitch/" style="font-size: 10px;">openvswitch</a> <a href="/tags/ovs/" style="font-size: 16.67px;">ovs</a> <a href="/tags/pexpect/" style="font-size: 10px;">pexpect</a> <a href="/tags/pi/" style="font-size: 10px;">pi</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/sdn/" style="font-size: 13.33px;">sdn</a> <a href="/tags/sqlalchemy/" style="font-size: 10px;">sqlalchemy</a> <a href="/tags/visa/" style="font-size: 11.67px;">visa</a> <a href="/tags/vpp/" style="font-size: 10px;">vpp</a> <a href="/tags/%E6%97%85%E8%A1%8C/" style="font-size: 10px;">旅行</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 10px;">树莓派</a> <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" style="font-size: 11.67px;">自动化</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/09/">九月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/08/">八月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">七月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">一月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">三月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/09/02/openstack-vm-traffic1/">Openstack网络——虚拟机通信实验1</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/15/linux-virtual-vm/">Linux虚拟网络之虚拟机</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/14/spain-visa/">西班牙申根签证快速攻略</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/08/openstack-security-group-ovs-1/">Openstack安全组基于ovs的学习笔记</a>
+          </li>
+        
+          <li>
+            <a href="/2019/08/07/linux-virtual-network-basic/">Linux虚拟网络学习笔记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Simble<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'simble';
+  
+  var disqus_url = 'http://www.isimble.com/2018/05/10/gitbook-gitlab/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
