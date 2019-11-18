@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="环境  环境准备  VmWare虚拟环境 Host需求：2cpu，4G内存，3块网卡 Ubuntu16.04   拓扑 搭建典型的c2s拓扑">
+<meta name="keywords" content="network,vpp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu16.04 VPP环境搭建">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;undefinedundefined15&#x2F;vpp-setup&#x2F;index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="环境  环境准备  VmWare虚拟环境 Host需求：2cpu，4G内存，3块网卡 Ubuntu16.04   拓扑 搭建典型的c2s拓扑">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;vpp-setup&#x2F;vpp_setup_topo.png">
+<meta property="og:updated_time" content="2018-11-15T08:42:11.503Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;vpp-setup&#x2F;vpp_setup_topo.png">
+
+<link rel="canonical" href="http://www.isimble.com/undefinedundefined15/vpp-setup/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Ubuntu16.04 VPP环境搭建 | Simble的小站</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-152780270-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simble的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">晒晒狗 vs 练练手</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">35</span></a>
+
+  </li>
+        <li class="menu-item menu-item-schedule">
+
+    <a href="/schedule/" rel="section"><i class="fa fa-fw fa-calendar"></i>日程表</a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-fw fa-comments"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/undefinedundefined15/vpp-setup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Ubuntu16.04 VPP环境搭建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-11-15 08:31:50 / 修改时间：16:42:11" itemprop="dateCreated datePublished" datetime="2018-11-15T08:31:50+08:00">2018-11-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/network/" itemprop="url" rel="index">
+                    <span itemprop="name">network</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/undefinedundefined15/vpp-setup/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="undefinedundefined15/vpp-setup/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h1>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<ol>
+<li>VmWare虚拟环境</li>
+<li>Host需求：2cpu，4G内存，3块网卡</li>
+<li>Ubuntu16.04</li>
+</ol>
+<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
+<p>搭建典型的c2s拓扑</p>
+<a id="more"></a>
+<img src="/.com//vpp-setup/vpp_setup_topo.png" class title="topo">
+<ul>
+<li>通过vsphere创建两个虚拟交换机</li>
+<li>host1的第二个接口与vpp的第二个接口连在同一个交换机上</li>
+<li>host2的第二个接口与vpp的第三个接口连在同一个交换机上</li>
+</ul>
+<h2 id="vpp安装先决条件"><a class="markdownIt-Anchor" href="#vpp安装先决条件"></a> VPP安装先决条件</h2>
+<ol>
+<li>Ubuntu安装git（git默认安装）</li>
+<li>Ubuntu安装dpdk，并绑定PCI的另外两个接口到dpdk</li>
+</ol>
+<h1 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h1>
+<p>官方文档提供了多种安装方式，并且推荐使用vagrant包，由于这里使用的是虚拟环境，则使用直接安装的方式</p>
+<h2 id="获取源码"><a class="markdownIt-Anchor" href="#获取源码"></a> 获取源码</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://gerrit.fd.io/r/vpp</span><br></pre></td></tr></table></figure>
+<h2 id="安装vpp"><a class="markdownIt-Anchor" href="#安装vpp"></a> 安装vpp</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> vpp</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step1</li>
+</ul>
+<p>可以先执行一下<code>make</code>查看可以执行哪些操作</p>
+<ul>
+<li>Step2 - make</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ make build-release</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">by executing <span class="string">"make install-dep"</span></span><br><span class="line"></span><br><span class="line">Makefile:262: recipe <span class="keyword">for</span> target <span class="string">'/root/vpp/build-root/.deps.ok'</span> failed</span><br><span class="line">make: *** [/root/vpp/build-root/.deps.ok] Error 1</span><br></pre></td></tr></table></figure>
+<p>如果遇到以上错误，则意味着缺少依赖包</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make install-dep</span><br></pre></td></tr></table></figure>
+<p>依赖包安装完成后，再次执行<code>make build-release</code></p>
+<ul>
+<li>Step3 - Build deb包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make pkg-deb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step4 - 安装VPP packages</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg -i /vpp/build-root/*.deb</span><br></pre></td></tr></table></figure>
+<p>中间可能会遇到<code>vpp-api-python</code>的错误，使用apt安装后重新安装packages</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install vpp-api-python</span><br></pre></td></tr></table></figure>
+<h1 id="配置"><a class="markdownIt-Anchor" href="#配置"></a> 配置</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/vpp</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/vpp/startup.conf /etc/vpp/</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/sysctl.d/80-vpp.conf /etc/sysctl.d/</span><br></pre></td></tr></table></figure>
+<p>修改<code>/etc/vpp/startup.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">unix &#123;</span><br><span class="line">  nodaemon</span><br><span class="line">  <span class="built_in">log</span> /var/<span class="built_in">log</span>/vpp/vpp.log</span><br><span class="line">  full-coredump</span><br><span class="line">  <span class="comment">#cli-listen /run/vpp/cli.sock</span></span><br><span class="line">  cli-listen 0.0.0.0:5002</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-trace &#123;</span><br><span class="line">  on</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-segment &#123;</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">socksvr &#123;</span><br><span class="line">  default</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cpu &#123;</span><br><span class="line">    main-core 0</span><br><span class="line">    workers 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dpdk &#123;</span><br><span class="line">    dev 0000:0b:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    dev 0000:13:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    num-mbufs 128000</span><br><span class="line">    socket-mem 1024,1024</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    path /root/vpp/build-root/install-vpp-native/vpp/lib/vpp_plugins</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="启动vpp"><a class="markdownIt-Anchor" href="#启动vpp"></a> 启动VPP</h1>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service vpp start</span><br></pre></td></tr></table></figure>
+<p>查看状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status vpp.service</span><br><span class="line">● vpp.service - vector packet processing engine</span><br><span class="line">   Loaded: loaded (/lib/systemd/system/vpp.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Thu 2018-11-15 16:00:09 CST; 4min 52s ago</span><br><span class="line">  Process: 19959 ExecStopPost=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19985 ExecStartPre=/sbin/modprobe uio_pci_generic (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19981 ExecStartPre=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 19989 (vpp_main)</span><br><span class="line">    Tasks: 6</span><br><span class="line">   Memory: 55.9M</span><br><span class="line">      CPU: 9min 46.890s</span><br><span class="line">   CGroup: /system.slice/vpp.service</span><br><span class="line">           └─19989 /usr/bin/vpp -c /etc/vpp/startup.conf</span><br><span class="line"></span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: nat_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: lb_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: gtpu_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: avf_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: acl_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: memif_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: stn_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio vpp[19989]: /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcor</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcore 0 --socket</span><br><span class="line">Nov 15 16:00:10 fdio vnet[19989]: dpdk_ipsec_process:1015: not enough DPDK crypto resources, default to OpenSSL</span><br></pre></td></tr></table></figure>
+<p>虽然有警告信息，但似乎不影响使用</p>
+<h1 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h1>
+<blockquote>
+<p>根据<code>startup.conf</code>中的配置不同，选择不同的连接vpp方式</p>
+</blockquote>
+<h2 id="登陆vpp-cli"><a class="markdownIt-Anchor" href="#登陆vpp-cli"></a> 登陆VPP CLI</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ telnet 127.0.0.1 5002</span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">    _______    _        _   _____  ___</span><br><span class="line"> __/ __/ _ \  (_)__    | | / / _ \/ _ \</span><br><span class="line"> _/ _// // / / / _ \   | |/ / ___/ ___/</span><br><span class="line"> /_/ /____(_)_/\___/   |___/_/  /_/</span><br><span class="line"></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2     down         9000/0/0/0</span><br><span class="line">GigabitEthernetb/0/0              1     down         9000/0/0/0</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="开启端口"><a class="markdownIt-Anchor" href="#开启端口"></a> 开启端口</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface state GigabitEthernet13/0/0 up</span></span><br><span class="line">vpp<span class="comment"># set interface state GigabitEthernetb/0/0 up</span></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2      up          9000/0/0/0     rx packets                     1</span><br><span class="line">                                                                    rx bytes                      60</span><br><span class="line">                                                                    drops                          1</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">GigabitEthernetb/0/0              1      up          9000/0/0/0     rx packets                     4</span><br><span class="line">                                                                    rx bytes                     240</span><br><span class="line">                                                                    drops                          4</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h2 id="配置为switch模式"><a class="markdownIt-Anchor" href="#配置为switch模式"></a> 配置为switch模式</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernet13/0/0 1</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernetb/0/0 1</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off        N/A</span><br></pre></td></tr></table></figure>
+<h2 id="测试连通性"><a class="markdownIt-Anchor" href="#测试连通性"></a> 测试连通性</h2>
+<ul>
+<li>c2s</li>
+</ul>
+<ol>
+<li>Host1: 192.168.0.2/24</li>
+<li>Host2: 192.168.0.3/24</li>
+</ol>
+<p>通过host1 ping host2</p>
+<ul>
+<li>配置loopback口测试连通性</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># create loopback interface</span></span><br><span class="line">loop0</span><br><span class="line">vpp<span class="comment"># set interface ip address loop0 192.168.0.1/24</span></span><br><span class="line">vpp<span class="comment"># set interface state loop0 up</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge loop0 1 bvi</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off       loop0</span><br><span class="line">vpp<span class="comment"># ping 192.168.0.2</span></span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=.8704 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=3 ttl=64 time=.2564 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=4 ttl=64 time=.2653 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=5 ttl=64 time=.3413 ms</span><br><span class="line"></span><br><span class="line">Statistics: 5 sent, 4 received, 20% packet loss</span><br></pre></td></tr></table></figure>
+<p><code>set interface l2 bridge loop0 1 bvi</code>中的<strong>bvi</strong>意味着这个接口将用来接收、发送以及转发该bridge domain的报文</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/undefinedundefined14/dpdk-setup/" rel="bookmark">Ubuntu16.04上安装DPDK</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/undefinedundefined07/linux-virtual-network-basic/" rel="bookmark">Linux虚拟网络学习笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/undefinedundefined15/linux-virtual-vm/" rel="bookmark">Linux虚拟网络之虚拟机</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/undefinedundefined06/mininet-base/" rel="bookmark">Mininet基础使用</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/undefinedundefined08/mininet-user-define-topo/" rel="bookmark">Mininet自定义topo</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/network/" rel="tag"><i class="fa fa-tag"></i> network</a>
+              <a href="/tags/vpp/" rel="tag"><i class="fa fa-tag"></i> vpp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/undefinedundefined14/dpdk-setup/" rel="next" title="Ubuntu16.04上安装DPDK">
+                  <i class="fa fa-chevron-left"></i> Ubuntu16.04上安装DPDK
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/undefinedundefined14/cn_resources/" rel="prev" title="使用国内资源（备忘）">
+                  使用国内资源（备忘） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text"> 环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境准备"><span class="nav-number">1.1.</span> <span class="nav-text"> 环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拓扑"><span class="nav-number">1.2.</span> <span class="nav-text"> 拓扑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vpp安装先决条件"><span class="nav-number">1.3.</span> <span class="nav-text"> VPP安装先决条件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text"> 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#获取源码"><span class="nav-number">2.1.</span> <span class="nav-text"> 获取源码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装vpp"><span class="nav-number">2.2.</span> <span class="nav-text"> 安装vpp</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置"><span class="nav-number">3.</span> <span class="nav-text"> 配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动vpp"><span class="nav-number">4.</span> <span class="nav-text"> 启动VPP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text"> 测试</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#登陆vpp-cli"><span class="nav-number">5.1.</span> <span class="nav-text"> 登陆VPP CLI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开启端口"><span class="nav-number">5.2.</span> <span class="nav-text"> 开启端口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置为switch模式"><span class="nav-number">5.3.</span> <span class="nav-text"> 配置为switch模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试连通性"><span class="nav-number">5.4.</span> <span class="nav-text"> 测试连通性</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Simble"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Simble</p>
+  <div class="site-description" itemprop="description">记录一些技术的或者旅行的东东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/simble1986" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/simble1986" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://zpzhou.com/" title="https:&#x2F;&#x2F;zpzhou.com&#x2F;" rel="noopener" target="_blank">ZPDEV</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://10101.io/" title="https:&#x2F;&#x2F;10101.io&#x2F;" rel="noopener" target="_blank">WithdewHua</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simble</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">115k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://simble.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://www.isimble.com/undefinedundefined15/vpp-setup/",
+            identifier: "undefinedundefined15/vpp-setup/",
+            title: "Ubuntu16.04 VPP环境搭建"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://simble.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+</body>
+</html>
