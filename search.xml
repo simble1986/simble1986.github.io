@@ -1474,8 +1474,8 @@
         <category>network</category>
       </categories>
       <tags>
-        <tag>network</tag>
         <tag>ovs</tag>
+        <tag>network</tag>
       </tags>
   </entry>
   <entry>
@@ -1695,8 +1695,8 @@ h2的eth0与s1的eth2相连</p>
         <category>network</category>
       </categories>
       <tags>
-        <tag>network</tag>
         <tag>ovs</tag>
+        <tag>network</tag>
         <tag>openvswitch</tag>
       </tags>
   </entry>
