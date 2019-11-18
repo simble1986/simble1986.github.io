@@ -54,14 +54,14 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。  环境准备  系统： Ubuntu 16.04.6 LTS">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_topo.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_vnc_example.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_tap.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_bridge.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_nat.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_topo.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_vnc_example.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_tap.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_bridge.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_nat.png">
 <meta property="og:updated_time" content="2019-08-16T07:15:29.564Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_topo.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;15&#x2F;linux-virtual-vm&#x2F;qemu_topo.png">
 
 <link rel="canonical" href="http://www.isimble.com/2019/08/15/linux-virtual-vm/">
 
@@ -296,7 +296,7 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="实验topo"><a class="markdownIt-Anchor" href="#实验topo"></a> 实验topo</h3>
-<img src="/.com//08/15/linux-virtual-vm/qemu_topo.png" class title="TOPO">
+<img src="/2019/08/15/linux-virtual-vm/qemu_topo.png" class title="TOPO">
 <h3 id="软件包"><a class="markdownIt-Anchor" href="#软件包"></a> 软件包</h3>
 <p><strong>1. qemu</strong></p>
 <p>由于整套实验环境都是在虚拟机上完成，在没有开启诸如Intel-VTx技术的情况下，使用<code>qemu</code>作为虚拟机模拟器</p>
@@ -312,7 +312,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试</strong></p>
 <p>用vnc viewer连接当前虚拟机</p>
-<img src="/.com//08/15/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer">
+<img src="/2019/08/15/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer">
 <h2 id="tap接口使用"><a class="markdownIt-Anchor" href="#tap接口使用"></a> tap接口使用</h2>
 <p><strong>1. 创建虚拟机</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img -netdev tap,id=mynet0,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet0</span><br></pre></td></tr></table></figure>
@@ -334,7 +334,7 @@
 <p><strong>3. 小结</strong></p>
 <p>使用tap类型的netdev创建qemu虚拟机时，会自动创建一个tap接口，而这个tap接口与VM的接口相连。</p>
 <p>连接图如下：</p>
-<img src="/.com//08/15/linux-virtual-vm/qemu_tap.png" class title="tap">
+<img src="/2019/08/15/linux-virtual-vm/qemu_tap.png" class title="tap">
 <h2 id="虚拟机通信"><a class="markdownIt-Anchor" href="#虚拟机通信"></a> 虚拟机通信</h2>
 <p>理解了虚拟机使用tap接口之后，就可以考虑使用网桥方式进行2个甚至多个虚拟机之间通信了。</p>
 <p><strong>1. 创建虚拟机</strong></p>
@@ -359,7 +359,7 @@
 <p>现在，可以两个VM相互ping一下了</p>
 <p><strong>4. 访问外部PC</strong></p>
 <p>虚拟机需要访问外部网络，则需要添加物理接口，如下图</p>
-<img src="/.com//08/15/linux-virtual-vm/qemu_bridge.png" class title="bridge">
+<img src="/2019/08/15/linux-virtual-vm/qemu_bridge.png" class title="bridge">
 <p><strong>Host</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig ens192 up</span><br><span class="line">(host)$ brctl addif br0 ens192</span><br></pre></td></tr></table></figure>
 <p><strong>VM1</strong></p>
@@ -375,7 +375,7 @@
 </blockquote>
 <p>NAT模式主要通过iptables来实现。通过将虚拟机发出的报文的源地址转换为物理接口的IP，实现与外网的通信</p>
 <p>拓扑图如下：</p>
-<img src="/.com//08/15/linux-virtual-vm/qemu_nat.png" class title="nat">
+<img src="/2019/08/15/linux-virtual-vm/qemu_nat.png" class title="nat">
 <p><strong>1. 为网桥配置IP地址</strong></p>
 <p>用网桥的br0接口作为192.168.1.0/24网段的网关</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig br0 192.168.1.1/24</span><br></pre></td></tr></table></figure>

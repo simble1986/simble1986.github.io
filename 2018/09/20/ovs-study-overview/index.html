@@ -54,11 +54,11 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with&#x2F;without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-arch.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-module.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-arch.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-module.png">
 <meta property="og:updated_time" content="2018-09-21T05:53:35.313Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-arch.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;20&#x2F;ovs-study-overview&#x2F;ovs-arch.png">
 
 <link rel="canonical" href="http://www.isimble.com/2018/09/20/ovs-study-overview/">
 
@@ -326,7 +326,7 @@
 <li>维护逻辑标签</li>
 </ul>
 <h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
-<img src="/.com//09/20/ovs-study-overview/ovs-arch.png" class title="arch">
+<img src="/2018/09/20/ovs-study-overview/ovs-arch.png" class title="arch">
 <p>如上图</p>
 <ol>
 <li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
@@ -335,7 +335,7 @@
 <li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
 </ol>
 <h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
-<img src="/.com//09/20/ovs-study-overview/ovs-module.png" class title="module">
+<img src="/2018/09/20/ovs-study-overview/ovs-module.png" class title="module">
 <ol>
 <li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
 <li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>

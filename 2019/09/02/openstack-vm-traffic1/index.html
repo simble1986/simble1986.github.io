@@ -54,10 +54,10 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。 计划将分多篇博文，掰开来详细分析openstack中的各种流量路径。 本文以最简单的单节点为例，介绍在同子网下，虚拟机之间相互访问的流量路径">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;02&#x2F;openstack-vm-traffic1&#x2F;same_subnet.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;09&#x2F;02&#x2F;openstack-vm-traffic1&#x2F;same_subnet.png">
 <meta property="og:updated_time" content="2019-09-02T09:04:03.245Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;02&#x2F;openstack-vm-traffic1&#x2F;same_subnet.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;09&#x2F;02&#x2F;openstack-vm-traffic1&#x2F;same_subnet.png">
 
 <link rel="canonical" href="http://www.isimble.com/2019/09/02/openstack-vm-traffic1/">
 
@@ -459,7 +459,7 @@
 <p>通过上面一系列的流表，in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的报文基本上都会在<code>br-int</code>上正常转发</p>
 </blockquote>
 <h3 id="梳理一下"><a class="markdownIt-Anchor" href="#梳理一下"></a> 梳理一下</h3>
-<img src="/.com//09/02/openstack-vm-traffic1/same_subnet.png" class title="same_subnet">
+<img src="/2019/09/02/openstack-vm-traffic1/same_subnet.png" class title="same_subnet">
 <ol>
 <li>vm通过vnet与一个tap接口相连</li>
 <li>tap接口与qvbxxx接口置于一个linux网桥中</li>
@@ -526,10 +526,10 @@
       <div class="popular-posts-title"><a href="/2019/08/15/linux-virtual-vm/" rel="bookmark">Linux虚拟网络之虚拟机</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/10/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/10/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2019/08/08/openstack-security-group-ovs-1/" rel="bookmark">Openstack安全组基于ovs的学习笔记</a></div>

@@ -54,10 +54,10 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。 实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;08&#x2F;openstack-security-group-ovs-1&#x2F;rule_list.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;08&#x2F;openstack-security-group-ovs-1&#x2F;rule_list.png">
 <meta property="og:updated_time" content="2019-08-12T04:36:36.842Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;08&#x2F;08&#x2F;openstack-security-group-ovs-1&#x2F;rule_list.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;08&#x2F;openstack-security-group-ovs-1&#x2F;rule_list.png">
 
 <link rel="canonical" href="http://www.isimble.com/2019/08/08/openstack-security-group-ovs-1/">
 
@@ -311,7 +311,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openstack project create --domain default --description <span class="string">"Security Group Test Project"</span> <span class="built_in">test</span></span><br><span class="line">$ openstack user create --domain default --password-prompt <span class="built_in">test</span></span><br><span class="line">$ openstack role add --project <span class="built_in">test</span> --user <span class="built_in">test</span> admin</span><br></pre></td></tr></table></figure>
 <p><strong>2. 查看test租户的默认安全组下的规则</strong></p>
 <p>以test用户登陆openstack的dashboard，在<strong>网络</strong> &gt; <strong>安全组</strong> 下找到default安全组，查看对应的规则</p>
-<img src="/.com//08/08/openstack-security-group-ovs-1/rule_list.png" class title="Rule List">
+<img src="/2019/08/08/openstack-security-group-ovs-1/rule_list.png" class title="Rule List">
 <h2 id="安全组实验"><a class="markdownIt-Anchor" href="#安全组实验"></a> 安全组实验</h2>
 <blockquote>
 <p>需要事先创建一个虚拟机示例，默认关联default的安全组</p>
@@ -409,7 +409,7 @@
       <div class="popular-posts-title"><a href="/2018/11/13/ovs-study2/" rel="bookmark">OVS学习笔记——常用命令练习</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/10/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
     </li>
   </ul>
 
