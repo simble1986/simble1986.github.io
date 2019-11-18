@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>Openstack网络——虚拟机通信实验1</title>
-    <url>/post/62511fc2.html</url>
+    <url>/2019/09/02/openstack-vm-traffic1/</url>
     <content><![CDATA[<p>Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。</p>
 <p>计划将分多篇博文，掰开来详细分析openstack中的各种流量路径。</p>
 <p>本文以最简单的单节点为例，介绍在同子网下，虚拟机之间相互访问的流量路径</p>
@@ -177,7 +177,7 @@
 <p>通过上面一系列的流表，in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的报文基本上都会在<code>br-int</code>上正常转发</p>
 </blockquote>
 <h3 id="梳理一下"><a class="markdownIt-Anchor" href="#梳理一下"></a> 梳理一下</h3>
-<img src="/post/62511fc2/62511fc2/same_subnet.png" class title="same_subnet">
+<img src="/.com//09/02/openstack-vm-traffic1/same_subnet.png" class title="same_subnet">
 <ol>
 <li>vm通过vnet与一个tap接口相连</li>
 <li>tap接口与qvbxxx接口置于一个linux网桥中</li>
@@ -240,7 +240,7 @@
   </entry>
   <entry>
     <title>Linux虚拟网络之虚拟机</title>
-    <url>/post/13a44dc5.html</url>
+    <url>/2019/08/15/linux-virtual-vm/</url>
     <content><![CDATA[<p>本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。</p>
 <h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <blockquote>
@@ -248,7 +248,7 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="实验topo"><a class="markdownIt-Anchor" href="#实验topo"></a> 实验topo</h3>
-<img src="/post/13a44dc5/13a44dc5/qemu_topo.png" class title="TOPO">
+<img src="/.com//08/15/linux-virtual-vm/qemu_topo.png" class title="TOPO">
 <h3 id="软件包"><a class="markdownIt-Anchor" href="#软件包"></a> 软件包</h3>
 <p><strong>1. qemu</strong></p>
 <p>由于整套实验环境都是在虚拟机上完成，在没有开启诸如Intel-VTx技术的情况下，使用<code>qemu</code>作为虚拟机模拟器</p>
@@ -264,7 +264,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试</strong></p>
 <p>用vnc viewer连接当前虚拟机</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_vnc_example.png" class title="vnc viewer">
+<img src="/.com//08/15/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer">
 <h2 id="tap接口使用"><a class="markdownIt-Anchor" href="#tap接口使用"></a> tap接口使用</h2>
 <p><strong>1. 创建虚拟机</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img -netdev tap,id=mynet0,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet0</span><br></pre></td></tr></table></figure>
@@ -286,7 +286,7 @@
 <p><strong>3. 小结</strong></p>
 <p>使用tap类型的netdev创建qemu虚拟机时，会自动创建一个tap接口，而这个tap接口与VM的接口相连。</p>
 <p>连接图如下：</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_tap.png" class title="tap">
+<img src="/.com//08/15/linux-virtual-vm/qemu_tap.png" class title="tap">
 <h2 id="虚拟机通信"><a class="markdownIt-Anchor" href="#虚拟机通信"></a> 虚拟机通信</h2>
 <p>理解了虚拟机使用tap接口之后，就可以考虑使用网桥方式进行2个甚至多个虚拟机之间通信了。</p>
 <p><strong>1. 创建虚拟机</strong></p>
@@ -311,7 +311,7 @@
 <p>现在，可以两个VM相互ping一下了</p>
 <p><strong>4. 访问外部PC</strong></p>
 <p>虚拟机需要访问外部网络，则需要添加物理接口，如下图</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_bridge.png" class title="bridge">
+<img src="/.com//08/15/linux-virtual-vm/qemu_bridge.png" class title="bridge">
 <p><strong>Host</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(host)$ ifconfig ens192 up</span><br><span class="line">(host)$ brctl addif br0 ens192</span><br></pre></td></tr></table></figure>
 <p><strong>VM1</strong></p>
@@ -327,7 +327,7 @@
 </blockquote>
 <p>NAT模式主要通过iptables来实现。通过将虚拟机发出的报文的源地址转换为物理接口的IP，实现与外网的通信</p>
 <p>拓扑图如下：</p>
-<img src="/post/13a44dc5/13a44dc5/qemu_nat.png" class title="nat">
+<img src="/.com//08/15/linux-virtual-vm/qemu_nat.png" class title="nat">
 <p><strong>1. 为网桥配置IP地址</strong></p>
 <p>用网桥的br0接口作为192.168.1.0/24网段的网关</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(host)$ ifconfig br0 192.168.1.1/24</span><br></pre></td></tr></table></figure>
@@ -369,7 +369,7 @@
   </entry>
   <entry>
     <title>西班牙申根签证快速攻略</title>
-    <url>/post/29ce55ae.html</url>
+    <url>/2019/08/14/spain-visa/</url>
     <content><![CDATA[<h2 id="适用对象"><a class="markdownIt-Anchor" href="#适用对象"></a> 适用对象</h2>
 <ol>
 <li>北京领区</li>
@@ -452,14 +452,14 @@
 <p>在西班牙签证申请中心官网： 申请预约 -&gt; BLS签证中心 -&gt; 网上预约，或直接点击<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvYm9va19hcHBvaW50bWVudC5waHA=" title="https://china.blsspainvisa.com/chinese/book_appointment.php">这里<i class="fa fa-external-link"></i></span></p>
 <h3 id="预约表单填写"><a class="markdownIt-Anchor" href="#预约表单填写"></a> 预约表单填写</h3>
 <p><strong>基本信息</strong></p>
-<img src="/post/29ce55ae/29ce55ae/booking_1.png" class title="Booking form">
+<img src="/.com//08/14/spain-visa/booking_1.png" class title="Booking form">
 <p><strong>预约申请表</strong></p>
-<img src="/post/29ce55ae/29ce55ae/booking_table.png" class title="Booking Table">
+<img src="/.com//08/14/spain-visa/booking_table.png" class title="Booking Table">
 <p><strong>预约确认信</strong></p>
 <blockquote>
 <p>预约完成后，注意保存预约确认信，可打印也可保存在手机上</p>
 </blockquote>
-<img src="/post/29ce55ae/29ce55ae/booking_confirm.png" class title="Confirm">
+<img src="/.com//08/14/spain-visa/booking_confirm.png" class title="Confirm">
 <h2 id="前往签证中心"><a class="markdownIt-Anchor" href="#前往签证中心"></a> 前往签证中心</h2>
 <h3 id="地址"><a class="markdownIt-Anchor" href="#地址"></a> 地址</h3>
 <blockquote>
@@ -496,7 +496,7 @@
 <p>提交完所有资料后，你只需要在家等待签证的快递，是否通过，已经由不得你了。</p>
 <h3 id="查询进度"><a class="markdownIt-Anchor" href="#查询进度"></a> 查询进度</h3>
 <p>可以登陆<span class="exturl" data-url="aHR0cHM6Ly9jaGluYS5ibHNzcGFpbnZpc2EuY29tL2NoaW5lc2UvaW5kZXgucGhw" title="https://china.blsspainvisa.com/chinese/index.php">西班牙签证申请中心官网<i class="fa fa-external-link"></i></span>，通过<strong>受理号</strong>在线查询您的申请</p>
-<img src="/post/29ce55ae/29ce55ae/status.png" class title="Status">
+<img src="/.com//08/14/spain-visa/status.png" class title="Status">
 <h2 id="在职证明模版"><a class="markdownIt-Anchor" href="#在职证明模版"></a> 在职证明模版</h2>
 <blockquote>
 <p>在职证明需要有公司名称、地址、电话并加盖公章</p>
@@ -521,7 +521,7 @@
   </entry>
   <entry>
     <title>Openstack安全组基于ovs的学习笔记</title>
-    <url>/post/9b8e4f01.html</url>
+    <url>/2019/08/08/openstack-security-group-ovs-1/</url>
     <content><![CDATA[<p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
 <p>实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建</p>
 <a id="more"></a>
@@ -542,7 +542,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ openstack project create --domain default --description <span class="string">"Security Group Test Project"</span> <span class="built_in">test</span></span><br><span class="line">$ openstack user create --domain default --password-prompt <span class="built_in">test</span></span><br><span class="line">$ openstack role add --project <span class="built_in">test</span> --user <span class="built_in">test</span> admin</span><br></pre></td></tr></table></figure>
 <p><strong>2. 查看test租户的默认安全组下的规则</strong></p>
 <p>以test用户登陆openstack的dashboard，在<strong>网络</strong> &gt; <strong>安全组</strong> 下找到default安全组，查看对应的规则</p>
-<img src="/post/9b8e4f01/9b8e4f01/rule_list.png" class title="Rule List">
+<img src="/.com//08/08/openstack-security-group-ovs-1/rule_list.png" class title="Rule List">
 <h2 id="安全组实验"><a class="markdownIt-Anchor" href="#安全组实验"></a> 安全组实验</h2>
 <blockquote>
 <p>需要事先创建一个虚拟机示例，默认关联default的安全组</p>
@@ -629,7 +629,7 @@
   </entry>
   <entry>
     <title>Linux虚拟网络学习笔记</title>
-    <url>/post/575b6208.html</url>
+    <url>/2019/08/07/linux-virtual-network-basic/</url>
     <content><![CDATA[<p>Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。</p>
 <p>本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router</p>
 <a id="more"></a>
@@ -673,7 +673,7 @@
 <p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
 </blockquote>
 <p>下面的实验模拟4个namespace中的接口通过bridge互通</p>
-<img src="/post/575b6208/575b6208/bridge.jpg" class title="Rule List">
+<img src="/.com//08/07/linux-virtual-network-basic/bridge.jpg" class title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip link add tap3 <span class="built_in">type</span> veth peer name tap3_peer</span><br><span class="line">$ ip link add tap4 <span class="built_in">type</span> veth peer name tap4_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -697,7 +697,7 @@
 <p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
 <p>临时修改： <code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
 </blockquote>
-<img src="/post/575b6208/575b6208/router.jpg" class title="Rule List">
+<img src="/.com//08/07/linux-virtual-network-basic/router.jpg" class title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip link add tap5 <span class="built_in">type</span> veth peer name tap5_peer</span><br><span class="line">$ ip link add tap6 <span class="built_in">type</span> veth peer name tap6_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -713,7 +713,7 @@
 <p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
 <p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
 </blockquote>
-<img src="/post/575b6208/575b6208/tunnel.jpg" class title="Rule List">
+<img src="/.com//08/07/linux-virtual-network-basic/tunnel.jpg" class title="Rule List">
 <p>忽略上图中的tun1和tun2后，整个topo与router中的一样。那么先按照<a href="#router">router</a>章节创建两个ns及配置</p>
 <p><strong>1. 创建veth pair并分别迁移到对应的namespace</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure>
@@ -750,7 +750,7 @@
   </entry>
   <entry>
     <title>Docker + ovs，原来如此简单</title>
-    <url>/post/56e1f957.html</url>
+    <url>/2019/08/06/docker-ovs-basic/</url>
     <content><![CDATA[<p>一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。</p>
 <blockquote>
 <p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
@@ -830,7 +830,7 @@
   </entry>
   <entry>
     <title>k8s环境安装之差点儿我就放弃了</title>
-    <url>/post/d0b629f4.html</url>
+    <url>/2019/07/18/k8s-env-prep/</url>
     <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
 在行将放弃之际，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2Vhc3psYWIva3ViZWFzeg==" title="https://github.com/easzlab/kubeasz">kubeasz<i class="fa fa-external-link"></i></span>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
 <a id="more"></a>
@@ -898,7 +898,7 @@
   </entry>
   <entry>
     <title>pyenv使用笔记</title>
-    <url>/post/72a09cbb.html</url>
+    <url>/2019/02/05/pyenv-notebook/</url>
     <content><![CDATA[<p>OSX上的python版本纷繁复杂。</p>
 <ul>
 <li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
@@ -967,7 +967,7 @@
   </entry>
   <entry>
     <title>使用国内资源（备忘）</title>
-    <url>/post/612ebe35.html</url>
+    <url>/2019/01/14/cn_resources/</url>
     <content><![CDATA[<h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
 <blockquote>
 <p>docker.com越来越难访问了</p>
@@ -1030,7 +1030,7 @@
   </entry>
   <entry>
     <title>Ubuntu16.04 VPP环境搭建</title>
-    <url>/post/c80fffe0.html</url>
+    <url>/2018/11/15/vpp-setup/</url>
     <content><![CDATA[<h1 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h1>
 <h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <ol>
@@ -1041,7 +1041,7 @@
 <h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
 <p>搭建典型的c2s拓扑</p>
 <a id="more"></a>
-<img src="/post/c80fffe0/c80fffe0/vpp_setup_topo.png" class title="topo">
+<img src="/.com//11/15/vpp-setup/vpp_setup_topo.png" class title="topo">
 <ul>
 <li>通过vsphere创建两个虚拟交换机</li>
 <li>host1的第二个接口与vpp的第二个接口连在同一个交换机上</li>
@@ -1123,7 +1123,7 @@
   </entry>
   <entry>
     <title>Ubuntu16.04上安装DPDK</title>
-    <url>/post/879abefb.html</url>
+    <url>/2018/11/14/dpdk-setup/</url>
     <content><![CDATA[<h1 id="dpdk安装"><a class="markdownIt-Anchor" href="#dpdk安装"></a> DPDK安装</h1>
 <blockquote>
 <p>DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库</p>
@@ -1187,7 +1187,7 @@
   </entry>
   <entry>
     <title>OVS学习笔记——常用命令练习</title>
-    <url>/post/4c6bf73b.html</url>
+    <url>/2018/11/13/ovs-study2/</url>
     <content><![CDATA[<h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
 <ul>
 <li>创建网桥</li>
@@ -1480,7 +1480,7 @@
   </entry>
   <entry>
     <title>Mininet自定义topo</title>
-    <url>/post/dd7d5c81.html</url>
+    <url>/2018/11/08/mininet-user-define-topo/</url>
     <content><![CDATA[<h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
 <p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
 <a id="more"></a>
@@ -1508,7 +1508,7 @@
   </entry>
   <entry>
     <title>Opendaylight Oxygen环境准备</title>
-    <url>/post/5594d322.html</url>
+    <url>/2018/11/07/odl-setup/</url>
     <content><![CDATA[<h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2>
 <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ol>
@@ -1544,7 +1544,7 @@
 <p><strong>务必按照顺序安装，如果出现错误，删了目录重新来过吧</strong></p>
 <h3 id="登陆web"><a class="markdownIt-Anchor" href="#登陆web"></a> 登陆Web</h3>
 <p>使用<code>admin:admin</code>登陆即可</p>
-<img src="/post/5594d322/5594d322/opendaylight_login.png" class title="ODL WebUI">
+<img src="/.com//11/07/odl-setup/opendaylight_login.png" class title="ODL WebUI">
 ]]></content>
       <categories>
         <category>sdn</category>
@@ -1557,7 +1557,7 @@
   </entry>
   <entry>
     <title>Mininet基础使用</title>
-    <url>/post/46d30180.html</url>
+    <url>/2018/11/06/mininet-base/</url>
     <content><![CDATA[<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
 <p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
 <p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
@@ -1630,7 +1630,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>OpenvSwitch学习笔记1</title>
-    <url>/post/775edb62.html</url>
+    <url>/2018/09/20/ovs-study-overview/</url>
     <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
 <ol>
 <li>VLAN with trunk and access ports</li>
@@ -1671,7 +1671,7 @@ h2的eth0与s1的eth2相连</p>
 <li>维护逻辑标签</li>
 </ul>
 <h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
-<img src="/post/775edb62/775edb62/ovs-arch.png" class title="arch">
+<img src="/.com//09/20/ovs-study-overview/ovs-arch.png" class title="arch">
 <p>如上图</p>
 <ol>
 <li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
@@ -1680,7 +1680,7 @@ h2的eth0与s1的eth2相连</p>
 <li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
 </ol>
 <h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
-<img src="/post/775edb62/775edb62/ovs-module.png" class title="module">
+<img src="/.com//09/20/ovs-study-overview/ovs-module.png" class title="module">
 <ol>
 <li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
 <li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
@@ -1702,7 +1702,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Hexo开启disqus评论系统</title>
-    <url>/post/c4780247.html</url>
+    <url>/2018/09/12/hexo-enable-disqus/</url>
     <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<span class="exturl" data-url="aHR0cDovL3d3dy5zaW1ibGUuc2l0ZS9wb3N0L2EwNzJiY2U2Lmh0bWw=" title="http://www.simble.site/post/a072bce6.html">博文<i class="fa fa-external-link"></i></span>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0a2V2aW50YW4vaGV4by10aGVtZS1tYXRlcmlhbC1mbG93" title="https://github.com/stkevintan/hexo-theme-material-flow">MaterialFlow<i class="fa fa-external-link"></i></span>，刚好也换换评论系统</p>
 <p>相比Valine，disqus开启真的是太简单了</p>
 <a id="more"></a>
@@ -1712,12 +1712,12 @@ h2的eth0与s1的eth2相连</p>
 <ol>
 <li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
 </ol>
-<img src="/post/c4780247/c4780247/disqus_1.png" class title="Add Disqus To Site">
+<img src="/.com//09/12/hexo-enable-disqus/disqus_1.png" class title="Add Disqus To Site">
 <ol start="2">
 <li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
 </ol>
-<img src="/post/c4780247/c4780247/disqus2.png" class title="Install">
-<img src="/post/c4780247/c4780247/disqus-shortname.png" class title="Shortname">
+<img src="/.com//09/12/hexo-enable-disqus/disqus2.png" class title="Install">
+<img src="/.com//09/12/hexo-enable-disqus/disqus-shortname.png" class title="Shortname">
 <h3 id="配置hexo"><a class="markdownIt-Anchor" href="#配置hexo"></a> 配置Hexo</h3>
 <p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure>
@@ -1735,7 +1735,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>openstack接口状态异常</title>
-    <url>/post/257b0787.html</url>
+    <url>/2018/09/11/openstack-neutron-problem1/</url>
     <content><![CDATA[<h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
 <p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
 <h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
@@ -1774,7 +1774,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Ubuntu在Openstack中启动密码注入不生效问题定位1</title>
-    <url>/post/c2a7a06a.html</url>
+    <url>/2018/09/10/openstack-metadata/</url>
     <content><![CDATA[<h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
 <p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
 <a id="more"></a>
@@ -1837,7 +1837,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>sqlalchemy连接docker的mysql问题记录</title>
-    <url>/post/6e2fcf3d.html</url>
+    <url>/2018/08/14/sqlalchemy-mysql-docker/</url>
     <content><![CDATA[<p>又开始鼓捣flask+mysql了 👶</p>
 <p>不成想，又一次踩了好多雷 😂</p>
 <p>有一种打怪升级的感觉</p>
@@ -1913,7 +1913,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>美签记录</title>
-    <url>/post/fbe9394a.html</url>
+    <url>/2018/07/30/us-visa/</url>
     <content><![CDATA[<p>记第一次拿到十年美签</p>
 <h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
 <ul>
@@ -1948,7 +1948,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Openstack学习笔记1</title>
-    <url>/post/9b5fb1d1.html</url>
+    <url>/2018/06/28/openstack-study1/</url>
     <content><![CDATA[<p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
 <a id="more"></a>
 <h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
@@ -2056,7 +2056,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>使用markdown写PPT</title>
-    <url>/post/4f712e63.html</url>
+    <url>/2018/06/21/marp/</url>
     <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
 <a id="more"></a>
@@ -2090,7 +2090,7 @@ h2的eth0与s1的eth2相连</p>
 <p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
 <p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
 <p>比如：</p>
-<img src="/post/4f712e63/4f712e63/ppt1.png" class title="效果">
+<img src="/.com//06/21/marp/ppt1.png" class title="效果">
 <p>则是用如下代码完成</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
 <p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
@@ -2112,7 +2112,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Ubuntu16.04安装Open vSwitch</title>
-    <url>/post/b2c6ed30.html</url>
+    <url>/2018/05/29/ovs-install/</url>
     <content><![CDATA[<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
@@ -2196,7 +2196,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>gitbook+gitlab发布私有的图书仓库</title>
-    <url>/post/51748f3c.html</url>
+    <url>/2018/05/10/gitbook-gitlab/</url>
     <content><![CDATA[<p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
 <p>另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。</p>
 <a id="more"></a>
@@ -2280,7 +2280,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>python virtenv环境搭建</title>
-    <url>/post/4926e490.html</url>
+    <url>/2018/05/06/python-virtenv/</url>
     <content><![CDATA[<p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
 <p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
 <a id="more"></a>
@@ -2328,7 +2328,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Docker API一种连接到PTY的交互方法</title>
-    <url>/post/b18ab8ad.html</url>
+    <url>/2018/05/04/docker-pexpect/</url>
     <content><![CDATA[<p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
 <p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
 <a id="more"></a>
@@ -2383,7 +2383,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>dockerpty使用</title>
-    <url>/post/1c49a9aa.html</url>
+    <url>/2018/05/03/dockerpty-usage/</url>
     <content><![CDATA[<p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
 <h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
@@ -2440,7 +2440,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Docker中无密码apt安装mysql</title>
-    <url>/post/70cf198a.html</url>
+    <url>/2018/03/29/docker-install-mysql-server-no-passwd/</url>
     <content><![CDATA[<h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
 <p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
 <a id="more"></a>
@@ -2489,7 +2489,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Hexo+Next上开启Valine评论系统</title>
-    <url>/post/a072bce6.html</url>
+    <url>/2018/03/27/hexo-next-valine/</url>
     <content><![CDATA[<p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
 <a id="more"></a>
 <h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
@@ -2502,14 +2502,14 @@ h2的eth0与s1的eth2相连</p>
 <h2 id="获取appid"><a class="markdownIt-Anchor" href="#获取appid"></a> 获取AppID</h2>
 <h3 id="注册leancloud"><a class="markdownIt-Anchor" href="#注册leancloud"></a> 注册Leancloud</h3>
 <p>访问<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24v" title="https://leancloud.cn/">Leancloud<i class="fa fa-external-link"></i></span>，点击<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vZGFzaGJvYXJkL2xvZ2luLmh0bWwjL3NpZ251cA==" title="https://leancloud.cn/dashboard/login.html#/signup">免费试用<i class="fa fa-external-link"></i></span>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
-<img src="/post/a072bce6/a072bce6/leancloud_signup.png" class title="注册页面">
+<img src="/.com//03/27/hexo-next-valine/leancloud_signup.png" class title="注册页面">
 <p><em>注册完后需要验证邮箱</em></p>
 <h3 id="创建应用"><a class="markdownIt-Anchor" href="#创建应用"></a> 创建应用</h3>
 <p>访问<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vYXBwbGlzdC5odG1s" title="https://leancloud.cn/applist.html">控制台<i class="fa fa-external-link"></i></span>，在控制台中创建新应用</p>
-<img src="/post/a072bce6/a072bce6/leancloud_new_app.png" class title="创建应用">
+<img src="/.com//03/27/hexo-next-valine/leancloud_new_app.png" class title="创建应用">
 <h3 id="获取应用key"><a class="markdownIt-Anchor" href="#获取应用key"></a> 获取应用Key</h3>
 <p>点击新创建的应用——设置——应用Key，保存页面上的App ID以及App Key以备后续使用</p>
-<img src="/post/a072bce6/a072bce6/leancloud_appkey.png" class title="应用Key">
+<img src="/.com//03/27/hexo-next-valine/leancloud_appkey.png" class title="应用Key">
 <h2 id="配置valine"><a class="markdownIt-Anchor" href="#配置valine"></a> 配置Valine</h2>
 <p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<span class="exturl" data-url="aHR0cHM6Ly92YWxpbmUuanMub3JnLyMvaGV4bz9pZD1oZXhvLXRoZW1lLW5leHQ=" title="https://valine.js.org/#/hexo?id=hexo-theme-next">Hexo中使用Valine<i class="fa fa-external-link"></i></span>，点击<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2lpc3NuYW4vaGV4by10aGVtZS1uZXh0L3B1bGwvMTk4Mw==" title="https://github.com/iissnan/hexo-theme-next/pull/1983">merged<i class="fa fa-external-link"></i></span>，会跳转到Next主题的merge历史</p>
 <h3 id="检查相关文件"><a class="markdownIt-Anchor" href="#检查相关文件"></a> 检查相关文件</h3>
@@ -2544,7 +2544,7 @@ h2的eth0与s1的eth2相连</p>
 <h2 id="清除测试留言"><a class="markdownIt-Anchor" href="#清除测试留言"></a> 清除测试留言</h2>
 <p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<span class="exturl" data-url="aHR0cHM6Ly9sZWFuY2xvdWQuY24vZGFzaGJvYXJkL2FwcGxpc3QuaHRtbCMvYXBwcw==" title="https://leancloud.cn/dashboard/applist.html#/apps">控制台<i class="fa fa-external-link"></i></span>清除测试数据</p>
 <p>点击<em>myblog</em>——存储——Comments，即可查看当前留言，选中测试时的留言，删除即可</p>
-<img src="/post/a072bce6/a072bce6/leancloud_cleancomments.png" class title="清除测试留言">
+<img src="/.com//03/27/hexo-next-valine/leancloud_cleancomments.png" class title="清除测试留言">
 ]]></content>
       <categories>
         <category>hexo</category>
@@ -2557,7 +2557,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>在Ubuntu 16.04上开启Docker的Remote API</title>
-    <url>/post/3e41aa59.html</url>
+    <url>/2018/03/27/enable-docker-remote-api/</url>
     <content><![CDATA[<p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
 <h3 id="可行的方法"><a class="markdownIt-Anchor" href="#可行的方法"></a> 可行的方法</h3>
 <ul>
@@ -2603,7 +2603,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>使用hexo搭建自己的博客——创建站点</title>
-    <url>/post/80ca9385.html</url>
+    <url>/2018/03/25/setup-hexo-create-site/</url>
     <content><![CDATA[<h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
 <h3 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h3>
 <p><span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv" title="https://hexo.io">Hexo<i class="fa fa-external-link"></i></span>是一个快速、简介且高效的博客框架，可以使用<span class="exturl" data-url="aHR0cHM6Ly9kYXJpbmdmaXJlYmFsbC5uZXQvcHJvamVjdHMvbWFya2Rvd24v" title="https://daringfireball.net/projects/markdown/">Markdown<i class="fa fa-external-link"></i></span>解析文章并生成网站</p>
@@ -2693,7 +2693,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>docker基本操作（一）</title>
-    <url>/post/493f285a.html</url>
+    <url>/2018/03/23/docker_study_cmd1/</url>
     <content><![CDATA[<p>本文作为docker使用笔记供小伙伴们参考</p>
 <h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
 <p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
@@ -2780,7 +2780,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>在树莓派上部署nodejs</title>
-    <url>/post/4fa2931e.html</url>
+    <url>/2018/03/22/nodejs-setup-pi/</url>
     <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
 <a id="more"></a>
 <h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
@@ -2814,7 +2814,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Hello World</title>
-    <url>/post/4a17b156.html</url>
+    <url>/2018/03/22/hello-world/</url>
     <content><![CDATA[<p>Welcome to <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==" title="https://hexo.io/">Hexo<i class="fa fa-external-link"></i></span>! This is your very first post. Check <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3Mv" title="https://hexo.io/docs/">documentation<i class="fa fa-external-link"></i></span> for more info. If you get any problems when using Hexo, you can find the answer in <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvL2RvY3MvdHJvdWJsZXNob290aW5nLmh0bWw=" title="https://hexo.io/docs/troubleshooting.html">troubleshooting<i class="fa fa-external-link"></i></span> or you can ask me on <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2hleG9qcy9oZXhvL2lzc3Vlcw==" title="https://github.com/hexojs/hexo/issues">GitHub<i class="fa fa-external-link"></i></span>.</p>
 <a id="more"></a>
 <h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
