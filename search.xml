@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>test</title>
-    <url>/2019/11/18/test/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Openstack网络——虚拟机通信实验1</title>
     <url>/2019/09/02/openstack-vm-traffic1/</url>
     <content><![CDATA[<p>Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。</p>
@@ -1027,8 +1022,8 @@
         <category>tech</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>docker</tag>
+        <tag>python</tag>
         <tag>Linux</tag>
         <tag>Mac</tag>
       </tags>
