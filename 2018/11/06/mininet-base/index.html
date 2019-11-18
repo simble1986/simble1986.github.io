@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
+<meta name="keywords" content="network,sdn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mininet基础使用">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;11&#x2F;06&#x2F;mininet-base&#x2F;index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="Mininet是什么 Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。 Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-07T03:09:12.588Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.isimble.com/2018/11/06/mininet-base/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Mininet基础使用 | Simble的小站</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simble的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">晒晒狗 vs 练练手</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签<span class="badge">33</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">35</span></a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-fw fa-comments"></i>guestbook</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/11/06/mininet-base/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Mininet基础使用
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2018-11-07 03:00:33 / 修改时间：11:09:12" itemprop="dateCreated datePublished" datetime="2018-11-07T03:00:33+08:00">2018-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/sdn/" itemprop="url" rel="index">
+                    <span itemprop="name">sdn</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
+<p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
+<p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
+<a id="more"></a>
+<h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
+<ul>
+<li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
+<li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
+<li>支持<strong>系统级回归测试</strong>，这些<strong>测试</strong>可重复且易于打包</li>
+<li>支持<strong>复杂的拓扑测试</strong>，无需连接物理网络</li>
+<li>包括具有拓扑感知和OpenFlow感知的<strong>CLI</strong>，用于调试或运行网络范围的测试</li>
+<li>支持<strong>任意自定义拓扑</strong>，并包括一组基本的<strong>参数化拓扑</strong></li>
+<li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
+<li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
+</ul>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="ubuntu1604"><a class="markdownIt-Anchor" href="#ubuntu1604"></a> Ubuntu16.04</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
+<ul>
+<li>进入mininet命令行模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn</span></span><br><span class="line">*** No default OpenFlow controller found <span class="keyword">for</span> default switch!</span><br><span class="line">*** Falling back to OVS Bridge</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s1)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2</span><br><span class="line">*** Starting controller</span><br><span class="line"></span><br><span class="line">*** Starting 1 switches</span><br><span class="line">s1 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; nodes</span><br><span class="line">available nodes are:</span><br><span class="line">h1 h2 s1</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到当前包含3个节点，包括两个host，一个switch</p>
+</blockquote>
+<ul>
+<li>查看连接状况</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; net</span><br><span class="line">h1 h1-eth0:s1-eth1</span><br><span class="line">h2 h2-eth0:s1-eth2</span><br><span class="line">s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>h1的eth0与s1的eth1相连<br>
+h2的eth0与s1的eth2相连</p>
+</blockquote>
+<ul>
+<li>查看详细信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; dump</span><br><span class="line">&lt;Host h1: h1-eth0:10.0.0.1 pid=6896&gt;</span><br><span class="line">&lt;Host h2: h2-eth0:10.0.0.2 pid=6899&gt;</span><br><span class="line">&lt;OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=6905&gt;</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>环境清理</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mn -c</span></span><br><span class="line">*** Removing excess controllers/ofprotocols/ofdatapaths/pings/noxes</span><br><span class="line">killall controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">killall -9 controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">pkill -9 -f <span class="string">"sudo mnexec"</span></span><br><span class="line">*** Removing junk from /tmp</span><br><span class="line">rm -f /tmp/vconn* /tmp/vlogs* /tmp/*.out /tmp/*.<span class="built_in">log</span></span><br><span class="line">*** Removing old X11 tunnels</span><br><span class="line">*** Removing excess kernel datapaths</span><br><span class="line">ps ax | egrep -o <span class="string">'dp[0-9]+'</span> | sed <span class="string">'s/dp/nl:/'</span></span><br><span class="line">***  Removing OVS datapaths</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">*** Removing all links of the pattern foo-ethX</span><br><span class="line">ip link show | egrep -o <span class="string">'([-_.[:alnum:]]+-eth[[:digit:]]+)'</span></span><br><span class="line">ip link show</span><br><span class="line">*** Killing stale mininet node processes</span><br><span class="line">pkill -9 -f mininet:</span><br><span class="line">*** Shutting down stale tunnels</span><br><span class="line">pkill -9 -f Tunnel=Ethernet</span><br><span class="line">pkill -9 -f .ssh/mn</span><br><span class="line">rm -f ~/.ssh/mn/*</span><br><span class="line">*** Cleanup complete.</span><br><span class="line">root@mininet:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>节点命令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 ifconfig</span><br><span class="line">h1-eth0   Link encap:Ethernet  HWaddr a2:5f:da:ed:6a:74</span><br><span class="line">          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: fe80::a05f:daff:feed:6a74/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1206 (1.2 KB)  TX bytes:648 (648.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Run http server</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 python -m SimpleHTTPServer 80 &amp;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Http client</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h2 wget h1</span><br><span class="line">--2018-11-07 10:52:29--  http://10.0.0.1/</span><br><span class="line">Connecting to 10.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 370 [text/html]</span><br><span class="line">Saving to: <span class="string">'index.html'</span></span><br><span class="line"></span><br><span class="line">index.html          100%[===================&gt;]     370  --.-KB/s    <span class="keyword">in</span> 0s</span><br><span class="line"></span><br><span class="line">2018-11-07 10:52:29 (62.3 MB/s) - <span class="string">'index.html'</span> saved [370/370]</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/11/08/mininet-user-define-topo/" rel="bookmark">Mininet自定义topo</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/11/07/odl-setup/" rel="bookmark">Opendaylight Oxygen环境准备</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/11/14/dpdk-setup/" rel="bookmark">Ubuntu16.04上安装DPDK</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/08/07/linux-virtual-network-basic/" rel="bookmark">Linux虚拟网络学习笔记</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/08/15/linux-virtual-vm/" rel="bookmark">Linux虚拟网络之虚拟机</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/network/" rel="tag"><i class="fa fa-tag"></i> network</a>
+              <a href="/tags/sdn/" rel="tag"><i class="fa fa-tag"></i> sdn</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2018/09/20/ovs-study-overview/" rel="next" title="OpenvSwitch学习笔记1">
+                  <i class="fa fa-chevron-left"></i> OpenvSwitch学习笔记1
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2018/11/07/odl-setup/" rel="prev" title="Opendaylight Oxygen环境准备">
+                  Opendaylight Oxygen环境准备 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mininet是什么"><span class="nav-number">1.</span> <span class="nav-text"> Mininet是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mininet用途"><span class="nav-number">2.</span> <span class="nav-text"> Mininet用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">3.</span> <span class="nav-text"> 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ubuntu1604"><span class="nav-number">3.1.</span> <span class="nav-text"> Ubuntu16.04</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.2.</span> <span class="nav-text"> 测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用"><span class="nav-number">4.</span> <span class="nav-text"> 使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">4.1.</span> <span class="nav-text"> 常用命令</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Simble"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">Simble</p>
+  <div class="site-description" itemprop="description">记录一些技术的或者旅行的东东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i>FB Page</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/simble1986" title="Instagram → https:&#x2F;&#x2F;instagram.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/simble1986" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i>Linkedin</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://zpzhou.com/" title="https:&#x2F;&#x2F;zpzhou.com&#x2F;" rel="noopener" target="_blank">ZPDEV</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://10101.io/" title="https:&#x2F;&#x2F;10101.io&#x2F;" rel="noopener" target="_blank">WithdewHua</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simble</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">115k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
