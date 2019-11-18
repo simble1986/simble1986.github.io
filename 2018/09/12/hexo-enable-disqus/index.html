@@ -54,12 +54,12 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="之前一直使用Hexo的Next主题，开启的是Valine评论系统。有博文来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的MaterialFlow，刚好也换换评论系统 相比Valine，disqus开启真的是太简单了">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;12&#x2F;hexo-enable-disqus&#x2F;disqus_1.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;12&#x2F;hexo-enable-disqus&#x2F;disqus2.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;12&#x2F;hexo-enable-disqus&#x2F;disqus-shortname.png">
-<meta property="og:updated_time" content="2018-09-13T02:02:48.873Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;disqus_1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;disqus2.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;disqus-shortname.png">
+<meta property="og:updated_time" content="2019-11-18T14:09:05.267Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;09&#x2F;12&#x2F;hexo-enable-disqus&#x2F;disqus_1.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;.com&#x2F;&#x2F;disqus_1.png">
 
 <link rel="canonical" href="http://www.isimble.com/2018/09/12/hexo-enable-disqus/">
 
@@ -232,10 +232,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2018-09-13 01:40:20 / 修改时间：10:02:48" itemprop="dateCreated datePublished" datetime="2018-09-13T01:40:20+08:00">2018-09-13</time>
+              <time title="创建时间：2018-09-13 01:40:20" itemprop="dateCreated datePublished" datetime="2018-09-13T01:40:20+08:00">2018-09-13</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-11-18 22:09:05" itemprop="dateModified" datetime="2019-11-18T22:09:05+08:00">2019-11-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -296,12 +302,12 @@
 <ol>
 <li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
 </ol>
-<img src="/.com//09/12/hexo-enable-disqus/disqus_1.png" class title="Add Disqus To Site">
+<p><img src="/.com//disqus_1.png" alt="Add Disqus To Site"></p>
 <ol start="2">
 <li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
 </ol>
-<img src="/.com//09/12/hexo-enable-disqus/disqus2.png" class title="Install">
-<img src="/.com//09/12/hexo-enable-disqus/disqus-shortname.png" class title="Shortname">
+<p><img src="/.com//disqus2.png" alt="Install"></p>
+<p><img src="/.com//disqus-shortname.png" alt="Shortname"></p>
 <h3 id="配置hexo"><a class="markdownIt-Anchor" href="#配置hexo"></a> 配置Hexo</h3>
 <p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure>

@@ -1717,12 +1717,12 @@ h2的eth0与s1的eth2相连</p>
 <ol>
 <li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
 </ol>
-<img src="/.com//09/12/hexo-enable-disqus/disqus_1.png" class title="Add Disqus To Site">
+<p><img src="/.com//disqus_1.png" alt="Add Disqus To Site"></p>
 <ol start="2">
 <li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
 </ol>
-<img src="/.com//09/12/hexo-enable-disqus/disqus2.png" class title="Install">
-<img src="/.com//09/12/hexo-enable-disqus/disqus-shortname.png" class title="Shortname">
+<p><img src="/.com//disqus2.png" alt="Install"></p>
+<p><img src="/.com//disqus-shortname.png" alt="Shortname"></p>
 <h3 id="配置hexo"><a class="markdownIt-Anchor" href="#配置hexo"></a> 配置Hexo</h3>
 <p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure>
