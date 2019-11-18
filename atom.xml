@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="https://www.w3.org/2005/Atom">
   <title>Simble的小站</title>
   
   <subtitle>晒晒狗vs练练手</subtitle>
@@ -14,7 +14,7 @@
     
   </author>
   
-  <generator uri="http://hexo.io/">Hexo</generator>
+  <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
     <title>Openstack网络——虚拟机通信实验1</title>
@@ -30,6 +30,7 @@
 &lt;p&gt;本文以最简单的单节点为例，介绍在同子网下，虚拟机之间相互访问的流量路径&lt;/p&gt;
     
     </summary>
+    
     
       <category term="openstack" scheme="http://www.isimble.com/categories/openstack/"/>
     
@@ -58,6 +59,7 @@
 &lt;/blockquote&gt;
     
     </summary>
+    
     
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
@@ -96,6 +98,7 @@
     
     </summary>
     
+    
       <category term="旅行" scheme="http://www.isimble.com/categories/%E6%97%85%E8%A1%8C/"/>
     
     
@@ -119,6 +122,7 @@
     
     </summary>
     
+    
       <category term="openstack" scheme="http://www.isimble.com/categories/openstack/"/>
     
     
@@ -141,6 +145,7 @@
 &lt;p&gt;本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router&lt;/p&gt;
     
     </summary>
+    
     
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
@@ -167,6 +172,7 @@
     
     </summary>
     
+    
       <category term="docker" scheme="http://www.isimble.com/categories/docker/"/>
     
     
@@ -186,9 +192,10 @@
     <summary type="html">
     
       &lt;p&gt;尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。&lt;br&gt;
-在行将放弃之际，&lt;a href=&quot;https://github.com/easzlab/kubeasz&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;kubeasz&lt;/a&gt;挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境&lt;/p&gt;
+在行将放弃之际，&lt;a href=&quot;https://github.com/easzlab/kubeasz&quot;&gt;kubeasz&lt;/a&gt;挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境&lt;/p&gt;
     
     </summary>
+    
     
       <category term="k8s" scheme="http://www.isimble.com/categories/k8s/"/>
     
@@ -218,6 +225,7 @@
     
     </summary>
     
+    
       <category term="python" scheme="http://www.isimble.com/categories/python/"/>
     
     
@@ -240,6 +248,7 @@
 &lt;/blockquote&gt;
     
     </summary>
+    
     
       <category term="tech" scheme="http://www.isimble.com/categories/tech/"/>
     
@@ -275,6 +284,7 @@
     
     </summary>
     
+    
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
     
@@ -301,6 +311,7 @@
 &lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ git &lt;span class=&quot;built_in&quot;&gt;clone&lt;/span&gt; git://dpdk.org/dpdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
+    
     
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
@@ -332,6 +343,7 @@
     
     </summary>
     
+    
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
     
@@ -354,6 +366,7 @@
 &lt;p&gt;通过&lt;code&gt;mn -h&lt;/code&gt;可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo&lt;/p&gt;
     
     </summary>
+    
     
       <category term="sdn" scheme="http://www.isimble.com/categories/sdn/"/>
     
@@ -392,6 +405,7 @@
     
     </summary>
     
+    
       <category term="sdn" scheme="http://www.isimble.com/categories/sdn/"/>
     
     
@@ -417,6 +431,7 @@
 &lt;p&gt;Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境&lt;/p&gt;
     
     </summary>
+    
     
       <category term="sdn" scheme="http://www.isimble.com/categories/sdn/"/>
     
@@ -450,6 +465,7 @@
     
     </summary>
     
+    
       <category term="network" scheme="http://www.isimble.com/categories/network/"/>
     
     
@@ -470,10 +486,11 @@
     
     <summary type="html">
     
-      &lt;p&gt;之前一直使用Hexo的Next主题，开启的是Valine评论系统。有&lt;a href=&quot;http://www.simble.site/post/a072bce6.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;博文&lt;/a&gt;来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的&lt;a href=&quot;https://github.com/stkevintan/hexo-theme-material-flow&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;MaterialFlow&lt;/a&gt;，刚好也换换评论系统&lt;/p&gt;
+      &lt;p&gt;之前一直使用Hexo的Next主题，开启的是Valine评论系统。有&lt;a href=&quot;http://www.simble.site/post/a072bce6.html&quot;&gt;博文&lt;/a&gt;来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的&lt;a href=&quot;https://github.com/stkevintan/hexo-theme-material-flow&quot;&gt;MaterialFlow&lt;/a&gt;，刚好也换换评论系统&lt;/p&gt;
 &lt;p&gt;相比Valine，disqus开启真的是太简单了&lt;/p&gt;
     
     </summary>
+    
     
       <category term="hexo" scheme="http://www.isimble.com/categories/hexo/"/>
     
@@ -500,6 +517,7 @@
     
     </summary>
     
+    
       <category term="cloud" scheme="http://www.isimble.com/categories/cloud/"/>
     
     
@@ -520,6 +538,7 @@
 &lt;p&gt;使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码&lt;/p&gt;
     
     </summary>
+    
     
       <category term="cloud" scheme="http://www.isimble.com/categories/cloud/"/>
     
@@ -542,6 +561,7 @@
 &lt;p&gt;有一种打怪升级的感觉&lt;/p&gt;
     
     </summary>
+    
     
       <category term="python" scheme="http://www.isimble.com/categories/python/"/>
     
