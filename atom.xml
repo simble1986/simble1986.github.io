@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.isimble.com/"/>
-  <updated>2019-11-21T06:58:43.622Z</updated>
+  <updated>2019-11-21T07:02:21.269Z</updated>
   <id>http://www.isimble.com/</id>
   
   <author>
@@ -21,14 +21,13 @@
     <link href="http://www.isimble.com/2019/11/20/openstack-env/"/>
     <id>http://www.isimble.com/2019/11/20/openstack-env/</id>
     <published>2019-11-20T22:48:16.000Z</published>
-    <updated>2019-11-21T06:58:43.622Z</updated>
+    <updated>2019-11-21T07:02:21.269Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2><p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p><p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p><a id="more"></a><h2 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h2><h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3><p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p><p><img src="/2019/11/20/openstack-env/test_env_brief.png" alt="test_env_brief"></p><h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3><ul><li><p>Openstack： stein（1 controller node + 1 compute node）</p></li><li><p>Host： Ubuntu 18.04</p></li><li><p>Network driver： openvswitch</p></li></ul><h3 id="节点说明"><a class="markdownIt-Anchor" href="#节点说明"></a> 节点说明</h3><ol><li>node0既做为控制节点，也同时为网络节点、存储节点</li><li>node1为计算节点</li></ol><h3 id="网桥说明"><a class="markdownIt-Anchor" href="#网桥说明"></a> 网桥说明</h3><ol><li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li><li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li><li>在node0上创建<strong>br-ext</strong>作为外部网络网桥并绑定物理接口</li></ol><blockquote><p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p></blockquote><h3 id="tunnel相关配置"><a class="markdownIt-Anchor" href="#tunnel相关配置"></a> tunnel相关配置</h3><ol><li><code>tunnel_type</code>当前设置为<code>vxlan</code></li><li><code>local_ip</code>配置于<code>br-provider</code>上</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p><p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p><a id="more"></a><h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3><p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p><p><img src="/2019/11/20/openstack-env/test_env_brief.png" alt="test_env_brief"></p><h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3><ul><li><p>Openstack： stein（1 controller node + 1 compute node）</p></li><li><p>Host： Ubuntu 18.04</p></li><li><p>Network driver： openvswitch</p></li></ul><h3 id="节点说明"><a class="markdownIt-Anchor" href="#节点说明"></a> 节点说明</h3><ol><li>node0既做为控制节点，也同时为网络节点、存储节点</li><li>node1为计算节点</li></ol><h3 id="网桥说明"><a class="markdownIt-Anchor" href="#网桥说明"></a> 网桥说明</h3><ol><li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li><li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li><li>在node0上创建<strong>br-ext</strong>作为外部网络网桥并绑定物理接口</li></ol><blockquote><p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p></blockquote><h3 id="tunnel相关配置"><a class="markdownIt-Anchor" href="#tunnel相关配置"></a> tunnel相关配置</h3><ol><li><code>tunnel_type</code>当前设置为<code>vxlan</code></li><li><code>local_ip</code>配置于<code>br-provider</code>上</li></ol>]]></content>
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#前言&quot;&gt;&lt;/a&gt; 前言&lt;/h2&gt;
-&lt;p&gt;本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。&lt;/p&gt;
+      &lt;p&gt;本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。&lt;/p&gt;
 &lt;p&gt;CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。&lt;/p&gt;
     
     </summary>
