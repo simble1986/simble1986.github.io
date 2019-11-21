@@ -46,18 +46,20 @@
   };
 </script>
 
-  <meta name="description" content="折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。 当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章">
-<meta name="keywords" content="docker,pexpect,自动化">
+  <meta name="description" content="搭建完测试环境后，拉起来个虚拟机看看，操作步骤 创建网络 - 创建虚拟机实例 - 创建路由器 本篇主要关注创建网络时主机上的行为">
+<meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Docker API一种连接到PTY的交互方法">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;05&#x2F;04&#x2F;docker-pexpect&#x2F;index.html">
+<meta property="og:title" content="Openstack学习 —— 创建网络及子网">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。 当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章">
+<meta property="og:description" content="搭建完测试环境后，拉起来个虚拟机看看，操作步骤 创建网络 - 创建虚拟机实例 - 创建路由器 本篇主要关注创建网络时主机上的行为">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-04T09:51:16.000Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;create_network.png">
+<meta property="og:updated_time" content="2019-11-21T08:23:35.866Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;create_network.png">
 
-<link rel="canonical" href="http://www.isimble.com/2018/05/04/docker-pexpect/">
+<link rel="canonical" href="http://www.isimble.com/2019/11/21/openstack-create-network/">
 
 
 <script id="page-configurations">
@@ -71,7 +73,7 @@
   };
 </script>
 
-  <title>Docker API一种连接到PTY的交互方法 | Simble的小站</title>
+  <title>Openstack学习 —— 创建网络及子网 | Simble的小站</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
     <script>
@@ -191,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/05/04/docker-pexpect/">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2019/11/21/openstack-create-network/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -204,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Docker API一种连接到PTY的交互方法
+          Openstack学习 —— 创建网络及子网
         </h1>
 
         <div class="post-meta">
@@ -215,7 +217,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2018-05-04 09:35:45 / 修改时间：17:51:16" itemprop="dateCreated datePublished" datetime="2018-05-04T09:35:45+08:00">2018-05-04</time>
+              <time title="创建时间：2019-11-21 08:22:03 / 修改时间：16:23:35" itemprop="dateCreated datePublished" datetime="2019-11-21T08:22:03+08:00">2019-11-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -223,8 +225,8 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
+                  <a href="/categories/cloud/" itemprop="url" rel="index">
+                    <span itemprop="name">cloud</span>
                   </a>
                 </span>
             </span>
@@ -238,8 +240,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/05/04/docker-pexpect/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/05/04/docker-pexpect/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2019/11/21/openstack-create-network/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/21/openstack-create-network/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,7 +251,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -268,48 +270,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
-<p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
+        <p>搭建完测试环境后，拉起来个虚拟机看看，操作步骤</p>
+<p><strong>创建网络</strong> - 创建虚拟机实例 - 创建路由器</p>
+<p>本篇主要关注创建网络时主机上的行为</p>
 <a id="more"></a>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
-<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
-<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
-<h2 id="自动化思路"><a class="markdownIt-Anchor" href="#自动化思路"></a> 自动化思路</h2>
+<blockquote>
+<p>注：openstack CLI以及ovs命令行输出信息较多，仅提取关键信息</p>
+</blockquote>
+<h3 id="创建网络及子网"><a class="markdownIt-Anchor" href="#创建网络及子网"></a> 创建网络及子网</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ openstack network create net1</span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">| Field                     | Value           </span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">| id                        | 2caecd1e-bda7-4a4e-baec-3d192f52aa3b</span><br><span class="line">| provider:network_type     | vxlan                               </span><br><span class="line">| provider:segmentation_id  | 15                                  </span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">$ openstack subnet create --network net1 --subnet-range 200.0.0.0/24 sub1</span><br><span class="line">+-------------------+-------------------------------------</span><br><span class="line">| Field             | Value                               </span><br><span class="line">+-------------------+-------------------------------------</span><br><span class="line">| allocation_pools  | 200.0.0.2-200.0.0.254               </span><br><span class="line">| cidr              | 200.0.0.0/24                        </span><br><span class="line">| gateway_ip        | 200.0.0.1                           </span><br><span class="line">| id                | 5875f007-7b0f-45af-b78f-82527e5d9a90</span><br><span class="line">| network_id        | 2caecd1e-bda7-4a4e-baec-3d192f52aa3b</span><br><span class="line">+-------------------+-------------------------------------</span><br></pre></td></tr></table></figure>
+<h3 id="发生了什么"><a class="markdownIt-Anchor" href="#发生了什么"></a> 发生了什么？</h3>
+<p><strong>1. openstack</strong></p>
+<p><code>net1</code>的id为<code>2caecd1e-bda7-4a4e-baec-3d192f52aa3b</code></p>
+<p><code>sub1</code>的id为<code>5875f007-7b0f-45af-b78f-82527e5d9a90</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                       | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br><span class="line">| 17a89323-fd0a-44cc-a525-fcf8d2efb836 |      | fa:16:3e:f6:db:c9 | ip_address=<span class="string">'200.0.0.2'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure>
+<p>在<code>sub1</code>下创建了一个port</p>
+<ul>
+<li>ID：<code>17a89323-fd0a-44cc-a525-fcf8d2efb836</code></li>
+<li>IP：<code>200.0.0.2</code></li>
+</ul>
+<p><strong>2. ovs</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"tap17a89323-fd"</span></span><br><span class="line">            tag: 1</span><br><span class="line">            Interface <span class="string">"tap17a89323-fd"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<p>ovs在br-int下创建了一个port <code>tap17a89323-fd</code>, tag为 <code>1</code></p>
+<p><strong>3. Linux namespace</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns</span><br><span class="line">qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b (id: 0)</span><br><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b ifconfig</span><br><span class="line">...</span><br><span class="line">tap17a89323-fd: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 169.254.169.254  netmask 255.255.0.0  broadcast 169.254.255.255</span><br><span class="line">        inet6 fe80::f816:3eff:fef6:dbc9  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether fa:16:3e:f6:db:c9  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 5  bytes 446 (446.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<p>创建了一个<code>qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b</code>的namespace</p>
+<p>ovs的br-int上的 <code>tap17a89323-fd</code>的port被放在了这个namespace中。</p>
+<blockquote>
+<p>留意一下接口的IP地址及MAC地址</p>
+</blockquote>
+<h3 id="综上"><a class="markdownIt-Anchor" href="#综上"></a> 综上</h3>
+<p>openstack上创建network并创建一个子网之后，体现为：</p>
 <ol>
-<li>client通过python API连接到docker</li>
-<li>创建一个container并保持运行</li>
-<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
-<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
+<li>创建了一个dhcp的namespace</li>
+<li>ovs在br-int上创建了dhcp的port，并将其置于dhcp的namespace中</li>
 </ol>
-<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
-<ul>
-<li>Docker开启remote API</li>
-</ul>
-<p>参见之前博文</p>
-<ul>
-<li>Docker Client</li>
-</ul>
-<p>安装必要的包</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure>
-<h2 id="开始使用"><a class="markdownIt-Anchor" href="#开始使用"></a> 开始使用</h2>
-<ul>
-<li>创建container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>连接container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用pexpect连接</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
-<ul>
-<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
-<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
-</ul>
+<p><img src="/2019/11/21/openstack-create-network/create_network.png" alt="Create Network"></p>
 
     </div>
 
@@ -320,19 +316,19 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/03/27/enable-docker-remote-api/" rel="bookmark">在Ubuntu 16.04上开启Docker的Remote API</a></div>
+      <div class="popular-posts-title"><a href="/2019/11/20/openstack-env/" rel="bookmark">Openstack学习 —— 实验环境介绍</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2019/01/14/cn_resources/" rel="bookmark">使用国内资源（备忘）</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/03/29/docker-install-mysql-server-no-passwd/" rel="bookmark">Docker中无密码apt安装mysql</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/10/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2019/08/06/docker-ovs-basic/" rel="bookmark">Docker + ovs，原来如此简单</a></div>
+      <div class="popular-posts-title"><a href="/2019/08/08/openstack-security-group-ovs-1/" rel="bookmark">Openstack安全组基于ovs的学习笔记</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/03/23/docker_study_cmd1/" rel="bookmark">docker基本操作（一）</a></div>
+      <div class="popular-posts-title"><a href="/2019/09/02/openstack-vm-traffic1/" rel="bookmark">Openstack网络——虚拟机通信实验1</a></div>
     </li>
   </ul>
 
@@ -340,26 +336,21 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
-              <a href="/tags/pexpect/" rel="tag"><i class="fa fa-tag"></i> pexpect</a>
-              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/" rel="tag"><i class="fa fa-tag"></i> 自动化</a>
+              <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2018/05/03/dockerpty-usage/" rel="next" title="dockerpty使用">
-                  <i class="fa fa-chevron-left"></i> dockerpty使用
+                <a href="/2019/11/20/openstack-env/" rel="next" title="Openstack学习 —— 实验环境介绍">
+                  <i class="fa fa-chevron-left"></i> Openstack学习 —— 实验环境介绍
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2018/05/06/python-virtenv/" rel="prev" title="python virtenv环境搭建">
-                  python virtenv环境搭建 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -405,7 +396,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text"> 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动化思路"><span class="nav-number">2.</span> <span class="nav-text"> 自动化思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">2.1.</span> <span class="nav-text"> 环境准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始使用"><span class="nav-number">3.</span> <span class="nav-text"> 开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">3.1.</span> <span class="nav-text"> 注意事项</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建网络及子网"><span class="nav-number">1.</span> <span class="nav-text"> 创建网络及子网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发生了什么"><span class="nav-number">2.</span> <span class="nav-text"> 发生了什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#综上"><span class="nav-number">3.</span> <span class="nav-text"> 综上</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -580,9 +571,9 @@
       DISQUS.reset({
         reload: true,
         config: {page: {
-            url: "http://www.isimble.com/2018/05/04/docker-pexpect/",
-            identifier: "2018/05/04/docker-pexpect/",
-            title: "Docker API一种连接到PTY的交互方法"
+            url: "http://www.isimble.com/2019/11/21/openstack-create-network/",
+            identifier: "2019/11/21/openstack-create-network/",
+            title: "Openstack学习 —— 创建网络及子网"
           }
         }
       });
