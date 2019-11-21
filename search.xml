@@ -3,8 +3,7 @@
   <entry>
     <title>Openstack学习 —— 实验环境介绍</title>
     <url>/2019/11/20/openstack-env/</url>
-    <content><![CDATA[<h1 id="openstack学习-实验环境介绍"><a class="markdownIt-Anchor" href="#openstack学习-实验环境介绍"></a> Openstack学习 —— 实验环境介绍</h1>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+    <content><![CDATA[<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
 <p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
 <p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
 <a id="more"></a>
