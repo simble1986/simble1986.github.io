@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="前面已经有一篇博文讲解了同主机内的虚拟机通信，本篇则主要关注与跨主机虚拟机访问的详细解析。 创建网络 - 创建虚拟机实例 - 创建路由器 在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就创建两个虚拟机（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。">
+<meta name="keywords" content="openstack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Openstack学习 —— 跨主机虚拟机访问1">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="前面已经有一篇博文讲解了同主机内的虚拟机通信，本篇则主要关注与跨主机虚拟机访问的详细解析。 创建网络 - 创建虚拟机实例 - 创建路由器 在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就创建两个虚拟机（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;create_vm_ports.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;create_vm_portswithdhcp.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;create_vm_portswithnode1.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;create_vm_with_2node.png">
+<meta property="og:updated_time" content="2019-11-22T08:04:59.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-cross-host-vm-1&#x2F;create_vm_ports.png">
+
+<link rel="canonical" href="http://www.isimble.com/2019/11/21/openstack-cross-host-vm-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Openstack学习 —— 跨主机虚拟机访问1 | Simble的小站</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-152780270-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simble的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">晒晒狗 vs 练练手</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">38</span></a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-fw fa-comments"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2019/11/21/openstack-cross-host-vm-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Openstack学习 —— 跨主机虚拟机访问1
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2019-11-22 07:44:38 / 修改时间：16:04:59" itemprop="dateCreated datePublished" datetime="2019-11-22T07:44:38+08:00">2019-11-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/cloud/" itemprop="url" rel="index">
+                    <span itemprop="name">cloud</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2019/11/21/openstack-cross-host-vm-1/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/21/openstack-cross-host-vm-1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>前面已经有一篇博文讲解了<a href="/2019/11/21/openstack-cross-host-vm-1/openstack-vm-traffic1.md">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
+<p>创建网络 - <strong>创建虚拟机实例</strong> - 创建路由器</p>
+<p>在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就<strong>创建两个虚拟机</strong>（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。</p>
+<a id="more"></a>
+<blockquote>
+<p>注：openstack及ovs等CLI输出内容较多，文章中仅列出关注的部分内容</p>
+</blockquote>
+<h3 id="创建虚拟机"><a class="markdownIt-Anchor" href="#创建虚拟机"></a> 创建虚拟机</h3>
+<blockquote>
+<p>在创建虚拟机之前，需要创建规格（flavor）和上传镜像（image）</p>
+<p>本文使用cirros作为测试镜像</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openstack server create --flavor small --image cirros --network net1 --min 2 --max 2 vm</span><br><span class="line">$ openstack server list</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ID                                   | Name | Status | Networks         | Image  | Flavor |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ebb1b8fa-6457-4e80-8a49-14093622ce5d | vm-2 | ACTIVE | net1=200.0.0.219 | cirros | small  |</span><br><span class="line">| fb619b6c-9954-4dbd-8b1e-461c1c3c4c7d | vm-1 | ACTIVE | net1=200.0.0.238 | cirros | small  |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br></pre></td></tr></table></figure>
+<h2 id="发生了什么"><a class="markdownIt-Anchor" href="#发生了什么"></a> 发生了什么？</h2>
+<h3 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> Compute</h3>
+<p>还是有必要简单介绍一下nova相关的操作</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ openstack server show vm-1</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| Field                               | Value                                |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| OS-EXT-SRV-ATTR:hypervisor_hostname | node1                                |</span><br><span class="line">| OS-EXT-SRV-ATTR:instance_name       | instance-00000039                    |</span><br><span class="line">| addresses                           | net1=200.0.0.238                     |</span><br><span class="line">| id                                  | fb619b6c-9954-4dbd-8b1e-461c1c3c4c7d |</span><br><span class="line">| name                                | vm-1                                 |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">$ openstack server show vm-2</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| Field                               | Value                                |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| OS-EXT-SRV-ATTR:hypervisor_hostname | node0                                |</span><br><span class="line">| OS-EXT-SRV-ATTR:instance_name       | instance-0000003a                    |</span><br><span class="line">| addresses                           | net1=200.0.0.219                     |</span><br><span class="line">| id                                  | ebb1b8fa-6457-4e80-8a49-14093622ce5d |</span><br><span class="line">| name                                | vm-2                                 |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br></pre></td></tr></table></figure>
+<p>从实例的信息中看到，分别在node1上创建了vm-1：<code>instance-00000039</code>，在node0上创建了vm-2：<code>instance-0000003a</code>。不妨分别在两个node上使用<code>virsh list</code>看看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ virsh list</span><br><span class="line"> Id   Name                State</span><br><span class="line">-----------------------------------</span><br><span class="line"> 21   instance-0000003a   running</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(node1)$ virsh list</span><br><span class="line"> Id   Name                State</span><br><span class="line">-----------------------------------</span><br><span class="line"> 11   instance-00000039   running</span><br></pre></td></tr></table></figure>
+<h3 id="network"><a class="markdownIt-Anchor" href="#network"></a> Network</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                         | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| 02407769-97c6-45ae-8fba-ea464020951c |      | fa:16:3e:ad:66:9e | ip_address=<span class="string">'200.0.0.219'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">| 17a89323-fd0a-44cc-a525-fcf8d2efb836 |      | fa:16:3e:f6:db:c9 | ip_address=<span class="string">'200.0.0.2'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span>   | ACTIVE |</span><br><span class="line">| f4c391da-2295-479a-95c5-c7759132f2ea |      | fa:16:3e:f5:ca:f5 | ip_address=<span class="string">'200.0.0.238'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure>
+<p>先记住两个port对应的ID：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>IP</th>
+<th>Instance</th>
+<th>Node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02407769-97c6-45ae-8fba-ea464020951c</td>
+<td>200.0.0.219</td>
+<td>vm-1</td>
+<td>node0</td>
+</tr>
+<tr>
+<td>f4c391da-2295-479a-95c5-c7759132f2ea</td>
+<td>200.0.0.238</td>
+<td>vm-2</td>
+<td>node1</td>
+</tr>
+</tbody>
+</table>
+<h4 id="node0"><a class="markdownIt-Anchor" href="#node0"></a> node0</h4>
+<ul>
+<li><strong>Linux bridge</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brctl show</span><br><span class="line">bridge name       bridge id           STP enabled   interfaces</span><br><span class="line">qbr02407769-97      8000.02989dedfae5   no            qvb02407769-97</span><br><span class="line">                                                              tap02407769-97</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ovs</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">    ...</span><br><span class="line">        Port <span class="string">"qvo02407769-97"</span></span><br><span class="line">            tag: 1</span><br><span class="line">            Interface <span class="string">"qvo02407769-97"</span></span><br><span class="line">            ...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>别忘了留意<code>tag: 1</code>，后面分析时才会用到</p>
+</blockquote>
+<ul>
+<li><strong>MAC地址</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ip link show</span><br><span class="line">161: qbr02407769-97: ...</span><br><span class="line">    link/ether 02:98:9d:ed:fa:e5 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">162: qvo02407769-97@qvb02407769-97: ...</span><br><span class="line">    link/ether 2a:16:2b:d1:8d:a3 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">163: qvb02407769-97@qvo02407769-97: ...</span><br><span class="line">    link/ether 02:98:9d:ed:fa:e5 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">164: tap02407769-97: ...</span><br><span class="line">    link/ether fe:16:3e:ad:66:9e brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure>
+<ul>
+<li>vm-1</li>
+</ul>
+<blockquote>
+<p>可以使用<code>virsh console xxx</code>连入虚拟机的console进行操作</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ virsh console instance-0000003a</span><br><span class="line">Connected to domain instance-0000003a</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">login as <span class="string">'cirros'</span> user. default password: <span class="string">'gocubsgo'</span>. use <span class="string">'sudo'</span> <span class="keyword">for</span> root.</span><br><span class="line">vm-2 login: cirros</span><br><span class="line">Password:</span><br><span class="line">$ ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr FA:16:3E:AD:66:9E</span><br><span class="line">          inet addr:200.0.0.219  Bcast:200.0.0.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::f816:3eff:fead:669e/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:94 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:122 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:9192 (8.9 KiB)  TX bytes:10571 (10.3 KiB)       </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>从上面我们可以看到，分别创建了：</p>
+<ol>
+<li>一个linux网桥<code>qbr02407769-97</code></li>
+<li>一组接口对： <code>qvb02407769-97@qvo02407769-97</code></li>
+<li>一个tap接口：<code>tap02407769-97</code></li>
+</ol>
+<p><strong>你或许已经发现了<code>tap02407769-97</code>接口与instance-0000003a的<code>eth0</code>的关系</strong>，是的，他们MAC地址相同，也即表示他们实际上就是同一个网络接口。</p>
+<ul>
+<li><strong>连接关系整理</strong></li>
+</ul>
+<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_ports.png" alt="create_vm_ports"></p>
+<p>将上一篇文章中的dhcp的namespace也合入整个连接关系后：</p>
+<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_portswithdhcp.png" alt="create_vm_portswithdhcp"></p>
+<h4 id="node1"><a class="markdownIt-Anchor" href="#node1"></a> node1</h4>
+<p>同样收集node1上的各种信息</p>
+<ul>
+<li><strong>linux bridge</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brctl show</span><br><span class="line">bridge name       bridge id           STP enabled   interfaces</span><br><span class="line">qbrf4c391da-22      8000.aa5d4b2ddf79   no            qvbf4c391da-22</span><br><span class="line">                                                              tapf4c391da-22</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>ovs</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"qvof4c391da-22"</span></span><br><span class="line">            tag: 6</span><br><span class="line">            Interface <span class="string">"qvof4c391da-22"</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>别忘了留意<code>tag: 6</code>，你也可以思考一下，为什么同一个subnet，node0上是1，node1上是6？</p>
+</blockquote>
+<ul>
+<li><strong>连接关系</strong></li>
+</ul>
+<p>到现在，分布在两个node上的VM与br-int之间的通路已经清晰起来</p>
+<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_portswithnode1.png" alt="create_vm_portswithnode1"></p>
+<h3 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h3>
+<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/21/openstack-cross-host-vm-1/openstack-env.md">实验环境介绍</a>中的连接图：</p>
+<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
+<p>不妨先从vm-1访问一下vm-2，先思考一下两个虚拟机是如何访问的。下一篇文章再继续探讨流量是如何从一个节点的虚拟机经历千山万水到达另外一个节点虚拟机上的。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/11/21/openstack-create-network/" rel="bookmark">Openstack学习 —— 创建网络及子网</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/11/20/openstack-env/" rel="bookmark">Openstack学习 —— 实验环境介绍</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/10/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/09/02/openstack-vm-traffic1/" rel="bookmark">Openstack网络——虚拟机通信实验1</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/openstack/" rel="tag"><i class="fa fa-tag"></i> openstack</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/21/openstack-create-network/" rel="next" title="Openstack学习 —— 创建网络及子网">
+                  <i class="fa fa-chevron-left"></i> Openstack学习 —— 创建网络及子网
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建虚拟机"><span class="nav-number">1.</span> <span class="nav-text"> 创建虚拟机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发生了什么"><span class="nav-number"></span> <span class="nav-text"> 发生了什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#compute"><span class="nav-number">1.</span> <span class="nav-text"> Compute</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#network"><span class="nav-number">2.</span> <span class="nav-text"> Network</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node0"><span class="nav-number">2.1.</span> <span class="nav-text"> node0</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#node1"><span class="nav-number">2.2.</span> <span class="nav-text"> node1</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text"> 小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Simble"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Simble</p>
+  <div class="site-description" itemprop="description">记录一些技术的或者旅行的东东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/simble1986" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://zpzhou.com/" title="https:&#x2F;&#x2F;zpzhou.com&#x2F;" rel="noopener" target="_blank">ZPDEV</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://10101.io/" title="https:&#x2F;&#x2F;10101.io&#x2F;" rel="noopener" target="_blank">WithdewHua</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simble</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://simble.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://www.isimble.com/2019/11/21/openstack-cross-host-vm-1/",
+            identifier: "2019/11/21/openstack-cross-host-vm-1/",
+            title: "Openstack学习 —— 跨主机虚拟机访问1"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://simble.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+</body>
+</html>
