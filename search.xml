@@ -3,7 +3,7 @@
   <entry>
     <title>Openstack学习 —— 跨主机虚拟机访问1</title>
     <url>/2019/11/22/openstack-cross-host-vm-1/</url>
-    <content><![CDATA[<p>前面已经有一篇博文讲解了<a href="/2019/11/22/openstack-cross-host-vm-1/09/02/openstack-vm-traffic1/">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
+    <content><![CDATA[<p>前面已经有一篇博文讲解了<a href="/2019/09/02/openstack-vm-traffic1/">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
 <p>创建网络 - <strong>创建虚拟机实例</strong> - 创建路由器</p>
 <p>在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就<strong>创建两个虚拟机</strong>（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。</p>
 <a id="more"></a>
@@ -105,7 +105,7 @@
 <p>到现在，分布在两个node上的VM与br-int之间的通路已经清晰起来</p>
 <p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_portswithnode1.png" alt="create_vm_portswithnode1"></p>
 <h3 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h3>
-<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/22/openstack-cross-host-vm-1/11/21/openstack-env/">实验环境介绍</a>中的连接图：</p>
+<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/21/openstack-env/">实验环境介绍</a>中的连接图：</p>
 <p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
 <p>不妨先从vm-1访问一下vm-2，先思考一下两个虚拟机是如何访问的。下一篇文章再继续探讨流量是如何从一个节点的虚拟机经历千山万水到达另外一个节点虚拟机上的。</p>
 ]]></content>
@@ -2897,8 +2897,8 @@ h2的eth0与s1的eth2相连</p>
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>blog</tag>
         <tag>hexo</tag>
+        <tag>blog</tag>
         <tag>markdown</tag>
       </tags>
   </entry>
