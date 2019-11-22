@@ -2,8 +2,8 @@
 <search>
   <entry>
     <title>Openstack学习 —— 跨主机虚拟机访问1</title>
-    <url>/2019/11/21/openstack-cross-host-vm-1/</url>
-    <content><![CDATA[<p>前面已经有一篇博文讲解了<a href="/2019/11/21/openstack-cross-host-vm-1/openstack-vm-traffic1.md">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
+    <url>/2019/11/22/openstack-cross-host-vm-1/</url>
+    <content><![CDATA[<p>前面已经有一篇博文讲解了<a href="/2019/11/22/openstack-cross-host-vm-1/openstack-vm-traffic1.md">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
 <p>创建网络 - <strong>创建虚拟机实例</strong> - 创建路由器</p>
 <p>在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就<strong>创建两个虚拟机</strong>（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。</p>
 <a id="more"></a>
@@ -83,9 +83,9 @@
 <ul>
 <li><strong>连接关系整理</strong></li>
 </ul>
-<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_ports.png" alt="create_vm_ports"></p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_ports.png" alt="create_vm_ports"></p>
 <p>将上一篇文章中的dhcp的namespace也合入整个连接关系后：</p>
-<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_portswithdhcp.png" alt="create_vm_portswithdhcp"></p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_portswithdhcp.png" alt="create_vm_portswithdhcp"></p>
 <h4 id="node1"><a class="markdownIt-Anchor" href="#node1"></a> node1</h4>
 <p>同样收集node1上的各种信息</p>
 <ul>
@@ -103,10 +103,10 @@
 <li><strong>连接关系</strong></li>
 </ul>
 <p>到现在，分布在两个node上的VM与br-int之间的通路已经清晰起来</p>
-<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_portswithnode1.png" alt="create_vm_portswithnode1"></p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_portswithnode1.png" alt="create_vm_portswithnode1"></p>
 <h3 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h3>
-<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/21/openstack-cross-host-vm-1/openstack-env.md">实验环境介绍</a>中的连接图：</p>
-<p><img src="/2019/11/21/openstack-cross-host-vm-1/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
+<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/22/openstack-cross-host-vm-1/openstack-env.md">实验环境介绍</a>中的连接图：</p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
 <p>不妨先从vm-1访问一下vm-2，先思考一下两个虚拟机是如何访问的。下一篇文章再继续探讨流量是如何从一个节点的虚拟机经历千山万水到达另外一个节点虚拟机上的。</p>
 ]]></content>
       <categories>
@@ -165,13 +165,13 @@
   </entry>
   <entry>
     <title>Openstack学习 —— 实验环境介绍</title>
-    <url>/2019/11/20/openstack-env/</url>
+    <url>/2019/11/21/openstack-env/</url>
     <content><![CDATA[<p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
 <p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
 <a id="more"></a>
 <h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3>
 <p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p>
-<p><img src="/2019/11/20/openstack-env/test_env_brief.png" alt="test_env_brief"></p>
+<p><img src="/2019/11/21/openstack-env/test_env_brief.png" alt="test_env_brief"></p>
 <h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3>
 <ul>
 <li>
@@ -451,7 +451,7 @@
   </entry>
   <entry>
     <title>Linux虚拟网络之虚拟机</title>
-    <url>/2019/08/15/linux-virtual-vm/</url>
+    <url>/2019/08/16/linux-virtual-vm/</url>
     <content><![CDATA[<p>本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。</p>
 <h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <blockquote>
@@ -459,7 +459,7 @@
 </blockquote>
 <a id="more"></a>
 <h3 id="实验topo"><a class="markdownIt-Anchor" href="#实验topo"></a> 实验topo</h3>
-<img src="/2019/08/15/linux-virtual-vm/qemu_topo.png" class title="TOPO">
+<img src="/2019/08/16/linux-virtual-vm/qemu_topo.png" class title="TOPO">
 <h3 id="软件包"><a class="markdownIt-Anchor" href="#软件包"></a> 软件包</h3>
 <p><strong>1. qemu</strong></p>
 <p>由于整套实验环境都是在虚拟机上完成，在没有开启诸如Intel-VTx技术的情况下，使用<code>qemu</code>作为虚拟机模拟器</p>
@@ -475,7 +475,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img</span><br></pre></td></tr></table></figure>
 <p><strong>5. 测试</strong></p>
 <p>用vnc viewer连接当前虚拟机</p>
-<img src="/2019/08/15/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer">
+<img src="/2019/08/16/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer">
 <h2 id="tap接口使用"><a class="markdownIt-Anchor" href="#tap接口使用"></a> tap接口使用</h2>
 <p><strong>1. 创建虚拟机</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img -netdev tap,id=mynet0,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet0</span><br></pre></td></tr></table></figure>
@@ -497,7 +497,7 @@
 <p><strong>3. 小结</strong></p>
 <p>使用tap类型的netdev创建qemu虚拟机时，会自动创建一个tap接口，而这个tap接口与VM的接口相连。</p>
 <p>连接图如下：</p>
-<img src="/2019/08/15/linux-virtual-vm/qemu_tap.png" class title="tap">
+<img src="/2019/08/16/linux-virtual-vm/qemu_tap.png" class title="tap">
 <h2 id="虚拟机通信"><a class="markdownIt-Anchor" href="#虚拟机通信"></a> 虚拟机通信</h2>
 <p>理解了虚拟机使用tap接口之后，就可以考虑使用网桥方式进行2个甚至多个虚拟机之间通信了。</p>
 <p><strong>1. 创建虚拟机</strong></p>
@@ -522,7 +522,7 @@
 <p>现在，可以两个VM相互ping一下了</p>
 <p><strong>4. 访问外部PC</strong></p>
 <p>虚拟机需要访问外部网络，则需要添加物理接口，如下图</p>
-<img src="/2019/08/15/linux-virtual-vm/qemu_bridge.png" class title="bridge">
+<img src="/2019/08/16/linux-virtual-vm/qemu_bridge.png" class title="bridge">
 <p><strong>Host</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">(host)$ ifconfig ens192 up</span><br><span class="line">(host)$ brctl addif br0 ens192</span><br></pre></td></tr></table></figure>
 <p><strong>VM1</strong></p>
@@ -538,7 +538,7 @@
 </blockquote>
 <p>NAT模式主要通过iptables来实现。通过将虚拟机发出的报文的源地址转换为物理接口的IP，实现与外网的通信</p>
 <p>拓扑图如下：</p>
-<img src="/2019/08/15/linux-virtual-vm/qemu_nat.png" class title="nat">
+<img src="/2019/08/16/linux-virtual-vm/qemu_nat.png" class title="nat">
 <p><strong>1. 为网桥配置IP地址</strong></p>
 <p>用网桥的br0接口作为192.168.1.0/24网段的网关</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(host)$ ifconfig br0 192.168.1.1/24</span><br></pre></td></tr></table></figure>
@@ -580,7 +580,7 @@
   </entry>
   <entry>
     <title>西班牙申根签证快速攻略</title>
-    <url>/2019/08/14/spain-visa/</url>
+    <url>/2019/08/15/spain-visa/</url>
     <content><![CDATA[<h2 id="适用对象"><a class="markdownIt-Anchor" href="#适用对象"></a> 适用对象</h2>
 <ol>
 <li>北京领区</li>
@@ -663,14 +663,14 @@
 <p>在西班牙签证申请中心官网： 申请预约 -&gt; BLS签证中心 -&gt; 网上预约，或直接点击<a href="https://china.blsspainvisa.com/chinese/book_appointment.php" target="_blank" rel="noopener">这里</a></p>
 <h3 id="预约表单填写"><a class="markdownIt-Anchor" href="#预约表单填写"></a> 预约表单填写</h3>
 <p><strong>基本信息</strong></p>
-<img src="/2019/08/14/spain-visa/booking_1.png" class title="Booking form">
+<img src="/2019/08/15/spain-visa/booking_1.png" class title="Booking form">
 <p><strong>预约申请表</strong></p>
-<img src="/2019/08/14/spain-visa/booking_table.png" class title="Booking Table">
+<img src="/2019/08/15/spain-visa/booking_table.png" class title="Booking Table">
 <p><strong>预约确认信</strong></p>
 <blockquote>
 <p>预约完成后，注意保存预约确认信，可打印也可保存在手机上</p>
 </blockquote>
-<img src="/2019/08/14/spain-visa/booking_confirm.png" class title="Confirm">
+<img src="/2019/08/15/spain-visa/booking_confirm.png" class title="Confirm">
 <h2 id="前往签证中心"><a class="markdownIt-Anchor" href="#前往签证中心"></a> 前往签证中心</h2>
 <h3 id="地址"><a class="markdownIt-Anchor" href="#地址"></a> 地址</h3>
 <blockquote>
@@ -707,7 +707,7 @@
 <p>提交完所有资料后，你只需要在家等待签证的快递，是否通过，已经由不得你了。</p>
 <h3 id="查询进度"><a class="markdownIt-Anchor" href="#查询进度"></a> 查询进度</h3>
 <p>可以登陆<a href="https://china.blsspainvisa.com/chinese/index.php" target="_blank" rel="noopener">西班牙签证申请中心官网</a>，通过<strong>受理号</strong>在线查询您的申请</p>
-<img src="/2019/08/14/spain-visa/status.png" class title="Status">
+<img src="/2019/08/15/spain-visa/status.png" class title="Status">
 <h2 id="在职证明模版"><a class="markdownIt-Anchor" href="#在职证明模版"></a> 在职证明模版</h2>
 <blockquote>
 <p>在职证明需要有公司名称、地址、电话并加盖公章</p>
@@ -961,7 +961,7 @@
   </entry>
   <entry>
     <title>Docker + ovs，原来如此简单</title>
-    <url>/2019/08/06/docker-ovs-basic/</url>
+    <url>/2019/08/07/docker-ovs-basic/</url>
     <content><![CDATA[<p>一直没敢下手尝试docker的网络使用ovs，总觉得可能很复杂。所以，人往往都是自己把自己拒之门外的。</p>
 <blockquote>
 <p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
@@ -1041,7 +1041,7 @@
   </entry>
   <entry>
     <title>k8s环境安装之差点儿我就放弃了</title>
-    <url>/2019/07/18/k8s-env-prep/</url>
+    <url>/2019/07/19/k8s-env-prep/</url>
     <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
 在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
 <a id="more"></a>
@@ -1178,7 +1178,7 @@
   </entry>
   <entry>
     <title>使用国内资源（备忘）</title>
-    <url>/2019/01/14/cn_resources/</url>
+    <url>/2019/01/15/cn_resources/</url>
     <content><![CDATA[<h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
 <blockquote>
 <p>docker.com越来越难访问了</p>
@@ -1334,7 +1334,7 @@
   </entry>
   <entry>
     <title>Ubuntu16.04上安装DPDK</title>
-    <url>/2018/11/14/dpdk-setup/</url>
+    <url>/2018/11/15/dpdk-setup/</url>
     <content><![CDATA[<h1 id="dpdk安装"><a class="markdownIt-Anchor" href="#dpdk安装"></a> DPDK安装</h1>
 <blockquote>
 <p>DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库</p>
@@ -1768,7 +1768,7 @@
   </entry>
   <entry>
     <title>Mininet基础使用</title>
-    <url>/2018/11/06/mininet-base/</url>
+    <url>/2018/11/07/mininet-base/</url>
     <content><![CDATA[<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
 <p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
 <p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
@@ -1841,7 +1841,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>OpenvSwitch学习笔记1</title>
-    <url>/2018/09/20/ovs-study-overview/</url>
+    <url>/2018/09/21/ovs-study-overview/</url>
     <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
 <ol>
 <li>VLAN with trunk and access ports</li>
@@ -1882,7 +1882,7 @@ h2的eth0与s1的eth2相连</p>
 <li>维护逻辑标签</li>
 </ul>
 <h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
-<img src="/2018/09/20/ovs-study-overview/ovs-arch.png" class title="arch">
+<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class title="arch">
 <p>如上图</p>
 <ol>
 <li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
@@ -1891,7 +1891,7 @@ h2的eth0与s1的eth2相连</p>
 <li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
 </ol>
 <h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
-<img src="/2018/09/20/ovs-study-overview/ovs-module.png" class title="module">
+<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class title="module">
 <ol>
 <li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
 <li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
@@ -1913,7 +1913,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Hexo开启disqus评论系统</title>
-    <url>/2018/09/12/hexo-enable-disqus/</url>
+    <url>/2018/09/13/hexo-enable-disqus/</url>
     <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
 <p>相比Valine，disqus开启真的是太简单了</p>
 <a id="more"></a>
@@ -1923,12 +1923,12 @@ h2的eth0与s1的eth2相连</p>
 <ol>
 <li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
 </ol>
-<p><img src="/2018/09/12/hexo-enable-disqus/disqus_1.png" alt="Add Disqus To Site"></p>
+<p><img src="/2018/09/13/hexo-enable-disqus/disqus_1.png" alt="Add Disqus To Site"></p>
 <ol start="2">
 <li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
 </ol>
-<p><img src="/2018/09/12/hexo-enable-disqus/disqus2.png" alt="Install"></p>
-<p><img src="/2018/09/12/hexo-enable-disqus/disqus-shortname.png" alt="Shortname"></p>
+<p><img src="/2018/09/13/hexo-enable-disqus/disqus2.png" alt="Install"></p>
+<p><img src="/2018/09/13/hexo-enable-disqus/disqus-shortname.png" alt="Shortname"></p>
 <h3 id="配置hexo"><a class="markdownIt-Anchor" href="#配置hexo"></a> 配置Hexo</h3>
 <p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure>
@@ -1985,7 +1985,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Ubuntu在Openstack中启动密码注入不生效问题定位1</title>
-    <url>/2018/09/10/openstack-metadata/</url>
+    <url>/2018/09/11/openstack-metadata/</url>
     <content><![CDATA[<h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
 <p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
 <a id="more"></a>
@@ -2048,7 +2048,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>sqlalchemy连接docker的mysql问题记录</title>
-    <url>/2018/08/14/sqlalchemy-mysql-docker/</url>
+    <url>/2018/08/15/sqlalchemy-mysql-docker/</url>
     <content><![CDATA[<p>又开始鼓捣flask+mysql了 👶</p>
 <p>不成想，又一次踩了好多雷 😂</p>
 <p>有一种打怪升级的感觉</p>
@@ -2323,7 +2323,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Ubuntu16.04安装Open vSwitch</title>
-    <url>/2018/05/29/ovs-install/</url>
+    <url>/2018/05/30/ovs-install/</url>
     <content><![CDATA[<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
@@ -2407,7 +2407,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>gitbook+gitlab发布私有的图书仓库</title>
-    <url>/2018/05/10/gitbook-gitlab/</url>
+    <url>/2018/05/11/gitbook-gitlab/</url>
     <content><![CDATA[<p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
 <p>另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。</p>
 <a id="more"></a>
@@ -2491,7 +2491,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>python virtenv环境搭建</title>
-    <url>/2018/05/06/python-virtenv/</url>
+    <url>/2018/05/07/python-virtenv/</url>
     <content><![CDATA[<p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
 <p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
 <a id="more"></a>
@@ -2651,7 +2651,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>Docker中无密码apt安装mysql</title>
-    <url>/2018/03/29/docker-install-mysql-server-no-passwd/</url>
+    <url>/2018/03/30/docker-install-mysql-server-no-passwd/</url>
     <content><![CDATA[<h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
 <p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
 <a id="more"></a>
@@ -2991,7 +2991,7 @@ h2的eth0与s1的eth2相连</p>
   </entry>
   <entry>
     <title>在树莓派上部署nodejs</title>
-    <url>/2018/03/22/nodejs-setup-pi/</url>
+    <url>/2018/03/23/nodejs-setup-pi/</url>
     <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
 <a id="more"></a>
 <h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>

@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://www.isimble.com/2019/11/21/openstack-cross-host-vm-1/</loc>
+    <loc>http://www.isimble.com/2019/11/22/openstack-cross-host-vm-1/</loc>
     
-    <lastmod>2019-11-22T08:17:10.708Z</lastmod>
+    <lastmod>2019-11-22T08:21:32.185Z</lastmod>
     
   </url>
   
@@ -16,21 +16,21 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/11/20/openstack-env/</loc>
+    <loc>http://www.isimble.com/2019/11/21/openstack-env/</loc>
     
     <lastmod>2019-11-21T07:02:21.269Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/09/12/hexo-enable-disqus/</loc>
+    <loc>http://www.isimble.com/2018/09/13/hexo-enable-disqus/</loc>
     
     <lastmod>2019-11-18T14:11:01.042Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/01/14/cn_resources/</loc>
+    <loc>http://www.isimble.com/2019/01/15/cn_resources/</loc>
     
     <lastmod>2019-11-18T13:53:40.136Z</lastmod>
     
@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/08/15/linux-virtual-vm/</loc>
+    <loc>http://www.isimble.com/2019/08/16/linux-virtual-vm/</loc>
     
     <lastmod>2019-08-16T07:15:29.564Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/08/14/spain-visa/</loc>
+    <loc>http://www.isimble.com/2019/08/15/spain-visa/</loc>
     
     <lastmod>2019-08-15T01:34:57.170Z</lastmod>
     
@@ -79,14 +79,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/08/06/docker-ovs-basic/</loc>
+    <loc>http://www.isimble.com/2019/08/07/docker-ovs-basic/</loc>
     
     <lastmod>2019-08-07T07:09:31.967Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2019/07/18/k8s-env-prep/</loc>
+    <loc>http://www.isimble.com/2019/07/19/k8s-env-prep/</loc>
     
     <lastmod>2019-07-19T03:30:28.053Z</lastmod>
     
@@ -107,28 +107,28 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/11/14/dpdk-setup/</loc>
+    <loc>http://www.isimble.com/2018/11/15/dpdk-setup/</loc>
     
     <lastmod>2018-11-15T05:55:46.719Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/10/gitbook-gitlab/</loc>
+    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/06/python-virtenv/</loc>
+    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/29/docker-install-mysql-server-no-passwd/</loc>
+    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -163,14 +163,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/11/06/mininet-base/</loc>
+    <loc>http://www.isimble.com/2018/11/07/mininet-base/</loc>
     
     <lastmod>2018-11-07T03:09:12.588Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/09/20/ovs-study-overview/</loc>
+    <loc>http://www.isimble.com/2018/09/21/ovs-study-overview/</loc>
     
     <lastmod>2018-09-21T05:53:35.313Z</lastmod>
     
@@ -184,14 +184,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/09/10/openstack-metadata/</loc>
+    <loc>http://www.isimble.com/2018/09/11/openstack-metadata/</loc>
     
     <lastmod>2018-09-11T06:20:19.516Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/08/14/sqlalchemy-mysql-docker/</loc>
+    <loc>http://www.isimble.com/2018/08/15/sqlalchemy-mysql-docker/</loc>
     
     <lastmod>2018-08-15T03:46:05.443Z</lastmod>
     
@@ -212,7 +212,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/29/ovs-install/</loc>
+    <loc>http://www.isimble.com/2018/05/30/ovs-install/</loc>
     
     <lastmod>2018-05-30T06:19:38.000Z</lastmod>
     
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/22/nodejs-setup-pi/</loc>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
