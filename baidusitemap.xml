@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.isimble.com/2019/11/27/openstack-cross-host-vm-2/</loc>
+    <lastmod>2019-11-27</lastmod>
+  </url>  <url>
     <loc>http://www.isimble.com/2019/11/22/openstack-cross-host-vm-1/</loc>
     <lastmod>2019-11-22</lastmod>
   </url>  <url>
@@ -46,16 +49,16 @@
     <loc>http://www.isimble.com/2018/11/15/dpdk-setup/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
-    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
-    <lastmod>2018-11-15</lastmod>
-  </url>  <url>
-    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
-    <lastmod>2018-11-15</lastmod>
-  </url>  <url>
     <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
     <loc>http://www.isimble.com/2018/06/21/marp/</loc>
+    <lastmod>2018-11-15</lastmod>
+  </url>  <url>
+    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
+    <lastmod>2018-11-15</lastmod>
+  </url>  <url>
+    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
     <loc>http://www.isimble.com/2018/11/13/ovs-study2/</loc>
@@ -103,16 +106,16 @@
     <loc>http://www.isimble.com/2018/05/04/docker-pexpect/</loc>
     <lastmod>2018-05-04</lastmod>
   </url>  <url>
-    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
-    <lastmod>2018-03-30</lastmod>
-  </url>  <url>
-    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
-    <lastmod>2018-03-30</lastmod>
-  </url>  <url>
     <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
     <lastmod>2018-03-30</lastmod>
   </url>  <url>
+    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
+    <lastmod>2018-03-30</lastmod>
+  </url>  <url>
     <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
+    <lastmod>2018-03-30</lastmod>
+  </url>  <url>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
     <lastmod>2018-03-30</lastmod>
   </url>
 </urlset>

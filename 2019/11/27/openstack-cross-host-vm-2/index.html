@@ -46,18 +46,21 @@
   };
 </script>
 
-  <meta name="description" content="该系列用来记录本人使用Openstack的一些笔记和心得">
+  <meta name="description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Openstack学习笔记1">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;06&#x2F;28&#x2F;openstack-study1&#x2F;index.html">
+<meta property="og:title" content="Openstack学习 —— 跨主机虚拟机访问2">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="该系列用来记录本人使用Openstack的一些笔记和心得">
+<meta property="og:description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-06-28T10:00:04.000Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;create_vm_with_2node.png">
+<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;create_vm_with_2node_vxlan.png">
+<meta property="og:updated_time" content="2019-11-27T06:51:27.597Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;create_vm_with_2node.png">
 
-<link rel="canonical" href="http://www.isimble.com/2018/06/28/openstack-study1/">
+<link rel="canonical" href="http://www.isimble.com/2019/11/27/openstack-cross-host-vm-2/">
 
 
 <script id="page-configurations">
@@ -71,7 +74,7 @@
   };
 </script>
 
-  <title>Openstack学习笔记1 | Simble的小站</title>
+  <title>Openstack学习 —— 跨主机虚拟机访问2 | Simble的小站</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
     <script>
@@ -191,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/06/28/openstack-study1/">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2019/11/27/openstack-cross-host-vm-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -204,7 +207,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Openstack学习笔记1
+          Openstack学习 —— 跨主机虚拟机访问2
         </h1>
 
         <div class="post-meta">
@@ -215,7 +218,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2018-06-28 09:57:29 / 修改时间：18:00:04" itemprop="dateCreated datePublished" datetime="2018-06-28T09:57:29+08:00">2018-06-28</time>
+              <time title="创建时间：2019-11-27 14:47:24 / 修改时间：14:51:27" itemprop="dateCreated datePublished" datetime="2019-11-27T14:47:24+08:00">2019-11-27</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -238,8 +241,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/06/28/openstack-study1/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/28/openstack-study1/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2019/11/27/openstack-cross-host-vm-2/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/27/openstack-cross-host-vm-2/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -249,14 +252,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>4.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -268,103 +271,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
+        <p>上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。</p>
+<p>本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。</p>
 <a id="more"></a>
-<h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
-<h3 id="服务说明"><a class="markdownIt-Anchor" href="#服务说明"></a> 服务说明</h3>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
+<h3 id="br-tun"><a class="markdownIt-Anchor" href="#br-tun"></a> br-tun</h3>
+<p><strong>在前面收集信息时，你或许已经关注到了linux bridge和ovs中还有其他变化，那么，来看看 <code>br-tun</code></strong></p>
 <ul>
-<li>keystone - 必选</li>
+<li>ovs</li>
 </ul>
-<p>认证服务，是其他所有服务的基础</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<p>当环境搭建完毕后，并不会立即创建这个接口，而是当创建了虚拟机后，会创建VXLAN的VTEP接口。</p>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node_vxlan.png" alt="create_vm_with_2node_vxlan"></p>
+<h3 id="流表"><a class="markdownIt-Anchor" href="#流表"></a> 流表</h3>
+<h4 id="node0"><a class="markdownIt-Anchor" href="#node0"></a> node0</h4>
 <ul>
-<li>glance - 必选</li>
+<li><strong>br-int</strong></li>
 </ul>
-<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
-<ul>
-<li>nova - 必选</li>
-</ul>
-<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
-<ul>
-<li>neutron - 必选</li>
-</ul>
-<p>网络服务</p>
-<ul>
-<li>horizon - 可选（推荐选择）</li>
-</ul>
-<p>管理界面，图形化管理界面，方便使用</p>
-<ul>
-<li>cinder - 可选</li>
-</ul>
-<p>块存储服务，用来创建虚拟机的磁盘</p>
-<h3 id="一些理解"><a class="markdownIt-Anchor" href="#一些理解"></a> 一些理解</h3>
-<p>openstack可以理解为插件型的，灵活就体现于此。</p>
-<ul>
-<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
-<li>同样，可以在任意一个节点上起块存储服务</li>
-</ul>
-<h3 id="关于网络"><a class="markdownIt-Anchor" href="#关于网络"></a> 关于网络</h3>
-<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
-<p>需要说明的是：</p>
-<ul>
-<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
-<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
-<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
-<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
-<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
-<li>在openstack的UI上看到的网口，都是代号</li>
-</ul>
-<h2 id="测试环境准备"><a class="markdownIt-Anchor" href="#测试环境准备"></a> 测试环境准备</h2>
-<h3 id="两台虚拟机当然也可以all-in-one"><a class="markdownIt-Anchor" href="#两台虚拟机当然也可以all-in-one"></a> 两台虚拟机（当然也可以all in one）</h3>
-<h4 id="硬件准备"><a class="markdownIt-Anchor" href="#硬件准备"></a> 硬件准备</h4>
-<p>每台虚拟机应包含</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure>
+<p><strong>table 0</strong></p>
 <ol>
-<li>虚机可上网</li>
-<li>另外包含一张额外的网卡</li>
-<li>内存尽量多（8G）</li>
-<li>CPU尽量多（8 cpus）</li>
-<li>controller硬盘稍微大一些</li>
+<li>从<code>qvo02407769-97</code>送入的icmp，arp报文，送往table 24</li>
+<li>从<code>qvo02407769-97</code>送入其他报文送往table 25</li>
+<li>其他报文送table 60</li>
 </ol>
-<h4 id="基本准备"><a class="markdownIt-Anchor" href="#基本准备"></a> 基本准备</h4>
+<p><strong>table 24</strong></p>
+<ol>
+<li>从<code>qvo02407769-97</code>送入的报文，送往table 60。<code>fe80::f816:3eff:fead:669e</code>是vm-1的IPv6地址</li>
+<li>从<code>qvo02407769-97</code>送入的arp报文，arp源地址为<code>200.0.0.219</code>即vm-1来的报文，送往table 25</li>
+</ol>
+<p><strong>table 25</strong></p>
+<p>从<code>qvo02407769-97</code>送入的报文，源mac为<code>fa:16:3e:ad:66:9e</code>即vm-1来的报文，送往table 60</p>
+<p><strong>table 60</strong></p>
+<p>正常转发</p>
 <blockquote>
-<p>Ubuntu16.04 + Q版本（Queens）</p>
+<p>综上，从vm-1来的报文以及其他报文，都将正常在<code>br-int</code>上转发</p>
 </blockquote>
-<h5 id="配置ntp"><a class="markdownIt-Anchor" href="#配置ntp"></a> 配置NTP</h5>
-<h5 id="安装openstack基础包"><a class="markdownIt-Anchor" href="#安装openstack基础包"></a> 安装Openstack基础包</h5>
 <ul>
-<li>准备仓库</li>
+<li><strong>br-tun</strong></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>安装openstack包</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure>
-<h4 id="controller"><a class="markdownIt-Anchor" href="#controller"></a> controller</h4>
-<p>controller上需要安装的东西最多</p>
-<h5 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h5>
-<ul>
-<li>数据库: MariaDB</li>
-<li>消息队列: RabbitMQ</li>
-<li>服务及身份认证: Memcached</li>
-<li>etcd</li>
-</ul>
-<h5 id="openstack服务"><a class="markdownIt-Anchor" href="#openstack服务"></a> openstack服务</h5>
-<ul>
-<li>认证服务: keystone</li>
-<li>镜像服务: glance</li>
-<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
-<li>网络服务（网络管理，调度等服务）: neutron</li>
-<li>管理界面: horizon</li>
-<li>块存储服务（可选）: cinder</li>
-</ul>
-<h4 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> compute</h4>
-<p>计算节点相对来说简单了很多</p>
-<h5 id="openstack服务-2"><a class="markdownIt-Anchor" href="#openstack服务-2"></a> openstack服务</h5>
-<ul>
-<li>计算服务（专指计算服务）: nova-compute</li>
-<li>网络服务: neutron</li>
-</ul>
-<p><strong>可在controller上同样起计算服务</strong></p>
-<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure>
+<p><strong>table 0</strong></p>
+<ol>
+<li>从<code>br-int</code>来的报文（即需要从本节点送出的报文），送到table 2</li>
+<li>从<code>vxlan-ac0a000b</code>送来的报文（即从其他节点送到node 0的），送到table 4</li>
+</ol>
+<p><strong>table 2</strong>： 将要送出本节点的报文</p>
+<ol>
+<li>送往table 20</li>
+<li>送往table 22</li>
+</ol>
+<p><strong>table 4</strong>： 从其他节点送到本节点的报文</p>
+<p>tun_id为15（0xf）的报文，打上vlan标签1，送往table 10</p>
+<blockquote>
+<p>即从vxlan的tunnel出来的报文，如果tunnel id是15，则报文设置vlan为1</p>
+<p>而<code>qvo02407769-97</code>（与vm-1相连）和<code>tap17a89323-fd</code>（DHCP的tap接口）的vlan tag正是<code>1</code></p>
+</blockquote>
+<p><strong>table 10</strong></p>
+<blockquote>
+<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0…11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:“patch-int”</p>
+</blockquote>
+<p>这个action是如此的复杂，但不看<code>learn()</code>中的内容，报文最终被送往了<code>br-int</code></p>
+<blockquote>
+<p>learn则是在table20中增加对于回程报文的转发规则</p>
+</blockquote>
+<p><strong>table 20</strong></p>
+<p>送往table 22</p>
+<p><strong>table 22</strong></p>
+<p>VLAN tag为1的报文，去掉VLAN，设置tun_id为15（0xf）后，送往<code>vxlan-ac0a000b</code></p>
+<blockquote>
+<p>综上：</p>
+<ol>
+<li>从vm-1送来的报文，携带VLAN tag为1，去掉VLAN tag，设置tun_id为15，从vxlan接口送出</li>
+<li>从其他节点送来的报文，如果tun_id为15，设置VLAN tag为1，送往br-int</li>
+</ol>
+</blockquote>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>完整的分析了node0上的流表，node1上的流表内容基本相似，就不再展开。</p>
+<p>至此，跨节点的虚拟机相互访问的实验及分析正式完结。你会发现</p>
+<ol>
+<li>每一个port在连接到虚拟机的时候，都创建了一个网桥</li>
+<li>每个虚拟机连在br-int上的接口，都按照subnet分配了一个VLAN tag，且每个节点的并不相同</li>
+<li>当虚拟机的报文要送出/进入当前节点时，会有VLAN tag和VXLAN的tun_id相互转换</li>
+</ol>
+<p>现在，思考一下：</p>
+<ol>
+<li>node1上的vm-1是如何通过DHCP获取IP地址的？</li>
+<li>为什么虚拟机不直接连在br-int上，而是要通过一个linux bridge连接到br-int上呢？</li>
+</ol>
 
     </div>
 
@@ -402,17 +396,14 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2018/06/21/marp/" rel="next" title="使用markdown写PPT">
-                  <i class="fa fa-chevron-left"></i> 使用markdown写PPT
+                <a href="/2019/11/22/openstack-cross-host-vm-1/" rel="next" title="Openstack学习 —— 跨主机虚拟机访问1">
+                  <i class="fa fa-chevron-left"></i> Openstack学习 —— 跨主机虚拟机访问1
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2018/07/30/us-visa/" rel="prev" title="美签记录">
-                  美签记录 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -458,7 +449,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#openstack一些理解"><span class="nav-number">1.</span> <span class="nav-text"> Openstack一些理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#服务说明"><span class="nav-number">1.1.</span> <span class="nav-text"> 服务说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些理解"><span class="nav-number">1.2.</span> <span class="nav-text"> 一些理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于网络"><span class="nav-number">1.3.</span> <span class="nav-text"> 关于网络</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试环境准备"><span class="nav-number">2.</span> <span class="nav-text"> 测试环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#两台虚拟机当然也可以all-in-one"><span class="nav-number">2.1.</span> <span class="nav-text"> 两台虚拟机（当然也可以all in one）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#硬件准备"><span class="nav-number">2.1.1.</span> <span class="nav-text"> 硬件准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本准备"><span class="nav-number">2.1.2.</span> <span class="nav-text"> 基本准备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置ntp"><span class="nav-number">2.1.2.1.</span> <span class="nav-text"> 配置NTP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装openstack基础包"><span class="nav-number">2.1.2.2.</span> <span class="nav-text"> 安装Openstack基础包</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#controller"><span class="nav-number">2.1.3.</span> <span class="nav-text"> controller</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#依赖"><span class="nav-number">2.1.3.1.</span> <span class="nav-text"> 依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#openstack服务"><span class="nav-number">2.1.3.2.</span> <span class="nav-text"> openstack服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compute"><span class="nav-number">2.1.4.</span> <span class="nav-text"> compute</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#openstack服务-2"><span class="nav-number">2.1.4.1.</span> <span class="nav-text"> openstack服务</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#br-tun"><span class="nav-number">1.</span> <span class="nav-text"> br-tun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流表"><span class="nav-number">2.</span> <span class="nav-text"> 流表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node0"><span class="nav-number">2.1.</span> <span class="nav-text"> node0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -633,9 +624,9 @@
       DISQUS.reset({
         reload: true,
         config: {page: {
-            url: "http://www.isimble.com/2018/06/28/openstack-study1/",
-            identifier: "2018/06/28/openstack-study1/",
-            title: "Openstack学习笔记1"
+            url: "http://www.isimble.com/2019/11/27/openstack-cross-host-vm-2/",
+            identifier: "2019/11/27/openstack-cross-host-vm-2/",
+            title: "Openstack学习 —— 跨主机虚拟机访问2"
           }
         }
       });
