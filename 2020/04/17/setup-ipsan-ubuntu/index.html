@@ -54,7 +54,7 @@
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="参考文章 IPSAN的定义就不讲了，主要讲一下搭建环境。IPSAN主要包括两种node：  initiator：可以理解为客户端 target：可以理解为服务器端  实际上也不存在客户端服务器端的理解。target端主要是把磁盘share出来给其他设备用的。initiator相当于用来映射target端的磁盘到本地的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-04-17T09:03:09.369Z">
+<meta property="og:updated_time" content="2020-04-17T09:06:22.502Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://www.isimble.com/2020/04/17/setup-ipsan-ubuntu/">
@@ -215,7 +215,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-04-17 17:00:27 / 修改时间：17:03:09" itemprop="dateCreated datePublished" datetime="2020-04-17T17:00:27+08:00">2020-04-17</time>
+              <time title="创建时间：2020-04-17 17:00:27 / 修改时间：17:06:22" itemprop="dateCreated datePublished" datetime="2020-04-17T17:00:27+08:00">2020-04-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -320,10 +320,10 @@
 <li>修改配置文件</li>
 </ul>
 <p>探测完成后，将会在<code>/etc/iscsi/nodes/</code>目录和<code>/etc/iscsi/send_targets/</code>目录下看到对应的target</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l /etc/iscsi/nodes/abc.id123.testsite.xyz\:lun1/192.168.0.100\,3260\,1/ </span><br><span class="line">total 4</span><br><span class="line">-rw------- 1 root root 1840 Nov  8 13:17 default</span><br><span class="line"></span><br><span class="line">$ ls -l /etc/iscsi/send_targets/192.168.0.100,3260/</span><br><span class="line">total 8</span><br><span class="line">lrwxrwxrwx 1 root root  66 Nov  8 13:17 iqn.2019-11.example.com:lun1,192.168.0.103,3260,1,default -&gt; /etc/iscsi/nodes/iqn.2019-11.example.com:lun1/192.168.0.103,3260,1</span><br><span class="line">-rw------- 1 root root 547 Nov  8 13:17 st_config</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l /etc/iscsi/nodes/abc.id123.testsite.xyz\:lun1/192.168.0.100\,3260\,1/ </span><br><span class="line">total 4</span><br><span class="line">-rw------- 1 root root 1840 Nov  8 13:17 default</span><br><span class="line"></span><br><span class="line">$ ls -l /etc/iscsi/send_targets/192.168.0.100,3260/</span><br><span class="line">total 8</span><br><span class="line">lrwxrwxrwx 1 root root  66 Nov  8 13:17 abc.id123.testsite.xyz:lun1,192.168.0.100,3260,1,default -&gt; /etc/iscsi/nodes/abc.id123.testsite.xyz:lun1/192.168.0.100,3260,1</span><br><span class="line">-rw------- 1 root root 547 Nov  8 13:17 st_config</span><br></pre></td></tr></table></figure>
 <p>修改default文件，增加CHAP的配置（认证相关）</p>
 <p><code>vim /etc/iscsi/nodes/abc.id123.testsite.xyz\:lun1/192.168.0.100\,3260\,1/default</code>，新增如下内容</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">node.session.auth.authmethod = CHAP  </span><br><span class="line">node.session.auth.username = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password = password          </span><br><span class="line">node.session.auth.username_in = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password_in = password         </span><br><span class="line">node.startup = automatic</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">node.session.auth.authmethod = CHAP</span><br><span class="line">node.session.auth.username = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password = password</span><br><span class="line">node.session.auth.username_in = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password_in = password</span><br><span class="line">node.startup = automatic</span><br></pre></td></tr></table></figure>
 <h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
 <ul>
 <li>重启服务</li>
