@@ -275,101 +275,14 @@
       
           <p>本文主要介绍Openstack的安全组在规则及其在ovs的流表中的体现。</p>
 <p>实验基于openstack的stein版本，devstack安装，采用了ovs作为虚拟交换机。描述Openflow在Openstack安全组中的应用分析。实验环境以Ubuntu 18.04.3 LTS搭建</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>Openstack安全组</h2>
-<p><strong>1. 安全组</strong></p>
-<p>在Openstack中，安全组是做哦那个在neutron port上的一组策略，这些策略可以理解为一些防火墙的规则集合。</p>
-<p><strong>2. 安全组的实现</strong></p>
-<p>Openstack中的安全组的实现有以下集中：</p>
-<ul>
-<li>ovs + iptables + connection track</li>
-<li>ovs + openflow + connection track</li>
-<li>linuxbridge + iptables + connection track</li>
-</ul>
-<p>由于本文实验环境基于devstack（stein），因此，仅基于第二种情况进行说明</p>
-<h2>实验准备</h2>
-<p><strong>1. 创建项目及用户（非必须）</strong></p>
-<p>创建一个test的project和user</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ openstack project create --domain default --description <span class="string">"Security Group Test Project"</span> <span class="built_in">test</span></span><br><span class="line">$ openstack user create --domain default --password-prompt <span class="built_in">test</span></span><br><span class="line">$ openstack role add --project <span class="built_in">test</span> --user <span class="built_in">test</span> admin</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 查看test租户的默认安全组下的规则</strong></p>
-<p>以test用户登陆openstack的dashboard，在<strong>网络</strong> &gt; <strong>安全组</strong> 下找到default安全组，查看对应的规则</p>
-<p><img src="/2019/08/08/openstack-security-group-ovs-1/rule_list.png" class title="Rule List"></p>
-<h2>安全组实验</h2>
-<blockquote>
-<p>需要事先创建一个虚拟机示例，默认关联default的安全组</p>
-</blockquote>
-<p><strong>0. 获取一些信息</strong></p>
-<ul>
-<li>端口ID</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+-----------------------------------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                                                  | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+-----------------------------------------------------------------------------------------------------+--------+</span><br><span class="line">| 41ca5359-2edc-4d74-8321-5883ecb618c5 |      | fa:16:3e:fa:fd:13 | ip_address=<span class="string">'192.168.233.49'</span>, subnet_id=<span class="string">'ef4d1362-24b5-4d01-8748-ffe9cc2ca2e5'</span>                       | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+-----------------------------------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure></p>
-<p>创建了一个ID为<code>41ca5359-2edc-4d74-8321-5883ecb618c5</code>的port，分配IP地址为<code>192.168.233.49</code></p>
-<ul>
-<li>接口名称</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        Controller <span class="string">"tcp:127.0.0.1:6633"</span></span><br><span class="line">            is_connected: <span class="literal">true</span></span><br><span class="line">            ...</span><br><span class="line">            </span><br><span class="line">        Port <span class="string">"tap41ca5359-2e"</span></span><br><span class="line">            tag: 3</span><br><span class="line">            Interface <span class="string">"tap41ca5359-2e"</span></span><br><span class="line">            </span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
-<p>对应的创建了一个<code>tap41ca5359-2e</code>的接口</p>
-<p><strong>1. 创建一条ingress的规则</strong></p>
-<p>通过Dashboard在default的安全组下创建一条ingress的规则，remote-ip为199.0.0.0/24，协议为tcp，目的端口为80</p>
-<ul>
-<li>查看br-int流表</li>
-</ul>
-<blockquote>
-<p>br-int下的流表非常的多，可以使用过滤规则进行匹配</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int | grep 199.0.0.0</span><br><span class="line"> cookie=0xd9177c011dbdf439, duration=98.493s, table=82, n_packets=0, n_bytes=0, idle_age=98, priority=77,ct_state=+est-rel-rpl,tcp,reg5=0xe,nw_src=199.0.0.0/24,tp_dst=80 actions=output:14</span><br><span class="line"> cookie=0xd9177c011dbdf439, duration=98.493s, table=82, n_packets=0, n_bytes=0, idle_age=98, priority=77,ct_state=+new-est,tcp,reg5=0xe,nw_src=199.0.0.0/24,tp_dst=80 actions=ct(commit,zone=NXM_NX_REG6[0..15]),output:14,resubmit(,92)</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，共新增了两条流表</p>
-<p><strong>3. 创建一条egress的规则</strong></p>
-<blockquote>
-<p>同样以remote-ip为199.0.0.0/24，协议为tcp，目的端口为80的参数创建egress规则</p>
-</blockquote>
-<p>查看流表看到新增了如下两条：</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=19.261s, table=72, n_packets=0, n_bytes=0, idle_age=19, priority=77,ct_state=+est-rel-rpl,tcp,reg5=0xe,nw_dst=199.0.0.0/24,tp_dst=80 actions=resubmit(,73)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=19.261s, table=72, n_packets=0, n_bytes=0, idle_age=19, priority=77,ct_state=+new-est,tcp,reg5=0xe,nw_dst=199.0.0.0/24,tp_dst=80 actions=resubmit(,73)</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 流表解读</strong></p>
-<p><strong>4.1 ingress</strong></p>
-<ul>
-<li>stpe2中的流表，分别指定了<code>tcp</code>协议，<code>nw_src</code>为<code>199.0.0.0/24</code>，<code>tp_dst</code>为<code>80</code></li>
-<li>step2的action，第一条为直接从14的接口送出，第二条为重定向到了92</li>
-</ul>
-<p>先来看看ID为14的接口是哪个？不出所料，自然是<code>tap41ca5359-2e</code>的接口</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl show br-int</span><br><span class="line">...</span><br><span class="line"> 14(tap41ca5359-2e): addr:fe:16:3e:fa:fd:13</span><br><span class="line">     config:     0</span><br><span class="line">     state:      0</span><br><span class="line">     current:    10MB-FD COPPER</span><br><span class="line">     speed: 10 Mbps now, 0 Mbps max</span><br><span class="line">     </span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>table 92</li>
-</ul>
-<blockquote>
-<p>丢弃</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.551s, table=92, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br></pre></td></tr></table></figure></p>
-<p><strong>以上可看到，源地址为<code>199.0.0.0/24</code>，目的端口为<code>80</code>的<code>TCP</code>报文大多数情况将送往<code>tap41ca5359-2e</code>的接口</strong></p>
-<p><strong>4.2 egress</strong></p>
-<ul>
-<li>step3中的流表，则分别指定了<code>tcp</code>协议，<code>nw_dst</code>为<code>199.0.0.0/24</code>，<code>tp_dst</code>为<code>80</code></li>
-<li>step3的action则送往了73的table，而73则非常复杂，又涉及到了81，91，94的table</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=73, n_packets=10, n_bytes=1345, priority=100,reg6=0x3,dl_dst=fa:16:3e:fa:fd:13 actions=load:0xe-&gt;NXM_NX_REG5[],resubmit(,81)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=73, n_packets=5, n_bytes=438, priority=90,ct_state=+new-est,ip,reg5=0xe actions=ct(commit,zone=NXM_NX_REG6[0..15]),resubmit(,91)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=73, n_packets=0, n_bytes=0, priority=90,ct_state=+new-est,ipv6,reg5=0xe actions=ct(commit,zone=NXM_NX_REG6[0..15]),resubmit(,91)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197929.613s, table=73, n_packets=0, n_bytes=0, priority=80,reg5=0x6 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197929.613s, table=73, n_packets=0, n_bytes=0, priority=80,reg5=0x3 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197929.613s, table=73, n_packets=0, n_bytes=0, priority=80,reg5=0x4 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197929.613s, table=73, n_packets=0, n_bytes=0, priority=80,reg5=0x7 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197929.613s, table=73, n_packets=0, n_bytes=0, priority=80,reg5=0x5 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197849.617s, table=73, n_packets=5, n_bytes=446, priority=80,reg5=0x9 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197849.617s, table=73, n_packets=2, n_bytes=180, priority=80,reg5=0x8 actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197817.084s, table=73, n_packets=11, n_bytes=778, priority=80,reg5=0xa actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197815.612s, table=73, n_packets=49080, n_bytes=5791412, priority=80,reg5=0xb actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197815.612s, table=73, n_packets=8, n_bytes=648, priority=80,reg5=0xc actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=73, n_packets=6, n_bytes=1078, priority=80,reg5=0xe actions=resubmit(,94)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.616s, table=73, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>table 91</li>
-</ul>
-<blockquote>
-<p>重定向到了94</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.561s, table=91, n_packets=10, n_bytes=876, priority=1 actions=resubmit(,94)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>table 94</li>
-</ul>
-<blockquote>
-<p>正常转发</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.572s, table=94, n_packets=49280, n_bytes=5803120, priority=1 actions=NORMAL</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>table 81</li>
-</ul>
-<blockquote>
-<p>送往<code>tap41ca5359-2e</code>的接口</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=3, n_bytes=126, priority=100,arp,reg5=0xe actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=130 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=135 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=100,icmp6,reg5=0xe,icmp_type=136 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=2, n_bytes=729, priority=95,udp,reg5=0xe,tp_src=67,tp_dst=68 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=95,udp6,reg5=0xe,tp_src=547,tp_dst=546 actions=output:<span class="string">"tap41ca5359-2e"</span></span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=5, n_bytes=490, priority=90,ct_state=-trk,ip,reg5=0xe actions=ct(table=82,zone=NXM_NX_REG6[0..15])</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=90,ct_state=-trk,ipv6,reg5=0xe actions=ct(table=82,zone=NXM_NX_REG6[0..15])</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=1305.051s, table=81, n_packets=0, n_bytes=0, priority=80,ct_state=+trk,reg5=0xe actions=resubmit(,82)</span><br><span class="line">cookie=0xd9177c011dbdf439, duration=3197934.606s, table=81, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br></pre></td></tr></table></figure></p>
-<p><strong>由上可看到，送往<code>199.0.0.0/24</code>，目的端口为<code>80</code>的<code>TCP</code>报文大多数情况将正常转发出去</strong></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/08/openstack-security-group-ovs-1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -453,7 +366,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.4k</span>
+              <span>7.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -474,114 +387,14 @@
       
           <p>Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。</p>
 <p>本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>环境准备</h2>
-<blockquote>
-<p>注：本实验基于Ubuntu16.04</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ apt install uml-utilities</span><br><span class="line">$ apt install bridge-utils</span><br></pre></td></tr></table></figure></p>
-<h2>tap设备</h2>
-<blockquote>
-<p>Linux的tun/tap驱动实现了虚拟网卡的功能，tun表示虚拟的是点对点设备，tap表示虚拟的是以太网设备</p>
-<p>tap位于网络OSI模型的二层（数据链路层），tun位于网络的三层。</p>
-</blockquote>
-<p><strong>1. 创建tap</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ tunctl -t tap_test</span><br><span class="line">$ ifconfig tap_test 192.168.100.1/24</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 创建namespace</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns add ns_test</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 迁移网口到namespace</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ip link <span class="built_in">set</span> tap_test netns ns_test</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>迁移后，对应的ip会没有</p>
-</blockquote>
-<p><strong>4. 进入namespace并查看接口信息</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns_test /bin/bash</span><br><span class="line">$ ifconfig tap_test 192.168.50.1/24</span><br><span class="line">$ ifconfig</span><br><span class="line">tap_test  Link encap:Ethernet  HWaddr 76:71:70:f2:ac:f6</span><br><span class="line">          inet addr:192.168.50.1  Bcast:192.168.50.255  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure></p>
-<h2>veth pair</h2>
-<blockquote>
-<p>Veth pair是一对虚拟网卡，从一个veth网卡发出的数据包可以直接到达它的peer veth。相当于两个接口之间接着一根网线</p>
-</blockquote>
-<p><strong>1. 创建两个ns</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 创建veth pair</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap2</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 迁移网口到namespace</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 分别绑定IP地址</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig tap1 192.168.40.1/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig tap2 192.168.40.2/24</span><br></pre></td></tr></table></figure></p>
-<p><strong>5. 测试连通性</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ping 192.168.40.2</span><br><span class="line">PING 192.168.40.2 (192.168.40.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.40.2: icmp_seq=1 ttl=64 time=0.096 ms</span><br><span class="line">64 bytes from 192.168.40.2: icmp_seq=2 ttl=64 time=0.049 ms</span><br></pre></td></tr></table></figure></p>
-<h2>bridge</h2>
-<blockquote>
-<p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
-</blockquote>
-<p>下面的实验模拟4个namespace中的接口通过bridge互通</p>
-<p><img src="/2019/08/07/linux-virtual-network-basic/bridge.jpg" class title="Rule List"></p>
-<p><strong>1. 创建veth pair</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip link add tap3 <span class="built_in">type</span> veth peer name tap3_peer</span><br><span class="line">$ ip link add tap4 <span class="built_in">type</span> veth peer name tap4_peer</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 创建namespace并迁移tap接口</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip netns add ns3</span><br><span class="line">$ ip netns add ns4</span><br><span class="line"><span class="comment"># 迁移tap接口</span></span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap3 netns ns3</span><br><span class="line">$ ip link <span class="built_in">set</span> tap4 netns ns4</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 创建bridge</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brctl addbr br1</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 将对应的tap添加到bridge中</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brctl addif br1 tap1_peer</span><br><span class="line">$ brctl addif br1 tap2_peer</span><br><span class="line">$ brctl addif br1 tap3_peer</span><br><span class="line">$ brctl addif br1 tap4_peer</span><br></pre></td></tr></table></figure></p>
-<p><strong>5. 配置IP地址</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig tap1 192.168.50.1/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig tap2 192.168.50.2/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns3 ifconfig tap3 192.168.50.3/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns4 ifconfig tap4 192.168.50.4/24</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注： 此时是无法相互访问</p>
-</blockquote>
-<p><strong>6. 设置网桥及对应接口状态为up</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig br1 up</span><br><span class="line">$ ifconfig tap1_peer up</span><br><span class="line">$ ifconfig tap2_peer up</span><br><span class="line">$ ifconfig tap3_peer up</span><br><span class="line">$ ifconfig tap4_peer up</span><br></pre></td></tr></table></figure></p>
-<p><strong>7. 测试连通性</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns4 ping 192.168.50.1 -c 1</span><br><span class="line">PING 192.168.50.1 (192.168.50.1) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.50.1: icmp_seq=1 ttl=64 time=0.095 ms</span><br><span class="line"></span><br><span class="line">--- 192.168.50.1 ping statistics ---</span><br><span class="line">1 packets transmitted, 1 received, 0% packet loss, time 0ms</span><br><span class="line">rtt min/avg/max/mdev = 0.095/0.095/0.095/0.000 ms</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns4 ping 192.168.50.2 -c 1</span><br><span class="line">PING 192.168.50.2 (192.168.50.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.50.2: icmp_seq=1 ttl=64 time=0.106 ms</span><br><span class="line"></span><br><span class="line">--- 192.168.50.2 ping statistics ---</span><br><span class="line">1 packets transmitted, 1 received, 0% packet loss, time 0ms</span><br><span class="line">rtt min/avg/max/mdev = 0.106/0.106/0.106/0.000 ms</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h2>router</h2>
-<blockquote>
-<p>注：Linux默认不开启转发功能，实验前需要先打开</p>
-<p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
-<p>临时修改： <code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
-</blockquote>
-<p><img src="/2019/08/07/linux-virtual-network-basic/router.jpg" class title="Rule List"></p>
-<p><strong>1. 创建veth pair</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap5 <span class="built_in">type</span> veth peer name tap5_peer</span><br><span class="line">$ ip link add tap6 <span class="built_in">type</span> veth peer name tap6_peer</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 创建namespace并迁移tap接口</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns add ns5</span><br><span class="line">$ ip netns add ns6</span><br><span class="line">$ ip link <span class="built_in">set</span> tap5 netns ns5</span><br><span class="line">$ ip link <span class="built_in">set</span> tap6 netns ns6</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 配置IP地址</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig tap5_peer 192.168.100.1/24</span><br><span class="line">$ ifconfig tap6_peer 192.168.200.1/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns5 ifconfig tap5 192.168.100.2/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns6 ifconfig tap6 192.168.200.2/24</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 为namespace配置路由</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns5 route add -net 192.168.200.0/24 gw 192.168.100.1</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns6 route add -net 192.168.100.0/24 gw 192.168.200.1</span><br></pre></td></tr></table></figure></p>
-<p><strong>5. 测试</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns5 ping 192.168.200.2</span><br><span class="line">PING 192.168.200.2 (192.168.200.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.200.2: icmp_seq=1 ttl=63 time=0.077 ms</span><br><span class="line">64 bytes from 192.168.200.2: icmp_seq=2 ttl=63 time=0.087 ms</span><br></pre></td></tr></table></figure></p>
-<h2>tun</h2>
-<blockquote>
-<p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
-<p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
-</blockquote>
-<p><img src="/2019/08/07/linux-virtual-network-basic/tunnel.jpg" class title="Rule List"></p>
-<p>忽略上图中的tun1和tun2后，整个topo与router中的一样。那么先按照<a href="#router">router</a>章节创建两个ns及配置</p>
-<p><strong>1. 创建veth pair并分别迁移到对应的namespace</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure></p>
-<p><strong>2. 配置IP和路由</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig tap1_peer 192.168.100.1/24</span><br><span class="line">$ ifconfig tap2_peer 192.168.200.1/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig tap1 192.168.100.2/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig tap2 192.168.200.2/24</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns1 route add -net 192.168.200.0/24 gw 192.168.100.1</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 route add -net 192.168.100.0/24 gw 192.168.200.1</span><br></pre></td></tr></table></figure></p>
-<p><strong>3. 在ns1中创建tun1</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ip tunnel add tun1 mode ipip remote 192.168.200.2 <span class="built_in">local</span> 192.168.100.2 ttl 255</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ip addr add 192.168.50.10 peer 192.168.60.10 dev tun1</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig tun1 up</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ifconfig</span><br><span class="line">tap1      Link encap:Ethernet  HWaddr 46:a0:97:02:8c:07</span><br><span class="line">          inet addr:192.168.100.2  Bcast:192.168.100.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::44a0:97ff:fe02:8c07/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:12 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:12 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:928 (928.0 B)  TX bytes:928 (928.0 B)</span><br><span class="line"></span><br><span class="line">tun1      Link encap:IPIP Tunnel  HWaddr</span><br><span class="line">          inet addr:192.168.50.10  P-t-P:192.168.60.10  Mask:255.255.255.255</span><br><span class="line">          UP POINTOPOINT RUNNING NOARP  MTU:1480  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure></p>
-<p><strong>4. 在ns2中创建tun2</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ip tunnel add tun2 mode ipip remote 192.168.100.2 <span class="built_in">local</span> 192.168.200.2 ttl 255</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ip addr add 192.168.60.10 peer 192.168.50.10 dev tun2</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig tun2 up</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 ifconfig</span><br><span class="line">tap2      Link encap:Ethernet  HWaddr aa:2e:e9:18:94:95</span><br><span class="line">          inet addr:192.168.200.2  Bcast:192.168.200.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::a82e:e9ff:fe18:9495/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:12 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:12 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:928 (928.0 B)  TX bytes:928 (928.0 B)</span><br><span class="line"></span><br><span class="line">tun2      Link encap:IPIP Tunnel  HWaddr</span><br><span class="line">          inet addr:192.168.60.10  P-t-P:192.168.50.10  Mask:255.255.255.255</span><br><span class="line">          UP POINTOPOINT RUNNING NOARP  MTU:1480  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure></p>
-<p><strong>5. 测试tun的连通性</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 ping 192.168.60.10</span><br><span class="line">PING 192.168.60.10 (192.168.60.10) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.60.10: icmp_seq=1 ttl=64 time=0.333 ms</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p><strong>6. 抓包看看</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns2 tcpdump -i tap2</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on tap2, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">09:55:19.399964 IP 192.168.100.2 &gt; 192.168.200.2: IP 192.168.50.10 &gt; 192.168.60.10: ICMP <span class="built_in">echo</span> request, id 17197, seq 1, length 64 (ipip-proto-4)</span><br><span class="line">09:55:19.400004 IP 192.168.200.2 &gt; 192.168.100.2: IP 192.168.60.10 &gt; 192.168.50.10: ICMP <span class="built_in">echo</span> reply, id 17197, seq 1, length 64 (ipip-proto-4)</span><br><span class="line">...</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns2 tcpdump -i tun2</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on tun2, link-type RAW (Raw IP), capture size 262144 bytes</span><br><span class="line">09:55:57.735663 IP 192.168.50.10 &gt; 192.168.60.10: ICMP <span class="built_in">echo</span> request, id 17199, seq 1, length 64</span><br><span class="line">09:55:57.735685 IP 192.168.60.10 &gt; 192.168.50.10: ICMP <span class="built_in">echo</span> reply, id 17199, seq 1, length 64</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注：namespace中抓包可能不会立即打印在屏幕上</p>
-</blockquote>
-<p><strong>7. 查看路由表项</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> ns1 route -n</span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">192.168.60.10   0.0.0.0         255.255.255.255 UH    0      0        0 tun1</span><br><span class="line">192.168.100.0   0.0.0.0         255.255.255.0   U     0      0        0 tap1</span><br><span class="line">192.168.200.0   192.168.100.1   255.255.255.0   UG    0      0        0 tap1</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>可以看到，ns1中自动创建了一条指向192.168.60.10的路由，下一跳是tun1</p>
-</blockquote>
-<h2>小结</h2>
-<p>Openstack的neutron组件正是基于这些Linux虚拟网络功能实现了虚拟机之间的网络通道。</p>
-<p>其中，tap、tun、veth pair被用于bridge之间的连接、bridge与vm的连接、bridge与router之间的连接。</p>
-<p>而bridge提供二层转发功能，router提供三层转发功能。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/07/linux-virtual-network-basic/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -682,71 +495,14 @@
 <blockquote>
 <p>我整整折腾了一天，容器内以二层方式访问外部的IP始终不通。最后发现原来是网卡<strong>混杂模式</strong>惹的祸</p>
 </blockquote>
-<p>&lt;!-- more --&gt;</p>
-<h2>环境准备</h2>
-<h3>安装docker</h3>
-<p>在我的其他博文里有国内源安装docker的内容，原样照搬</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update &amp;&amp; sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">$ apt update</span><br><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure></p>
-<h3>安装ovs</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install openvswitch-switch</span><br></pre></td></tr></table></figure></p>
-<h3>安装ovs-docker</h3>
-<p>简单介绍一下，ovs-docker实际上是一个shell脚本，封装了ovs和docker的一些操作。</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/bin</span><br><span class="line">$ wget https://raw.githubusercontent.com/openvswitch/ovs/master/utilities/ovs-docker</span><br><span class="line">$ chmod a+rwx ovs-docker</span><br></pre></td></tr></table></figure></p>
-<h2>实验</h2>
-<p>两个docker容器经过ovs网桥进行访问及访问外部网络</p>
-<h3>容器互访</h3>
-<ul>
-<li>创建ovs网桥</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>创建两个容器</li>
-</ul>
-<blockquote>
-<p>注：实验使用了busybox的镜像，需要提前pull到本地</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull busybox</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --net=none --privileged=<span class="literal">true</span> --name=h1 busybox</span><br></pre></td></tr></table></figure></p>
-<p>在另外一个shell中执行</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it --net=none --privileged=<span class="literal">true</span> --name=h2 busybox</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>查看当前网络</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/ <span class="comment"># ifconfig</span></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure></p>
-<p>可以看到当前仅有一个loopback接口</p>
-<ul>
-<li>连接容器到网桥</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-docker add-port br0 eth0 h1</span><br><span class="line">$ ovs-docker add-port br0 eth0 h2</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>配置IP地址</li>
-</ul>
-<p>分别在两个docker容器中配置eth0的IP地址为同一个网段</p>
-<p><strong>h1</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig eth0 192.168.1.2</span><br></pre></td></tr></table></figure></p>
-<p><strong>h2</strong></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig eth0 192.168.1.3</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>测试连通性</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ping 192.168.1.3</span><br><span class="line">PING 192.168.1.2 (192.168.1.3): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.3: seq=0 ttl=64 time=1.065 ms</span><br><span class="line">64 bytes from 192.168.1.3: seq=1 ttl=64 time=0.139 ms</span><br></pre></td></tr></table></figure></p>
-<p><strong>没错</strong>，就是这么简单</p>
-<h3>访问外部网络</h3>
-<p>当我解决了<strong>混杂模式</strong>的问题之后，原来一切都是那么简单</p>
-<blockquote>
-<p>在外部另外一个PC上配置了192.168.1.1</p>
-</blockquote>
-<ul>
-<li>为br0增加物理接口</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 ens192</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>测试</li>
-</ul>
-<p>从容器中ping 192.168.1.1</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ping 192.168.1.1</span><br><span class="line">PING 192.168.1.1 (192.168.1.1): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.1: seq=30 ttl=64 time=1.319 ms</span><br><span class="line">64 bytes from 192.168.1.1: seq=31 ttl=64 time=0.461 ms</span><br></pre></td></tr></table></figure></p>
-<p><strong>大功告成</strong></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/08/07/docker-ovs-basic/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -824,7 +580,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -843,62 +599,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。
+          <p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br>
 在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>环境准备</h2>
-<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<a href="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md" target="_blank" rel="noopener">官方文档</a></p>
-<ol>
-<li>一台Linux虚拟机(Ubuntu16.04 server或CentOS 7 Minimal)</li>
-<li>内存需要2G</li>
-<li>硬盘30G</li>
-</ol>
-<h2>安装</h2>
-<h3>下载文件</h3>
-<p>github的说明文档提供的下载方式，我其实都疑惑了，因为有一个<code>${release}</code>，并非开箱即食。可以这样做</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/easzlab/kubeasz.git</span><br></pre></td></tr></table></figure>
-随后，进入kubeasz目录，使用工具脚本下载</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> kubeasz</span><br><span class="line">$ bash tools/easzup -D</span><br></pre></td></tr></table></figure></p>
-<h3>安装</h3>
-<p>下面就是按部就班的运行了，注意，你也不需要提前安装docker，所有的都是自动下载及安装的</p>
-<ol>
-<li>容器化运行 kubeasz</li>
-</ol>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bash tools/easzup -S</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>使用默认配置安装 aio 集群</li>
-</ol>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it kubeasz easzctl start-aio</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>如遇到失败，可再次尝试执行</p>
-</blockquote>
-<h3>验证安装</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl version                   <span class="comment"># 验证集群版本     </span></span><br><span class="line">$ kubectl get componentstatus       <span class="comment"># 验证 scheduler/controller-manager/etcd等组件状态</span></span><br><span class="line">$ kubectl get node                  <span class="comment"># 验证节点就绪 (Ready) 状态</span></span><br><span class="line">$ kubectl get pod --all-namespaces  <span class="comment"># 验证集群pod状态，默认已安装网络插件、coredns、metrics-server等</span></span><br><span class="line">$ kubectl get svc --all-namespaces  <span class="comment"># 验证集群服务状态</span></span><br></pre></td></tr></table></figure></p>
-<h3>登陆dashboard</h3>
-<p>安装完成后，dashboard已经准备好了，只需要获取登陆方式即可。</p>
-<p>按照官方文档的说法，登陆dashboard有好几种方式，选择一种即可。如token方式</p>
-<h4>获取port</h4>
-<p>按照以上方式安装完成后，默认的port应该是34980，所以，可以访问<code>https://当前IP:34980</code>，即可登陆dashboard</p>
-<p>也可以查看dashboard的端口开放状况</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc --all-namespaces</span><br><span class="line">NAMESPACE     NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE</span><br><span class="line">default       kubernetes                ClusterIP   10.68.0.1       &lt;none&gt;        443/TCP                       30m</span><br><span class="line">kube-system   heapster                  ClusterIP   10.68.91.148    &lt;none&gt;        80/TCP                        114s</span><br><span class="line">kube-system   kube-dns                  ClusterIP   10.68.0.2       &lt;none&gt;        53/UDP,53/TCP,9153/TCP        2m20s</span><br><span class="line">kube-system   kubernetes-dashboard      NodePort    10.68.23.76     &lt;none&gt;        443:34980/TCP                 118s</span><br><span class="line">kube-system   metrics-server            ClusterIP   10.68.29.183    &lt;none&gt;        443/TCP                       2m13s</span><br><span class="line">kube-system   traefik-ingress-service   NodePort    10.68.226.239   &lt;none&gt;        80:23456/TCP,8080:38858/TCP   105s</span><br></pre></td></tr></table></figure></p>
-<h4>获取token</h4>
-<ul>
-<li>查看如下文件是否存在</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ls /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>获取token</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">====</span><br><span class="line">ca.crt:     1350 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWRoNjYyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmZDdjZjc4Mi1hOTM0LTExZTktOTA1Zi0wMDBjMjlhMzc1YmYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.KXFNuuibxRpF7AJHZBRkGgvpiVl4axfGA0A8haLIR3coX0HHPrQph8sO9GKl7C0KP6YXN-43VIxlpDXy-i_UkimxDJRVS08IW4r39Z4HhD-rKFYafQJROMrFG9lcbn1pZWTLBRGsO3lFCI1DyRDC7W_HSb63mgO2IoiQXGhgdhEWc7OnyNfxovkbtQA5xfsVqWqeWE-Dn4Jeo0lFe630I-iREMXPQvF5I7UNJFMJLCgFV0fG8J7__MYBf8xVnYL3ryaMBwKjQxQVsD3IOGS6TAk7RLZzjevySl-pXE1CcE8fosQQwJsOjOoKn5u1LGK3XUkIJR2rOf3jVMoQYYqe1Q</span><br></pre></td></tr></table></figure></p>
-<h2>踩过的坑</h2>
-<h3>node出于NotReady状态</h3>
-<ul>
-<li>排查思路</li>
-</ul>
-<p>查看服务状态及相关错误信息</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ journalctl -f -u kubelet</span><br></pre></td></tr></table></figure></p>
-<p>最终发现我的内存因为是1G导致运行失败</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/07/19/k8s-env-prep/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1006,60 +716,14 @@
 <li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
 <li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
 </ul>
-<p>&lt;!-- more --&gt;</p>
-<p>经常搞不清楚用的是哪里的python。遇到要升级python版本，又提心吊胆的怕把系统的那个给搞挂了。于是，便试着用pyenv来管理版本</p>
-<h2>关于Pyenv</h2>
-<blockquote>
-<p>pyenv是Python版本管理工具，能够使你轻松的在多个python版本之间进行切换</p>
-</blockquote>
-<ul>
-<li>
-<p>pyenv当前在<a href="https://github.com/pyenv/pyenv" target="_blank" rel="noopener">github</a>上有14k的关注量</p>
-</li>
-<li>
-<p>安装说明参看github上的<a href="https://github.com/pyenv/pyenv#installation" target="_blank" rel="noopener">安装文档</a></p>
-</li>
-</ul>
-<h2>常用命令</h2>
-<p>使用<code>pyenv commands</code>可以查看所有命令或者通过<code>pyenv -h</code>来查看常用命令</p>
-<h3>版本管理</h3>
-<h4>查看已安装的python版本</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (<span class="built_in">set</span> by /Users/xxx/.pyenv/version)</span><br><span class="line">  3.7.0</span><br></pre></td></tr></table></figure></p>
-<h4>查看可以安装的版本</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv install -l</span><br><span class="line">Available versions:</span><br><span class="line">  2.1.3</span><br><span class="line">  2.2.3</span><br><span class="line">  ...</span><br><span class="line">  stackless-3.5.4</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，可安装的版本有python2, python3, activepython, anaconda, ironpython, jython, pypy, stackless, etc.</p>
-<h4>安装指定版本</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv install 2.7.15</span><br><span class="line">python-build: use openssl from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-2.7.15...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installed Python-2.7.15 to /Users/xxx/.pyenv/versions/2.7.15</span><br></pre></td></tr></table></figure></p>
-<p><strong>注</strong>：Mac上安装可能会遇到<code>The Python zlib extension was not compiled. Missing the zlib?</code>的错误，可以尝试<code>CFLAGS=&quot;-I$(xcrun --show-sdk-path)/usr/include&quot; pyenv install 2.7.15</code></p>
-<p><em>更多错误，可查看项目的wiki中的<a href="https://github.com/pyenv/pyenv/wiki/Common-build-problems" target="_blank" rel="noopener">常见问题</a></em></p>
-<blockquote>
-<p>安装完毕一个python版本后，需要执行<code>pyenv rehash</code>来更新后，才能看到已安装的版本</p>
-</blockquote>
-<h3>优先级</h3>
-<p>可以为当前目录、当前shell以及全局进行不同的python版本定义</p>
-<p>遵循<strong>shell&gt;local&gt;global</strong>的优先级顺序</p>
-<h4>设置版本</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv global 2.7.15 <span class="comment">#设置全局版本，版本信息记录在~/.pyenv/version</span></span><br><span class="line">$ pyenv <span class="built_in">local</span> 3.7.0 <span class="comment">#设置当前目录的python版本，将在当前目录生成.python-version文件</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>当需要为一个目录设置特定的python版本时，可以先进入该目录下执行<code>pyenv local xxx</code></li>
-<li>当需要为该目录下的一个子目录设置特定的python版本，可进入该子目录设置local</li>
-<li>设置完毕后，会在响应的目录下生成<code>.python-version</code>的文件</li>
-<li>使用时，将从当前目录开始查找，如果不存在<code>.python-version</code>文件，则向上一级查找，直到根目录为止</li>
-<li>如果到跟目录任然没有查找到，则使用global的设置</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv shell 3.6.0 <span class="comment">#为当前shell设置python版本，将通过环境变量的方式设置</span></span><br><span class="line">$ env | grep PYENV_VERSION</span><br><span class="line">PYENV_VERSION=2.7.15</span><br><span class="line">$ pyenv shell --<span class="built_in">unset</span> <span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<h3>virtualenv</h3>
-<p>默认情况下，安装pyenv后会安装<strong>pyenv-virtualenv</strong>的插件，可以通过<code>pyenv virtualenv</code>创建虚拟环境</p>
-<h4>查看已有的virtualenv</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv virtualenvs</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br></pre></td></tr></table></figure></p>
-<h4>创建virtualenv</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv virtualenv 2.7.15 my2.7.15</span><br><span class="line">Collecting virtualenv</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/8f/f1/c0b069ca6cb44f9681715232e6d3d65c75866dd231c5e4a88e80a46634bb/virtualenv-16.3.0-py2.py3-none-any.whl (2.0MB)</span><br><span class="line">    100% |████████████████████████████████| 2.0MB 117kB/s</span><br><span class="line">Requirement already satisfied: setuptools&gt;=18.0.0 <span class="keyword">in</span> ./.pyenv/versions/2.7.15/lib/python2.7/site-packages (from virtualenv) (39.0.1)</span><br><span class="line">Installing collected packages: virtualenv</span><br><span class="line">Successfully installed virtualenv-16.3.0</span><br><span class="line">New python executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python2.7</span><br><span class="line">Also creating executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line">Requirement already satisfied: setuptools <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line">Requirement already satisfied: pip <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line"></span><br><span class="line">$ pyenv virtualenvs</span><br><span class="line">  2.7.15/envs/my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br></pre></td></tr></table></figure></p>
-<h4>active &amp; deactive</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv activate my2.7.15</span><br><span class="line">(my2.7.15) $</span><br><span class="line">(my2.7.15) $ pyenv deactivate</span><br></pre></td></tr></table></figure></p>
-<h4>删除virtualenv</h4>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pyenv uninstall my2.7.15</span><br><span class="line">pyenv-virtualenv: remove /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15? Y</span><br></pre></td></tr></table></figure></p>
-<p><strong>Have Fun</strong> :smile:</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/02/05/pyenv-notebook/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1143,7 +807,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>944</span>
+              <span>927</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1162,56 +826,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>使用阿里云镜像安装Docker-CE</h2>
+          <h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
 <blockquote>
 <p>docker.com越来越难访问了</p>
 </blockquote>
-<p>&lt;!-- more --&gt;</p>
-<ol>
-<li>
-<p>安装必要工具</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>安装阿里云的GPG证书</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>添加软件源</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>拉取更新</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>安装docker-ce</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure></p>
-</li>
-</ol>
-<h2>使用阿里云的pip源</h2>
-<ol>
-<li>
-<p>安装pip</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">$ python get-pip.py</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>修改pip源为阿里云（永久修改）</p>
-<p>在用户根目录创建 <code>.pip/pip.conf</code></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure></p>
-</li>
-</ol>
-<h2>MAC使用清华homebrew源</h2>
-<blockquote>
-<p>可直接访问<a href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/" target="_blank" rel="noopener">清华大学开源软件镜像站</a>获取</p>
-</blockquote>
-<ul>
-<li>
-<p>替换现有的git</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br><span class="line"></span><br><span class="line">$ brew update</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/01/15/cn_resources/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1308,88 +934,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>环境</h1>
-<h2>环境准备</h2>
+          <h1 id="环境"><a class="markdownIt-Anchor" href="#环境"></a> 环境</h1>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
 <ol>
 <li>VmWare虚拟环境</li>
 <li>Host需求：2cpu，4G内存，3块网卡</li>
 <li>Ubuntu16.04</li>
 </ol>
-<h2>拓扑</h2>
+<h2 id="拓扑"><a class="markdownIt-Anchor" href="#拓扑"></a> 拓扑</h2>
 <p>搭建典型的c2s拓扑</p>
-<p>&lt;!-- more --&gt;</p>
-<p><img src="/2018/11/15/vpp-setup/vpp_setup_topo.png" class title="topo"></p>
-<ul>
-<li>通过vsphere创建两个虚拟交换机</li>
-<li>host1的第二个接口与vpp的第二个接口连在同一个交换机上</li>
-<li>host2的第二个接口与vpp的第三个接口连在同一个交换机上</li>
-</ul>
-<h2>VPP安装先决条件</h2>
-<ol>
-<li>Ubuntu安装git（git默认安装）</li>
-<li>Ubuntu安装dpdk，并绑定PCI的另外两个接口到dpdk</li>
-</ol>
-<h1>安装</h1>
-<p>官方文档提供了多种安装方式，并且推荐使用vagrant包，由于这里使用的是虚拟环境，则使用直接安装的方式</p>
-<h2>获取源码</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> https://gerrit.fd.io/r/vpp</span><br></pre></td></tr></table></figure></p>
-<h2>安装vpp</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> vpp</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Step1</li>
-</ul>
-<p>可以先执行一下<code>make</code>查看可以执行哪些操作</p>
-<ul>
-<li>Step2 - make</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ make build-release</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">by executing <span class="string">"make install-dep"</span></span><br><span class="line"></span><br><span class="line">Makefile:262: recipe <span class="keyword">for</span> target <span class="string">'/root/vpp/build-root/.deps.ok'</span> failed</span><br><span class="line">make: *** [/root/vpp/build-root/.deps.ok] Error 1</span><br></pre></td></tr></table></figure></p>
-<p>如果遇到以上错误，则意味着缺少依赖包</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make install-dep</span><br></pre></td></tr></table></figure></p>
-<p>依赖包安装完成后，再次执行<code>make build-release</code></p>
-<ul>
-<li>Step3 - Build deb包</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make pkg-deb</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Step4 - 安装VPP packages</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dpkg -i /vpp/build-root/*.deb</span><br></pre></td></tr></table></figure></p>
-<p>中间可能会遇到<code>vpp-api-python</code>的错误，使用apt安装后重新安装packages</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install vpp-api-python</span><br></pre></td></tr></table></figure></p>
-<h1>配置</h1>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/vpp</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/vpp/startup.conf /etc/vpp/</span><br><span class="line">cp ./build-root/deb/debian/vpp/etc/sysctl.d/80-vpp.conf /etc/sysctl.d/</span><br></pre></td></tr></table></figure></p>
-<p>修改<code>/etc/vpp/startup.conf</code></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">unix &#123;</span><br><span class="line">  nodaemon</span><br><span class="line">  <span class="built_in">log</span> /var/<span class="built_in">log</span>/vpp/vpp.log</span><br><span class="line">  full-coredump</span><br><span class="line">  <span class="comment">#cli-listen /run/vpp/cli.sock</span></span><br><span class="line">  cli-listen 0.0.0.0:5002</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-trace &#123;</span><br><span class="line">  on</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">api-segment &#123;</span><br><span class="line">  gid vpp</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">socksvr &#123;</span><br><span class="line">  default</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cpu &#123;</span><br><span class="line">    main-core 0</span><br><span class="line">    workers 2</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dpdk &#123;</span><br><span class="line">    dev 0000:0b:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    dev 0000:13:00.0 &#123;num-rx-queues 2&#125;</span><br><span class="line">    num-mbufs 128000</span><br><span class="line">    socket-mem 1024,1024</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">plugins &#123;</span><br><span class="line">    path /root/vpp/build-root/install-vpp-native/vpp/lib/vpp_plugins</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h1>启动VPP</h1>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ service vpp start</span><br></pre></td></tr></table></figure></p>
-<p>查看状态</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status vpp.service</span><br><span class="line">● vpp.service - vector packet processing engine</span><br><span class="line">   Loaded: loaded (/lib/systemd/system/vpp.service; enabled; vendor preset: enabled)</span><br><span class="line">   Active: active (running) since Thu 2018-11-15 16:00:09 CST; 4min 52s ago</span><br><span class="line">  Process: 19959 ExecStopPost=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19985 ExecStartPre=/sbin/modprobe uio_pci_generic (code=exited, status=0/SUCCESS)</span><br><span class="line">  Process: 19981 ExecStartPre=/bin/rm -f /dev/shm/db /dev/shm/global_vm /dev/shm/vpe-api (code=exited, status=0/SUCCESS)</span><br><span class="line"> Main PID: 19989 (vpp_main)</span><br><span class="line">    Tasks: 6</span><br><span class="line">   Memory: 55.9M</span><br><span class="line">      CPU: 9min 46.890s</span><br><span class="line">   CGroup: /system.slice/vpp.service</span><br><span class="line">           └─19989 /usr/bin/vpp -c /etc/vpp/startup.conf</span><br><span class="line"></span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: nat_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: lb_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: gtpu_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: avf_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: acl_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: memif_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: load_one_vat_plugin:67: Loaded plugin: stn_test_plugin.so</span><br><span class="line">Nov 15 16:00:09 fdio vpp[19989]: /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcor</span><br><span class="line">Nov 15 16:00:09 fdio /usr/bin/vpp[19989]: dpdk: EAL init args: -c 7 -n 4 --huge-dir /run/vpp/hugepages --file-prefix vpp -w 0000:0b:00.0 -w 0000:13:00.0 --master-lcore 0 --socket</span><br><span class="line">Nov 15 16:00:10 fdio vnet[19989]: dpdk_ipsec_process:1015: not enough DPDK crypto resources, default to OpenSSL</span><br></pre></td></tr></table></figure></p>
-<p>虽然有警告信息，但似乎不影响使用</p>
-<h1>测试</h1>
-<blockquote>
-<p>根据<code>startup.conf</code>中的配置不同，选择不同的连接vpp方式</p>
-</blockquote>
-<h2>登陆VPP CLI</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ telnet 127.0.0.1 5002</span><br><span class="line">Trying 127.0.0.1...</span><br><span class="line">Connected to 127.0.0.1.</span><br><span class="line">Escape character is <span class="string">'^]'</span>.</span><br><span class="line">    _______    _        _   _____  ___</span><br><span class="line"> __/ __/ _ \  (_)__    | | / / _ \/ _ \</span><br><span class="line"> _/ _// // / / / _ \   | |/ / ___/ ___/</span><br><span class="line"> /_/ /____(_)_/\___/   |___/_/  /_/</span><br><span class="line"></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2     down         9000/0/0/0</span><br><span class="line">GigabitEthernetb/0/0              1     down         9000/0/0/0</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<h2>开启端口</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface state GigabitEthernet13/0/0 up</span></span><br><span class="line">vpp<span class="comment"># set interface state GigabitEthernetb/0/0 up</span></span><br><span class="line">vpp<span class="comment"># show interface</span></span><br><span class="line">              Name               Idx    State  MTU (L3/IP4/IP6/MPLS)     Counter          Count</span><br><span class="line">GigabitEthernet13/0/0             2      up          9000/0/0/0     rx packets                     1</span><br><span class="line">                                                                    rx bytes                      60</span><br><span class="line">                                                                    drops                          1</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">GigabitEthernetb/0/0              1      up          9000/0/0/0     rx packets                     4</span><br><span class="line">                                                                    rx bytes                     240</span><br><span class="line">                                                                    drops                          4</span><br><span class="line">                                                                    ip4                            1</span><br><span class="line">local0                            0     down          0/0/0/0</span><br><span class="line">vpp<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<h2>配置为switch模式</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernet13/0/0 1</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge GigabitEthernetb/0/0 1</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off        N/A</span><br></pre></td></tr></table></figure></p>
-<h2>测试连通性</h2>
-<ul>
-<li>c2s</li>
-</ul>
-<ol>
-<li>Host1: 192.168.0.2/24</li>
-<li>Host2: 192.168.0.3/24</li>
-</ol>
-<p>通过host1 ping host2</p>
-<ul>
-<li>配置loopback口测试连通性</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">vpp<span class="comment"># create loopback interface</span></span><br><span class="line">loop0</span><br><span class="line">vpp<span class="comment"># set interface ip address loop0 192.168.0.1/24</span></span><br><span class="line">vpp<span class="comment"># set interface state loop0 up</span></span><br><span class="line">vpp<span class="comment"># set interface l2 bridge loop0 1 bvi</span></span><br><span class="line">vpp<span class="comment"># show bridge-domain</span></span><br><span class="line">  BD-ID   Index   BSN  Age(min)  Learning  U-Forwrd   UU-Flood   Flooding  ARP-Term   BVI-Intf</span><br><span class="line">    1       1      0     off        on        on       flood        on       off       loop0</span><br><span class="line">vpp<span class="comment"># ping 192.168.0.2</span></span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=2 ttl=64 time=.8704 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=3 ttl=64 time=.2564 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=4 ttl=64 time=.2653 ms</span><br><span class="line">116 bytes from 192.168.0.2: icmp_seq=5 ttl=64 time=.3413 ms</span><br><span class="line"></span><br><span class="line">Statistics: 5 sent, 4 received, 20% packet loss</span><br></pre></td></tr></table></figure></p>
-<p><code>set interface l2 bridge loop0 1 bvi</code>中的<strong>bvi</strong>意味着这个接口将用来接收、发送以及转发该bridge domain的报文</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/15/vpp-setup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1486,59 +1047,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>DPDK安装</h1>
+          <h1 id="dpdk安装"><a class="markdownIt-Anchor" href="#dpdk安装"></a> DPDK安装</h1>
 <blockquote>
 <p>DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库</p>
 </blockquote>
-<h2>从git获取源码</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://dpdk.org/dpdk</span><br></pre></td></tr></table></figure></p>
-<p>&lt;!-- more --&gt;</p>
-<h2>创建环境变量</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ <span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br></pre></td></tr></table></figure></p>
-<p>因为这些环境变量总是会用到，可以将其放入一个文件，如<code>env.source</code>，使用<code>source env.source</code></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ more env.source</span><br><span class="line"><span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br><span class="line">$ <span class="built_in">source</span> env.source</span><br></pre></td></tr></table></figure></p>
-<h2>开始安装</h2>
-<blockquote>
-<p>使用<code>dpdk-setup.sh</code>脚本进行安装</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">./usertools/dpdk-setup.sh</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_SDK exported as /root/dpdk</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 1: Select the DPDK environment to build</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[1] arm64-armv8a-linuxapp-clang</span><br><span class="line">[2] arm64-armv8a-linuxapp-gcc</span><br><span class="line">[3] arm64-dpaa2-linuxapp-gcc</span><br><span class="line">[4] arm64-dpaa-linuxapp-gcc</span><br><span class="line">[5] arm64-stingray-linuxapp-gcc</span><br><span class="line">[6] arm64-thunderx-linuxapp-gcc</span><br><span class="line">[7] arm64-xgene1-linuxapp-gcc</span><br><span class="line">[8] arm-armv7a-linuxapp-gcc</span><br><span class="line">[9] i686-native-linuxapp-gcc</span><br><span class="line">[10] i686-native-linuxapp-icc</span><br><span class="line">[11] ppc_64-power8-linuxapp-gcc</span><br><span class="line">[12] x86_64-native-bsdapp-clang</span><br><span class="line">[13] x86_64-native-bsdapp-gcc</span><br><span class="line">[14] x86_64-native-linuxapp-clang</span><br><span class="line">[15] x86_64-native-linuxapp-gcc</span><br><span class="line">[16] x86_64-native-linuxapp-icc</span><br><span class="line">[17] x86_x32-native-linuxapp-gcc</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 2: Setup linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[18] Insert IGB UIO module</span><br><span class="line">[19] Insert VFIO module</span><br><span class="line">[20] Insert KNI module</span><br><span class="line">[21] Setup hugepage mappings <span class="keyword">for</span> non-NUMA systems</span><br><span class="line">[22] Setup hugepage mappings <span class="keyword">for</span> NUMA systems</span><br><span class="line">[23] Display current Ethernet/Crypto device settings</span><br><span class="line">[24] Bind Ethernet/Crypto device to IGB UIO module</span><br><span class="line">[25] Bind Ethernet/Crypto device to VFIO module</span><br><span class="line">[26] Setup VFIO permissions</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 3: Run <span class="built_in">test</span> application <span class="keyword">for</span> linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[27] Run <span class="built_in">test</span> application (<span class="variable">$RTE_TARGET</span>/app/<span class="built_in">test</span>)</span><br><span class="line">[28] Run testpmd application <span class="keyword">in</span> interactive mode (<span class="variable">$RTE_TARGET</span>/app/testpmd)</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 4: Other tools</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[29] List hugepage info from /proc/meminfo</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 5: Uninstall and system cleanup</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[30] Unbind devices from IGB UIO or VFIO driver</span><br><span class="line">[31] Remove IGB UIO module</span><br><span class="line">[32] Remove VFIO module</span><br><span class="line">[33] Remove KNI module</span><br><span class="line">[34] Remove hugepage mappings</span><br><span class="line"></span><br><span class="line">[35] Exit Script</span><br><span class="line"></span><br><span class="line">Option:</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Step1</li>
-</ul>
-<p>根据自己环境选择相应的build，如我是64位的Intel架构的环境，则选择**[15]**</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">Installation <span class="keyword">in</span> /root/dpdk/ complete</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_TARGET exported as x86_64-native-linuxapp-gcc</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Step2</li>
-</ul>
-<ol>
-<li>选择**[18]**来家在哪里<code>igb_uio</code>模块</li>
-<li>选择**[21]**来创建Hugepage，这里我输入了128</li>
-<li>选择**[24]**来绑定PCI网卡</li>
-</ol>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Option: 21</span><br><span class="line"></span><br><span class="line">Removing currently reserved hugepages</span><br><span class="line">Unmounting /mnt/huge and removing directory</span><br><span class="line"></span><br><span class="line">  Input the number of 2048kB hugepages</span><br><span class="line">  Example: to have 128MB of hugepages available <span class="keyword">in</span> a 2MB huge page system,</span><br><span class="line">  enter <span class="string">'64'</span> to reserve 64 * 2MB pages</span><br><span class="line">Number of pages: 128</span><br><span class="line">Reserving hugepages</span><br><span class="line">Creating /mnt/huge and mounting as hugetlbfs</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Option: 24</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Other Compress devices</span><br><span class="line">======================</span><br><span class="line">&lt;none&gt;</span><br><span class="line"></span><br><span class="line">Enter PCI address of device to <span class="built_in">bind</span> to IGB UIO driver: 0b:00.0</span><br><span class="line"></span><br><span class="line">Network devices using DPDK-compatible driver</span><br><span class="line">============================================</span><br><span class="line">0000:0b:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br><span class="line">0000:13:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br></pre></td></tr></table></figure></p>
-<p>确认需要使用的PCI网卡为<strong>drv=igb_uio</strong>则说明绑定成功</p>
-<ul>
-<li>Step3 - 测试</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Option: 27</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute <span class="built_in">test</span> app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/<span class="built_in">test</span>: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Option: 28</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute testpmd app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/testpmd: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure></p>
-<p>执行27和28都有可能报错，提示<code>command not found</code>，此时，可以先退出安装脚本</p>
-<p>进入<code>/dpdk/x86_64-native-linuxapp-gcc/app</code>目录，会看到<code>testpmd</code>存在于目录下，运行测试，正常状况时，会如下显示</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: Probing VFIO support...</span><br><span class="line">EAL: PCI device 0000:03:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:0b:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:13:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">testpmd: create a new mbuf pool &lt;mbuf_pool_socket_0&gt;: n=203456, size=2176, socket=0</span><br><span class="line">testpmd: preferred mempool ops selected: ring_mp_mc</span><br><span class="line">Configuring Port 0 (socket 0)</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">    TX queue: 0</span><br><span class="line">      TX desc=0 - TX free threshold=0</span><br><span class="line">      TX threshold registers: pthresh=0 hthresh=0  wthresh=0</span><br><span class="line">      TX offloads=0x0 - TX RS bit threshold=0</span><br><span class="line">Press enter to <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">Telling cores to stop...</span><br><span class="line">Waiting <span class="keyword">for</span> lcores to finish...</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 0  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 1  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  +++++++++++++++ Accumulated forward statistics <span class="keyword">for</span> all ports+++++++++++++++</span><br><span class="line">  RX-packets: 114            RX-dropped: 0             RX-total: 114</span><br><span class="line">  TX-packets: 114            TX-dropped: 0             TX-total: 114</span><br><span class="line">  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">Done.</span><br><span class="line"></span><br><span class="line">Shutting down port 0...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Shutting down port 1...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Bye...</span><br></pre></td></tr></table></figure></p>
-<h2>HugePage问题解决</h2>
-<ul>
-<li>问题</li>
-</ul>
-<p>当运行测试时或者<code>testpmd</code>，可能会遇到如下问题</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: FATAL: Cannot get hugepage information.</span><br><span class="line">EAL: Cannot get hugepage information.</span><br><span class="line">PANIC <span class="keyword">in</span> main():</span><br><span class="line">Cannot init EAL</span><br><span class="line">5: [./testpmd(_start+0x29) [0x498829]]</span><br><span class="line">4: [/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f8a0fee0830]]</span><br><span class="line">3: [./testpmd(main+0xc48) [0x48f528]]</span><br><span class="line">2: [./testpmd(__rte_panic+0xbb) [0x47eb09]]</span><br><span class="line">1: [./testpmd(rte_dump_stack+0x2b) [0x5c8a1b]]</span><br><span class="line">Aborted (core dumped)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>问题原因及解决</li>
-</ul>
-<p>这说明Hugepage不够用，可以先查看系统内存状况</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:     665</span><br><span class="line">HugePages_Free:        0</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:      537</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure></p>
-<p>很显然，这里总共有665，太小了，不够用，需要修改系统相关内容</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 2048 &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</span><br><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:    2048</span><br><span class="line">HugePages_Free:     1080</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:        0</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure></p>
-<p><strong>注</strong> 如果系统重启或者重新编译，则该值会被重新刷新为默认值，需要重新设置</p>
-
+<h2 id="从git获取源码"><a class="markdownIt-Anchor" href="#从git获取源码"></a> 从git获取源码</h2>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://dpdk.org/dpdk</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/15/dpdk-setup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1635,288 +1157,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1>控制管理</h1>
+          <h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
 <ul>
 <li>创建网桥</li>
 </ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br testbr</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br testbr</span><br></pre></td></tr></table></figure>
 <ul>
 <li>查看网桥和端口</li>
 </ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">b66c0897-27c9-441a-9486-42cfb65a4649</span><br><span class="line">    Bridge testbr</span><br><span class="line">        Port testbr</span><br><span class="line">            Interface testbr</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.5.5"</span></span><br></pre></td></tr></table></figure></p>
-<p>&lt;!-- more --&gt;</p>
-<ul>
-<li>网桥端口操作</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br><span class="line">$ ovs-vsctl del-port br0 eth1</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>查看流表</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows testbr</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=364.789s, table=0, n_packets=0, n_bytes=0, idle_age=364, priority=0 actions=NORMAL</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>控制器设置</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置控制器</span></span><br><span class="line">$ ovs-vsctl <span class="built_in">set</span>-controller testbr tcp:10.180.9.62:6633</span><br><span class="line">$ ovs-vsctl show</span><br><span class="line">b66c0897-27c9-441a-9486-42cfb65a4649</span><br><span class="line">    Bridge testbr</span><br><span class="line">        Controller <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line">        Port testbr</span><br><span class="line">            Interface testbr</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.5.5"</span></span><br><span class="line"><span class="comment"># 查看控制器列表</span></span><br><span class="line">$ ovs-vsctl list controller</span><br><span class="line">_uuid               : 2fe35662-3f4f-446b-9296-6f1eae38ba5e</span><br><span class="line">connection_mode     : []</span><br><span class="line">controller_burst_limit: []</span><br><span class="line">controller_rate_limit: []</span><br><span class="line">enable_async_messages: []</span><br><span class="line">external_ids        : &#123;&#125;</span><br><span class="line">inactivity_probe    : []</span><br><span class="line">is_connected        : <span class="literal">true</span></span><br><span class="line">local_gateway       : []</span><br><span class="line">local_ip            : []</span><br><span class="line">local_netmask       : []</span><br><span class="line">max_backoff         : []</span><br><span class="line">other_config        : &#123;&#125;</span><br><span class="line">role                : other</span><br><span class="line">status              : &#123;sec_since_connect=<span class="string">"4"</span>, state=ACTIVE&#125;</span><br><span class="line">target              : <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line"><span class="comment"># 删除控制器</span></span><br><span class="line">$ ovs-vsctl del-controller testbr</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>接口相关</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-ports s1</span><br><span class="line">OFPST_PORT reply (xid=0x2): 3 ports</span><br><span class="line">  port LOCAL: rx pkts=0, bytes=0, drop=94, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=0, bytes=0, drop=0, errs=0, coll=0</span><br><span class="line">  port  1: rx pkts=124, bytes=8418, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8898, drop=0, errs=0, coll=0</span><br><span class="line">  port  2: rx pkts=123, bytes=8340, drop=0, errs=0, frame=0, over=0, crc=0</span><br><span class="line">           tx pkts=130, bytes=8886, drop=0, errs=0, coll=0</span><br><span class="line">$ ovs-appctl dpif/show</span><br><span class="line">system@ovs-system: hit:318465 missed:735</span><br><span class="line">    s1:</span><br><span class="line">        s1 65534/3: (internal)</span><br><span class="line">        s1-eth1 1/2: (system)</span><br><span class="line">        s1-eth2 2/1: (system)</span><br></pre></td></tr></table></figure></p>
-<h1>流表类</h1>
-<h2>流表操作</h2>
-<h3>查看流表</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=356.689s, table=0, n_packets=708, n_bytes=42480, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=356.699s, table=0, n_packets=94, n_bytes=7488, idle_age=346, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure></p>
-<h3>添加普通流表</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=drop</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=441.879s, table=0, n_packets=878, n_bytes=52680, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=2.861s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=1 actions=drop</span><br><span class="line"> cookie=0x0, duration=441.889s, table=0, n_packets=94, n_bytes=7488, idle_age=432, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure></p>
-<h3>按照匹配删除流表</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl del-flows s1 <span class="string">"in_port=1"</span></span><br><span class="line">mininet&gt; sh ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=521.249s, table=0, n_packets=1036, n_bytes=62160, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=521.259s, table=0, n_packets=94, n_bytes=7488, idle_age=511, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure></p>
-<h2>常用匹配项</h2>
-<h3>VLAN Tag</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ vs-ofctl add-flow s1 priority=401,in_port=1,dl_vlan=777,actions=output:2</span><br><span class="line">$ ovs-ofctl dump-flows s1</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=663.043s, table=0, n_packets=1318, n_bytes=79080, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=3.022s, table=0, n_packets=0, n_bytes=0, idle_age=3, priority=401,in_port=1,dl_vlan=777 actions=output:2</span><br><span class="line"> cookie=0x0, duration=663.053s, table=0, n_packets=94, n_bytes=7488, idle_age=653, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure></p>
-<h3>MAC</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a,action=output:3</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1,action=output:2</span><br><span class="line">$ sh ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=69.067s, table=0, n_packets=0, n_bytes=0, idle_age=69, in_port=1,dl_src=0a:f6:95:7e:c6:4a/0a:f6:95:7e:c6:4a actions=output:3</span><br><span class="line"> cookie=0x0, duration=14.496s, table=0, n_packets=0, n_bytes=0, idle_age=14, in_port=1,dl_dst=be:7c:6a:e9:e6:b1/be:7c:6a:e9:e6:b1 actions=output:2</span><br></pre></td></tr></table></figure></p>
-<h3>IP</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_src=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,action=drop</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=119.033s, table=0, n_packets=119, n_bytes=7140, idle_age=0, priority=65535,dl_dst=01:80:c2:00:00:0e,dl_type=0x88cc actions=CONTROLLER:65535</span><br><span class="line"> cookie=0x0, duration=28.864s, table=0, n_packets=0, n_bytes=0, idle_age=28, ip,in_port=1,nw_src=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=10.036s, table=0, n_packets=0, n_bytes=0, idle_age=10, ip,in_port=1,nw_dst=192.168.0.0/16 actions=drop</span><br><span class="line"> cookie=0x0, duration=119.057s, table=0, n_packets=90, n_bytes=7164, idle_age=109, priority=0 actions=CONTROLLER:65535</span><br></pre></td></tr></table></figure></p>
-<h3>其他</h3>
-<table>
-<thead>
-<tr>
-<th>匹配项</th>
-<th>关键字</th>
-<th>条件</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>以太网类型</td>
-<td>dl_type</td>
-<td></td>
-<td><code>in_port=1,dl_type=0x0806,actions=output:2</code></td>
-</tr>
-<tr>
-<td>协议号</td>
-<td>nw_proto</td>
-<td>指定dl_type=0x0800或者ip</td>
-<td><code>ip,in_port=1,nw_proto=1,actions=output:2</code></td>
-</tr>
-<tr>
-<td>TCP flags</td>
-<td>tcp_flags</td>
-<td>指定TCP</td>
-<td><code>tcp,tcp_flags=ack,actions=output:2</code></td>
-</tr>
-</tbody>
-</table>
-<h3>一些速记符</h3>
-<table>
-<thead>
-<tr>
-<th>速记符</th>
-<th>匹配项</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ip</td>
-<td>dl_type=0x800</td>
-</tr>
-<tr>
-<td>ipv6</td>
-<td>dl_type=0x86dd</td>
-</tr>
-<tr>
-<td>icmp</td>
-<td>dl_type=0x0800,nw_proto=1</td>
-</tr>
-<tr>
-<td>icmp6</td>
-<td>dl_type=0x86dd,nw_proto=58</td>
-</tr>
-<tr>
-<td>tcp</td>
-<td>dl_type=0x0800,nw_proto=6</td>
-</tr>
-<tr>
-<td>tcp6</td>
-<td>dl_type=0x86dd,nw_proto=6</td>
-</tr>
-<tr>
-<td>udp</td>
-<td>dl_type=0x0800,nw_proto=17</td>
-</tr>
-<tr>
-<td>udp6</td>
-<td>dl_type=0x86dd,nw_proto=17</td>
-</tr>
-<tr>
-<td>arp</td>
-<td>dl_type=0x0806</td>
-</tr>
-</tbody>
-</table>
-<h2>指令动作（actions）</h2>
-<h3>基础动作</h3>
-<table>
-<thead>
-<tr>
-<th>动作</th>
-<th>说明</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>normal</td>
-<td>L2/L3处理</td>
-<td><code>actions=normal</code></td>
-</tr>
-<tr>
-<td>output</td>
-<td>出接口</td>
-<td><code>actions=output:2</code></td>
-</tr>
-<tr>
-<td>group</td>
-<td>指定的group</td>
-<td><code>actions=group:1</code></td>
-</tr>
-<tr>
-<td>flood</td>
-<td>从所有物理接口转发出去，除了入接口和已关闭flooding的接口</td>
-<td><code>actions=flood</code></td>
-</tr>
-<tr>
-<td>all</td>
-<td>从所有物理接口转发出去，除了入接口</td>
-<td><code>actions=all</code></td>
-</tr>
-<tr>
-<td>local</td>
-<td>转发给本地网桥</td>
-<td><code>actions=local</code></td>
-</tr>
-<tr>
-<td>in_port</td>
-<td>从入接口转发出去</td>
-<td><code>actions=in_port</code></td>
-</tr>
-<tr>
-<td>controller</td>
-<td>以packet-in消息上送给控制器</td>
-<td><code>actions=controller</code></td>
-</tr>
-<tr>
-<td>drop</td>
-<td>丢弃数据包</td>
-<td><code>actions=drop</code></td>
-</tr>
-</tbody>
-</table>
-<h3>修改VLAN ID</h3>
-<ul>
-<li>
-<p>关键字： <code>mod_vlan_vid</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_vlan_vid:1034,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>剥除VLAN</h3>
-<ul>
-<li>
-<p>关键字： <code>strip_vlan</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>弹出最外层VLAN</h3>
-<ul>
-<li>
-<p>关键字： <code>pop_vlan</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow br0 in_port=1,dl_type=0x8100,dl_vlan=777,actions=pop_vlan,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>修改源/目的MAC</h3>
-<ul>
-<li>
-<p>关键字：<code>mod_dl_src</code> / <code>mod_dl_dst</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_src:01:80:c2:00:00:0e,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_dl_dst:01:80:c2:00:00:0e,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>修改源/目的IP</h3>
-<ul>
-<li>
-<p>关键字： <code>mod_nw_src</code>/<code>mod_nw_dst</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_src:192.168.0.10,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 in_port=1,actions=mod_nw_dst:192.168.0.10,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>修改TCP/UDP端口</h3>
-<ul>
-<li>
-<p>关键字：<code>mod_tp_src</code>/<code>mod_tp_dst</code></p>
-</li>
-<li>
-<p>举例</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 tcp,in_port=1,actions=mod_tp_dst:21,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_src:1039,output:2</span><br><span class="line">$ ovs-ofctl add-flow s1 udp,in_port=1,actions=mod_tp_dst:53,output:2</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>VxLan</h3>
-<ul>
-<li>
-<p>创建VxLAN接口</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port s3 vxlan1 -- <span class="built_in">set</span> Interface vxlan1 <span class="built_in">type</span>=vxlan options:remote_ip=1.1.1.1 ofport_request=2000</span><br><span class="line">$ ovs-vsctl show</span><br><span class="line">    Bridge <span class="string">"s3"</span></span><br><span class="line">        Controller <span class="string">"tcp:10.180.9.62:6633"</span></span><br><span class="line">        Controller <span class="string">"ptcp:6636"</span></span><br><span class="line">        fail_mode: secure</span><br><span class="line">        Port <span class="string">"s3-eth2"</span></span><br><span class="line">            Interface <span class="string">"s3-eth2"</span></span><br><span class="line">        Port <span class="string">"vxlan1"</span></span><br><span class="line">            Interface <span class="string">"vxlan1"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;remote_ip=<span class="string">"1.1.1.1"</span>&#125;</span><br><span class="line">        Port <span class="string">"s3-eth3"</span></span><br><span class="line">            Interface <span class="string">"s3-eth3"</span></span><br><span class="line">        Port <span class="string">"s3-eth1"</span></span><br><span class="line">            Interface <span class="string">"s3-eth1"</span></span><br><span class="line">        Port <span class="string">"s3"</span></span><br><span class="line">            Interface <span class="string">"s3"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>VxLAN流表</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl add-flow s3 ip,in_port=1,nw_dst=192.168.0.0/16,actions=output:2000</span><br><span class="line">$ ovs-ofctl add-flow s3 in_port=2000,actions=output:1</span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=35.227s, table=0, n_packets=0, n_bytes=0, idle_age=35, ip,in_port=1,nw_dst=192.168.0.0/16 actions=output:2000</span><br><span class="line"> cookie=0x0, duration=2.469s, table=0, n_packets=0, n_bytes=0, idle_age=2, in_port=2000 actions=output:1</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h1>实验</h1>
-<h2>拓扑</h2>
-<p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">                <span class="string">+------------+</span></span><br><span class="line">                <span class="string">|</span>     <span class="string">s2</span>     <span class="string">|</span></span><br><span class="line">                <span class="string">+---+----+---+</span></span><br><span class="line">                    <span class="string">|</span>    <span class="string">|</span></span><br><span class="line">         <span class="string">+----------+</span>    <span class="string">+----------+</span></span><br><span class="line">         <span class="string">|</span>                          <span class="string">|</span></span><br><span class="line"><span class="string">+--------+--------+</span>        <span class="string">+--------+--------+</span></span><br><span class="line"><span class="string">|</span>       <span class="string">s3</span>        <span class="string">|</span>        <span class="string">|</span>        <span class="string">s4</span>       <span class="string">|</span></span><br><span class="line"><span class="string">+---+---------+---+</span>        <span class="string">+---+---------+---+</span></span><br><span class="line">    <span class="string">|</span>         <span class="string">|</span>                <span class="string">|</span>         <span class="string">|</span></span><br><span class="line"><span class="string">+---+--+</span>   <span class="string">+--+---+</span>        <span class="string">+---+--+</span>   <span class="string">+--+---+</span></span><br><span class="line"><span class="string">|</span>  <span class="string">h1</span>  <span class="string">|</span>   <span class="string">|</span>  <span class="string">h2</span>  <span class="string">|</span>        <span class="string">|</span>  <span class="string">h3</span>  <span class="string">|</span>   <span class="string">|</span>  <span class="string">h4</span>  <span class="string">|</span></span><br><span class="line"><span class="string">+------+</span>   <span class="string">+------+</span>        <span class="string">+------+</span>   <span class="string">+------+</span></span><br></pre></td></tr></table></figure></p>
-<h2>实验要求</h2>
-<ol>
-<li>h1可以与h3通信，但不可以与h2和h4通信</li>
-<li>h2可以与h4通信，但不可以与h1和h3通信</li>
-</ol>
-<h2>具体操作</h2>
-<ol>
-<li>由h1送出的报文，在s3上打上vlan tag 1000</li>
-<li>随后s3将报文送往s2</li>
-<li>s2收到s3的vlan1000的报文，直接转送s4</li>
-<li>s4收到vlan1000的报文后，剥离vlan，送到h3</li>
-<li>h3收到请求报文后，返回响应报文，送往s4</li>
-<li>s4收到h3的报文后，打上vlan tag 1000</li>
-<li>随后s4将报文送往s2</li>
-<li>s2收到s4的vlan1000的报文，直接送往s3</li>
-<li>s3收到s2的vlan1000报文后，剥离vlan，送往h1</li>
-</ol>
-<h2>h1-h3流表</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1664.027s, table=0, n_packets=79, n_bytes=4026, idle_age=803, in_port=1,dl_vlan=1000 actions=output:2</span><br><span class="line"> cookie=0x0, duration=1642.112s, table=0, n_packets=10, n_bytes=852, idle_age=803, in_port=2,dl_vlan=1000 actions=output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2826.459s, table=0, n_packets=330, n_bytes=14700, idle_age=807, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1895.062s, table=0, n_packets=10, n_bytes=852, idle_age=807, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br><span class="line"></span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=2776.175s, table=0, n_packets=229, n_bytes=10010, idle_age=810, in_port=1 actions=mod_vlan_vid:1000,output:3</span><br><span class="line"> cookie=0x0, duration=1507.500s, table=0, n_packets=10, n_bytes=852, idle_age=810, in_port=3,dl_vlan=1000 actions=strip_vlan,output:1</span><br></pre></td></tr></table></figure></p>
-<h2>h2-h4流表</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows s2</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=827.167s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=2,dl_vlan=2000 actions=output:1</span><br><span class="line"> cookie=0x0, duration=812.342s, table=0, n_packets=60, n_bytes=2816, idle_age=698, in_port=1,dl_vlan=2000 actions=output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s3</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1347.703s, table=0, n_packets=60, n_bytes=2576, idle_age=702, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=710.639s, table=0, n_packets=3, n_bytes=194, idle_age=702, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br><span class="line"> </span><br><span class="line">$ ovs-ofctl dump-flows s4</span><br><span class="line">NXST_FLOW reply (xid=0x4):</span><br><span class="line"> cookie=0x0, duration=1133.570s, table=0, n_packets=60, n_bytes=2576, idle_age=705, in_port=2 actions=mod_vlan_vid:2000,output:3</span><br><span class="line"> cookie=0x0, duration=1088.590s, table=0, n_packets=60, n_bytes=2816, idle_age=705, in_port=3,dl_vlan=2000 actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure></p>
-<h2>命令列表</h2>
-<ul>
-<li>h1-h3</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s2 in_port=1,dl_vlan=1000,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s2 in_port=2,dl_vlan=1000,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s3 in_port=1,actions=mod_vlan_vid:1000,output:3</span><br><span class="line">ovs-ofctl add-flow s3 in_port=3,dl_vlan=1000,actions=strip_vlan,output:1</span><br><span class="line">ovs-ofctl add-flow s4 in_port=1,actions=mod_vlan_vid:1000,output:3</span><br><span class="line">ovs-ofctl add-flow s4 in_port=3,dl_vlan=1000,actions=strip_vlan,output:1</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>h2-h4</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovs-ofctl add-flow s2 in_port=2,dl_vlan=2000,actions=output:1</span><br><span class="line">ovs-ofctl add-flow s2 in_port=1,dl_vlan=2000,actions=output:2</span><br><span class="line">ovs-ofctl add-flow s3 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s3 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br><span class="line">ovs-ofctl add-flow s4 in_port=2,actions=mod_vlan_vid:2000,output:3</span><br><span class="line">ovs-ofctl add-flow s4 in_port=3,dl_vlan=2000,actions=strip_vlan,output:2</span><br></pre></td></tr></table></figure></p>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">b66c0897-27c9-441a-9486-42cfb65a4649</span><br><span class="line">    Bridge testbr</span><br><span class="line">        Port testbr</span><br><span class="line">            Interface testbr</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.5.5"</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/13/ovs-study2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -2013,23 +1270,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>mininet自带topo</h2>
+          <h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
 <p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
-<p>&lt;!-- more --&gt;</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ mn --<span class="built_in">help</span></span><br><span class="line">Usage: mn [options]</span><br><span class="line">(<span class="built_in">type</span> mn -h <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  --topo=TOPO           linear|minimal|reversed|single|torus|tree[,param=value</span><br><span class="line">                        ...] linear=LinearTopo torus=TorusTopo tree=TreeTopo</span><br><span class="line">                        single=SingleSwitchTopo</span><br><span class="line">                        reversed=SingleSwitchReversedTopo minimal=MinimalTopo</span><br></pre></td></tr></table></figure></p>
-<h2>获取示例</h2>
-<p>Mininet提供了topo-2sw-2host的示例，可以通过<a href="https://github.com/mininet/mininet" target="_blank" rel="noopener">Mininet github</a>的custom目录下获取</p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""Custom topology example</span></span><br><span class="line"><span class="string">Two directly connected switches plus a host for each switch:</span></span><br><span class="line"><span class="string">   host --- switch --- switch --- host</span></span><br><span class="line"><span class="string">Adding the 'topos' dict with a key/value pair to generate our newly defined</span></span><br><span class="line"><span class="string">topology enables one to pass in '--topo=mytopo' from the command line.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        leftHost = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        rightHost = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        leftSwitch = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line">        rightSwitch = self.addSwitch( <span class="string">'s4'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( leftHost, leftSwitch )</span><br><span class="line">        self.addLink( leftSwitch, rightSwitch )</span><br><span class="line">        self.addLink( rightSwitch, rightHost )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure></p>
-<h2>自定义topo</h2>
-<p>如要创建如下topo</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">                         +------------+</span><br><span class="line">              +----------+     s3     +---------+</span><br><span class="line">              |          +------------+         |</span><br><span class="line">              |                                 |</span><br><span class="line">         +----+----+                       +----+----+</span><br><span class="line">   +-----+    s1   +-----+           +-----+   s2    +-----+</span><br><span class="line">   |     +---------+     |           |     +---------+     |</span><br><span class="line">   |                     |           |                     |</span><br><span class="line">+--+--+               +--+--+     +--+--+               +--+--+</span><br><span class="line">| h1  |               | h2  |     | h3  |               | h4  |</span><br><span class="line">+-----+               +-----+     +-----+               +-----+</span><br></pre></td></tr></table></figure></p>
-<p>代码</p>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        h1 = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        h2 = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        h3 = self.addHost( <span class="string">'h3'</span> )</span><br><span class="line">        h4 = self.addHost( <span class="string">'h4'</span> )</span><br><span class="line">        s1 = self.addSwitch( <span class="string">'s1'</span> )</span><br><span class="line">        s2 = self.addSwitch( <span class="string">'s2'</span> )</span><br><span class="line">        s3 = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( h1, s1 )</span><br><span class="line">        self.addLink( s1, h2 )</span><br><span class="line">        self.addLink( s1, s3 )</span><br><span class="line">        self.addLink( s3, s2 )</span><br><span class="line">        self.addLink( h3, s2 )</span><br><span class="line">        self.addLink( s2, h4 )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure></p>
-<h2>使用自定义topo</h2>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn --custom ./testtopo.py --topo mytopo --controller=remote,ip=127.0.0.1,port=6633</span></span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1 s2 s3</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h3, s2) (s1, h2) (s1, s3) (s2, h4) (s3, s2)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Starting controller</span><br><span class="line">c0</span><br><span class="line">*** Starting 3 switches</span><br><span class="line">s1 s2 s3 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<p>查看连接状态</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; links</span><br><span class="line">h1-eth0&lt;-&gt;s1-eth1 (OK OK)</span><br><span class="line">h3-eth0&lt;-&gt;s2-eth2 (OK OK)</span><br><span class="line">s1-eth2&lt;-&gt;h2-eth0 (OK OK)</span><br><span class="line">s1-eth3&lt;-&gt;s3-eth1 (OK OK)</span><br><span class="line">s2-eth3&lt;-&gt;h4-eth0 (OK OK)</span><br><span class="line">s3-eth2&lt;-&gt;s2-eth1 (OK OK)</span><br><span class="line">mininet&gt; pingall</span><br><span class="line">*** Ping: testing ping reachability</span><br><span class="line">h1 -&gt; h2 h3 h4</span><br><span class="line">h2 -&gt; h1 h3 h4</span><br><span class="line">h3 -&gt; h1 h2 h4</span><br><span class="line">h4 -&gt; h1 h2 h3</span><br><span class="line">*** Results: 0% dropped (12/12 received)</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/08/mininet-user-define-topo/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -2172,12 +1422,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

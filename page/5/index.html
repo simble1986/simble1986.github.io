@@ -273,28 +273,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点
-&lt;!-- more --&gt;</p>
-<h2>安装nodejs</h2>
-<p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
-<h3>安装包获取</h3>
-<p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
-获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz" target="_blank" rel="noopener">安装包</a>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure></p>
-<h3>安装nodejs</h3>
-<p>解压缩
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tar -Jxv -f node-v8.10.0-linux-armv7l.tar.xz</span><br><span class="line">node-v8.10.0-linux-armv7l/</span><br><span class="line">node-v8.10.0-linux-armv7l/README.md</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/node</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/npm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-可根据个人喜好重命名文件夹，此处重命名为node，分别验证版本信息
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ ./bin/node -v</span><br><span class="line">v8.10.0</span><br><span class="line">pi@raspberrypi:~/node $ ./bin/npm -v</span><br><span class="line">5.6.0</span><br></pre></td></tr></table></figure>
-配置node和npm为全局命令
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ sudo ln /home/pi/node/bin/node /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">pi@raspberrypi:~/node $ sudo ln -s /home/pi/node/lib/node_modules/npm/bin/npm /usr/<span class="built_in">local</span>/bin/npm</span><br></pre></td></tr></table></figure>
-此时执行npm会报错
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ npm -v</span><br><span class="line">module.js:471</span><br><span class="line">    throw err;</span><br><span class="line">    ^</span><br><span class="line"></span><br><span class="line">Error: Cannot find module <span class="string">'/usr/local/bin/node_modules/npm/bin/npm-cli.js'</span></span><br></pre></td></tr></table></figure>
-需要修改/usr/local/bin/目录下的npm文件，将$basedir替换为绝对路径，此处为/home/pi/node/
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/<span class="keyword">sh</span></span><br><span class="line">(set -o igncr) 2&gt;/dev/null &amp;&amp; set -o igncr; # cygwin encoding fix</span><br><span class="line"></span><br><span class="line">basedir=`dirname <span class="string">"$0"</span>`</span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">NODE_EXE=<span class="string">"/home/pi/node/bin/node.exe"</span></span><br><span class="line">if ! [ -x "$NODE_EXE" ]; then</span><br><span class="line">  NODE_EXE=node</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">NPM_CLI_JS=<span class="string">"/home/pi/node/lib/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">  *MINGW*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">  *CYGWIN*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line"><span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> <span class="string">"$@"</span></span><br></pre></td></tr></table></figure>
-再次验证，npm已经可以正常工作</p>
-
+          <p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/23/nodejs-setup-pi/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -367,7 +354,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>374</span>
+              <span>357</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -386,22 +373,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.
-&lt;!-- more --&gt;</p>
-<h2>Quick Start</h2>
-<h3>Create a new post</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3>Run server</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3>Generate static files</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3>Deploy to remote sites</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/22/hello-world/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -544,12 +524,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

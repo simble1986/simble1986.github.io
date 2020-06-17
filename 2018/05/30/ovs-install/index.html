@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="环境准备  获取安装包  1git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev &amp;lt;!-- more --&amp;gt; 安装  当使用源代码时，需要自己创建configure脚本  1$ .&#x2F;boot.sh  配置">
+  <meta name="description" content="环境准备  获取安装包  1git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
 <meta name="keywords" content="ovs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu16.04安装Open vSwitch">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;05&#x2F;30&#x2F;ovs-install&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="环境准备  获取安装包  1git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev &amp;lt;!-- more --&amp;gt; 安装  当使用源代码时，需要自己创建configure脚本  1$ .&#x2F;boot.sh  配置">
+<meta property="og:description" content="环境准备  获取安装包  1git clone https:&#x2F;&#x2F;github.com&#x2F;openvswitch&#x2F;ovs.git  安装必要的依赖  1apt install autoconf libtool make libssl-dev libcap-ng-dev">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-30T06:19:38.000Z">
 <meta name="twitter:card" content="summary">
@@ -268,79 +268,79 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3>环境准备</h3>
+        <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure>
 <ul>
 <li>安装必要的依赖</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
-&lt;!-- more --&gt;</p>
-<h3>安装</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h3>
 <ul>
 <li>当使用源代码时，需要自己创建<code>configure</code>脚本</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./boot.sh</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./boot.sh</span><br></pre></td></tr></table></figure>
 <ul>
 <li>配置并开启内核模块</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-linux=/lib/modules/$(uname -r)/build</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-linux=/lib/modules/$(uname -r)/build</span><br></pre></td></tr></table></figure>
 <ul>
 <li>安装</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure>
 <ul>
 <li>安装内核模块</li>
 </ul>
 <p>该步骤可能会报错，请参看后文</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br></pre></td></tr></table></figure>
 <p>官方安装文档中提到，你有可能之前已经安装了ovs的模块，为了确保使用的是你刚才编译的，则需要在<code>/etc/depmod.d/</code>中添加如下内容</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ config_file=&quot;/etc/depmod.d/openvswitch.conf&quot;</span><br><span class="line">$ for module in datapath/linux/*.ko; do</span><br><span class="line">   modname=&quot;$(basename $&#123;module&#125;)&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * extra&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * weak-updates&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   done</span><br><span class="line">$ depmod -a</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ config_file=&quot;/etc/depmod.d/openvswitch.conf&quot;</span><br><span class="line">$ for module in datapath/linux/*.ko; do</span><br><span class="line">   modname=&quot;$(basename $&#123;module&#125;)&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * extra&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * weak-updates&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   done</span><br><span class="line">$ depmod -a</span><br></pre></td></tr></table></figure>
 <ul>
 <li>加载内核模块</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/modprobe openvswitch</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/modprobe openvswitch</span><br></pre></td></tr></table></figure>
 <ul>
 <li>验证</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure></p>
-<h3>启动服务</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure>
+<h3 id="启动服务"><a class="markdownIt-Anchor" href="#启动服务"></a> 启动服务</h3>
 <p>官方说明中提到有一个<code>ovs-ctl</code>的命令，然而，我安装完之后并没有这个命令。可能官方文档比较老了吧。</p>
-<h4>创建必要的目录</h4>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure></p>
-<h4>配置ovsdb-server</h4>
+<h4 id="创建必要的目录"><a class="markdownIt-Anchor" href="#创建必要的目录"></a> 创建必要的目录</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure>
+<h4 id="配置ovsdb-server"><a class="markdownIt-Anchor" href="#配置ovsdb-server"></a> 配置ovsdb-server</h4>
 <ul>
 <li>从源文件目录创建<code>conf.db</code></li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ovs$ ovsdb-tool create /etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ovs$ ovsdb-tool create /etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br></pre></td></tr></table></figure>
 <ul>
 <li>配置</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovsdb-server --remote=punix:/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovsdb-server --remote=punix:/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
 <ul>
 <li>初始化数据库</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure></p>
-<h4>启动ovs进程</h4>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure></p>
-<h3>验证</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure>
+<h4 id="启动ovs进程"><a class="markdownIt-Anchor" href="#启动ovs进程"></a> 启动ovs进程</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure>
+<h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
 <ul>
 <li>创建bridge</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure>
 <ul>
 <li>为br0添加接口</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br></pre></td></tr></table></figure>
 <ul>
 <li>查看配置</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure></p>
-<h3>问题及解决</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure>
+<h3 id="问题及解决"><a class="markdownIt-Anchor" href="#问题及解决"></a> 问题及解决</h3>
 <p>安装内核模块时出现如下错误，<strong>忽略即可</strong>（我还以为很严重，搜了一阵，发现不用管）</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -357,10 +357,10 @@
       <div class="popular-posts-title"><a href="/2019/08/08/openstack-security-group-ovs-1/" rel="bookmark">Openstack安全组基于ovs的学习笔记</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/21/ovs-study-overview/" rel="bookmark">OpenvSwitch学习笔记1</a></div>
+      <div class="popular-posts-title"><a href="/2018/11/13/ovs-study2/" rel="bookmark">OVS学习笔记——常用命令练习</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/11/13/ovs-study2/" rel="bookmark">OVS学习笔记——常用命令练习</a></div>
+      <div class="popular-posts-title"><a href="/2018/09/21/ovs-study-overview/" rel="bookmark">OpenvSwitch学习笔记1</a></div>
     </li>
   </ul>
 
@@ -431,7 +431,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">启动服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">创建必要的目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">配置ovsdb-server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">3.3.</span> <span class="nav-text">启动ovs进程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">问题及解决</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境准备"><span class="nav-number">1.</span> <span class="nav-text"> 环境准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text"> 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动服务"><span class="nav-number">3.</span> <span class="nav-text"> 启动服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建必要的目录"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建必要的目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置ovsdb-server"><span class="nav-number">3.2.</span> <span class="nav-text"> 配置ovsdb-server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动ovs进程"><span class="nav-number">3.3.</span> <span class="nav-text"> 启动ovs进程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证"><span class="nav-number">4.</span> <span class="nav-text"> 验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题及解决"><span class="nav-number">5.</span> <span class="nav-text"> 问题及解决</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -525,12 +525,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

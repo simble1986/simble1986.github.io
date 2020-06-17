@@ -267,43 +267,30 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>安装Opendaylight</h2>
-<h3>环境准备</h3>
+          <h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2>
+<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ol>
 <li>
 <p>基础包</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>安装jdk</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>设置<code>JAVA_HOME</code></p>
 <p>在<code>/etc/environment</code>的末尾添加<code>JAVA_HOME=&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</code>，需要退出当前终端重新登陆</p>
 </li>
 </ol>
-<p>&lt;!-- more --&gt;</p>
-<h3>获取安装包</h3>
-<blockquote>
-<p>https://docs.opendaylight.org/en/latest/downloads.html</p>
-</blockquote>
-<ul>
-<li>运行karaf</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ unzip karaf-0.8.3.zip</span><br><span class="line">   ...</span><br><span class="line">$ <span class="built_in">cd</span> karaf-0.8.3/</span><br><span class="line">$ ./bin/karaf</span><br><span class="line">Apache Karaf starting up. Press Enter to open the shell now...</span><br><span class="line">100% [========================================================================]</span><br><span class="line">Karaf started <span class="keyword">in</span> 1s. Bundle stats: 54 active, 55 total</span><br><span class="line"></span><br><span class="line">    ________                       ________                .__  .__       .__     __</span><br><span class="line">    \_____  \ ______   ____   ____ \______ \ _____  ___.__.|  | |__| ____ |  |___/  |_</span><br><span class="line">     /   |   \\____ \_/ __ \ /    \ |    |  \\__  \&lt;   |  ||  | |  |/ ___\|  |  \   __\</span><br><span class="line">    /    |    \  |_&gt; &gt;  ___/|   |  \|    `   \/ __ \\___  ||  |_|  / /_/  &gt;   Y  \  |</span><br><span class="line">    \_______  /   __/ \___  &gt;___|  /_______  (____  / ____||____/__\___  /|___|  /__|</span><br><span class="line">            \/|__|        \/     \/        \/     \/\/            /_____/      \/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hit <span class="string">'&lt;tab&gt;'</span> <span class="keyword">for</span> a list of available commands</span><br><span class="line">and <span class="string">'[cmd] --help'</span> <span class="keyword">for</span> <span class="built_in">help</span> on a specific <span class="built_in">command</span>.</span><br><span class="line">Hit <span class="string">'&lt;ctrl-d&gt;'</span> or <span class="built_in">type</span> <span class="string">'system:shutdown'</span> or <span class="string">'logout'</span> to shutdown OpenDaylight.</span><br><span class="line"></span><br><span class="line">opendaylight-user@root&gt;</span><br></pre></td></tr></table></figure></p>
-<h3>安装feature</h3>
-<blockquote>
-<p>说起来，这真的是一件让人崩溃的事情，不同的版本，安装feature不同，在什么都还不懂的情况下安装feature，遇到了无数的问题，终于当我将要换到更老的版本之前（0.7.3），让我找到了**Oxygen（0.8.3）**的feature</p>
-</blockquote>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opendaylight-user@root&gt;feature:install odl-restconf odl-l2switch-switch odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui odl-dluxapps-yangvisualizer odl-dluxapps-yangman</span><br></pre></td></tr></table></figure></p>
-<p>我有必要把这些feature再次列出来</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">feature:install odl-restconf</span><br><span class="line">feature:install odl-l2switch-switch </span><br><span class="line">feature:install odl-dlux-core </span><br><span class="line">feature:install odl-dluxapps-nodes </span><br><span class="line">feature:install odl-dluxapps-topology </span><br><span class="line">feature:install odl-dluxapps-yangui </span><br><span class="line">feature:install odl-dluxapps-yangvisualizer </span><br><span class="line">feature:install odl-dluxapps-yangman</span><br></pre></td></tr></table></figure></p>
-<p><strong>务必按照顺序安装，如果出现错误，删了目录重新来过吧</strong></p>
-<h3>登陆Web</h3>
-<p>使用<code>admin:admin</code>登陆即可</p>
-<p><img src="/2018/11/07/odl-setup/opendaylight_login.png" class title="ODL WebUI"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/07/odl-setup/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -400,68 +387,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>Mininet是什么</h2>
+          <h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
 <p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
 <p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>Mininet用途</h2>
-<ul>
-<li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
-<li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
-<li>支持<strong>系统级回归测试</strong>，这些<strong>测试</strong>可重复且易于打包</li>
-<li>支持<strong>复杂的拓扑测试</strong>，无需连接物理网络</li>
-<li>包括具有拓扑感知和OpenFlow感知的<strong>CLI</strong>，用于调试或运行网络范围的测试</li>
-<li>支持<strong>任意自定义拓扑</strong>，并包括一组基本的<strong>参数化拓扑</strong></li>
-<li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
-<li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
-</ul>
-<h2>安装</h2>
-<h3>Ubuntu16.04</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure></p>
-<h3>测试</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure></p>
-<h2>使用</h2>
-<h3>常用命令</h3>
-<ul>
-<li>进入mininet命令行模式</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn</span></span><br><span class="line">*** No default OpenFlow controller found <span class="keyword">for</span> default switch!</span><br><span class="line">*** Falling back to OVS Bridge</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s1)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2</span><br><span class="line">*** Starting controller</span><br><span class="line"></span><br><span class="line">*** Starting 1 switches</span><br><span class="line">s1 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>查看节点</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; nodes</span><br><span class="line">available nodes are:</span><br><span class="line">h1 h2 s1</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>可以看到当前包含3个节点，包括两个host，一个switch</p>
-</blockquote>
-<ul>
-<li>查看连接状况</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; net</span><br><span class="line">h1 h1-eth0:s1-eth1</span><br><span class="line">h2 h2-eth0:s1-eth2</span><br><span class="line">s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>h1的eth0与s1的eth1相连
-h2的eth0与s1的eth2相连</p>
-</blockquote>
-<ul>
-<li>查看详细信息</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; dump</span><br><span class="line">&lt;Host h1: h1-eth0:10.0.0.1 pid=6896&gt;</span><br><span class="line">&lt;Host h2: h2-eth0:10.0.0.2 pid=6899&gt;</span><br><span class="line">&lt;OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=6905&gt;</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>环境清理</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mn -c</span></span><br><span class="line">*** Removing excess controllers/ofprotocols/ofdatapaths/pings/noxes</span><br><span class="line">killall controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">killall -9 controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">pkill -9 -f <span class="string">"sudo mnexec"</span></span><br><span class="line">*** Removing junk from /tmp</span><br><span class="line">rm -f /tmp/vconn* /tmp/vlogs* /tmp/*.out /tmp/*.<span class="built_in">log</span></span><br><span class="line">*** Removing old X11 tunnels</span><br><span class="line">*** Removing excess kernel datapaths</span><br><span class="line">ps ax | egrep -o <span class="string">'dp[0-9]+'</span> | sed <span class="string">'s/dp/nl:/'</span></span><br><span class="line">***  Removing OVS datapaths</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">*** Removing all links of the pattern foo-ethX</span><br><span class="line">ip link show | egrep -o <span class="string">'([-_.[:alnum:]]+-eth[[:digit:]]+)'</span></span><br><span class="line">ip link show</span><br><span class="line">*** Killing stale mininet node processes</span><br><span class="line">pkill -9 -f mininet:</span><br><span class="line">*** Shutting down stale tunnels</span><br><span class="line">pkill -9 -f Tunnel=Ethernet</span><br><span class="line">pkill -9 -f .ssh/mn</span><br><span class="line">rm -f ~/.ssh/mn/*</span><br><span class="line">*** Cleanup complete.</span><br><span class="line">root@mininet:~<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>节点命令</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 ifconfig</span><br><span class="line">h1-eth0   Link encap:Ethernet  HWaddr a2:5f:da:ed:6a:74</span><br><span class="line">          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: fe80::a05f:daff:feed:6a74/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1206 (1.2 KB)  TX bytes:648 (648.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Run http server</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h1 python -m SimpleHTTPServer 80 &amp;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>Http client</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mininet&gt; h2 wget h1</span><br><span class="line">--2018-11-07 10:52:29--  http://10.0.0.1/</span><br><span class="line">Connecting to 10.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 370 [text/html]</span><br><span class="line">Saving to: <span class="string">'index.html'</span></span><br><span class="line"></span><br><span class="line">index.html          100%[===================&gt;]     370  --.-KB/s    <span class="keyword">in</span> 0s</span><br><span class="line"></span><br><span class="line">2018-11-07 10:52:29 (62.3 MB/s) - <span class="string">'index.html'</span> saved [370/370]</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/11/07/mininet-base/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -539,7 +475,7 @@ h2的eth0与s1的eth2相连</p>
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>930</span>
+              <span>911</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -558,66 +494,25 @@ h2的eth0与s1的eth2相连</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>功能支持</h2>
+          <h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
 <ol>
 <li>VLAN with trunk and access ports</li>
 <li>绑定NIC(with/without LAC)</li>
-<li>可见性：NetFlow, sFlow(R), and mirroring</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
 <li>QoS</li>
 <li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
 <li>连接故障管理</li>
 <li>openflow 1.0及其扩展</li>
 <li>使用Linux内核进行高性能转发</li>
 </ol>
-<p>&lt;!-- more --&gt;</p>
-<h2>主要组成部分</h2>
-<ul>
-<li>
-<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
-</li>
-<li>
-<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
-</li>
-<li>
-<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
-</li>
-<li>
-<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
-</li>
-<li>
-<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
-</li>
-</ul>
-<h2>场景</h2>
-<p>多服务器虚拟化部署场景</p>
-<ul>
-<li>高动态的end-points</li>
-<li>维护的是逻辑抽象</li>
-<li>状态迁移</li>
-<li>响应网络动态修改</li>
-<li>维护逻辑标签</li>
-</ul>
-<h3>包处理流程</h3>
-<p><img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class title="arch"></p>
-<p>如上图</p>
-<ol>
-<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
-<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
-<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
-<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
-</ol>
-<h3>包处理流程</h3>
-<p><img src="/2018/09/21/ovs-study-overview/ovs-module.png" class title="module"></p>
-<ol>
-<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
-<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
-<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
-<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
-<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
-<li>通过reinject，使用netlink将包重新送回内核</li>
-<li>匹配流表项并根据相应的动作执行</li>
-</ol>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/21/ovs-study-overview/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -701,7 +596,7 @@ h2的eth0与s1的eth2相连</p>
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>350</span>
+              <span>333</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -722,27 +617,14 @@ h2的eth0与s1的eth2相连</p>
       
           <p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
 <p>相比Valine，disqus开启真的是太简单了</p>
-<p>&lt;!-- more --&gt;</p>
-<h3>注册disqus账号</h3>
-<p>其实我很早之前就注册了账号，直接使用facebook关联过去的.</p>
-<h3>网站上开启</h3>
-<ol>
-<li>登陆disqus后，在首页点击右侧设置-Add Disqus To Site</li>
-</ol>
-<p><img src="/2018/09/13/hexo-enable-disqus/disqus_1.png" alt="Add Disqus To Site"></p>
-<ol start="2">
-<li>在随后弹出的页面点击Start - I want to install Disqus on my site</li>
-</ol>
-<p><img src="/2018/09/13/hexo-enable-disqus/disqus2.png" alt="Install"></p>
-<p><img src="/2018/09/13/hexo-enable-disqus/disqus-shortname.png" alt="Shortname"></p>
-<h3>配置Hexo</h3>
-<p>修改hexo的_config.yml，增加<code>disqus_shortname</code></p>
-<p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">disqus_shortname:</span> <span class="string">your_shortname</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>大功告成</p>
-</blockquote>
-<p><strong>欢迎大家留言</strong></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/13/hexo-enable-disqus/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -839,35 +721,20 @@ h2的eth0与s1的eth2相连</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>错误信息</h2>
+          <h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
 <p>neutron错误日志<code>Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2</code></p>
-<h2>问题现象</h2>
+<h2 id="问题现象"><a class="markdownIt-Anchor" href="#问题现象"></a> 问题现象</h2>
 <blockquote>
 <p>openstack的router中创建了一个联通两个vlan的路由器，发现两个接口轮流处于<code>build</code>状态</p>
 </blockquote>
-<p>&lt;!-- more --&gt;</p>
-<h2>查看日志</h2>
-<ul>
-<li>/var/log/neutron/neutron-linuxbridge-agent.log</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">115265 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_utils/excutils.py"</span>, line 196, <span class="keyword">in</span> force_reraise</span><br><span class="line">115266 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     six.reraise(self.type_, self.value, self.tb)</span><br><span class="line">115267 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 419, <span class="keyword">in</span> add_tap_interface</span><br><span class="line">115268 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     tap_device_name, device_owner)</span><br><span class="line">115269 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 451, <span class="keyword">in</span> _add_tap_interface</span><br><span class="line">115270 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     segmentation_id)</span><br><span class="line">115271 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 403, <span class="keyword">in</span> ensure_physical_in_bridge</span><br><span class="line">115272 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     physical_interface)</span><br><span class="line">115273 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 221, <span class="keyword">in</span> ensure_flat_bridge</span><br><span class="line">115274 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     gateway):</span><br><span class="line">115275 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 362, <span class="keyword">in</span> ensure_bridge</span><br><span class="line">115276 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     self.update_interface_ip_details(bridge_name, interface, ips, gateway)</span><br><span class="line">115277 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/plugins/ml2/drivers/linuxbridge/agent/linuxbridge_neut       ron_agent.py"</span>, line 301, <span class="keyword">in</span> update_interface_ip_details</span><br><span class="line">115278 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     dst_device.addr.add(cidr=ip[<span class="string">'cidr'</span>])</span><br><span class="line">115279 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/linux/ip_lib.py"</span>, line 597, <span class="keyword">in</span> add</span><br><span class="line">115280 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     self._as_root([net.version], tuple(args))</span><br><span class="line">115281 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/linux/ip_lib.py"</span>, line 384, <span class="keyword">in</span> _as_root</span><br><span class="line">115282 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     use_root_namespace=use_root_namespace)</span><br><span class="line">115283 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/linux/ip_lib.py"</span>, line 96, <span class="keyword">in</span> _as_root</span><br><span class="line">115284 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     log_fail_as_error=self.log_fail_as_error)</span><br><span class="line">115285 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/linux/ip_lib.py"</span>, line 105, <span class="keyword">in</span> _execute</span><br><span class="line">115286 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     log_fail_as_error=log_fail_as_error)</span><br><span class="line">115287 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/linux/utils.py"</span>, line 146, <span class="keyword">in</span> execute</span><br><span class="line">115288 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent     raise ProcessExecutionError(msg, returncode=returncode)</span><br><span class="line">115289 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent ProcessExecutionError: Exit code: 2; Stdin: ; Stdout: ; Stderr: sudo: unable to resolve host pxea4badb2       17413</span><br><span class="line">115290 2018-09-11 16:59:59.274 1553 ERROR neutron.plugins.ml2.drivers.agent._common_agent RTNETLINK answers: File exists</span><br></pre></td></tr></table></figure></p>
-<h2>问题原因</h2>
-<ul>
-<li><code>sudo: unable to resolve host pxea4badb2</code></li>
-</ul>
-<blockquote>
-<p>无法解析主机名</p>
-</blockquote>
-<p>查看<code>/etc/hosts</code>中缺少了本地hostname的IP地址映射</p>
-<ul>
-<li><code>Exit code: 2; Stdin: ; Stdout: ; Stderr:</code></li>
-</ul>
-<blockquote>
-<p>问题比较不直观，google之后，有人说是因为bridge上配置了IP，导致冲突了</p>
-</blockquote>
-<p>经查看controller上，发现一个bridge和一个无力网卡配置了同样的IP，可能是因为之前使用flat网络后切换为vlan网络，没有清理openstack中创建的配置导致。</p>
-<p>将bridge上的IP地址删除后，恢复正常</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/11/openstack-neutron-problem1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -945,7 +812,7 @@ h2的eth0与s1的eth2相连</p>
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
+              <span>7.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -964,59 +831,16 @@ h2的eth0与s1的eth2相连</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>问题说明</h2>
+          <h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
 <p>使用Ubuntu的cloud镜像创建实例，在创建时使用脚本修改密码</p>
-<p>&lt;!--more--&gt;</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">passwd ubuntu&lt;&lt;EOF</span><br><span class="line">ubuntu</span><br><span class="line">ubuntu</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
-<p>系统启动后，发现密码修改未成功</p>
-<h2>定位思路</h2>
-<p>查看实例启动日志 :arrow_right: 查看openstack的neutron agent状态 :arrow_right: 查看meta-data服务日志</p>
-<h2>step by step</h2>
-<ul>
-<li>查看实例启动日志</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[  731.435163] cloud-init[845]: 2018-09-11 01:42:24,574 - url_helper.py[WARNING]: Calling <span class="string">'http://169.254.169.254/2009-04-04/meta-data/instance-id'</span> failed [119/120s]: request error [HTTPConnectionPool(host=<span class="string">'169.254.169.254'</span>, port=80): Max retries exceeded with url: /2009-04-04/meta-data/instance-id (Caused by NewConnectionError(<span class="string">'&lt;requests.packages.urllib3.connection.HTTPConnection object at 0x7fa26f1eb6d8&gt;: Failed to establish a new connection: [Errno 101] Network is unreachable'</span>,))]</span><br><span class="line">[  738.460169] cloud-init[845]: 2018-09-11 01:42:31,597 - DataSourceEc2.py[CRITICAL]: Giving up on md from [<span class="string">'http://169.254.169.254/2009-04-04/meta-data/instance-id'</span>] after 126 seconds</span><br><span class="line">[  738.470572] cloud-init[845]: 2018-09-11 01:42:31,608 - util.py[WARNING]: Getting data from &lt;class <span class="string">'cloudinit.sources.DataSourceCloudStack.DataSourceCloudStack'</span>&gt; failed</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>以上日志说明cloud-init在向meta-data server获取meta-data时失败</p>
-</blockquote>
-<ul>
-<li>查看neutron agent状态</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@pxea4badb217413:~<span class="comment"># neutron agent-list</span></span><br><span class="line">+--------------------------------------+--------------------+-----------------+-------------------+-------+----------------+---------------------------+</span><br><span class="line">| id                                   | agent_type         | host            | availability_zone | alive | admin_state_up | binary                    |</span><br><span class="line">+--------------------------------------+--------------------+-----------------+-------------------+-------+----------------+---------------------------+</span><br><span class="line">| 459740a7-b60c-4db7-9ee0-3b45d6c3b2de | Linux bridge agent | pxe1418773526e5 |                   | :-)   | True           | neutron-linuxbridge-agent |</span><br><span class="line">| 4ec74c6a-c392-4216-bddd-789ec5aa3d86 | DHCP agent         | pxea4badb217413 | nova              | :-)   | True           | neutron-dhcp-agent        |</span><br><span class="line">| 6d992669-fbe6-412c-a717-5c2b61a2b901 | Metadata agent     | pxea4badb217413 |                   | :-)   | True           | neutron-metadata-agent    |</span><br><span class="line">| 77dc04a5-0e43-4907-be3a-6f165e77807c | Linux bridge agent | pxe74867aee16bc |                   | :-)   | True           | neutron-linuxbridge-agent |</span><br><span class="line">| c54c7593-5973-41ed-86c8-7e22ac1e95ec | Linux bridge agent | pxea4badb217413 |                   | :-)   | True           | neutron-linuxbridge-agent |</span><br><span class="line">| e882e27d-45de-4cb3-9284-7e9101e2b39b | L3 agent           | pxea4badb217413 | nova              | :-)   | True           | neutron-l3-agent          |</span><br><span class="line">+--------------------------------------+--------------------+-----------------+-------------------+-------+----------------+---------------------------+</span><br><span class="line">root@pxea4badb217413:~<span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>检查neutron-metadata日志</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent [-] Failed reporting state!</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent Traceback (most recent call last):</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/metadata/agent.py"</span>, line <span class="number">266</span>, <span class="keyword">in</span> _report_state</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     use_call=self.agent_state.get(<span class="string">'start_flag'</span>))</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/neutron/agent/rpc.py"</span>, line <span class="number">87</span>, <span class="keyword">in</span> report_state</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     <span class="keyword">return</span> method(context, <span class="string">'report_state'</span>, **kwargs)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/rpc/client.py"</span>, line <span class="number">158</span>, <span class="keyword">in</span> call</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     retry=self.retry)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/transport.py"</span>, line <span class="number">90</span>, <span class="keyword">in</span> _send</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     timeout=timeout, retry=retry)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py"</span>, line <span class="number">470</span>, <span class="keyword">in</span> send</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     retry=retry)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py"</span>, line <span class="number">459</span>, <span class="keyword">in</span> _send</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     result = self._waiter.wait(msg_id, timeout)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py"</span>, line <span class="number">342</span>, <span class="keyword">in</span> wait</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     message = self.waiters.get(msg_id, timeout=timeout)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent   File <span class="string">"/usr/lib/python2.7/dist-packages/oslo_messaging/_drivers/amqpdriver.py"</span>, line <span class="number">244</span>, <span class="keyword">in</span> get</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent     <span class="string">'to message ID %s'</span> % msg_id)</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent MessagingTimeout: Timed out waiting <span class="keyword">for</span> a reply to message ID <span class="number">5</span>b145001c0a34d37a68337821e64908f</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.404</span> <span class="number">10617</span> ERROR neutron.agent.metadata.agent</span><br><span class="line"><span class="number">2018</span><span class="number">-09</span><span class="number">-05</span> <span class="number">19</span>:<span class="number">07</span>:<span class="number">06.405</span> <span class="number">10617</span> WARNING oslo.service.loopingcall [-] Function <span class="string">'neutron.agent.metadata.agent.UnixDomainMetadataProxy._report_state'</span> run outlasted interval by <span class="number">30.00</span> s</span><br><span class="line">ec</span><br></pre></td></tr></table></figure></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">2018-09-06 16:23:48.658 1238 ERROR oslo.messaging._drivers.impl_rabbit [-] AMQP server on controller:5672 is unreachable: [Errno 111] ECONNREFUSED. Trying again <span class="keyword">in</span> 1 seconds.</span><br><span class="line">2018-09-06 16:23:49.752 1238 ERROR oslo.messaging._drivers.impl_rabbit [-] AMQP server on controller:5672 is unreachable: [Errno 111] ECONNREFUSED. Trying again <span class="keyword">in</span> 2 seconds.</span><br><span class="line">2018-09-06 16:23:51.766 1238 ERROR oslo.messaging._drivers.impl_rabbit [-] AMQP server on controller:5672 is unreachable: [Errno 111] ECONNREFUSED. Trying again <span class="keyword">in</span> 4 seconds.</span><br><span class="line">2018-09-06 16:23:55.779 1238 ERROR oslo.messaging._drivers.impl_rabbit [-] AMQP server on controller:5672 is unreachable: [Errno 111] ECONNREFUSED. Trying again <span class="keyword">in</span> 6 seconds.</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>以上显示为AMQP server连接不到</p>
-</blockquote>
-<ul>
-<li>检查meta-data的配置</li>
-</ul>
-<p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> /etc/neutron/metadata_agent.ini</span><br><span class="line"> </span><br><span class="line"># IP address used by Nova metadata server. (string value)</span><br><span class="line">#nova_metadata_ip = 127.0.0.1</span><br><span class="line">nova_metadata_ip = controller</span><br><span class="line"># TCP Port used by Nova metadata server. (port value)</span><br><span class="line"># Minimum value: 0</span><br><span class="line"># Maximum value: 65535</span><br><span class="line">#nova_metadata_port = 8775</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>查看controller上端口监听状况</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">root@pxea4badb217413:~<span class="comment"># netstat -lnp</span></span><br><span class="line">Active Internet connections (only servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name</span><br><span class="line">tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1149/sshd</span><br><span class="line">tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      2316/exim4</span><br><span class="line">tcp        0      0 127.0.0.1:6010          0.0.0.0:*               LISTEN      18284/12</span><br><span class="line">tcp        0      0 127.0.0.1:6011          0.0.0.0:*               LISTEN      18861/20</span><br><span class="line">tcp        0      0 0.0.0.0:9696            0.0.0.0:*               LISTEN      1243/python</span><br><span class="line">tcp        0      0 0.0.0.0:6080            0.0.0.0:*               LISTEN      1247/python</span><br><span class="line">tcp        0      0 0.0.0.0:8774            0.0.0.0:*               LISTEN      1237/python</span><br><span class="line">tcp        0      0 0.0.0.0:8775            0.0.0.0:*               LISTEN      1237/python</span><br><span class="line">tcp        0      0 0.0.0.0:9191            0.0.0.0:*               LISTEN      1242/python</span><br><span class="line">tcp        0      0 0.0.0.0:25672           0.0.0.0:*               LISTEN      2922/beam.smp</span><br><span class="line">tcp        0      0 0.0.0.0:8776            0.0.0.0:*               LISTEN      1235/python</span><br><span class="line">tcp        0      0 10.160.17.196:3306      0.0.0.0:*               LISTEN      1769/mysqld</span><br><span class="line">tcp        0      0 10.160.17.196:11211     0.0.0.0:*               LISTEN      2443/memcached</span><br><span class="line">tcp        0      0 0.0.0.0:9292            0.0.0.0:*               LISTEN      1246/python</span><br><span class="line">tcp6       0      0 :::21                   :::*                    LISTEN      833/vsftpd</span><br><span class="line">tcp6       0      0 :::22                   :::*                    LISTEN      1149/sshd</span><br><span class="line">tcp6       0      0 ::1:25                  :::*                    LISTEN      2316/exim4</span><br><span class="line">tcp6       0      0 ::1:6010                :::*                    LISTEN      18284/12</span><br><span class="line">tcp6       0      0 ::1:6011                :::*                    LISTEN      18861/20</span><br><span class="line">tcp6       0      0 :::35357                :::*                    LISTEN      3904/apache2</span><br><span class="line">tcp6       0      0 :::5000                 :::*                    LISTEN      3904/apache2</span><br><span class="line">tcp6       0      0 :::80                   :::*                    LISTEN      3904/apache2</span><br><span class="line">tcp6       0      0 :::8081                 :::*                    LISTEN      4749/cma</span><br><span class="line">tcp6       0      0 :::4369                 :::*                    LISTEN      2586/epmd</span><br><span class="line">udp        0      0 0.0.0.0:123             0.0.0.0:*                           3218/chronyd</span><br><span class="line">udp        0      0 0.0.0.0:161             0.0.0.0:*                           3189/snmpd</span><br><span class="line">udp        0      0 0.0.0.0:323             0.0.0.0:*                           3218/chronyd</span><br><span class="line">udp6       0      0 :::123                  :::*                                3218/chronyd</span><br><span class="line">udp6       0      0 :::323                  :::*                                3218/chronyd</span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>以上，发现5762端口未监听</p>
-</blockquote>
-<ul>
-<li>尝试启动rabbitmq-server</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">service rabbitmq-server start</span><br><span class="line"> * Starting RabbitMQ Messaging Server rabbitmq-server                                                                                                                              * RabbitMQ Messaging Server already running</span><br><span class="line">                                                                                                                                                                           [ OK ]</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>再次查看端口监听状态</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp6       0      0 :::5672                 :::*                    LISTEN      2922/beam.smp</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>重启meta-data的service，发现日志已经不再报错了</li>
-</ul>
-<blockquote>
-<p>然而，这竟然不是最终原因，最终的问题发现是<strong>网络问题</strong></p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/09/11/openstack-metadata/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1113,70 +937,17 @@ h2的eth0与s1的eth2相连</p>
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>又开始鼓捣flask+mysql了 :baby:</p>
-<p>不成想，又一次踩了好多雷 :joy:</p>
+          <p>又开始鼓捣flask+mysql了 👶</p>
+<p>不成想，又一次踩了好多雷 😂</p>
 <p>有一种打怪升级的感觉</p>
-<p>&lt;!-- more --&gt;</p>
-<h3>环境说明</h3>
-<ol>
-<li>Mac+flask</li>
-<li>docker+mysql</li>
-</ol>
-<h3>问题1 create_engine报错</h3>
-<ul>
-<li>错误信息</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@localhost/beta_monitor'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/__init__.py"</span>, line <span class="number">424</span>, <span class="keyword">in</span> create_engine</span><br><span class="line">    <span class="keyword">return</span> strategy.create(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/strategies.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> create</span><br><span class="line">    dbapi = dialect_cls.dbapi(**dbapi_args)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/dialects/mysql/mysqldb.py"</span>, line <span class="number">102</span>, <span class="keyword">in</span> dbapi</span><br><span class="line">    <span class="keyword">return</span> __import__(<span class="string">'MySQLdb'</span>)</span><br><span class="line">ImportError: No module named MySQLdb</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>问题原因</li>
-</ul>
-<p>没有安装python的mysql包，需要安装<code>mysql-python</code>和/或<code>mysqlclient</code>，然后就遇到了第二个问题</p>
-<h3>问题2 <code>pip install mysql-python</code>失败</h3>
-<ul>
-<li>错误信息</li>
-</ul>
-<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">⇒ pip install mysql-python</span><br><span class="line">Collecting mysql-python</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip (108kB)</span><br><span class="line">    100% |████████████████████████████████| 112kB 153kB/s</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    sh: mysql_config: command not found</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/setup.py", line 17, in &lt;module&gt;</span><br><span class="line">        metadata, options = get_config()</span><br><span class="line">      File "setup_posix.py", line 43, in get_config</span><br><span class="line">        libs = mysql_config("libs_r")</span><br><span class="line">      File "setup_posix.py", line 25, in mysql_config</span><br><span class="line">        raise EnvironmentError("%s not found" % (mysql_config.path,))</span><br><span class="line">    EnvironmentError: mysql_config not found</span><br><span class="line"></span><br><span class="line">    ----------------------------------------</span><br><span class="line">Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>问题原因</li>
-</ul>
-<p><code>mysql_config</code>不存在，原来是系统必须安装mysql客户端</p>
-<ul>
-<li>解决方法 <code>brew install mysql</code></li>
-</ul>
-<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">⇒ brew install mysql</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">==&gt; Pouring mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<h3>问题3 连接mysql服务器失败</h3>
-<ul>
-<li>错误信息 <code>Authentication plugin 'caching_sha2_password' cannot be loaded</code></li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@127.0.0.1/beta_monitor'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>connection = engine.connect()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/base.py"</span>, line <span class="number">2102</span>, <span class="keyword">in</span> connect</span><br><span class="line">    <span class="keyword">return</span> self._connection_cls(self, **kwargs)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/__init__.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> Connect</span><br><span class="line">    <span class="keyword">return</span> Connection(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/connections.py"</span>, line <span class="number">193</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super(Connection, self).__init__(*args, **kwargs2)</span><br><span class="line">sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (<span class="number">2059</span>, <span class="string">"Authentication plugin 'caching_sha2_password' cannot be loaded: dlopen(/usr/local/Cellar/mysql/5.7.22/lib/plugin/caching_sha2_password.so, 2): image not found"</span>) (Background on this error at: http://sqlalche.me/e/e3q8)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>问题原因</li>
-</ul>
-<p>上网查了一通，似乎说从某个版本开始，mysql用了一种认证方式导致问题。根据解决方法看，更换了认证方式就可以了</p>
-<ul>
-<li>解决方法</li>
-</ul>
-<ol>
-<li>用docker启动mysql时增加参数 <code>--default-authentication-plugin=mysql_native_password</code></li>
-</ol>
-<p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~|⇒ docker run -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=beta_monitor -e MYSQL_USER=test -e MYSQL_PASSWORD=123456 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">d8f5e623dc595df19b9d6cce52780381b625c1565622f5867f2ad3aeafdca499</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>如果安装在服务器上，则在my.cnf中修改相关配置</li>
-</ol>
-<ul>
-<li>测试</li>
-</ul>
-<ol>
-<li>本地连接测试</li>
-</ol>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">~|⇒ mysql -utest -p123456 -h 127.0.0.1</span><br><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server at &apos;reading initial communication packet&apos;, system error: 0</span><br><span class="line">~|⇒ mysql -utest -p -h 127.0.0.1</span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 8</span><br><span class="line">Server version: 8.0.12 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and/or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br></pre></td></tr></table></figure></p>
-<ol start="2">
-<li>通过<code>connection = engine.connect()</code>无异常</li>
-</ol>
-<blockquote>
-<p>作为一个暗夜精灵玩家，强烈谴责希尔瓦纳斯烧了我老家的卑劣行径，暴雪怎么洗也没用</p>
-</blockquote>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/08/15/sqlalchemy-mysql-docker/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1260,7 +1031,7 @@ h2的eth0与s1的eth2相连</p>
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>225</span>
+              <span>215</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1280,7 +1051,7 @@ h2的eth0与s1的eth2相连</p>
 
       
           <p>记第一次拿到十年美签</p>
-<h1>时间</h1>
+<h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
 <ul>
 <li>提交DS160: 2018-07-08</li>
 <li>预约面签时间: 2018-07-27 前面排队人太多</li>
@@ -1288,13 +1059,13 @@ h2的eth0与s1的eth2相连</p>
 <li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li>
 <li>收到护照: 2018-08-02</li>
 </ul>
-<h4>持续时间</h4>
+<h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4>
 <ul>
 <li>面签持续时间：1分钟不到</li>
 <li>AP持续时间：2个工作日</li>
 <li>Issued到送到苏州：3个工作日</li>
 </ul>
-<h1>面签问题</h1>
+<h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1>
 <ol>
 <li>你去美国干什么？</li>
 <li>要去美国多久？</li>
@@ -1302,7 +1073,7 @@ h2的eth0与s1的eth2相连</p>
 <li>你们公司是做什么的？</li>
 <li>你是一个人去么？</li>
 </ol>
-<p>&quot;你通过了！&quot;</p>
+<p>“你通过了！”</p>
 
       
     </div>
@@ -1401,103 +1172,14 @@ h2的eth0与s1的eth2相连</p>
 
       
           <p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>Openstack一些理解</h2>
-<h3>服务说明</h3>
-<ul>
-<li>keystone - 必选</li>
-</ul>
-<p>认证服务，是其他所有服务的基础</p>
-<ul>
-<li>glance - 必选</li>
-</ul>
-<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
-<ul>
-<li>nova - 必选</li>
-</ul>
-<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
-<ul>
-<li>neutron - 必选</li>
-</ul>
-<p>网络服务</p>
-<ul>
-<li>horizon - 可选（推荐选择）</li>
-</ul>
-<p>管理界面，图形化管理界面，方便使用</p>
-<ul>
-<li>cinder - 可选</li>
-</ul>
-<p>块存储服务，用来创建虚拟机的磁盘</p>
-<h3>一些理解</h3>
-<p>openstack可以理解为插件型的，灵活就体现于此。</p>
-<ul>
-<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
-<li>同样，可以在任意一个节点上起块存储服务</li>
-</ul>
-<h3>关于网络</h3>
-<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
-<p>需要说明的是：</p>
-<ul>
-<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
-<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
-<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
-<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
-<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
-<li>在openstack的UI上看到的网口，都是代号</li>
-</ul>
-<h2>测试环境准备</h2>
-<h3>两台虚拟机（当然也可以all in one）</h3>
-<h4>硬件准备</h4>
-<p>每台虚拟机应包含</p>
-<ol>
-<li>虚机可上网</li>
-<li>另外包含一张额外的网卡</li>
-<li>内存尽量多（8G）</li>
-<li>CPU尽量多（8 cpus）</li>
-<li>controller硬盘稍微大一些</li>
-</ol>
-<h4>基本准备</h4>
-<blockquote>
-<p>Ubuntu16.04 + Q版本（Queens）</p>
-</blockquote>
-<h5>配置NTP</h5>
-<h5>安装Openstack基础包</h5>
-<ul>
-<li>准备仓库</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>安装openstack包</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure></p>
-<h4>controller</h4>
-<p>controller上需要安装的东西最多</p>
-<h5>依赖</h5>
-<ul>
-<li>数据库: MariaDB</li>
-<li>消息队列: RabbitMQ</li>
-<li>服务及身份认证: Memcached</li>
-<li>etcd</li>
-</ul>
-<h5>openstack服务</h5>
-<ul>
-<li>认证服务: keystone</li>
-<li>镜像服务: glance</li>
-<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
-<li>网络服务（网络管理，调度等服务）: neutron</li>
-<li>管理界面: horizon</li>
-<li>块存储服务（可选）: cinder</li>
-</ul>
-<h4>compute</h4>
-<p>计算节点相对来说简单了很多</p>
-<h5>openstack服务</h5>
-<ul>
-<li>计算服务（专指计算服务）: nova-compute</li>
-<li>网络服务: neutron</li>
-</ul>
-<p><strong>可在controller上同样起计算服务</strong></p>
-<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/28/openstack-study1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1602,50 +1284,14 @@ h2的eth0与s1的eth2相连</p>
       
           <p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
-<p>&lt;!-- more --&gt;</p>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/" target="_blank" rel="noopener">Marp</a>。</p>
-<h3>优点</h3>
-<ul>
-<li>书写简单</li>
-<li>提供两套模版</li>
-<li>可实时预览</li>
-<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
-<li>支持Mac，Win和Linux</li>
-</ul>
-<h3>缺点</h3>
-<ul>
-<li>没有动画</li>
-<li>只能导出为pdf格式，不能生成PPT格式</li>
-<li>仅支持基础的markdown语法</li>
-</ul>
-<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
-<h3>用法</h3>
-<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
-<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
-<h4>设置页码</h4>
-<p>页码是可以随时开启，随时关闭的。</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure></p>
-<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
-<h4>背景设置</h4>
-<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
-<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure></p>
-<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
-<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
-<p>比如：</p>
-<p><img src="/2018/06/21/marp/ppt1.png" class title="效果"></p>
-<p>则是用如下代码完成</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure></p>
-<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
-<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
-<h4>emoji</h4>
-<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
-<p>比如：</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure></p>
-<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
-<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
-<p>:cat:</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/21/marp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1788,12 +1434,12 @@ h2的eth0与s1的eth2相连</p>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">140k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:08</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>
