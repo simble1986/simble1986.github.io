@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。 CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。">
+  <meta name="description" content="本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。 CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。 &amp;lt;!-">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack学习 —— 实验环境介绍">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-env&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。 CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。">
+<meta property="og:description" content="本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。 CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。 &amp;lt;!-">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-env&#x2F;test_env_brief.png">
 <meta property="og:updated_time" content="2019-11-21T07:02:21.269Z">
@@ -251,7 +251,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>702</span>
+              <span>719</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -272,11 +272,11 @@
       
         <p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
 <p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
-<a id="more"></a>
-<h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3>
+<p>&lt;!-- more --&gt;</p>
+<h3>环境概览</h3>
 <p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p>
 <p><img src="/2019/11/21/openstack-env/test_env_brief.png" alt="test_env_brief"></p>
-<h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3>
+<h3>版本说明</h3>
 <ul>
 <li>
 <p>Openstack： stein（1 controller node + 1 compute node）</p>
@@ -288,12 +288,12 @@
 <p>Network driver： openvswitch</p>
 </li>
 </ul>
-<h3 id="节点说明"><a class="markdownIt-Anchor" href="#节点说明"></a> 节点说明</h3>
+<h3>节点说明</h3>
 <ol>
 <li>node0既做为控制节点，也同时为网络节点、存储节点</li>
 <li>node1为计算节点</li>
 </ol>
-<h3 id="网桥说明"><a class="markdownIt-Anchor" href="#网桥说明"></a> 网桥说明</h3>
+<h3>网桥说明</h3>
 <ol>
 <li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li>
 <li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li>
@@ -302,7 +302,7 @@
 <blockquote>
 <p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p>
 </blockquote>
-<h3 id="tunnel相关配置"><a class="markdownIt-Anchor" href="#tunnel相关配置"></a> tunnel相关配置</h3>
+<h3>tunnel相关配置</h3>
 <ol>
 <li><code>tunnel_type</code>当前设置为<code>vxlan</code></li>
 <li><code>local_ip</code>配置于<code>br-provider</code>上</li>
@@ -323,13 +323,13 @@
       <div class="popular-posts-title"><a href="/2019/11/22/openstack-cross-host-vm-1/" rel="bookmark">Openstack学习 —— 跨主机虚拟机访问1</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/11/27/openstack-cross-host-vm-2/" rel="bookmark">Openstack学习 —— 跨主机虚拟机访问2</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/09/11/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/06/28/openstack-study1/" rel="bookmark">Openstack学习笔记1</a></div>
     </li>
   </ul>
 
@@ -400,7 +400,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境概览"><span class="nav-number">1.</span> <span class="nav-text"> 环境概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本说明"><span class="nav-number">2.</span> <span class="nav-text"> 版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#节点说明"><span class="nav-number">3.</span> <span class="nav-text"> 节点说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网桥说明"><span class="nav-number">4.</span> <span class="nav-text"> 网桥说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tunnel相关配置"><span class="nav-number">5.</span> <span class="nav-text"> tunnel相关配置</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">环境概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">版本说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">节点说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">网桥说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">tunnel相关配置</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -494,12 +494,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">142k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

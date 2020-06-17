@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在&#x2F;usr&#x2F;share&#x2F;bash-completion&#x2F;completions&#x2F;docker目录">
+  <meta name="description" content="本文作为docker使用笔记供小伙伴们参考 准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在&#x2F;usr&#x2F;share&#x2F;bash-completion&#x2F;completions&#x2F;docker目录 &amp;lt;!-- more --&amp;gt; 为了方便操作，在ubuntu上打开docker命令行自动补齐功能 编辑&#x2F;etc&#x2F;bash.bashrc文件，查找completion段，将该段内容前的#删">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="docker基本操作（一）">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;03&#x2F;23&#x2F;docker_study_cmd1&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考  准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在&#x2F;usr&#x2F;share&#x2F;bash-completion&#x2F;completions&#x2F;docker目录">
+<meta property="og:description" content="本文作为docker使用笔记供小伙伴们参考 准备工作 安装最新版的docker-ce，会将自动命令行补齐安装在&#x2F;usr&#x2F;share&#x2F;bash-completion&#x2F;completions&#x2F;docker目录 &amp;lt;!-- more --&amp;gt; 为了方便操作，在ubuntu上打开docker命令行自动补齐功能 编辑&#x2F;etc&#x2F;bash.bashrc文件，查找completion段，将该段内容前的#删">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-05-04T09:58:13.000Z">
 <meta name="twitter:card" content="summary">
@@ -275,36 +275,38 @@
 
       
         <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2 id="准备工作"><a class="markdownIt-Anchor" href="#准备工作"></a> 准备工作</h2>
-<p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录</p>
-<a id="more"></a>
-<p>为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
-<p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
-<h2 id="image操作"><a class="markdownIt-Anchor" href="#image操作"></a> image操作</h2>
+<h2>准备工作</h2>
+<p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录
+&lt;!-- more --&gt;
+为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
+<p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<h2>image操作</h2>
 <ul>
-<li>build image</li>
+<li>
+<p>build image
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mytest:latest .</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>查看image
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx                 &lt;none&gt;              73acd1f0cfad        8 days ago          109MB</span><br><span class="line">mongo                 3                   5b1317f8158f        8 days ago          366MB</span><br><span class="line">$ dockeer image ls</span><br></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p>删除image
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure></p>
+</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mytest:latest .</span><br></pre></td></tr></table></figure>
-<ul>
-<li>查看image</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx                 &lt;none&gt;              73acd1f0cfad        8 days ago          109MB</span><br><span class="line">mongo                 3                   5b1317f8158f        8 days ago          366MB</span><br><span class="line">$ dockeer image ls</span><br></pre></td></tr></table></figure>
-<ul>
-<li>删除image</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="从docker-hub上获取image"><a class="markdownIt-Anchor" href="#从docker-hub上获取image"></a> 从docker hub上获取image</h3>
-<p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure>
-<h2 id="continer相关"><a class="markdownIt-Anchor" href="#continer相关"></a> continer相关</h2>
-<h3 id="创建docker"><a class="markdownIt-Anchor" href="#创建docker"></a> 创建docker</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure>
+<h3>从docker hub上获取image</h3>
+<p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure></p>
+<h2>continer相关</h2>
+<h3>创建docker</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure></p>
 <p>常用参数说明</p>
 <blockquote>
-<p>–rm 当运行结束（<mark>当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止</mark>）时自动删除docker<br><br>
--it 重定向docker终端<br><br>
--d 在后台执行<br><br>
+<p>--rm 当运行结束（==当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止==）时自动删除docker&lt;br&gt;
+-it 重定向docker终端&lt;br&gt;
+-d 在后台执行&lt;br&gt;
 -e 添加运行时的参数，常被用于docker CMD执行时增加参数</p>
 </blockquote>
 <p><strong>docker支持长id和短id方式索引，亦可通过名称进行索引</strong></p>
@@ -315,7 +317,7 @@
 <li>通过docker stop可以停止运行的容器，也可以使用docker kill来快速停止一个容器</li>
 <li>docker start会保留容器的第一次启动时的所有参数</li>
 <li>docker restart可以重启容器</li>
-<li>可以在启动容器时设置–restart来自动重启容器</li>
+<li>可以在启动容器时设置--restart来自动重启容器</li>
 </ol>
 <ul>
 <li>删除容器</li>
@@ -326,30 +328,28 @@
 <li>使用docker rm来删除一个容器</li>
 <li>使用docker rmi则会删除docker的image</li>
 </ol>
-<h3 id="查看及操作"><a class="markdownIt-Anchor" href="#查看及操作"></a> 查看及操作</h3>
+<h3>查看及操作</h3>
 <ul>
 <li>查看容器状态</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br></pre></td></tr></table></figure>
-<p>使用docker ps -a查看所有容器（包含休眠状态）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br><span class="line">ef58155f9957        registry:2               <span class="string">"/entrypoint.sh /etc…"</span>    2 days ago          Exited (137) 41 hours ago                                sltregistry</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br></pre></td></tr></table></figure>
+使用docker ps -a查看所有容器（包含休眠状态）
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br><span class="line">ef58155f9957        registry:2               <span class="string">"/entrypoint.sh /etc…"</span>    2 days ago          Exited (137) 41 hours ago                                sltregistry</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>连接到容器的终端</li>
 </ul>
 <p><em>尽量使用exec方法，attach连入后可查看当前容器命令运行的日志，但不当的操作容易使运行中的容器退出</em></p>
 <ol>
-<li>使用attach</li>
+<li>使用attach
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker attach &lt;id/name&gt;</span><br></pre></td></tr></table></figure></li>
+<li>使用exec
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;id/name&gt; /bin/sh</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker attach &lt;id/name&gt;</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用exec</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;id/name&gt; /bin/sh</span><br></pre></td></tr></table></figure>
 <ul>
 <li>查看容器运行的日志</li>
 </ul>
-<p>容器以<code>-d</code>参数运行时，可以使用docker logs查看运行过程中的日志</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker logs mytest_haproxy</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] Cannot raise FD <span class="built_in">limit</span> to 200000011, <span class="built_in">limit</span> is 1048576.</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] FD <span class="built_in">limit</span> (1048576) too low <span class="keyword">for</span> maxconn=100000000/maxsock=200000011. Please raise <span class="string">'ulimit-n'</span> to 200000011 or more to avoid any trouble.</span><br></pre></td></tr></table></figure>
+<p>容器以<code>-d</code>参数运行时，可以使用docker logs查看运行过程中的日志
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker logs mytest_haproxy</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] Cannot raise FD <span class="built_in">limit</span> to 200000011, <span class="built_in">limit</span> is 1048576.</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] FD <span class="built_in">limit</span> (1048576) too low <span class="keyword">for</span> maxconn=100000000/maxsock=200000011. Please raise <span class="string">'ulimit-n'</span> to 200000011 or more to avoid any trouble.</span><br></pre></td></tr></table></figure></p>
 
     </div>
 
@@ -366,10 +366,10 @@
       <div class="popular-posts-title"><a href="/2018/03/30/docker-install-mysql-server-no-passwd/" rel="bookmark">Docker中无密码apt安装mysql</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/05/04/docker-pexpect/" rel="bookmark">Docker API一种连接到PTY的交互方法</a></div>
+      <div class="popular-posts-title"><a href="/2019/08/07/docker-ovs-basic/" rel="bookmark">Docker + ovs，原来如此简单</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2019/08/07/docker-ovs-basic/" rel="bookmark">Docker + ovs，原来如此简单</a></div>
+      <div class="popular-posts-title"><a href="/2018/05/04/docker-pexpect/" rel="bookmark">Docker API一种连接到PTY的交互方法</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/05/03/dockerpty-usage/" rel="bookmark">dockerpty使用</a></div>
@@ -443,7 +443,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text"> 准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#image操作"><span class="nav-number">2.</span> <span class="nav-text"> image操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从docker-hub上获取image"><span class="nav-number">2.1.</span> <span class="nav-text"> 从docker hub上获取image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#continer相关"><span class="nav-number">3.</span> <span class="nav-text"> continer相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建docker"><span class="nav-number">3.1.</span> <span class="nav-text"> 创建docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看及操作"><span class="nav-number">3.2.</span> <span class="nav-text"> 查看及操作</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">image操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">从docker hub上获取image</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">continer相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">创建docker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">查看及操作</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -537,12 +537,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">142k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

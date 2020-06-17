@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。">
+  <meta name="description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。 &amp;lt;!-- more --&amp;gt;  br-tun 在前面收集信息时，你或许已经关注到了linux br">
 <meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack学习 —— 跨主机虚拟机访问2">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。">
+<meta property="og:description" content="上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。 本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。 &amp;lt;!-- more --&amp;gt;  br-tun 在前面收集信息时，你或许已经关注到了linux br">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;create_vm_with_2node.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;openstack-cross-host-vm-2&#x2F;create_vm_with_2node_vxlan.png">
@@ -252,7 +252,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -273,22 +273,22 @@
       
         <p>上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。</p>
 <p>本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。</p>
-<a id="more"></a>
+<p>&lt;!-- more --&gt;</p>
 <p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
-<h3 id="br-tun"><a class="markdownIt-Anchor" href="#br-tun"></a> br-tun</h3>
+<h3>br-tun</h3>
 <p><strong>在前面收集信息时，你或许已经关注到了linux bridge和ovs中还有其他变化，那么，来看看 <code>br-tun</code></strong></p>
 <ul>
 <li>ovs</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
 <p>当环境搭建完毕后，并不会立即创建这个接口，而是当创建了虚拟机后，会创建VXLAN的VTEP接口。</p>
 <p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node_vxlan.png" alt="create_vm_with_2node_vxlan"></p>
-<h3 id="流表"><a class="markdownIt-Anchor" href="#流表"></a> 流表</h3>
-<h4 id="node0"><a class="markdownIt-Anchor" href="#node0"></a> node0</h4>
+<h3>流表</h3>
+<h4>node0</h4>
 <ul>
 <li><strong>br-int</strong></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure></p>
 <p><strong>table 0</strong></p>
 <ol>
 <li>从<code>qvo02407769-97</code>送入的icmp，arp报文，送往table 24</li>
@@ -310,7 +310,7 @@
 <ul>
 <li><strong>br-tun</strong></li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure></p>
 <p><strong>table 0</strong></p>
 <ol>
 <li>从<code>br-int</code>来的报文（即需要从本节点送出的报文），送到table 2</li>
@@ -329,7 +329,7 @@
 </blockquote>
 <p><strong>table 10</strong></p>
 <blockquote>
-<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0…11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:“patch-int”</p>
+<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:&quot;patch-int&quot;</p>
 </blockquote>
 <p>这个action是如此的复杂，但不看<code>learn()</code>中的内容，报文最终被送往了<code>br-int</code></p>
 <blockquote>
@@ -346,7 +346,7 @@
 <li>从其他节点送来的报文，如果tun_id为15，设置VLAN tag为1，送往br-int</li>
 </ol>
 </blockquote>
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<h3>总结</h3>
 <p>完整的分析了node0上的流表，node1上的流表内容基本相似，就不再展开。</p>
 <p>至此，跨节点的虚拟机相互访问的实验及分析正式完结。你会发现</p>
 <ol>
@@ -452,7 +452,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#br-tun"><span class="nav-number">1.</span> <span class="nav-text"> br-tun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流表"><span class="nav-number">2.</span> <span class="nav-text"> 流表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#node0"><span class="nav-number">2.1.</span> <span class="nav-text"> node0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">br-tun</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">流表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#null"><span class="nav-number">2.1.</span> <span class="nav-text">node0</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -546,12 +546,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">142k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>
