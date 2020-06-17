@@ -46,21 +46,18 @@
   };
 </script>
 
-  <meta name="description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
-<meta name="keywords" content="markdown">
+  <meta name="description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则. 对应章节：05 | 白话容器基础（一）：从进程说开去">
+<meta name="keywords" content="docker,Kubernetes">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用markdown写PPT">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;06&#x2F;21&#x2F;marp&#x2F;index.html">
+<meta property="og:title" content="K8s学习笔记——container之于进程">
+<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2020&#x2F;06&#x2F;17&#x2F;kubernetesLearning01&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
+<meta property="og:description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则. 对应章节：05 | 白话容器基础（一）：从进程说开去">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;yhatt&#x2F;marp&#x2F;master&#x2F;images&#x2F;marp.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;06&#x2F;21&#x2F;marp&#x2F;ppt1.png">
-<meta property="og:updated_time" content="2018-11-15T05:46:30.039Z">
+<meta property="og:updated_time" content="2020-06-17T05:41:20.476Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;yhatt&#x2F;marp&#x2F;master&#x2F;images&#x2F;marp.png">
 
-<link rel="canonical" href="http://www.isimble.com/2018/06/21/marp/">
+<link rel="canonical" href="http://www.isimble.com/2020/06/17/kubernetesLearning01/">
 
 
 <script id="page-configurations">
@@ -74,7 +71,7 @@
   };
 </script>
 
-  <title>使用markdown写PPT | Simble的小站</title>
+  <title>K8s学习笔记——container之于进程 | Simble的小站</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
     <script>
@@ -194,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/06/21/marp/">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2020/06/17/kubernetesLearning01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -207,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          使用markdown写PPT
+          K8s学习笔记——container之于进程
         </h1>
 
         <div class="post-meta">
@@ -216,24 +213,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2018-06-21 13:42:00" itemprop="dateCreated datePublished" datetime="2018-06-21T13:42:00+08:00">2018-06-21</time>
+              <time title="创建时间：2020-06-17 13:35:07 / 修改时间：13:41:20" itemprop="dateCreated datePublished" datetime="2020-06-17T13:35:07+08:00">2020-06-17</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-11-15 13:46:30" itemprop="dateModified" datetime="2018-11-15T13:46:30+08:00">2018-11-15</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
                   </a>
                 </span>
             </span>
@@ -247,8 +238,8 @@
       </span>
       <span class="post-meta-item-text">Disqus：</span>
     
-    <a title="disqus" href="/2018/06/21/marp/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/21/marp/" itemprop="commentCount"></span>
+    <a title="disqus" href="/2020/06/17/kubernetesLearning01/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/06/17/kubernetesLearning01/" itemprop="commentCount"></span>
     </a>
   </span>
   
@@ -258,14 +249,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -277,51 +268,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
-<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
+        <blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则.</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/14642" target="_blank" rel="noopener">05 | 白话容器基础（一）：从进程说开去</a></p>
+</blockquote>
 <a id="more"></a>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/" target="_blank" rel="noopener">Marp</a>。</p>
-<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
-<ul>
-<li>书写简单</li>
-<li>提供两套模版</li>
-<li>可实时预览</li>
-<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
-<li>支持Mac，Win和Linux</li>
-</ul>
-<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
-<ul>
-<li>没有动画</li>
-<li>只能导出为pdf格式，不能生成PPT格式</li>
-<li>仅支持基础的markdown语法</li>
-</ul>
-<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
-<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
-<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
-<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
-<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
-<p>页码是可以随时开启，随时关闭的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
-<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
-<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
-<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
-<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
-<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
-<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
-<p>比如：</p>
-<img src="/2018/06/21/marp/ppt1.png" class title="效果">
-<p>则是用如下代码完成</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
-<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
-<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
-<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
-<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
-<p>比如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
-<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
-<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
-<p>🐱</p>
+<h2 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h2>
+<h3 id="start一个container"><a class="markdownIt-Anchor" href="#start一个container"></a> start一个container</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it -d busybox</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">...</span><br><span class="line">root      2817  0.0  0.2 107700  2296 ?        Sl   05:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.run</span><br><span class="line">root      2851  0.0  0.0   1308     4 pts/0    Ss+  05:42   0:00 sh</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程树"><a class="markdownIt-Anchor" href="#查看进程树"></a> 查看进程树</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ pstree  -g</span><br><span class="line">systemd(1)─┬─VGAuthService(562)</span><br><span class="line">           ├─accounts-daemon(866)─┬─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           │                      └─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           ├─atd(928)</span><br><span class="line">           ├─containerd(1055)─┬─containerd-shim(2817)─┬─sh(2851)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       └─&#123;containerd-shim&#125;(2817)</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure>
+<h3 id="查看容器内进程"><a class="markdownIt-Anchor" href="#查看容器内进程"></a> 查看容器内进程</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br></pre></td></tr></table></figure>
+<h3 id="分别查看两个进程的namespace"><a class="markdownIt-Anchor" href="#分别查看两个进程的namespace"></a> 分别查看两个进程的namespace</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/proc/2817/ns<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; <span class="string">'ipc:[4026531839]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; <span class="string">'mnt:[4026531840]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 net -&gt; <span class="string">'net:[4026531993]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; <span class="string">'uts:[4026531838]</span></span><br><span class="line"><span class="string">/proc/2851/ns# ls -l</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; '</span>cgroup:[4026531835]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; '</span>ipc:[4026532571]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; '</span>mnt:[4026532569]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:42 net -&gt; '</span>net:[4026532574]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; '</span>user:[4026531837]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; '</span>uts:[4026532570]<span class="string">'</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<ol>
+<li>启动一个docker容器后，会看到启动了一个2817的进程，这个进程是1055的子进程</li>
+<li>而因为busybox容器启动后，启动了<code>sh</code>，其实际上是2817的子进程2851</li>
+<li>而在容器中，能看到1号进程是<code>sh</code></li>
+<li>通过/proc下可以看到，进程2817和进程2851的ns下，cgroup是都是<code>4026531835</code></li>
+<li>而很明显，每个container都会创建<code>ipc</code>, <code>mnt</code>, <code>net</code>, <code>pid</code>, <code>pid_for_children</code>, <code>user</code>, <code>uts</code>这些namespace</li>
+</ol>
 
     </div>
 
@@ -332,7 +303,19 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/03/25/setup-hexo-create-site/" rel="bookmark">使用hexo搭建自己的博客——创建站点</a></div>
+      <div class="popular-posts-title"><a href="/2019/07/19/k8s-env-prep/" rel="bookmark">k8s环境安装之差点儿我就放弃了</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/05/19/ubuntu-install-k8s-aliyun/" rel="bookmark">国内源安装k8s——Ubuntu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/01/15/cn_resources/" rel="bookmark">使用国内资源（备忘）</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/03/30/docker-install-mysql-server-no-passwd/" rel="bookmark">Docker中无密码apt安装mysql</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2019/08/07/docker-ovs-basic/" rel="bookmark">Docker + ovs，原来如此简单</a></div>
     </li>
   </ul>
 
@@ -340,24 +323,22 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/markdown/" rel="tag"><i class="fa fa-tag"></i> markdown</a>
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2018/05/30/ovs-install/" rel="next" title="Ubuntu16.04安装Open vSwitch">
-                  <i class="fa fa-chevron-left"></i> Ubuntu16.04安装Open vSwitch
+                <a href="/2020/05/19/ubuntu-install-k8s-aliyun/" rel="next" title="国内源安装k8s——Ubuntu">
+                  <i class="fa fa-chevron-left"></i> 国内源安装k8s——Ubuntu
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2018/06/28/openstack-study1/" rel="prev" title="Openstack学习笔记1">
-                  Openstack学习笔记1 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -403,7 +384,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.</span> <span class="nav-text"> 优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">2.</span> <span class="nav-text"> 缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用法"><span class="nav-number">3.</span> <span class="nav-text"> 用法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置页码"><span class="nav-number">3.1.</span> <span class="nav-text"> 设置页码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背景设置"><span class="nav-number">3.2.</span> <span class="nav-text"> 背景设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#emoji"><span class="nav-number">3.3.</span> <span class="nav-text"> emoji</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作"><span class="nav-number">1.</span> <span class="nav-text"> 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#start一个container"><span class="nav-number">1.1.</span> <span class="nav-text"> start一个container</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看进程"><span class="nav-number">1.2.</span> <span class="nav-text"> 查看进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看进程树"><span class="nav-number">1.3.</span> <span class="nav-text"> 查看进程树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看容器内进程"><span class="nav-number">1.4.</span> <span class="nav-text"> 查看容器内进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分别查看两个进程的namespace"><span class="nav-number">1.5.</span> <span class="nav-text"> 分别查看两个进程的namespace</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text"> 总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -578,9 +559,9 @@
       DISQUS.reset({
         reload: true,
         config: {page: {
-            url: "http://www.isimble.com/2018/06/21/marp/",
-            identifier: "2018/06/21/marp/",
-            title: "使用markdown写PPT"
+            url: "http://www.isimble.com/2020/06/17/kubernetesLearning01/",
+            identifier: "2020/06/17/kubernetesLearning01/",
+            title: "K8s学习笔记——container之于进程"
           }
         }
       });

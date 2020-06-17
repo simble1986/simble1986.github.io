@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.isimble.com/"/>
-  <updated>2020-05-19T09:26:18.171Z</updated>
+  <updated>2020-06-17T05:41:20.476Z</updated>
   <id>http://www.isimble.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>K8s学习笔记——container之于进程</title>
+    <link href="http://www.isimble.com/2020/06/17/kubernetesLearning01/"/>
+    <id>http://www.isimble.com/2020/06/17/kubernetesLearning01/</id>
+    <published>2020-06-17T05:35:07.000Z</published>
+    <updated>2020-06-17T05:41:20.476Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p><p>秉持眼过千遍不如手过一遍的原则.</p><p>对应章节：<a href="https://time.geekbang.org/column/article/14642" target="_blank" rel="noopener">05 | 白话容器基础（一）：从进程说开去</a></p></blockquote><a id="more"></a><h2 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h2><h3 id="start一个container"><a class="markdownIt-Anchor" href="#start一个container"></a> start一个container</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it -d busybox</span><br></pre></td></tr></table></figure><h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">...</span><br><span class="line">root      2817  0.0  0.2 107700  2296 ?        Sl   05:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.run</span><br><span class="line">root      2851  0.0  0.0   1308     4 pts/0    Ss+  05:42   0:00 sh</span><br><span class="line">...</span><br></pre></td></tr></table></figure><h3 id="查看进程树"><a class="markdownIt-Anchor" href="#查看进程树"></a> 查看进程树</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ pstree  -g</span><br><span class="line">systemd(1)─┬─VGAuthService(562)</span><br><span class="line">           ├─accounts-daemon(866)─┬─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           │                      └─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           ├─atd(928)</span><br><span class="line">           ├─containerd(1055)─┬─containerd-shim(2817)─┬─sh(2851)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       └─&#123;containerd-shim&#125;(2817)</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure><h3 id="查看容器内进程"><a class="markdownIt-Anchor" href="#查看容器内进程"></a> 查看容器内进程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br></pre></td></tr></table></figure><h3 id="分别查看两个进程的namespace"><a class="markdownIt-Anchor" href="#分别查看两个进程的namespace"></a> 分别查看两个进程的namespace</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/proc/2817/ns<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; <span class="string">'ipc:[4026531839]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; <span class="string">'mnt:[4026531840]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 net -&gt; <span class="string">'net:[4026531993]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; <span class="string">'uts:[4026531838]</span></span><br><span class="line"><span class="string">/proc/2851/ns# ls -l</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; '</span>cgroup:[4026531835]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; '</span>ipc:[4026532571]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; '</span>mnt:[4026532569]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:42 net -&gt; '</span>net:[4026532574]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; '</span>user:[4026531837]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; '</span>uts:[4026532570]<span class="string">'</span></span><br></pre></td></tr></table></figure><h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2><ol><li>启动一个docker容器后，会看到启动了一个2817的进程，这个进程是1055的子进程</li><li>而因为busybox容器启动后，启动了<code>sh</code>，其实际上是2817的子进程2851</li><li>而在容器中，能看到1号进程是<code>sh</code></li><li>通过/proc下可以看到，进程2817和进程2851的ns下，cgroup是都是<code>4026531835</code></li><li>而很明显，每个container都会创建<code>ipc</code>, <code>mnt</code>, <code>net</code>, <code>pid</code>, <code>pid_for_children</code>, <code>user</code>, <code>uts</code>这些namespace</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;学习极客时间上的&lt;a href=&quot;https://time.geekbang.org/column/intro/116&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;《深入剖析Kubernetes》&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;秉持眼过千遍不如手过一遍的原则.&lt;/p&gt;
+&lt;p&gt;对应章节：&lt;a href=&quot;https://time.geekbang.org/column/article/14642&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;05 | 白话容器基础（一）：从进程说开去&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+    
+      <category term="k8s" scheme="http://www.isimble.com/categories/k8s/"/>
+    
+    
+      <category term="docker" scheme="http://www.isimble.com/tags/docker/"/>
+    
+      <category term="Kubernetes" scheme="http://www.isimble.com/tags/Kubernetes/"/>
+    
+  </entry>
   
   <entry>
     <title>国内源安装k8s——Ubuntu</title>
@@ -556,48 +585,6 @@
       <category term="network" scheme="http://www.isimble.com/tags/network/"/>
     
       <category term="sdn" scheme="http://www.isimble.com/tags/sdn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Opendaylight Oxygen环境准备</title>
-    <link href="http://www.isimble.com/2018/11/07/odl-setup/"/>
-    <id>http://www.isimble.com/2018/11/07/odl-setup/</id>
-    <published>2018-11-07T06:53:08.000Z</published>
-    <updated>2018-11-07T15:12:37.548Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="安装opendaylight"><a class="markdownIt-Anchor" href="#安装opendaylight"></a> 安装Opendaylight</h2><h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3><ol><li><p>基础包</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install unzip lrzsz</span><br></pre></td></tr></table></figure></li><li><p>安装jdk</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure></li><li><p>设置<code>JAVA_HOME</code></p><p>在<code>/etc/environment</code>的末尾添加<code>JAVA_HOME=&quot;/usr/lib/jvm/java-8-openjdk-amd64&quot;</code>，需要退出当前终端重新登陆</p></li></ol><a id="more"></a><h3 id="获取安装包"><a class="markdownIt-Anchor" href="#获取安装包"></a> 获取安装包</h3><blockquote><p><a href="https://docs.opendaylight.org/en/latest/downloads.html" target="_blank" rel="noopener">https://docs.opendaylight.org/en/latest/downloads.html</a></p></blockquote><ul><li>运行karaf</li></ul><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ unzip karaf-0.8.3.zip</span><br><span class="line">   ...</span><br><span class="line">$ <span class="built_in">cd</span> karaf-0.8.3/</span><br><span class="line">$ ./bin/karaf</span><br><span class="line">Apache Karaf starting up. Press Enter to open the shell now...</span><br><span class="line">100% [========================================================================]</span><br><span class="line">Karaf started <span class="keyword">in</span> 1s. Bundle stats: 54 active, 55 total</span><br><span class="line"></span><br><span class="line">    ________                       ________                .__  .__       .__     __</span><br><span class="line">    \_____  \ ______   ____   ____ \______ \ _____  ___.__.|  | |__| ____ |  |___/  |_</span><br><span class="line">     /   |   \\____ \_/ __ \ /    \ |    |  \\__  \&lt;   |  ||  | |  |/ ___\|  |  \   __\</span><br><span class="line">    /    |    \  |_&gt; &gt;  ___/|   |  \|    `   \/ __ \\___  ||  |_|  / /_/  &gt;   Y  \  |</span><br><span class="line">    \_______  /   __/ \___  &gt;___|  /_______  (____  / ____||____/__\___  /|___|  /__|</span><br><span class="line">            \/|__|        \/     \/        \/     \/\/            /_____/      \/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Hit <span class="string">'&lt;tab&gt;'</span> <span class="keyword">for</span> a list of available commands</span><br><span class="line">and <span class="string">'[cmd] --help'</span> <span class="keyword">for</span> <span class="built_in">help</span> on a specific <span class="built_in">command</span>.</span><br><span class="line">Hit <span class="string">'&lt;ctrl-d&gt;'</span> or <span class="built_in">type</span> <span class="string">'system:shutdown'</span> or <span class="string">'logout'</span> to shutdown OpenDaylight.</span><br><span class="line"></span><br><span class="line">opendaylight-user@root&gt;</span><br></pre></td></tr></table></figure><h3 id="安装feature"><a class="markdownIt-Anchor" href="#安装feature"></a> 安装feature</h3><blockquote><p>说起来，这真的是一件让人崩溃的事情，不同的版本，安装feature不同，在什么都还不懂的情况下安装feature，遇到了无数的问题，终于当我将要换到更老的版本之前（0.7.3），让我找到了**Oxygen（0.8.3）**的feature</p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">opendaylight-user@root&gt;feature:install odl-restconf odl-l2switch-switch odl-dlux-core odl-dluxapps-nodes odl-dluxapps-topology odl-dluxapps-yangui odl-dluxapps-yangvisualizer odl-dluxapps-yangman</span><br></pre></td></tr></table></figure><p>我有必要把这些feature再次列出来</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">feature:install odl-restconf</span><br><span class="line">feature:install odl-l2switch-switch </span><br><span class="line">feature:install odl-dlux-core </span><br><span class="line">feature:install odl-dluxapps-nodes </span><br><span class="line">feature:install odl-dluxapps-topology </span><br><span class="line">feature:install odl-dluxapps-yangui </span><br><span class="line">feature:install odl-dluxapps-yangvisualizer </span><br><span class="line">feature:install odl-dluxapps-yangman</span><br></pre></td></tr></table></figure><p><strong>务必按照顺序安装，如果出现错误，删了目录重新来过吧</strong></p><h3 id="登陆web"><a class="markdownIt-Anchor" href="#登陆web"></a> 登陆Web</h3><p>使用<code>admin:admin</code>登陆即可</p><img src="/2018/11/07/odl-setup/opendaylight_login.png" class title="ODL WebUI">]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;安装opendaylight&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#安装opendaylight&quot;&gt;&lt;/a&gt; 安装Opendaylight&lt;/h2&gt;
-&lt;h3 id=&quot;环境准备&quot;&gt;&lt;a class=&quot;markdownIt-Anchor&quot; href=&quot;#环境准备&quot;&gt;&lt;/a&gt; 环境准备&lt;/h3&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;基础包&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ apt-get install unzip lrzsz&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;安装jdk&lt;/p&gt;
-&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;$ apt-get install openjdk-8-jdk&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;设置&lt;code&gt;JAVA_HOME&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;在&lt;code&gt;/etc/environment&lt;/code&gt;的末尾添加&lt;code&gt;JAVA_HOME=&amp;quot;/usr/lib/jvm/java-8-openjdk-amd64&amp;quot;&lt;/code&gt;，需要退出当前终端重新登陆&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-    
-    </summary>
-    
-    
-      <category term="sdn" scheme="http://www.isimble.com/categories/sdn/"/>
-    
-    
-      <category term="network" scheme="http://www.isimble.com/tags/network/"/>
-    
-      <category term="sdn" scheme="http://www.isimble.com/tags/sdn/"/>
-    
-      <category term="opendaylight" scheme="http://www.isimble.com/tags/opendaylight/"/>
     
   </entry>
   
