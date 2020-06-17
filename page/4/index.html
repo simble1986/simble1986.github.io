@@ -150,7 +150,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">43</span></a>
 
   </li>
         <li class="menu-item menu-item-guestbook">
@@ -185,6 +185,118 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/06/21/marp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/21/marp/" class="post-title-link" itemprop="url">使用markdown写PPT</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-21 13:42:00" itemprop="dateCreated datePublished" datetime="2018-06-21T13:42:00+08:00">2018-06-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2018-11-15 13:46:30" itemprop="dateModified" datetime="2018-11-15T13:46:30+08:00">2018-11-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2018/06/21/marp/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/21/marp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
+<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/21/marp/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -267,80 +379,23 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3>环境准备</h3>
+          <h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
 <ul>
 <li>获取安装包</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/openvswitch/ovs.git</span><br></pre></td></tr></table></figure>
 <ul>
 <li>安装必要的依赖</li>
 </ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
-&lt;!-- more --&gt;</p>
-<h3>安装</h3>
-<ul>
-<li>当使用源代码时，需要自己创建<code>configure</code>脚本</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./boot.sh</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>配置并开启内核模块</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-linux=/lib/modules/$(uname -r)/build</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>安装</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ make</span><br><span class="line">$ make install</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>安装内核模块</li>
-</ul>
-<p>该步骤可能会报错，请参看后文</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br></pre></td></tr></table></figure></p>
-<p>官方安装文档中提到，你有可能之前已经安装了ovs的模块，为了确保使用的是你刚才编译的，则需要在<code>/etc/depmod.d/</code>中添加如下内容</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ config_file=&quot;/etc/depmod.d/openvswitch.conf&quot;</span><br><span class="line">$ for module in datapath/linux/*.ko; do</span><br><span class="line">   modname=&quot;$(basename $&#123;module&#125;)&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * extra&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   echo &quot;override $&#123;modname%.ko&#125; * weak-updates&quot; &gt;&gt; &quot;$config_file&quot;</span><br><span class="line">   done</span><br><span class="line">$ depmod -a</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>加载内核模块</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/modprobe openvswitch</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>验证</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ /sbin/lsmod | grep openvswitch</span><br><span class="line">openvswitch           303104  0</span><br><span class="line">tunnel6                16384  1 openvswitch</span><br><span class="line">nf_nat_ipv6            16384  1 openvswitch</span><br><span class="line">nf_defrag_ipv6         36864  2 openvswitch,nf_conntrack_ipv6</span><br><span class="line">nf_nat_ipv4            16384  2 openvswitch,iptable_nat</span><br><span class="line">nf_nat                 28672  6 nf_nat_redirect,openvswitch,nf_nat_ipv4,nf_nat_ipv6,xt_nat,nf_nat_masquerade_ipv4</span><br><span class="line">nf_conntrack          106496  11 xt_CT,openvswitch,nf_nat,nf_nat_ipv4,nf_nat_ipv6,xt_conntrack,nf_nat_masquerade_ipv4,nf_conntrack_netlink,xt_connmark,nf_conntrack_ipv4,nf_conntrack_ipv6</span><br><span class="line">libcrc32c              16384  2 raid456,openvswitch</span><br></pre></td></tr></table></figure></p>
-<h3>启动服务</h3>
-<p>官方说明中提到有一个<code>ovs-ctl</code>的命令，然而，我安装完之后并没有这个命令。可能官方文档比较老了吧。</p>
-<h4>创建必要的目录</h4>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p /etc/openvswitch</span><br><span class="line">$ mkdir -p /var/log/openvswitch</span><br><span class="line">$ mkdir -p /var/run/openvswitch</span><br></pre></td></tr></table></figure></p>
-<h4>配置ovsdb-server</h4>
-<ul>
-<li>从源文件目录创建<code>conf.db</code></li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ovs$ ovsdb-tool create /etc/openvswitch/conf.db \</span><br><span class="line">    vswitchd/vswitch.ovsschema</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>配置</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ovsdb-server --remote=punix:/var/run/openvswitch/db.sock \</span><br><span class="line">    --remote=db:Open_vSwitch,Open_vSwitch,manager_options \</span><br><span class="line">    --private-key=db:Open_vSwitch,SSL,private_key \</span><br><span class="line">    --certificate=db:Open_vSwitch,SSL,certificate \</span><br><span class="line">    --bootstrap-ca-cert=db:Open_vSwitch,SSL,ca_cert \</span><br><span class="line">    --pidfile --detach --log-file</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>初始化数据库</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vsctl --no-wait init</span><br></pre></td></tr></table></figure></p>
-<h4>启动ovs进程</h4>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ovs-vswitchd --pidfile --detach --log-file</span><br></pre></td></tr></table></figure></p>
-<h3>验证</h3>
-<ul>
-<li>创建bridge</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-br br0</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>为br0添加接口</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl add-port br0 eth1</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>查看配置</li>
-</ul>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br></pre></td></tr></table></figure></p>
-<h3>问题及解决</h3>
-<p>安装内核模块时出现如下错误，<strong>忽略即可</strong>（我还以为很严重，搜了一阵，发现不用管）</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">$ make modules_install</span><br><span class="line">cd datapath/linux &amp;&amp; make modules_install</span><br><span class="line">make[1]: Entering directory &apos;/root/ovs/datapath/linux&apos;</span><br><span class="line">make -C /lib/modules/4.4.0-127-generic/build M=/root/ovs/datapath/linux modules_install</span><br><span class="line">make[2]: Entering directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/openvswitch.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-geneve.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-gre.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-lisp.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-stt.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  INSTALL /root/ovs/datapath/linux/vport-vxlan.ko</span><br><span class="line">At main.c:222:</span><br><span class="line">- SSL error:02001002:system library:fopen:No such file or directory: bss_file.c:175</span><br><span class="line">- SSL error:2006D080:BIO routines:BIO_new_file:no such file: bss_file.c:178</span><br><span class="line">sign-file: certs/signing_key.pem: No such file or directory</span><br><span class="line">  DEPMOD  4.4.0-127-generic</span><br><span class="line">make[2]: Leaving directory &apos;/usr/src/linux-headers-4.4.0-127-generic&apos;</span><br><span class="line">depmod `sed -n &apos;s/#define UTS_RELEASE &quot;\([^&quot;]*\)&quot;/\1/p&apos; /lib/modules/4.4.0-127-generic/build/include/generated/utsrelease.h`</span><br><span class="line">make[1]: Leaving directory &apos;/root/ovs/datapath/linux&apos;</span><br></pre></td></tr></table></figure></p>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install autoconf libtool make libssl-dev libcap-ng-dev</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/30/ovs-install/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -445,81 +500,14 @@
       
           <p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
 <p>另一方面，由于最近痴迷于Docker，所以，也同样将gitbook打包成docker image，用于快速发布。这篇文章主要用于记录整个操作过程。</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>gitbook+docker</h2>
-<h3>本地安装</h3>
-<p>可参看gitbook的<a href="https://toolchain.gitbook.com/setup.html" target="_blank" rel="noopener">官方文档</a></p>
-<ul>
-<li>
-<p>环境需求</p>
-<p>gitbook需要nodejs环境</p>
-<ul>
-<li>NodeJS (v4.0.0 and above is recommended)</li>
-</ul>
-</li>
-<li>
-<p>安装gitbook-cli</p>
-</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install gitbook-cli -g</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>
-<p>创建一本书</p>
-<p><strong>当使用gitlab时，可跳过此步骤</strong></p>
-<ul>
-<li>创建存放书籍的目录</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir mybook</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>初始化</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook init</span><br></pre></td></tr></table></figure></p>
-<p>初始化完成后，将生成<code>SUMMARY.md</code>和<code>README.md</code></p>
-<ul>
-<li>插件安装</li>
-</ul>
-<p>如果没有生成book.json，可自行创建</p>
-<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&quot;root&quot;: &quot;./&quot;,</span><br><span class="line">&quot;title&quot;: &quot;mybook&quot;,</span><br><span class="line">&quot;head_title&quot;: &quot;My first book&quot;,</span><br><span class="line">&quot;description&quot;: &quot;test with gitbook&quot;,</span><br><span class="line">&quot;author&quot;: &quot;myname&quot;,</span><br><span class="line">&quot;output.name&quot;: &quot;practice&quot;,</span><br><span class="line"></span><br><span class="line">&quot;gitbook&quot;: &quot;&gt;= 3.0.0&quot;,</span><br><span class="line"></span><br><span class="line">&quot;language&quot;: &quot;zh-hans&quot;,</span><br><span class="line">&quot;plugins&quot;: [</span><br><span class="line">        ]</span><br></pre></td></tr></table></figure></p>
-<p>将插件在<code>plugins</code>字段中进行声明后，执行以下命令进行安装</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook install</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>预览和发布自己的书</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gitbook serve</span><br></pre></td></tr></table></figure></p>
-<p>随后可登陆http://localhost:4000来预览自己的书</p>
-</li>
-</ul>
-<h3>docker镜像</h3>
-<p>其实在docker hub上搜索便可以得到gitbook的镜像，但本着学习的态度，还是自己动手练习制作自己的docker镜像。</p>
-<p>由于nodejs有官方提供的docker镜像，所以，一切变得很简单</p>
-<ul>
-<li>Dockerfile</li>
-</ul>
-<p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node:<span class="number">8</span>-alpine</span><br><span class="line"><span class="keyword">MAINTAINER</span> Bo Qi &lt;simble1986@gmail.com&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> npm install gitbook-cli -g &amp;&amp; npm install &amp;&amp; gitbook install</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /book</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4000</span> <span class="number">35729</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> gitbook install &amp;&amp; gitbook serve</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>编译docker镜像</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build --tag mygitbook .</span><br></pre></td></tr></table></figure></p>
-<h2>书的结构</h2>
-<p>当使用<code>gitbook init</code>后会在当前目录生成两个文件：<code>README.md</code>和<code>SUMMARY.md</code>.</p>
-<p>其中，<code>README.md</code>用来对本书进行一些说明</p>
-<p>而<code>SUMMARY.md</code>则用来创建目录结构。</p>
-<h3>SUMMARY.md</h3>
-<p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># Summary</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>[<span class="string">介绍</span>](<span class="link">README.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Git使用</span>](<span class="link">gitSetup.md</span>)</span><br><span class="line"><span class="bullet">* </span>[<span class="string">Python基础</span>](<span class="link">part1/README.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习1-列表</span>](<span class="link">part1/1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习2-字典</span>](<span class="link">part1/2.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习3-数据结构嵌套</span>](<span class="link">part1/3.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习4-运算符</span>](<span class="link">part1/4.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习5-逻辑控制</span>](<span class="link">part1/5.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习6-异常处理</span>](<span class="link">part1/6.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习7-函数</span>](<span class="link">part1/7.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习8-文件操作</span>](<span class="link">part1/8.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">轻松一刻-猜数字游戏</span>](<span class="link">part1/happy1.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习9-类.1</span>](<span class="link">part1/9.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习10-类.2</span>](<span class="link">part1/10.md</span>)</span><br><span class="line"><span class="bullet">    * </span>[<span class="string">练习11-类的继承</span>](<span class="link">part1/11.md</span>)</span><br></pre></td></tr></table></figure></p>
-<h3>book.json</h3>
-<p>需要自己创建book.json</p>
-<p><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"root"</span>: <span class="string">"./"</span>,</span><br><span class="line">    <span class="attr">"title"</span>: <span class="string">"练习python"</span>,</span><br><span class="line">    <span class="attr">"head_title"</span>: <span class="string">"通过练习的方式来学习python"</span>,</span><br><span class="line">    <span class="attr">"description"</span>: <span class="string">"通过小练习一点一点熟悉python"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: <span class="string">"myname(simble1986@gmail.com)"</span>,</span><br><span class="line">    <span class="attr">"output.name"</span>: <span class="string">"通过练习学脚本"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"gitbook"</span>: <span class="string">"3.2.3"</span>,</span><br><span class="line"></span><br><span class="line">    <span class="attr">"language"</span>: <span class="string">"zh-hans"</span>,</span><br><span class="line">    <span class="attr">"links"</span> : &#123;</span><br><span class="line">    <span class="attr">"sidebar"</span> : &#123;</span><br><span class="line">        <span class="attr">"Home"</span> : <span class="string">"http://www.simble.site"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"plugins"</span>: [</span><br><span class="line">        <span class="string">"autotheme"</span>,</span><br><span class="line">        <span class="string">"prism"</span>,</span><br><span class="line">        <span class="string">"prism-themes"</span>,</span><br><span class="line">        <span class="string">"-highlight"</span>,</span><br><span class="line">        <span class="string">"-search"</span>,</span><br><span class="line">        <span class="string">"search-pro"</span>,</span><br><span class="line">        <span class="string">"emphasize"</span>,</span><br><span class="line">        <span class="string">"splitter"</span>,</span><br><span class="line">        <span class="string">"tbfed-pagefooter"</span>,</span><br><span class="line">        <span class="string">"toggle-chapters"</span>,</span><br><span class="line">        <span class="string">"codeblock-filename"</span>,</span><br><span class="line">        <span class="string">"ace"</span>,</span><br><span class="line">        <span class="string">"simple-page-toc"</span>,</span><br><span class="line">        <span class="string">"edit-link"</span>,</span><br><span class="line">        <span class="string">"copy-code-button"</span>,</span><br><span class="line">        <span class="string">"alerts"</span>,</span><br><span class="line">        <span class="string">"anchor-navigation-ex"</span>,</span><br><span class="line">        <span class="string">"theme-comscore"</span></span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3>git-lab归档</h3>
-<p>在gitlab上创建自己的project并归档</p>
-<h2>在服务器上用docker启动预览</h2>
-<ul>
-<li>从gitlab上clone书的结构</li>
-<li>启动docker并挂载gitbook的目录到docker中</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d -p 80:4000 -v /mybook:/book mygitbook</span><br></pre></td></tr></table></figure></p>
-<h2>插件及说明</h2>
-<p>非常感谢<a href="http://gitbook.zhangjikai.com/plugins.html" target="_blank" rel="noopener">Zhangjikai的插件说明文档</a>，然后我发现<a href="http://blog.zhangjikai.com/" target="_blank" rel="noopener">Zhangjikai</a>和我一样使用了Hexo搭建了自己的blog，并且同样适用了Next的主题</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/11/gitbook-gitlab/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -603,7 +591,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>775</span>
+              <span>758</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -624,42 +612,14 @@
       
           <p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
 <p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
-<p>&lt;!-- more --&gt;</p>
-<h4>安装</h4>
-<p>安装virtualenv</p>
-<ul>
-<li>python2.7</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install virtualenv</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>python3</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install virtualenv</span><br></pre></td></tr></table></figure></p>
-<h4>使用</h4>
-<ul>
-<li>创建工作目录</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># mkdir myproject</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># cd myproject</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>创建独立的python运行环境</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># virtualenv venv</span></span><br><span class="line">New python executable <span class="keyword">in</span> /home/<span class="built_in">test</span>/myproject/venv/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...done.</span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>引用新的环境变量</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># source venv/bin/activate</span></span><br><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>开始使用</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># pip install docker</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>退出当前venv环境</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># deactivate</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure></p>
-<h3>一个小问题</h3>
-<p>git clone时遇到<code>server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none</code>的解决方法</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> GIT_SSL_NO_VERIFY=1</span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/07/python-virtenv/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -758,47 +718,14 @@
       
           <p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
 <p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>前言</h2>
-<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
-<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
-<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
-<h2>自动化思路</h2>
-<ol>
-<li>client通过python API连接到docker</li>
-<li>创建一个container并保持运行</li>
-<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
-<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
-</ol>
-<h3>环境准备</h3>
-<ul>
-<li>Docker开启remote API</li>
-</ul>
-<p>参见之前博文</p>
-<ul>
-<li>Docker Client</li>
-</ul>
-<p>安装必要的包</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure></p>
-<h2>开始使用</h2>
-<ul>
-<li>创建container</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>连接container</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>使用pexpect连接</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
-<h3>注意事项</h3>
-<ul>
-<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
-<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
-</ul>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/04/docker-pexpect/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -902,51 +829,18 @@
 
       
           <p>本篇博客将介绍在使用docker API时，如何监管container的PTY实现交互</p>
-<h2>问题引入</h2>
+<h2 id="问题引入"><a class="markdownIt-Anchor" href="#问题引入"></a> 问题引入</h2>
 <p>docker官方已经提供了API用来管理client，container，image，network等，基本的操作覆盖了docker CLI相关功能，但docker的API现在只能使用exec_run来执行一条命令，中间无法进行交互，希望能有一个类似于<code>-it</code>的方式来完成交互操作。</p>
 <p>经过几天的学习和测试，发现其实docker的<code>containers.run()</code>和<code>containers.exec_run()</code>都是可以设置<code>stdin=True</code>, <code>tty=True</code>。但开启这些之后，将返回一个socket，需要自己来进行处理。</p>
 <p>google大法后，找到了一个<strong>dockerpty</strong>的python lib，可以完成这件事情</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>环境搭建</h2>
-<p>根据<a href="https://github.com/d11wtq/dockerpty" target="_blank" rel="noopener">dockerpty</a>的github上提到的安装过程，只需要<code>pip install dockerpty</code>即可完成安装。</p>
-<p>但源码已经有两年没有更新了，该版本无法在新的docker API上正常工作</p>
-<p>fork了工程后，对其中的代码涉及到的docker API进行更新后，测试可以正常工作，最新的代码已经上传到git上<a href="https://github.com/simble1986/dockerpty" target="_blank" rel="noopener">simble1986/dockerpty</a></p>
-<h4>依赖</h4>
-<p>原有的project上提到依赖的docker api为<code>docker-py&gt;=0.3.2</code>，但docker的python API已经更新</p>
-<ul>
-<li>安装docker API</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install docker</span><br></pre></td></tr></table></figure></p>
-<h4>安装步骤</h4>
-<ul>
-<li>获取源码</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/simble1986/dockerpty.git</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>安装</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ pip uninstall dockerpty</span><br><span class="line">$ <span class="built_in">cd</span> dockerpty</span><br><span class="line">$ python setup.py install</span><br></pre></td></tr></table></figure></p>
-<h2>相关API</h2>
-<p>参看docker官方<a href="https://docker-py.readthedocs.io/en/stable/index.html" target="_blank" rel="noopener">API文档</a>，以下主要对container相关参数加以说明</p>
-<ul>
-<li>tty (bool) – Allocate a pseudo-TTY.</li>
-<li>stdin_open (bool) – Keep STDIN open even if not attached.</li>
-</ul>
-<h2>基本使用</h2>
-<ul>
-<li>连接client</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@slt-docker:/home/bqi<span class="comment"># python</span></span><br><span class="line">Python <span class="number">2.7</span><span class="number">.12</span> (default, Dec  <span class="number">4</span> <span class="number">2017</span>, <span class="number">14</span>:<span class="number">50</span>:<span class="number">18</span>)</span><br><span class="line">[GCC <span class="number">5.4</span><span class="number">.0</span> <span class="number">20160609</span>] on linux2</span><br><span class="line">Type <span class="string">"help"</span>, <span class="string">"copyright"</span>, <span class="string">"credits"</span> <span class="keyword">or</span> <span class="string">"license"</span> <span class="keyword">for</span> more information.</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> dockerpty</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.from_env()</span><br></pre></td></tr></table></figure></p>
-<p><strong>注</strong>： 支持远程API</p>
-<ul>
-<li>创建container</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>test1 = client.containers.create(<span class="string">"ubuntu"</span>,<span class="string">"/bin/bash"</span>,tty=<span class="literal">True</span>,stdin_open=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>使用dockerpty</li>
-</ul>
-<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>dockerpty.start(client,test1)</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># ls</span></span><br><span class="line">bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var</span><br><span class="line">root@d6ddcf619602:/<span class="comment"># exit</span></span><br><span class="line">exit</span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/03/dockerpty-usage/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1049,43 +943,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h3>问题出现</h3>
+          <h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
 <p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
-<p>&lt;!-- more --&gt;</p>
-<h3>解决思路</h3>
-<p>如果将安装好的mysql-server使用apt remove从系统中卸载后，再次重新安装，则不再需要输入密码。另外当安装完一些软件后，可以使用dpkg-config来重新配置。</p>
-<p>这样，就可以在安装软件前先对系统做好相关配置。接下来，就是需要获取软件的必要配置项</p>
-<h3>获取软件必要配置项</h3>
-<h4>下载软件包</h4>
-<p>可以通过网上搜索方式下载相关的deb包，但众所周知，Linux的软件包版本多，很多情况下并不知道需要安装哪个版本。但可以使用apt来下载相应的软件包</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -d install -y mysql-server</span><br></pre></td></tr></table></figure></p>
-<p>使用apt-get的-d参数，将只会下载，不进行安装。下载完毕后，软件包位于<code>/var/cache/apt/archives</code>目录下。</p>
-<h4>获取配置项</h4>
-<p>进入软件包的存放目录，然后执行</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg-preconfigure mysql-server-5.1_5.1.49-3_amd64.deb</span><br></pre></td></tr></table></figure></p>
-<p>使用<code>debconfig-show</code>来查看相应的配置项</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ debconf-show mysql-server</span><br><span class="line">  mysql-server/root_password: (password omitted)</span><br><span class="line">  mysql-server/root_password_again: (password omitted)</span><br><span class="line">  mysql-server/error_setting_password:</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure></p>
-<p>可以看到，有两项是必须配置的：<code>mysql-server/root_password</code>和<code>mysql-server/root_password_again</code></p>
-<h4>预配置</h4>
-<ul>
-<li>创建配置文件</li>
-</ul>
-<p>在合适的目录下创建一个文件，例如<code>mysql-passwd</code>，输入以下内容</p>
-<p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">debconf mysql-server/root_password password <span class="number">123456</span></span><br><span class="line">debconf mysql-server/root_password_again password <span class="number">123456</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>加载配置</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ debconf-set-selections mysql-passwd</span><br></pre></td></tr></table></figure></p>
-<h4>测试结果</h4>
-<p>再次安装mysql-server，将不再需要输入密码</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install -y mysql-server</span><br></pre></td></tr></table></figure></p>
-<h3>DockerFile处理</h3>
-<p>DockerFile应当尽量避免不需要的操作，所以，获取配置项的操作可以提前在实验环境中完成。</p>
-<p>可将获取的命令行保存为本地文件，使用时copy过去。</p>
-<p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> ./mysql-passwd /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure></p>
-<p>或者是在DockerFile中直接生成，这时则可以将mysql passwd设置为参数</p>
-<p><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> debconf mysql-server/root_password password 123456 &gt; /tmp/mysql-passwd &amp;&amp; <span class="built_in">echo</span> debconf mysql-server/root_password_again password 123456 &gt;&gt; /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/30/docker-install-mysql-server-no-passwd/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1169,7 +1036,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1189,61 +1056,14 @@
 
       
           <p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
-<p>&lt;!-- more --&gt;</p>
-<h2>简介</h2>
-<h3>Valine</h3>
-<p><a href="https://valine.js.org/" target="_blank" rel="noopener">Valine</a>是一款基于<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>的快速、简洁且高效的无后端评论系统。</p>
-<h3>Leancloud</h3>
-<p>我的理解，<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>相当于是一个数据托管平台，可以帮助应用存储相关数据。Valine主要用到的是其中的数据存储——comments</p>
-<h2>环境说明</h2>
-<p>使用了最新版的<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>以及最新版的<a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">Next主题</a></p>
-<h2>获取AppID</h2>
-<h3>注册Leancloud</h3>
-<p>访问<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>，点击<a href="https://leancloud.cn/dashboard/login.html#/signup" target="_blank" rel="noopener">免费试用</a>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
-<p><img src="/2018/03/27/hexo-next-valine/leancloud_signup.png" class title="注册页面"></p>
-<p><em>注册完后需要验证邮箱</em></p>
-<h3>创建应用</h3>
-<p>访问<a href="https://leancloud.cn/applist.html" target="_blank" rel="noopener">控制台</a>，在控制台中创建新应用</p>
-<p><img src="/2018/03/27/hexo-next-valine/leancloud_new_app.png" class title="创建应用"></p>
-<h3>获取应用Key</h3>
-<p>点击新创建的应用——设置——应用Key，保存页面上的App ID以及App Key以备后续使用</p>
-<p><img src="/2018/03/27/hexo-next-valine/leancloud_appkey.png" class title="应用Key"></p>
-<h2>配置Valine</h2>
-<p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<a href="https://valine.js.org/#/hexo?id=hexo-theme-next" target="_blank" rel="noopener">Hexo中使用Valine</a>，点击<a href="https://github.com/iissnan/hexo-theme-next/pull/1983" target="_blank" rel="noopener">merged</a>，会跳转到Next主题的merge历史</p>
-<h3>检查相关文件</h3>
-<p>可以再次检查并确认&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;_config.xml，<code>layout/_macro/post.swig</code>和<code>layout/_third-party/comments/valine.swig</code>是否都已经合入了相关代码</p>
-<h3>配置AppKey</h3>
-<p>编辑&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;_config.xml中的valine部分内容</p>
-<p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">valine:</span><br><span class="line">  enable: true</span><br><span class="line">  appid: $Your APP ID # your leancloud application appid</span><br><span class="line">  appkey: $Your APP Key # your leancloud application appkey</span><br><span class="line">  notify: false # mail notifier , http<span class="variable">s:</span>//github.<span class="keyword">com</span>/xCss/Valine/wiki</span><br><span class="line">  verify: false # Verification code</span><br><span class="line">  placeholder: 随便说些什么吧 # comment box placeholder</span><br><span class="line">  avatar: mm # gravatar style</span><br><span class="line">  guest_info: nick,mail,link # custom comment header</span><br><span class="line">  pageSize: <span class="number">10</span> # pagination size</span><br></pre></td></tr></table></figure></p>
-<h3>重新生成页面</h3>
-<p>执行命令，重新生成并部署
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure></p>
-<p><strong>到这里，查看页面已经可以看到评论系统</strong></p>
-<h2>创建留言页面</h2>
-<p>可以为站点创建一个单独的留言板页面</p>
-<h3>创建页面</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page guestbook</span><br></pre></td></tr></table></figure></p>
-<h3>配置主题</h3>
-<ul>
-<li>修改主题配置文件</li>
-</ul>
-<p>在&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;_config.xml的menu字段新增guestbook字段</p>
-<p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> /<span class="keyword">tags</span>/ || <span class="keyword">tags</span></span><br><span class="line">  categorie<span class="variable">s:</span> /categories/ || <span class="keyword">th</span></span><br><span class="line">  archive<span class="variable">s:</span> /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonwea<span class="variable">l:</span> /<span class="number">404</span>/ || heartbeat</span><br><span class="line">  abou<span class="variable">t:</span> /about/ || user</span><br><span class="line">  guestbook: /guestbook/ || comments</span><br></pre></td></tr></table></figure></p>
-<p><em>可以访问<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">fontawesome</a>选择自己喜欢的图标来作为留言板的图标</em></p>
-<ul>
-<li>本地化处理</li>
-</ul>
-<p>编辑对应语言的配置文件<code>themes/next/languages/zh-CN.yml</code>，在menu中增加guestbook的中文</p>
-<p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: 首页</span><br><span class="line">  archive<span class="variable">s:</span> 归档</span><br><span class="line">  categorie<span class="variable">s:</span> 分类</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> 标签</span><br><span class="line">  abou<span class="variable">t:</span> 关于</span><br><span class="line">  <span class="built_in">search</span>: 搜索</span><br><span class="line">  schedule: 日程表</span><br><span class="line">  sitemap: 站点地图</span><br><span class="line">  commonwea<span class="variable">l:</span> 公益 <span class="number">404</span></span><br><span class="line">  guestbook: 留言</span><br></pre></td></tr></table></figure></p>
-<h3>编辑页面</h3>
-<p>编辑之前生成的guestbook页面</p>
-<p><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 留言板</span><br><span class="line">date: <span class="number">2018</span>-<span class="number">03</span>-<span class="number">26</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">19</span></span><br><span class="line">comment<span class="variable">s:</span> true</span><br><span class="line">---</span><br><span class="line"><span class="symbol">&lt;center&gt;</span>既然来了，就是一种缘分，留下点什么吧:<span class="keyword">ca</span><span class="variable">t:</span>&lt;/<span class="keyword">center</span>&gt;</span><br></pre></td></tr></table></figure></p>
-<p>重新部署之后就可以看到留言板了 :)</p>
-<h2>清除测试留言</h2>
-<p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<a href="https://leancloud.cn/dashboard/applist.html#/apps" target="_blank" rel="noopener">控制台</a>清除测试数据</p>
-<p>点击<em>myblog</em>——存储——Comments，即可查看当前留言，选中测试时的留言，删除即可</p>
-<p><img src="/2018/03/27/hexo-next-valine/leancloud_cleancomments.png" class title="清除测试留言"></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/27/hexo-next-valine/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1347,40 +1167,18 @@
 
       
           <p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
-<h3>可行的方法</h3>
+<h3 id="可行的方法"><a class="markdownIt-Anchor" href="#可行的方法"></a> 可行的方法</h3>
 <ul>
 <li>编辑/lib/systemd/system/docker.service</li>
 </ul>
-<p>&lt;!-- more --&gt;</p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /lib/systemd/system/docker.service</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>修改ExecStart的参数</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0:2375</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>随后执行<code>service docker restart</code>时会提示<code>Warning: docker.service changed on disk. Run 'systemctl daemon-reload' to reload units.</code>则表示配置成功</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl daemon-reload</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>重启docker服务</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker restart</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>测试是否成功</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl http://localhost:2375/containers/json</span><br><span class="line">[&#123;<span class="string">"Id"</span>:<span class="string">"30c8e35f1292421d11f6b09385a4fc980d6abaca591d0f52b18dbad8e4f5be04"</span>,<span class="string">"Names"</span>:[<span class="string">"/clever_murdock"</span>],<span class="string">"Image"</span>:<span class="string">"portainer/portainer"</span>,<span class="string">"ImageID"</span>:<span class="string">"sha256:a8f2aeb34cf69178be1d152759fb17ccff7915faf750c82cd7d1851b12ec7b37"</span>,<span class="string">"Command"</span>:<span class="string">"/portainer"</span>,<span class="string">"Created"</span>:1520845664,<span class="string">"Ports"</span>:[&#123;<span class="string">"IP"</span>:<span class="string">"0.0.0.0"</span>,<span class="string">"PrivatePort"</span>:9000,<span class="string">"PublicPort"</span>:9000,<span class="string">"Type"</span>:<span class="string">"tcp"</span>&#125;],<span class="string">"Labels"</span>:&#123;&#125;,<span class="string">"State"</span>:<span class="string">"running"</span>,<span class="string">"Status"</span>:<span class="string">"Up 13 minutes"</span>,<span class="string">"HostConfig"</span>:&#123;<span class="string">"NetworkMode"</span>:<span class="string">"default"</span>&#125;,<span class="string">"NetworkSettings"</span>:&#123;<span class="string">"Networks"</span>:&#123;<span class="string">"bridge"</span>:&#123;<span class="string">"IPAMConfig"</span>:null,<span class="string">"Links"</span>:null,<span class="string">"Aliases"</span>:null,<span class="string">"NetworkID"</span>:<span class="string">"78fa057306e70838bab1e18359c86bd8eff7de2285c351784ad951cd7a73f8d1"</span>,<span class="string">"EndpointID"</span>:<span class="string">"e99ca98169320155c8833a8746be7d0e1c8d98186c75fba9d9bf2486367a4e00"</span>,<span class="string">"Gateway"</span>:<span class="string">"172.17.0.1"</span>,<span class="string">"IPAddress"</span>:<span class="string">"172.17.0.2"</span>,<span class="string">"IPPrefixLen"</span>:16,<span class="string">"IPv6Gateway"</span>:<span class="string">""</span>,<span class="string">"GlobalIPv6Address"</span>:<span class="string">""</span>,<span class="string">"GlobalIPv6PrefixLen"</span>:0,<span class="string">"MacAddress"</span>:<span class="string">"02:42:ac:11:00:02"</span>,<span class="string">"DriverOpts"</span>:null&#125;&#125;&#125;,<span class="string">"Mounts"</span>:[&#123;<span class="string">"Type"</span>:<span class="string">"bind"</span>,<span class="string">"Source"</span>:<span class="string">"/opt/portainer"</span>,<span class="string">"Destination"</span>:<span class="string">"/data"</span>,<span class="string">"Mode"</span>:<span class="string">""</span>,<span class="string">"RW"</span>:<span class="literal">true</span>,<span class="string">"Propagation"</span>:<span class="string">"rprivate"</span>&#125;,&#123;<span class="string">"Type"</span>:<span class="string">"bind"</span>,<span class="string">"Source"</span>:<span class="string">"/var/run/docker.sock"</span>,<span class="string">"Destination"</span>:<span class="string">"/var/run/docker.sock"</span>,<span class="string">"Mode"</span>:<span class="string">""</span>,<span class="string">"RW"</span>:<span class="literal">true</span>,<span class="string">"Propagation"</span>:<span class="string">"rprivate"</span>&#125;]&#125;]</span><br></pre></td></tr></table></figure></p>
-<h3>不可行的方法</h3>
-<p>同时列出在Ubuntu上不可行的方法</p>
-<ul>
-<li>修改<code>/etc/default/docker</code>中的<code>DOCKER_OPTS</code></li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DOCKER_OPTS=<span class="string">'-H fd:// -H tcp://0.0.0.0:2375'</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>修改<code>/etc/init/docker.conf</code>中的<code>DOCKER_OPTS</code></li>
-</ul>
-<p><em>网上有人说在Ubuntu14.04上可以生效</em></p>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># modify these in /etc/default/$UPSTART_JOB (/etc/default/docker)</span></span><br><span class="line">        DOCKERD=/usr/bin/dockerd</span><br><span class="line">        DOCKER_OPTS=<span class="string">'-H unix:///var/run/docker.sock -H tcp://0.0.0.0:2375'</span></span><br></pre></td></tr></table></figure></p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/27/enable-docker-remote-api/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1464,7 +1262,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.5k</span>
+              <span>1.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1483,265 +1281,17 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2>安装及配置</h2>
-<h3>简介</h3>
-<p><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>是一个快速、简介且高效的博客框架，可以使用<a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>解析文章并生成网站
-&lt;!-- more --&gt;</p>
-<h3>说明</h3>
-<p>&lt;span id=&quot;inline-blue&quot;&gt;站点配置文件&lt;/span&gt; <code>$site_dir/_config.xml</code></p>
-<p>&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;<code>$site_dir/theme/$theme_dir/_config</code></p>
-<h3>安装hexo</h3>
-<p>当环境准备好git以及nodejs后便可以安装hexo
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br></pre></td></tr></table></figure></p>
-<h3>建站</h3>
-<p>安装Hexo后，创建站点文件存放的文件夹，如<em>blog</em>，然后执行
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
-<p>完成后，blog目录结构
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── _config.yml</span><br><span class="line">├── package.json</span><br><span class="line">├── scaffolds</span><br><span class="line">├── <span class="built_in">source</span></span><br><span class="line">|   ├── _drafts</span><br><span class="line">|   └── _posts</span><br><span class="line">└── themes</span><br></pre></td></tr></table></figure></p>
-<h3>配置</h3>
-<p>修改_config.yml
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">title:</span> <span class="string">your</span> <span class="string">site</span> <span class="string">tile</span></span><br><span class="line"><span class="attr">subtitle:</span> </span><br><span class="line"><span class="attr">description:</span> <span class="string">description</span></span><br><span class="line"><span class="attr">author:</span> <span class="string">your</span> <span class="string">name</span></span><br><span class="line"><span class="attr">language:</span> <span class="string">zh-Hans</span></span><br><span class="line"><span class="attr">timezone:</span> <span class="string">Asia/Shanghai</span></span><br></pre></td></tr></table></figure></p>
-<h3>常用命令</h3>
-<ul>
-<li>
-<p>清除缓存文件及已生成的静态文件
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>启动服务器
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<em>默认状况下，服务器将使用4000端口。可以通过<code>hexo server -p 80</code>来将server绑定至80端口</em></p>
-</li>
-<li>
-<p>部署网站
-可将网站按照_config.yml中的配置直接部署于github等（后续看心情写步骤）
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>主题修改</h3>
-<p>可访问hexo官方<a href="https://hexo.io/themes/" target="_blank" rel="noopener">主题库</a>选择自己喜欢的主题，并下载至theme目录下</p>
-<p>修改_config.xml中的theme字段
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">theme: landscape</span><br></pre></td></tr></table></figure></p>
-<h2>写作</h2>
-<p>有两种方法创建文章</p>
-<h3>创建文章</h3>
-<ul>
-<li>hexo命令行方式
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new &lt;layout&gt; title</span><br></pre></td></tr></table></figure>
-<em>layout为模版</em></li>
-</ul>
-<p>命令执行后，默认文章将位于source/_post/目录下，文件内容为：
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: test</span><br><span class="line">date: 2018-03-25 23:10:04</span><br><span class="line">tags:</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>直接创建文件
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="built_in">source</span>/_post/</span><br><span class="line">$ touch myfirstblog.md</span><br></pre></td></tr></table></figure>
-此时文件内容为空，需要自己添加相关内容</li>
-</ul>
-<h3>创建标签页</h3>
-<ul>
-<li>配置确认</li>
-</ul>
-<p>确认&lt;span id=&quot;inline-blue&quot;&gt;站点配置文件&lt;/span&gt;中有以下内容
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tag_dir:</span> <span class="string">tags</span></span><br></pre></td></tr></table></figure>
-确认&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;中tags打开
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="string">主页:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">home</span></span><br><span class="line">  <span class="string">标签:</span> <span class="string">/tags/</span> <span class="string">||</span> <span class="string">tags</span></span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>创建标签页
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page tags</span><br></pre></td></tr></table></figure></li>
-</ul>
-<p>修改tags/index.md中的type为&quot;tags&quot;
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: Tagcloud</span><br><span class="line">date: 2018-03-23 01:18:00</span><br><span class="line">type: "tags"</span><br><span class="line">---</span><br></pre></td></tr></table></figure></p>
-<h3>创建分类页面</h3>
-<p>与创建标签页相似</p>
-<ul>
-<li>确认配置</li>
-</ul>
-<p>&lt;span id=&quot;inline-blue&quot;&gt;站点配置文件&lt;/span&gt;中有<code>category_dir: categories</code></p>
-<p>&lt;span id=&quot;inline-yellow&quot;&gt;主题配置文件&lt;/span&gt;中的<code>分类: /categories/ || th</code>开启</p>
-<ul>
-<li>创建分类也
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
+          <h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
+<h3 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h3>
+<p><a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a>是一个快速、简介且高效的博客框架，可以使用<a href="https://daringfireball.net/projects/markdown/" target="_blank" rel="noopener">Markdown</a>解析文章并生成网站</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/25/setup-hexo-create-site/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2018/03/23/docker_study_cmd1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Simble">
-      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Simble的小站">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/23/docker_study_cmd1/" class="post-title-link" itemprop="url">docker基本操作（一）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-03-23 09:14:57" itemprop="dateCreated datePublished" datetime="2018-03-23T09:14:57+08:00">2018-03-23</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-05-04 17:58:13" itemprop="dateModified" datetime="2018-05-04T17:58:13+08:00">2018-05-04</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus：</span>
-    
-    <a title="disqus" href="/2018/03/23/docker_study_cmd1/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/03/23/docker_study_cmd1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-clock-o"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>本文作为docker使用笔记供小伙伴们参考</p>
-<h2>准备工作</h2>
-<p>安装最新版的docker-ce，会将自动命令行补齐安装在<code>/usr/share/bash-completion/completions/docker</code>目录
-&lt;!-- more --&gt;
-为了方便操作，在ubuntu上打开docker命令行自动补齐功能</p>
-<p>编辑/etc/bash.bashrc文件，查找completion段，将该段内容前的#删除即可
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># enable bash completion in interactive shells</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="built_in">shopt</span> -oq posix; <span class="keyword">then</span></span><br><span class="line">  <span class="keyword">if</span> [ -f /usr/share/bash-completion/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /usr/share/bash-completion/bash_completion</span><br><span class="line">  <span class="keyword">elif</span> [ -f /etc/bash_completion ]; <span class="keyword">then</span></span><br><span class="line">    . /etc/bash_completion</span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
-<h2>image操作</h2>
-<ul>
-<li>
-<p>build image
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker build -t mytest:latest .</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>查看image
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker images</span><br><span class="line">REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">nginx                 &lt;none&gt;              73acd1f0cfad        8 days ago          109MB</span><br><span class="line">mongo                 3                   5b1317f8158f        8 days ago          366MB</span><br><span class="line">$ dockeer image ls</span><br></pre></td></tr></table></figure></p>
-</li>
-<li>
-<p>删除image
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker image rm &lt;id/name&gt;</span><br><span class="line">$ docker rmi &lt;id/name&gt;</span><br></pre></td></tr></table></figure></p>
-</li>
-</ul>
-<h3>从docker hub上获取image</h3>
-<p><em>国内访问docker hub较慢，可使用阿里云的docker镜像服务</em>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull nginx</span><br></pre></td></tr></table></figure></p>
-<h2>continer相关</h2>
-<h3>创建docker</h3>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -d --name mytest -p 80:80 mynginx</span><br></pre></td></tr></table></figure></p>
-<p>常用参数说明</p>
-<blockquote>
-<p>--rm 当运行结束（==当CMD或entrypoint或docker run命令行指定的命令运行结束时，容器停止==）时自动删除docker&lt;br&gt;
--it 重定向docker终端&lt;br&gt;
--d 在后台执行&lt;br&gt;
--e 添加运行时的参数，常被用于docker CMD执行时增加参数</p>
-</blockquote>
-<p><strong>docker支持长id和短id方式索引，亦可通过名称进行索引</strong></p>
-<ul>
-<li>stop/start/restart容器</li>
-</ul>
-<ol>
-<li>通过docker stop可以停止运行的容器，也可以使用docker kill来快速停止一个容器</li>
-<li>docker start会保留容器的第一次启动时的所有参数</li>
-<li>docker restart可以重启容器</li>
-<li>可以在启动容器时设置--restart来自动重启容器</li>
-</ol>
-<ul>
-<li>删除容器</li>
-</ul>
-<ol>
-<li>可以使用docker ps列出当前正在运行的容器</li>
-<li>容器停止运行不代表容器已经被删除，可以使用docker ps -a</li>
-<li>使用docker rm来删除一个容器</li>
-<li>使用docker rmi则会删除docker的image</li>
-</ol>
-<h3>查看及操作</h3>
-<ul>
-<li>查看容器状态</li>
-</ul>
-<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br></pre></td></tr></table></figure>
-使用docker ps -a查看所有容器（包含休眠状态）
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                    COMMAND                   CREATED             STATUS              PORTS                        NAMES</span><br><span class="line">30c8e35f1292        portainer/portainer      <span class="string">"/portainer"</span>              10 days ago         Up 2 days           0.0.0.0:9000-&gt;9000/tcp       clever_murdock</span><br><span class="line">ef58155f9957        registry:2               <span class="string">"/entrypoint.sh /etc…"</span>    2 days ago          Exited (137) 41 hours ago                                sltregistry</span><br></pre></td></tr></table></figure></p>
-<ul>
-<li>连接到容器的终端</li>
-</ul>
-<p><em>尽量使用exec方法，attach连入后可查看当前容器命令运行的日志，但不当的操作容易使运行中的容器退出</em></p>
-<ol>
-<li>使用attach
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker attach &lt;id/name&gt;</span><br></pre></td></tr></table></figure></li>
-<li>使用exec
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it &lt;id/name&gt; /bin/sh</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ul>
-<li>查看容器运行的日志</li>
-</ul>
-<p>容器以<code>-d</code>参数运行时，可以使用docker logs查看运行过程中的日志
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ docker logs mytest_haproxy</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] Cannot raise FD <span class="built_in">limit</span> to 200000011, <span class="built_in">limit</span> is 1048576.</span><br><span class="line">[WARNING] 079/100555 (1) : [haproxy.main()] FD <span class="built_in">limit</span> (1048576) too low <span class="keyword">for</span> maxconn=100000000/maxsock=200000011. Please raise <span class="string">'ulimit-n'</span> to 200000011 or more to avoid any trouble.</span><br></pre></td></tr></table></figure></p>
-
       
     </div>
 
@@ -1806,7 +1356,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1884,12 +1434,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">145k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:12</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

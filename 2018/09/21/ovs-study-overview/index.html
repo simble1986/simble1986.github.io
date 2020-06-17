@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with&#x2F;without LAC) 可见性：NetFlow, sFlow(R), and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发  &amp;lt;!-- more --&amp;g">
+  <meta name="description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with&#x2F;without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
 <meta name="keywords" content="ovs,network,openvswitch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenvSwitch学习笔记1">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;21&#x2F;ovs-study-overview&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with&#x2F;without LAC) 可见性：NetFlow, sFlow(R), and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发  &amp;lt;!-- more --&amp;g">
+<meta property="og:description" content="功能支持  VLAN with trunk and access ports 绑定NIC(with&#x2F;without LAC) 可见性：NetFlow, sFlow®, and mirroring QoS Geneve, GRE, VXLAN, STT, and LISP 隧道 连接故障管理 openflow 1.0及其扩展 使用Linux内核进行高性能转发">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;21&#x2F;ovs-study-overview&#x2F;ovs-arch.png">
 <meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;09&#x2F;21&#x2F;ovs-study-overview&#x2F;ovs-module.png">
@@ -155,7 +155,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">42</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">43</span></a>
 
   </li>
         <li class="menu-item menu-item-guestbook">
@@ -252,7 +252,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>930</span>
+              <span>911</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -271,19 +271,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2>功能支持</h2>
+        <h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
 <ol>
 <li>VLAN with trunk and access ports</li>
 <li>绑定NIC(with/without LAC)</li>
-<li>可见性：NetFlow, sFlow(R), and mirroring</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
 <li>QoS</li>
 <li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
 <li>连接故障管理</li>
 <li>openflow 1.0及其扩展</li>
 <li>使用Linux内核进行高性能转发</li>
 </ol>
-<p>&lt;!-- more --&gt;</p>
-<h2>主要组成部分</h2>
+<a id="more"></a>
+<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
 <ul>
 <li>
 <p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
@@ -301,7 +301,7 @@
 <p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
 </li>
 </ul>
-<h2>场景</h2>
+<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
 <p>多服务器虚拟化部署场景</p>
 <ul>
 <li>高动态的end-points</li>
@@ -310,8 +310,8 @@
 <li>响应网络动态修改</li>
 <li>维护逻辑标签</li>
 </ul>
-<h3>包处理流程</h3>
-<p><img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class title="arch"></p>
+<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class title="arch">
 <p>如上图</p>
 <ol>
 <li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
@@ -319,8 +319,8 @@
 <li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
 <li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
 </ol>
-<h3>包处理流程</h3>
-<p><img src="/2018/09/21/ovs-study-overview/ovs-module.png" class title="module"></p>
+<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class title="module">
 <ol>
 <li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
 <li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
@@ -425,7 +425,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">功能支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">主要组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.1.</span> <span class="nav-text">包处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">3.2.</span> <span class="nav-text">包处理流程</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#功能支持"><span class="nav-number">1.</span> <span class="nav-text"> 功能支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主要组成部分"><span class="nav-number">2.</span> <span class="nav-text"> 主要组成部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场景"><span class="nav-number">3.</span> <span class="nav-text"> 场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#包处理流程"><span class="nav-number">3.1.</span> <span class="nav-text"> 包处理流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包处理流程-2"><span class="nav-number">3.2.</span> <span class="nav-text"> 包处理流程</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -441,7 +441,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -519,12 +519,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">145k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:12</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>
