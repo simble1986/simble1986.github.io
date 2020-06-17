@@ -272,14 +272,27 @@
 <p>秉持眼过千遍不如手过一遍的原则.</p>
 <p>对应章节：<a href="https://time.geekbang.org/column/article/14642" target="_blank" rel="noopener">05 | 白话容器基础（一）：从进程说开去</a></p>
 </blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/06/17/kubernetesLearning01/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h2>操作</h2>
+<h3>start一个container</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker run -it -d busybox</span><br></pre></td></tr></table></figure></p>
+<h3>查看进程</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">...</span><br><span class="line">root      2817  0.0  0.2 107700  2296 ?        Sl   05:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.run</span><br><span class="line">root      2851  0.0  0.0   1308     4 pts/0    Ss+  05:42   0:00 sh</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<h3>查看进程树</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ pstree  -g</span><br><span class="line">systemd(1)─┬─VGAuthService(562)</span><br><span class="line">           ├─accounts-daemon(866)─┬─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           │                      └─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           ├─atd(928)</span><br><span class="line">           ├─containerd(1055)─┬─containerd-shim(2817)─┬─sh(2851)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       └─&#123;containerd-shim&#125;(2817)</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure></p>
+<h3>查看容器内进程</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br></pre></td></tr></table></figure></p>
+<h3>分别查看两个进程的namespace</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">/proc/2817/ns<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; <span class="string">'ipc:[4026531839]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; <span class="string">'mnt:[4026531840]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 net -&gt; <span class="string">'net:[4026531993]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; <span class="string">'uts:[4026531838]</span></span><br><span class="line"><span class="string">/proc/2851/ns# ls -l</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; '</span>cgroup:[4026531835]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; '</span>ipc:[4026532571]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; '</span>mnt:[4026532569]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:42 net -&gt; '</span>net:[4026532574]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; '</span>user:[4026531837]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; '</span>uts:[4026532570]<span class="string">'</span></span><br></pre></td></tr></table></figure></p>
+<h2>总结</h2>
+<ol>
+<li>启动一个docker容器后，会看到启动了一个2817的进程，这个进程是1055的子进程</li>
+<li>而因为busybox容器启动后，启动了<code>sh</code>，其实际上是2817的子进程2851</li>
+<li>而在容器中，能看到1号进程是<code>sh</code></li>
+<li>通过/proc下可以看到，进程2817和进程2851的ns下，cgroup是都是<code>4026531835</code></li>
+<li>而很明显，每个container都会创建<code>ipc</code>, <code>mnt</code>, <code>net</code>, <code>pid</code>, <code>pid_for_children</code>, <code>user</code>, <code>uts</code>这些namespace</li>
+</ol>
+
       
     </div>
 
@@ -381,14 +394,95 @@
 <li>Ubuntu20.04</li>
 <li>master + slave</li>
 </ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/19/ubuntu-install-k8s-aliyun/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h2>安装docker</h2>
+<p>分别在两个node上安装docker-ce</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get update </span><br><span class="line">$ apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br><span class="line">$ apt update</span><br><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure></p>
+<h2>安装kubeadm，kubectl，kubelet</h2>
+<p>分别在两个node上安装</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get update &amp;&amp; apt-get install -y apt-transport-https</span><br><span class="line">$ curl https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | apt-key add - </span><br><span class="line">$ cat &lt;&lt;EOF &gt;/etc/apt/sources.list.d/kubernetes.list</span><br><span class="line">deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main</span><br><span class="line">EOF</span><br><span class="line">$ apt-get update</span><br><span class="line">$ apt-get install -y kubelet kubeadm kubectl</span><br></pre></td></tr></table></figure></p>
+<h2>初始化master节点</h2>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm init --pod-network-cidr=172.172.0.0/16 --image-repository registry.aliyuncs.com/google_containers</span><br></pre></td></tr></table></figure></p>
+<p>安装成功后，会有如下信息：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Your Kubernetes control-plane has initialized successfully!</span><br><span class="line"></span><br><span class="line">To start using your cluster, you need to run the following as a regular user:</span><br><span class="line"></span><br><span class="line">  mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">  sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">  sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br><span class="line"></span><br><span class="line">You should now deploy a pod network to the cluster.</span><br><span class="line">Run <span class="string">"kubectl apply -f [podnetwork].yaml"</span> with one of the options listed at:</span><br><span class="line">  https://kubernetes.io/docs/concepts/cluster-administration/addons/</span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"></span><br><span class="line">kubeadm join 10.160.18.180:6443 --token 5xxosi.3du1z15pevcvnyyx \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:4cc4977482e04ac0ca845bf3520a6a5fa8a0cf6ac8233e734a47e0250c259f73</span><br></pre></td></tr></table></figure></p>
+<p>根据提示，执行</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">$ sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">$ sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure></p>
+<h2>安装flannel</h2>
+<p>参考： <a href="https://github.com/coreos/flannel" target="_blank" rel="noopener">https://github.com/coreos/flannel</a></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure></p>
+<h2>安装dashboard</h2>
+<p>参考：<a href="https://github.com/kubernetes/dashboard" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard</a></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml</span><br></pre></td></tr></table></figure></p>
+<h4>修改dashboard配置</h4>
+<p>修改<code>spec</code>中的<code>type</code>为<code>NodePort</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kubernetes-dashboard edit service kubernetes-dashboard</span><br><span class="line">.......</span><br><span class="line">spec:</span><br><span class="line">  clusterIP: 10.101.212.193</span><br><span class="line">  externalTrafficPolicy: Cluster</span><br><span class="line">  ports:</span><br><span class="line">  - nodePort: 32609</span><br><span class="line">    port: 443</span><br><span class="line">    protocol: TCP</span><br><span class="line">    targetPort: 8443</span><br><span class="line">  selector:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  sessionAffinity: None</span><br><span class="line">  <span class="built_in">type</span>: NodePort</span><br></pre></td></tr></table></figure></p>
+<p>修改成功后，查看port信息</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kubernetes-dashboard get service kubernetes-dashboard</span><br><span class="line">NAME                   TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE</span><br><span class="line">kubernetes-dashboard   NodePort   10.101.212.193   &lt;none&gt;        443:32609/TCP   27m</span><br></pre></td></tr></table></figure></p>
+<p><strong>现在，可以通过<code>https://&lt;master-ip&gt;:&lt;NodePort&gt;</code>（这里的port是32609）来访问dashboard了</strong></p>
+<p>虽然页面已经展示出来了，但需要使用token或Kubeconfig才能访问</p>
+<h4>创建sample-user</h4>
+<h5>创建服务账号</h5>
+<p>新建<code>dashboard-adminuser.yaml</code>并写入：</p>
+<p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">admin-user</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kubernetes-dashboard</span></span><br></pre></td></tr></table></figure></p>
+<p>执行：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl apply -f dashboard-adminuser.yaml</span><br></pre></td></tr></table></figure></p>
+<h5>创建ClusterRoleBinding</h5>
+<p>新建<code>cluster-role-binding.yaml</code>并写入：</p>
+<p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">rbac.authorization.k8s.io/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ClusterRoleBinding</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">admin-user</span></span><br><span class="line"><span class="attr">roleRef:</span></span><br><span class="line">  <span class="attr">apiGroup:</span> <span class="string">rbac.authorization.k8s.io</span></span><br><span class="line">  <span class="attr">kind:</span> <span class="string">ClusterRole</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">cluster-admin</span></span><br><span class="line"><span class="attr">subjects:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">kind:</span> <span class="string">ServiceAccount</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">admin-user</span></span><br><span class="line">  <span class="attr">namespace:</span> <span class="string">kubernetes-dashboard</span></span><br></pre></td></tr></table></figure></p>
+<p>执行：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubetcl apply -f cluster-role-binding.yaml</span><br></pre></td></tr></table></figure></p>
+<h5>获取token</h5>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line">Name:         admin-user-token-jmggp</span><br><span class="line">Namespace:    kubernetes-dashboard</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  kubernetes.io/service-account.name: admin-user</span><br><span class="line">              kubernetes.io/service-account.uid: 58210c16-0fac-438c-8867-d0a3e7b950b9</span><br><span class="line"></span><br><span class="line">Type:  kubernetes.io/service-account-token</span><br><span class="line"></span><br><span class="line">Data</span><br><span class="line">====</span><br><span class="line">ca.crt:     1025 bytes</span><br><span class="line">namespace:  20 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IlhTSnlXMUhXTlNnUmd4MlVMTzdtbm14YVdiSzNUdjk4UnVoZ3RRbUFXZGsifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWptZ2dwIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiI1ODIxMGMxNi0wZmFjLTQzOGMtODg2Ny1kMGEzZTdiOTUwYjkiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.F4TKNO_6Guu-vcLUtELUOhRI2dGMcZ3V1et2evono_a6f-TvCR9c4pbyYCnRdCG6_MumTmyE5W1g3zHioVnb5TgnGwfmAfIWLltwwLEOxOdLfO7oqM8zrYfzZnIH16SoOZQYMU7xIk5MhE5WN265n8Q2kpDMraf0L06_nqNy1pq8h9eaX0QIntosl4fmf9KVew0geLCKbknEwpnzGGfSCcKLLgE7a45ACWwStJiL29t69gcKJ6ze33MXpA5_irk2nKkavXbKEk7ejapgYK66nOxJnDKgbNVDcBP47xHrPjGeeupB6bw6uUMWxA6z4kJUTVRepk6yTMGVDPzB9Muicw</span><br></pre></td></tr></table></figure></p>
+<p><strong>现在，可以使用token登录Dashboard了</strong></p>
+<h2>slave节点加入集群</h2>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubeadm join 10.160.18.180:6443 --token 5xxosi.3du1z15pevcvnyyx \</span><br><span class="line">    --discovery-token-ca-cert-hash sha256:4cc4977482e04ac0ca845bf3520a6a5fa8a0cf6ac8233e734a47e0250c259f73</span><br></pre></td></tr></table></figure></p>
+<h3>问题及解决方案</h3>
+<h4>docker cgroup driver问题</h4>
+<p><strong>问题日志</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[WARNING IsDockerSystemdCheck]: detected <span class="string">"cgroupfs"</span> as the Docker cgroup driver. The recommended driver is <span class="string">"systemd"</span>. Please follow the guide at https://kubernetes.io/docs/setup/cri/</span><br></pre></td></tr></table></figure></p>
+<p><strong>解决方法</strong></p>
+<ol>
+<li>在<code>/etc/docker/</code>下创建<code>daemon.json</code></li>
+</ol>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"exec-opts"</span>: [<span class="string">"native.cgroupdriver=systemd"</span>]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></p>
+<ol start="2">
+<li>重启docker进程</li>
+</ol>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart docker</span><br><span class="line">$ systemctl status docker</span><br></pre></td></tr></table></figure></p>
+<h4>swap问题</h4>
+<p><strong>问题日志</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[ERROR Swap]: running with swap on is not supported. Please <span class="built_in">disable</span> swap</span><br></pre></td></tr></table></figure></p>
+<p><strong>解决方法</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ swapoff -a</span><br><span class="line"><span class="comment"># 在所有node上执行</span></span><br></pre></td></tr></table></figure></p>
+<p>但这只是暂时关闭了swap，重启node后，就会再次打开。需要修改<code>/etc/fstab</code>，在swap那行加上<code>#</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#UUID=4eeb5155-41f9-4478-a420-2beb4290a721 none            swap    sw              0       0</span></span><br></pre></td></tr></table></figure></p>
+<h3>Node处于NotReady状态</h3>
+<p>node处于NotReady状态的原因有很多。可以一步一步处理</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get nodes</span><br><span class="line">NAME    STATUS   ROLES    AGE     VERSION</span><br><span class="line">node1   Ready    master   4h56m   v1.18.2</span><br><span class="line">node2   NotReady    &lt;none&gt;   4h6m    v1.18.2</span><br></pre></td></tr></table></figure></p>
+<p>先查看错误原因：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pod -n kube-system</span><br><span class="line">NAME                            READY   STATUS                  RESTARTS   AGE</span><br><span class="line">coredns-7ff77c879f-2k7rw        1/1     Running                 1          4h47m</span><br><span class="line">coredns-7ff77c879f-q76jr        1/1     Running                 1          4h47m</span><br><span class="line">etcd-node1                      1/1     Running                 2          4h47m</span><br><span class="line">kube-apiserver-node1            1/1     Running                 2          4h47m</span><br><span class="line">kube-controller-manager-node1   1/1     Running                 2          4h47m</span><br><span class="line">kube-flannel-ds-amd64-2jn8n     0/1     Init:ImagePullBackOff   0          3h49m</span><br><span class="line">kube-flannel-ds-amd64-ftpxl     1/1     Running                 1          3h49m</span><br><span class="line">kube-proxy-5q8wp                1/1     Running                 2          4h47m</span><br><span class="line">kube-proxy-wfcjq                0/1     ContainerCreating       0          5m46s</span><br><span class="line">kube-scheduler-node1            1/1     Running                 2          4h47m</span><br></pre></td></tr></table></figure></p>
+<p>k8s有些服务会在各个节点上启动，比如这里的proxy，flannel。</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe pod -n kube-system kube-flannel-ds-amd64-2jn8n</span><br><span class="line">.....</span><br><span class="line">Events:</span><br><span class="line">  Type     Reason                  Age                    From            Message</span><br><span class="line">  ----     ------                  ----                   ----            -------</span><br><span class="line">  Normal   Pulling                 6m51s                  kubelet, node2  Pulling image <span class="string">"quay.io/coreos/flannel:v0.12.0-amd64"</span></span><br><span class="line">  Warning  Failed                  5m48s                  kubelet, node2  Failed to pull image <span class="string">"quay.io/coreos/flannel:v0.12.0-amd64"</span>: rpc error: code = Unknown desc = Error response from daemon: Get https://quay.io/v2/coreos/flannel/manifests/v0.12.0-amd64: received unexpected HTTP status: 500 Internal Server Error</span><br><span class="line">  Warning  Failed                  5m48s                  kubelet, node2  Error: ErrImagePull</span><br><span class="line">  Normal   BackOff                 5m47s                  kubelet, node2  Back-off pulling image <span class="string">"quay.io/coreos/flannel:v0.12.0-amd64"</span></span><br><span class="line">  Warning  Failed                  5m47s                  kubelet, node2  Error: ImagePullBackOff</span><br><span class="line">  Normal   Pulling                 5m36s (x2 over 5m51s)  kubelet, node2  Pulling image <span class="string">"quay.io/coreos/flannel:v0.12.0-amd64"</span></span><br></pre></td></tr></table></figure></p>
+<p>最常见的是ImagePull失败。比如master node上镜像拉取正常，而其他节点拉取失败。</p>
+<h4>解决方法</h4>
+<h5>1. 在slave节点上手工拉取镜像</h5>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ docker pull quay.io/coreos/flannel:v0.12.0-amd64</span><br></pre></td></tr></table></figure></p>
+<h5>2. 将master节点上的镜像导入slave节点</h5>
+<ul>
+<li>查看master节点上的镜像</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">(master)$ docker images</span><br><span class="line">REPOSITORY                                                        TAG                 IMAGE ID            CREATED             SIZE</span><br><span class="line">kubernetesui/dashboard                                            v2.0.0              8b32422733b3        3 weeks ago         222MB</span><br><span class="line">registry.aliyuncs.com/google_containers/kube-proxy                v1.18.2             0d40868643c6        4 weeks ago         117MB</span><br><span class="line">registry.aliyuncs.com/google_containers/kube-scheduler            v1.18.2             a3099161e137        4 weeks ago         95.3MB</span><br><span class="line">registry.aliyuncs.com/google_containers/kube-apiserver            v1.18.2             6ed75ad404bd        4 weeks ago         173MB</span><br><span class="line">registry.aliyuncs.com/google_containers/kube-controller-manager   v1.18.2             ace0a8c17ba9        4 weeks ago         162MB</span><br><span class="line">kubernetesui/metrics-scraper                                      v1.0.4              86262685d9ab        7 weeks ago         36.9MB</span><br><span class="line">quay.io/coreos/flannel                                            v0.12.0-amd64       4e9f801d2217        2 months ago        52.8MB</span><br><span class="line">registry.aliyuncs.com/google_containers/pause                     3.2                 80d28bedfe5d        3 months ago        683kB</span><br><span class="line">registry.aliyuncs.com/google_containers/coredns                   1.6.7               67da37a9a360        3 months ago        43.8MB</span><br><span class="line">registry.aliyuncs.com/google_containers/etcd                      3.4.3-0             303ce5db0e90        6 months ago        288MB</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>将镜像导出为文件</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(master)$ docker save quay.io/coreos/flannel  &gt; flannel.tar</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>将文件传输到slave节点上</li>
+<li>slave节点上导入镜像</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">(slave)$ docker load &lt; flannel.tar</span><br><span class="line">256a7af3acb1: Loading layer [==================================================&gt;]  5.844MB/5.844MB</span><br><span class="line">d572e5d9d39b: Loading layer [==================================================&gt;]  10.37MB/10.37MB</span><br><span class="line">57c10be5852f: Loading layer [==================================================&gt;]  2.249MB/2.249MB</span><br><span class="line">7412f8eefb77: Loading layer [==================================================&gt;]  35.26MB/35.26MB</span><br><span class="line">05116c9ff7bf: Loading layer [==================================================&gt;]   5.12kB/5.12kB</span><br><span class="line">Loaded image: quay.io/coreos/flannel:v0.12.0-amd64</span><br></pre></td></tr></table></figure></p>
+<p><strong>Now， all is OK</strong></p>
+
       
     </div>
 
@@ -492,14 +586,68 @@
 <li>target：可以理解为服务器端</li>
 </ul>
 <p>实际上也不存在客户端服务器端的理解。target端主要是把磁盘share出来给其他设备用的。initiator相当于用来映射target端的磁盘到本地的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/04/17/setup-ipsan-ubuntu/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h2>安装及配置target端</h2>
+<h3>服务器准备(ip: 192.168.0.100)</h3>
+<p>服务器需要有两块磁盘，如果使用虚拟机环境，则特别简单</p>
+<ul>
+<li>第一块硬盘用来安装系统，大小40G就够了</li>
+<li>第二块硬盘用来通过IPSAN来share，按需来创建，最小2G</li>
+</ul>
+<h3>安装软件包</h3>
+<p>在Ubuntu上安装target端很简单，主要是安装tgt软件包</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 升级软件包</span></span><br><span class="line">$ apt update -y</span><br><span class="line">$ apt upgrade -y</span><br><span class="line"><span class="comment"># 安装tgt</span></span><br><span class="line">$ apt install tgt -y</span><br></pre></td></tr></table></figure></p>
+<p>默认状况下，安装完毕后，tgt服务就应该已经正常运行了。当然，可以确认是否已经运行正常</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status tgt</span><br></pre></td></tr></table></figure></p>
+<h3>配置</h3>
+<p>安装完成后，一般情况是没有这个文件的，需要自己创建一个。创建配置文件<code>/etc/tgt/conf.d/iscsi.conf</code></p>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">target</span> <span class="attr">abc.id123.testsite.xyz:lun1</span>&gt;</span></span><br><span class="line">     backing-store /dev/sdb</span><br><span class="line">     initiator-address 192.168.0.0/16</span><br><span class="line">     incominguser test password</span><br><span class="line">     outgoinguser test password</span><br><span class="line"><span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h4>配置说明</h4>
+<ol>
+<li>target后面为节点名称，随便写</li>
+<li>backing-store，即将要share出去的磁盘</li>
+<li>initiator-address，即可以允许连接的IP地址或地址范围</li>
+<li>incominguser，入的用户名密码（我的理解是写权限）</li>
+<li>outgoinguser，出的用户名密码（我的理解是读权限）</li>
+</ol>
+<h4>检查配置</h4>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart tgt</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>查看状态</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">$ tgtadm --mode target --op show</span><br><span class="line">Target abc.id123.testsite.xyz:lun1</span><br><span class="line">    System information:</span><br><span class="line">        Driver: iscsi</span><br><span class="line">        State: ready</span><br><span class="line">    I_T nexus information:</span><br><span class="line">    LUN information:</span><br><span class="line">        LUN: 0</span><br><span class="line">            Type: controller</span><br><span class="line">            SCSI ID: IET     00010000</span><br><span class="line">            SCSI SN: beaf10</span><br><span class="line">            Size: 0 MB, Block size: 1</span><br><span class="line">            Online: Yes</span><br><span class="line">            Removable media: No</span><br><span class="line">            Prevent removal: No</span><br><span class="line">            Readonly: No</span><br><span class="line">            SWP: No</span><br><span class="line">            Thin-provisioning: No</span><br><span class="line">            Backing store <span class="built_in">type</span>: null</span><br><span class="line">            Backing store path: None</span><br><span class="line">            Backing store flags: </span><br><span class="line">        LUN: 1</span><br><span class="line">            Type: disk</span><br><span class="line">            SCSI ID: IET     00010001</span><br><span class="line">            SCSI SN: beaf11</span><br><span class="line">            Size: 2146 MB, Block size: 512</span><br><span class="line">            Online: Yes</span><br><span class="line">            Removable media: No</span><br><span class="line">            Prevent removal: No</span><br><span class="line">            Readonly: No</span><br><span class="line">            SWP: No</span><br><span class="line">            Thin-provisioning: No</span><br><span class="line">            Backing store <span class="built_in">type</span>: rdwr</span><br><span class="line">            Backing store path: /dev/sdb</span><br><span class="line">            Backing store flags: </span><br><span class="line">    Account information:</span><br><span class="line">        <span class="built_in">test</span></span><br><span class="line">        <span class="built_in">test</span> (outgoing)</span><br><span class="line">    ACL information:</span><br><span class="line">        192.168.0.0/16</span><br></pre></td></tr></table></figure></p>
+<h2>安装及配置initiator</h2>
+<p>如果你只是想创建一个IPSAN共享存储出去，那么不需要安装initiator。本例则同样通过另外一台Ubuntu服务器来连接target端</p>
+<h3>安装及配置initiator(192.168.0.200)</h3>
+<ul>
+<li>安装open-iscsi软件包</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install open-iscsi -y</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>探测target端</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ iscsiadm -m discovery -t st -p 192.168.0.100</span><br><span class="line">192.168.0.100:3260,1 abc.id123.testsite.xyz:lun1</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>修改配置文件</li>
+</ul>
+<p>探测完成后，将会在<code>/etc/iscsi/nodes/</code>目录和<code>/etc/iscsi/send_targets/</code>目录下看到对应的target</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l /etc/iscsi/nodes/abc.id123.testsite.xyz\:lun1/192.168.0.100\,3260\,1/ </span><br><span class="line">total 4</span><br><span class="line">-rw------- 1 root root 1840 Nov  8 13:17 default</span><br><span class="line"></span><br><span class="line">$ ls -l /etc/iscsi/send_targets/192.168.0.100,3260/</span><br><span class="line">total 8</span><br><span class="line">lrwxrwxrwx 1 root root  66 Nov  8 13:17 abc.id123.testsite.xyz:lun1,192.168.0.100,3260,1,default -&gt; /etc/iscsi/nodes/abc.id123.testsite.xyz:lun1/192.168.0.100,3260,1</span><br><span class="line">-rw------- 1 root root 547 Nov  8 13:17 st_config</span><br></pre></td></tr></table></figure></p>
+<p>修改default文件，增加CHAP的配置（认证相关）</p>
+<p><code>vim /etc/iscsi/nodes/abc.id123.testsite.xyz\:lun1/192.168.0.100\,3260\,1/default</code>，新增如下内容</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">node.session.auth.authmethod = CHAP</span><br><span class="line">node.session.auth.username = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password = password</span><br><span class="line">node.session.auth.username_in = <span class="built_in">test</span></span><br><span class="line">node.session.auth.password_in = password</span><br><span class="line">node.startup = automatic</span><br></pre></td></tr></table></figure></p>
+<h3>验证</h3>
+<ul>
+<li>重启服务</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart open-iscsi</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>检查是否映射完成</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk</span><br><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">sda      8:0    0   40G  0 disk</span><br><span class="line">├─sda1   8:1    0  512M  0 part /boot/efi</span><br><span class="line">└─sda2   8:2    0 39.5G  0 part /</span><br><span class="line">sdb      8:16   0  120G  0 disk</span><br><span class="line">└─sdb1   8:17   0  120G  0 part</span><br><span class="line">sr0     11:0    1 1024M  0 rom</span><br></pre></td></tr></table></figure></p>
+<p>其中的sdb即为通过IPSAN连接的磁盘。可以以本地磁盘的方式进行访问</p>
+<h2>更多内容</h2>
+<p>可以参看<a href="https://www.cnblogs.com/kevingrace/p/8467141.html" target="_blank" rel="noopener">这篇文章</a>来创建多台target，创建LVM并share出去一组成IPSAN存储设备组</p>
+
       
     </div>
 
@@ -577,7 +725,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.3k</span>
+              <span>4.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -598,14 +746,93 @@
       
           <p>上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。</p>
 <p>本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/27/openstack-cross-host-vm-2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
+<h3>br-tun</h3>
+<p><strong>在前面收集信息时，你或许已经关注到了linux bridge和ovs中还有其他变化，那么，来看看 <code>br-tun</code></strong></p>
+<ul>
+<li>ovs</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<p>当环境搭建完毕后，并不会立即创建这个接口，而是当创建了虚拟机后，会创建VXLAN的VTEP接口。</p>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node_vxlan.png" alt="create_vm_with_2node_vxlan"></p>
+<h3>流表</h3>
+<h4>node0</h4>
+<ul>
+<li><strong>br-int</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure></p>
+<p><strong>table 0</strong></p>
+<ol>
+<li>从<code>qvo02407769-97</code>送入的icmp，arp报文，送往table 24</li>
+<li>从<code>qvo02407769-97</code>送入其他报文送往table 25</li>
+<li>其他报文送table 60</li>
+</ol>
+<p><strong>table 24</strong></p>
+<ol>
+<li>从<code>qvo02407769-97</code>送入的报文，送往table 60。<code>fe80::f816:3eff:fead:669e</code>是vm-1的IPv6地址</li>
+<li>从<code>qvo02407769-97</code>送入的arp报文，arp源地址为<code>200.0.0.219</code>即vm-1来的报文，送往table 25</li>
+</ol>
+<p><strong>table 25</strong></p>
+<p>从<code>qvo02407769-97</code>送入的报文，源mac为<code>fa:16:3e:ad:66:9e</code>即vm-1来的报文，送往table 60</p>
+<p><strong>table 60</strong></p>
+<p>正常转发</p>
+<blockquote>
+<p>综上，从vm-1来的报文以及其他报文，都将正常在<code>br-int</code>上转发</p>
+</blockquote>
+<ul>
+<li><strong>br-tun</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure></p>
+<p><strong>table 0</strong></p>
+<ol>
+<li>从<code>br-int</code>来的报文（即需要从本节点送出的报文），送到table 2</li>
+<li>从<code>vxlan-ac0a000b</code>送来的报文（即从其他节点送到node 0的），送到table 4</li>
+</ol>
+<p><strong>table 2</strong>： 将要送出本节点的报文</p>
+<ol>
+<li>送往table 20</li>
+<li>送往table 22</li>
+</ol>
+<p><strong>table 4</strong>： 从其他节点送到本节点的报文</p>
+<p>tun_id为15（0xf）的报文，打上vlan标签1，送往table 10</p>
+<blockquote>
+<p>即从vxlan的tunnel出来的报文，如果tunnel id是15，则报文设置vlan为1</p>
+<p>而<code>qvo02407769-97</code>（与vm-1相连）和<code>tap17a89323-fd</code>（DHCP的tap接口）的vlan tag正是<code>1</code></p>
+</blockquote>
+<p><strong>table 10</strong></p>
+<blockquote>
+<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:&quot;patch-int&quot;</p>
+</blockquote>
+<p>这个action是如此的复杂，但不看<code>learn()</code>中的内容，报文最终被送往了<code>br-int</code></p>
+<blockquote>
+<p>learn则是在table20中增加对于回程报文的转发规则</p>
+</blockquote>
+<p><strong>table 20</strong></p>
+<p>送往table 22</p>
+<p><strong>table 22</strong></p>
+<p>VLAN tag为1的报文，去掉VLAN，设置tun_id为15（0xf）后，送往<code>vxlan-ac0a000b</code></p>
+<blockquote>
+<p>综上：</p>
+<ol>
+<li>从vm-1送来的报文，携带VLAN tag为1，去掉VLAN tag，设置tun_id为15，从vxlan接口送出</li>
+<li>从其他节点送来的报文，如果tun_id为15，设置VLAN tag为1，送往br-int</li>
+</ol>
+</blockquote>
+<h3>总结</h3>
+<p>完整的分析了node0上的流表，node1上的流表内容基本相似，就不再展开。</p>
+<p>至此，跨节点的虚拟机相互访问的实验及分析正式完结。你会发现</p>
+<ol>
+<li>每一个port在连接到虚拟机的时候，都创建了一个网桥</li>
+<li>每个虚拟机连在br-int上的接口，都按照subnet分配了一个VLAN tag，且每个节点的并不相同</li>
+<li>当虚拟机的报文要送出/进入当前节点时，会有VLAN tag和VXLAN的tun_id相互转换</li>
+</ol>
+<p>现在，思考一下：</p>
+<ol>
+<li>node1上的vm-1是如何通过DHCP获取IP地址的？</li>
+<li>为什么虚拟机不直接连在br-int上，而是要通过一个linux bridge连接到br-int上呢？</li>
+</ol>
+
       
     </div>
 
@@ -705,14 +932,109 @@
           <p>前面已经有一篇博文讲解了<a href="/2019/09/02/openstack-vm-traffic1/">同主机内的虚拟机通信</a>，本篇则主要关注与跨主机虚拟机访问的详细解析。</p>
 <p>创建网络 - <strong>创建虚拟机实例</strong> - 创建路由器</p>
 <p>在上一篇文章中已经详细介绍了创建网络后主机上发生的事情。接下来，我们就<strong>创建两个虚拟机</strong>（nova自动调度到了两个节点上），然后来看看网络部分又发生了哪些事情。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/22/openstack-cross-host-vm-1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<blockquote>
+<p>注：openstack及ovs等CLI输出内容较多，文章中仅列出关注的部分内容</p>
+</blockquote>
+<h3>创建虚拟机</h3>
+<blockquote>
+<p>在创建虚拟机之前，需要创建规格（flavor）和上传镜像（image）</p>
+<p>本文使用cirros作为测试镜像</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openstack server create --flavor small --image cirros --network net1 --min 2 --max 2 vm</span><br><span class="line">$ openstack server list</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ID                                   | Name | Status | Networks         | Image  | Flavor |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ebb1b8fa-6457-4e80-8a49-14093622ce5d | vm-2 | ACTIVE | net1=200.0.0.219 | cirros | small  |</span><br><span class="line">| fb619b6c-9954-4dbd-8b1e-461c1c3c4c7d | vm-1 | ACTIVE | net1=200.0.0.238 | cirros | small  |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br></pre></td></tr></table></figure></p>
+<h2>发生了什么？</h2>
+<h3>Compute</h3>
+<p>还是有必要简单介绍一下nova相关的操作</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ openstack server show vm-1</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| Field                               | Value                                |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| OS-EXT-SRV-ATTR:hypervisor_hostname | node1                                |</span><br><span class="line">| OS-EXT-SRV-ATTR:instance_name       | instance-00000039                    |</span><br><span class="line">| addresses                           | net1=200.0.0.238                     |</span><br><span class="line">| id                                  | fb619b6c-9954-4dbd-8b1e-461c1c3c4c7d |</span><br><span class="line">| name                                | vm-1                                 |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">$ openstack server show vm-2</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| Field                               | Value                                |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br><span class="line">| OS-EXT-SRV-ATTR:hypervisor_hostname | node0                                |</span><br><span class="line">| OS-EXT-SRV-ATTR:instance_name       | instance-0000003a                    |</span><br><span class="line">| addresses                           | net1=200.0.0.219                     |</span><br><span class="line">| id                                  | ebb1b8fa-6457-4e80-8a49-14093622ce5d |</span><br><span class="line">| name                                | vm-2                                 |</span><br><span class="line">+-------------------------------------+--------------------------------------+</span><br></pre></td></tr></table></figure></p>
+<p>从实例的信息中看到，分别在node1上创建了vm-1：<code>instance-00000039</code>，在node0上创建了vm-2：<code>instance-0000003a</code>。不妨分别在两个node上使用<code>virsh list</code>看看：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(node0)$ virsh list</span><br><span class="line"> Id   Name                State</span><br><span class="line">-----------------------------------</span><br><span class="line"> 21   instance-0000003a   running</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(node1)$ virsh list</span><br><span class="line"> Id   Name                State</span><br><span class="line">-----------------------------------</span><br><span class="line"> 11   instance-00000039   running</span><br></pre></td></tr></table></figure></p>
+<h3>Network</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                         | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| 02407769-97c6-45ae-8fba-ea464020951c |      | fa:16:3e:ad:66:9e | ip_address=<span class="string">'200.0.0.219'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">| 17a89323-fd0a-44cc-a525-fcf8d2efb836 |      | fa:16:3e:f6:db:c9 | ip_address=<span class="string">'200.0.0.2'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span>   | ACTIVE |</span><br><span class="line">| f4c391da-2295-479a-95c5-c7759132f2ea |      | fa:16:3e:f5:ca:f5 | ip_address=<span class="string">'200.0.0.238'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure></p>
+<p>先记住两个port对应的ID：</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>IP</th>
+<th>Instance</th>
+<th>Node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>02407769-97c6-45ae-8fba-ea464020951c</td>
+<td>200.0.0.219</td>
+<td>vm-1</td>
+<td>node0</td>
+</tr>
+<tr>
+<td>f4c391da-2295-479a-95c5-c7759132f2ea</td>
+<td>200.0.0.238</td>
+<td>vm-2</td>
+<td>node1</td>
+</tr>
+</tbody>
+</table>
+<h4>node0</h4>
+<ul>
+<li><strong>Linux bridge</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brctl show</span><br><span class="line">bridge name       bridge id           STP enabled   interfaces</span><br><span class="line">qbr02407769-97      8000.02989dedfae5   no            qvb02407769-97</span><br><span class="line">                                                              tap02407769-97</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>ovs</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">    ...</span><br><span class="line">        Port <span class="string">"qvo02407769-97"</span></span><br><span class="line">            tag: 1</span><br><span class="line">            Interface <span class="string">"qvo02407769-97"</span></span><br><span class="line">            ...</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>别忘了留意<code>tag: 1</code>，后面分析时才会用到</p>
+</blockquote>
+<ul>
+<li><strong>MAC地址</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ip link show</span><br><span class="line">161: qbr02407769-97: ...</span><br><span class="line">    link/ether 02:98:9d:ed:fa:e5 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">162: qvo02407769-97@qvb02407769-97: ...</span><br><span class="line">    link/ether 2a:16:2b:d1:8d:a3 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">163: qvb02407769-97@qvo02407769-97: ...</span><br><span class="line">    link/ether 02:98:9d:ed:fa:e5 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">164: tap02407769-97: ...</span><br><span class="line">    link/ether fe:16:3e:ad:66:9e brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>vm-1</li>
+</ul>
+<blockquote>
+<p>可以使用<code>virsh console xxx</code>连入虚拟机的console进行操作</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ virsh console instance-0000003a</span><br><span class="line">Connected to domain instance-0000003a</span><br><span class="line">Escape character is ^]</span><br><span class="line"></span><br><span class="line">login as <span class="string">'cirros'</span> user. default password: <span class="string">'gocubsgo'</span>. use <span class="string">'sudo'</span> <span class="keyword">for</span> root.</span><br><span class="line">vm-2 login: cirros</span><br><span class="line">Password:</span><br><span class="line">$ ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr FA:16:3E:AD:66:9E</span><br><span class="line">          inet addr:200.0.0.219  Bcast:200.0.0.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::f816:3eff:fead:669e/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:94 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:122 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:9192 (8.9 KiB)  TX bytes:10571 (10.3 KiB)       </span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>从上面我们可以看到，分别创建了：</p>
+<ol>
+<li>一个linux网桥<code>qbr02407769-97</code></li>
+<li>一组接口对： <code>qvb02407769-97@qvo02407769-97</code></li>
+<li>一个tap接口：<code>tap02407769-97</code></li>
+</ol>
+<p><strong>你或许已经发现了<code>tap02407769-97</code>接口与instance-0000003a的<code>eth0</code>的关系</strong>，是的，他们MAC地址相同，也即表示他们实际上就是同一个网络接口。</p>
+<ul>
+<li><strong>连接关系整理</strong></li>
+</ul>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_ports.png" alt="create_vm_ports"></p>
+<p>将上一篇文章中的dhcp的namespace也合入整个连接关系后：</p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_portswithdhcp.png" alt="create_vm_portswithdhcp"></p>
+<h4>node1</h4>
+<p>同样收集node1上的各种信息</p>
+<ul>
+<li><strong>linux bridge</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ brctl show</span><br><span class="line">bridge name       bridge id           STP enabled   interfaces</span><br><span class="line">qbrf4c391da-22      8000.aa5d4b2ddf79   no            qvbf4c391da-22</span><br><span class="line">                                                              tapf4c391da-22</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>ovs</strong></li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"qvof4c391da-22"</span></span><br><span class="line">            tag: 6</span><br><span class="line">            Interface <span class="string">"qvof4c391da-22"</span></span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>别忘了留意<code>tag: 6</code>，你也可以思考一下，为什么同一个subnet，node0上是1，node1上是6？</p>
+</blockquote>
+<ul>
+<li><strong>连接关系</strong></li>
+</ul>
+<p>到现在，分布在两个node上的VM与br-int之间的通路已经清晰起来</p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_portswithnode1.png" alt="create_vm_portswithnode1"></p>
+<h3>小结</h3>
+<p>至此，两台虚拟机已经创建完毕。再加上<a href="/2019/11/21/openstack-env/">实验环境介绍</a>中的连接图：</p>
+<p><img src="/2019/11/22/openstack-cross-host-vm-1/create_vm_with_2node.png" alt="create_vm_with_2node"></p>
+<p>不妨先从vm-1访问一下vm-2，先思考一下两个虚拟机是如何访问的。下一篇文章再继续探讨流量是如何从一个节点的虚拟机经历千山万水到达另外一个节点虚拟机上的。</p>
+
       
     </div>
 
@@ -812,14 +1134,40 @@
           <p>搭建完测试环境后，拉起来个虚拟机看看，操作步骤</p>
 <p><strong>创建网络</strong> - 创建虚拟机实例 - 创建路由器</p>
 <p>本篇主要关注创建网络时主机上的行为</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/21/openstack-create-network/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<blockquote>
+<p>注：openstack CLI以及ovs命令行输出信息较多，仅提取关键信息</p>
+</blockquote>
+<h3>创建网络及子网</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">$ openstack network create net1</span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">| Field                     | Value           </span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">| id                        | 2caecd1e-bda7-4a4e-baec-3d192f52aa3b</span><br><span class="line">| provider:network_type     | vxlan                               </span><br><span class="line">| provider:segmentation_id  | 15                                  </span><br><span class="line">+---------------------------+-------------------------------------</span><br><span class="line">$ openstack subnet create --network net1 --subnet-range 200.0.0.0/24 sub1</span><br><span class="line">+-------------------+-------------------------------------</span><br><span class="line">| Field             | Value                               </span><br><span class="line">+-------------------+-------------------------------------</span><br><span class="line">| allocation_pools  | 200.0.0.2-200.0.0.254               </span><br><span class="line">| cidr              | 200.0.0.0/24                        </span><br><span class="line">| gateway_ip        | 200.0.0.1                           </span><br><span class="line">| id                | 5875f007-7b0f-45af-b78f-82527e5d9a90</span><br><span class="line">| network_id        | 2caecd1e-bda7-4a4e-baec-3d192f52aa3b</span><br><span class="line">+-------------------+-------------------------------------</span><br></pre></td></tr></table></figure></p>
+<h3>发生了什么？</h3>
+<p><strong>1. openstack</strong></p>
+<p><code>net1</code>的id为<code>2caecd1e-bda7-4a4e-baec-3d192f52aa3b</code></p>
+<p><code>sub1</code>的id为<code>5875f007-7b0f-45af-b78f-82527e5d9a90</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                       | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br><span class="line">| 17a89323-fd0a-44cc-a525-fcf8d2efb836 |      | fa:16:3e:f6:db:c9 | ip_address=<span class="string">'200.0.0.2'</span>, subnet_id=<span class="string">'5875f007-7b0f-45af-b78f-82527e5d9a90'</span> | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+--------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure></p>
+<p>在<code>sub1</code>下创建了一个port</p>
+<ul>
+<li>ID：<code>17a89323-fd0a-44cc-a525-fcf8d2efb836</code></li>
+<li>IP：<code>200.0.0.2</code></li>
+</ul>
+<p><strong>2. ovs</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"tap17a89323-fd"</span></span><br><span class="line">            tag: 1</span><br><span class="line">            Interface <span class="string">"tap17a89323-fd"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure></p>
+<p>ovs在br-int下创建了一个port <code>tap17a89323-fd</code>, tag为 <code>1</code></p>
+<p><strong>3. Linux namespace</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns</span><br><span class="line">qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b (id: 0)</span><br><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b ifconfig</span><br><span class="line">...</span><br><span class="line">tap17a89323-fd: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 169.254.169.254  netmask 255.255.0.0  broadcast 169.254.255.255</span><br><span class="line">        inet6 fe80::f816:3eff:fef6:dbc9  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether fa:16:3e:f6:db:c9  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 5  bytes 446 (446.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure></p>
+<p>创建了一个<code>qdhcp-2caecd1e-bda7-4a4e-baec-3d192f52aa3b</code>的namespace</p>
+<p>ovs的br-int上的 <code>tap17a89323-fd</code>的port被放在了这个namespace中。</p>
+<blockquote>
+<p>留意一下接口的IP地址及MAC地址</p>
+</blockquote>
+<h3>综上</h3>
+<p>openstack上创建network并创建一个子网之后，体现为：</p>
+<ol>
+<li>创建了一个dhcp的namespace</li>
+<li>ovs在br-int上创建了dhcp的port，并将其置于dhcp的namespace中</li>
+</ol>
+<p><img src="/2019/11/21/openstack-create-network/create_network.png" alt="Create Network"></p>
+
       
     </div>
 
@@ -897,7 +1245,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>702</span>
+              <span>719</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -918,14 +1266,42 @@
       
           <p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
 <p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/11/21/openstack-env/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h3>环境概览</h3>
+<p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p>
+<p><img src="/2019/11/21/openstack-env/test_env_brief.png" alt="test_env_brief"></p>
+<h3>版本说明</h3>
+<ul>
+<li>
+<p>Openstack： stein（1 controller node + 1 compute node）</p>
+</li>
+<li>
+<p>Host： Ubuntu 18.04</p>
+</li>
+<li>
+<p>Network driver： openvswitch</p>
+</li>
+</ul>
+<h3>节点说明</h3>
+<ol>
+<li>node0既做为控制节点，也同时为网络节点、存储节点</li>
+<li>node1为计算节点</li>
+</ol>
+<h3>网桥说明</h3>
+<ol>
+<li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li>
+<li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li>
+<li>在node0上创建<strong>br-ext</strong>作为外部网络网桥并绑定物理接口</li>
+</ol>
+<blockquote>
+<p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p>
+</blockquote>
+<h3>tunnel相关配置</h3>
+<ol>
+<li><code>tunnel_type</code>当前设置为<code>vxlan</code></li>
+<li><code>local_ip</code>配置于<code>br-provider</code>上</li>
+</ol>
+
       
     </div>
 
@@ -1025,14 +1401,229 @@
           <p>Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。</p>
 <p>计划将分多篇博文，掰开来详细分析openstack中的各种流量路径。</p>
 <p>本文以最简单的单节点为例，介绍在同子网下，虚拟机之间相互访问的流量路径</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/09/02/openstack-vm-traffic1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h2>环境说明</h2>
+<ul>
+<li>Openstack： stein（all in one）</li>
+<li>Host： Ubuntu 18.04</li>
+<li>Network driver： openvswitch</li>
+</ul>
+<h2>必要准备</h2>
+<ol>
+<li>外部网络：MyEx</li>
+<li>镜像：cirros</li>
+<li>flavor： small</li>
+</ol>
+<h2>实验</h2>
+<h3>同子网虚拟机</h3>
+<h4>创建网络</h4>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ openstack network create net1</span><br><span class="line">$ openstack subnet create --network net1 --subnet-range 200.0.0.0/24 sub1</span><br></pre></td></tr></table></figure></p>
+<h4>创建虚拟机</h4>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ openstack server create --flavor small --image cirros --network net1 --min 2 --max 2 vm</span><br><span class="line">$ openstack server list</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ID                                   | Name | Status | Networks         | Image  | Flavor |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br><span class="line">| ba3d4162-6a4d-45dc-9b41-0aa2e2ae0c88 | vm-1 | ACTIVE | net1=200.0.0.16  | cirros | small  |</span><br><span class="line">| d349a3a1-fdae-473c-83be-ac02ab5997f3 | vm-2 | ACTIVE | net1=200.0.0.224 | cirros | small  |</span><br><span class="line">+--------------------------------------+------+--------+------------------+--------+--------+</span><br></pre></td></tr></table></figure></p>
+<p>分别创建了：</p>
+<p>vm-1: 200.0.0.16</p>
+<p>vm-2: 200.0.0.224</p>
+<blockquote>
+<p>先确认两个虚机的连通性</p>
+</blockquote>
+<h2>发生了什么?</h2>
+<h3>linux bridge</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ brctl show</span><br><span class="line">bridge name          bridge id              STP enabled    interfaces</span><br><span class="line">brq459c374c-d3        8000.da9618bd3c8d    no              vxlan-6</span><br><span class="line">qbra95f52ba-a2        8000.c26ea2427d47    no              qvba95f52ba-a2</span><br><span class="line">                                                              tapa95f52ba-a2</span><br><span class="line">qbrebeae637-5c        8000.e2ef56b21ffb    no              qvbebeae637-5c</span><br><span class="line">                                                              tapebeae637-5c</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>先不关注<code>brq459c374c-d3</code>的网桥</p>
+</blockquote>
+<h3>Openstack</h3>
+<p>先来记录一下openstack上的port信息</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ openstack port list</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| ID                                   | Name | MAC Address       | Fixed IP Addresses                                                         | Status |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br><span class="line">| a333499b-e5ea-4658-9ec4-cc9b1942d660 |      | fa:16:3e:c7:8c:10 | ip_address=<span class="string">'192.168.0.2'</span>, subnet_id=<span class="string">'a5b25645-c5df-486b-9a49-9412eebc2e59'</span> | ACTIVE |</span><br><span class="line">| a95f52ba-a255-46a7-b3ca-2c870de30e2d |      | fa:16:3e:53:d5:50 | ip_address=<span class="string">'200.0.0.224'</span>, subnet_id=<span class="string">'690d8c09-5f55-4b0c-b673-aff967fb0765'</span> | ACTIVE |</span><br><span class="line">| e013286e-b707-4992-b9e2-4c1f77d465b1 |      | fa:16:3e:45:00:dc | ip_address=<span class="string">'200.0.0.2'</span>, subnet_id=<span class="string">'690d8c09-5f55-4b0c-b673-aff967fb0765'</span>   | ACTIVE |</span><br><span class="line">| ebeae637-5c92-4a5d-943c-27a7c3abfe1f |      | fa:16:3e:17:60:c2 | ip_address=<span class="string">'200.0.0.16'</span>, subnet_id=<span class="string">'690d8c09-5f55-4b0c-b673-aff967fb0765'</span>  | ACTIVE |</span><br><span class="line">+--------------------------------------+------+-------------------+----------------------------------------------------------------------------+--------+</span><br></pre></td></tr></table></figure></p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>用途</th>
+<th>ip</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a333499b-e5</td>
+<td>外部网络MyEx的DHCP port</td>
+<td>192.168.0.2</td>
+</tr>
+<tr>
+<td>a95f52ba-a2</td>
+<td>vm-2</td>
+<td>200.0.0.224</td>
+</tr>
+<tr>
+<td>e013286e-b7</td>
+<td>租户网络net1的DHCP port</td>
+<td>200.0.0.2</td>
+</tr>
+<tr>
+<td>ebeae637-5c</td>
+<td>vm-1</td>
+<td>200.0.0.16</td>
+</tr>
+</tbody>
+</table>
+<h3>网络接口</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">$ ip link show</span><br><span class="line">...</span><br><span class="line">45: qbra95f52ba-a2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether c2:6e:a2:42:7d:47 brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># qbra95f52ba-a2: linux bridge，vm-2相关</span></span><br><span class="line">46: qvoa95f52ba-a2@qvba95f52ba-a2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether 72:63:10:8c:b6:b4 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">47: qvba95f52ba-a2@qvoa95f52ba-a2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue master qbra95f52ba-a2 state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether c2:6e:a2:42:7d:47 brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># qvoa95f52ba-a2和qvba95f52ba-a2：veth pair</span></span><br><span class="line">48: qbrebeae637-5c: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether e2:ef:56:b2:1f:fb brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># qbrebeae637-5c： linux bridge，vm-1相关</span></span><br><span class="line">49: qvoebeae637-5c@qvbebeae637-5c: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue master ovs-system state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether 92:19:d7:5f:b7:0c brd ff:ff:ff:ff:ff:ff</span><br><span class="line">50: qvbebeae637-5c@qvoebeae637-5c: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue master qbrebeae637-5c state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether e2:ef:56:b2:1f:fb brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># qvoebeae637-5c和qvbebeae637-5c：veth pair</span></span><br><span class="line">51: tapa95f52ba-a2: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc fq_codel master qbra95f52ba-a2 state UNKNOWN mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fe:16:3e:53:d5:50 brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># tapa95f52ba-a2：tap接口，通过vnet方式与虚拟机vm-2相连</span></span><br><span class="line">52: tapebeae637-5c: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc fq_codel master qbrebeae637-5c state UNKNOWN mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether fe:16:3e:17:60:c2 brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># tapebeae637-5c：tap接口，通过vnet方式与虚拟机vm-1相连</span></span><br><span class="line">53: vxlan-6: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue master brq459c374c-d3 state UNKNOWN mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether da:96:18:bd:3c:8d brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># overlay接口</span></span><br><span class="line">54: brq459c374c-d3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UP mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether da:96:18:bd:3c:8d brd ff:ff:ff:ff:ff:ff</span><br><span class="line"><span class="comment"># overlay网桥</span></span><br></pre></td></tr></table></figure></p>
+<p>上面出现了两个<code>id</code>：<code>a95f52ba-a2</code>和<code>ebeae637-5c</code>，分别对应了openstack的两个port的<code>id</code></p>
+<p>而对于同一个<code>id</code>，有4个前缀：<code>qbr</code>,<code>qvb</code>,<code>qvo</code>,<code>tap</code>:</p>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>qbr</td>
+<td>Linux网桥</td>
+</tr>
+<tr>
+<td>qvb</td>
+<td>与qvo互为veth pair，qvb置于qbr网桥中</td>
+</tr>
+<tr>
+<td>qvo</td>
+<td>与qvo互为veth pair，qvo置于br-int的ovs网桥中</td>
+</tr>
+<tr>
+<td>tap</td>
+<td>tap接口，与虚拟机中的网卡组成veth pair</td>
+</tr>
+</tbody>
+</table>
+<h3>namespace</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns list</span><br><span class="line">qdhcp-459c374c-d347-4c3d-8dca-7dbb6b403f4f (id: 0)</span><br><span class="line">qdhcp-04d375a6-7600-4a62-87ff-9d66a41d15b1 (id: 1)</span><br></pre></td></tr></table></figure></p>
+<p>2个namespace的<code>id</code>分别对应了openstack上的两个network的<code>id</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ openstack network list</span><br><span class="line">+--------------------------------------+------+--------------------------------------+</span><br><span class="line">| ID                                   | Name | Subnets                              |</span><br><span class="line">+--------------------------------------+------+--------------------------------------+</span><br><span class="line">| 04d375a6-7600-4a62-87ff-9d66a41d15b1 | MyEx | a5b25645-c5df-486b-9a49-9412eebc2e59 |</span><br><span class="line">| 459c374c-d347-4c3d-8dca-7dbb6b403f4f | net1 | 690d8c09-5f55-4b0c-b673-aff967fb0765 |</span><br><span class="line">+--------------------------------------+------+--------------------------------------+</span><br></pre></td></tr></table></figure></p>
+<p>namespace中：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-459c374c-d347-4c3d-8dca-7dbb6b403f4f ifconfig</span><br><span class="line">...</span><br><span class="line">tape013286e-b7: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 169.254.169.254  netmask 255.255.0.0  broadcast 169.254.255.255</span><br><span class="line">        inet6 fe80::f816:3eff:fe45:dc  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether fa:16:3e:45:00:dc  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 254  bytes 18301 (18.3 KB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 161  bytes 17139 (17.1 KB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-04d375a6-7600-4a62-87ff-9d66a41d15b1 ifconfig</span><br><span class="line">...</span><br><span class="line">tapa333499b-e5: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 169.254.169.254  netmask 255.255.0.0  broadcast 169.254.255.255</span><br><span class="line">        inet6 fe80::f816:3eff:fec7:8c10  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether fa:16:3e:c7:8c:10  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 153628  bytes 12984859 (12.9 MB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 151174  bytes 14352784 (14.3 MB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>
+<p>每个namespace各有一个接口：<code>tape013286e-b7</code>和<code>tapa333499b-e5</code></p>
+</li>
+<li>
+<p>这两个接口因为在namespace中，在<code>ip link show</code>的时候看不到。</p>
+</li>
+<li>
+<p>其<code>id</code>也分别对应了openstack中的port的<code>id</code>，后面会看到这两个接口出现在ovs的<code>br-int</code>中</p>
+</li>
+</ul>
+<h3>openvswitch</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-vsctl show</span><br><span class="line">479f3788-7afb-48a4-accd-eb173f318715</span><br><span class="line">    ...</span><br><span class="line">    Bridge br-int</span><br><span class="line">        Controller <span class="string">"tcp:127.0.0.1:6633"</span></span><br><span class="line">            is_connected: <span class="literal">true</span></span><br><span class="line">        fail_mode: secure</span><br><span class="line">        Port int-br-ext</span><br><span class="line">            Interface int-br-ext</span><br><span class="line">                <span class="built_in">type</span>: patch</span><br><span class="line">                options: &#123;peer=phy-br-ext&#125;</span><br><span class="line">        Port <span class="string">"tapa333499b-e5"</span></span><br><span class="line">            tag: 2</span><br><span class="line">            Interface <span class="string">"tapa333499b-e5"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">        Port <span class="string">"tape013286e-b7"</span></span><br><span class="line">            tag: 3</span><br><span class="line">            Interface <span class="string">"tape013286e-b7"</span></span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">        Port <span class="string">"qvoebeae637-5c"</span></span><br><span class="line">            tag: 3</span><br><span class="line">            Interface <span class="string">"qvoebeae637-5c"</span></span><br><span class="line">        Port <span class="string">"qvoa95f52ba-a2"</span></span><br><span class="line">            tag: 3</span><br><span class="line">            Interface <span class="string">"qvoa95f52ba-a2"</span></span><br><span class="line">        Port patch-tun</span><br><span class="line">            Interface patch-tun</span><br><span class="line">                <span class="built_in">type</span>: patch</span><br><span class="line">                options: &#123;peer=patch-int&#125;</span><br><span class="line">        Port int-br-provider</span><br><span class="line">            Interface int-br-provider</span><br><span class="line">                <span class="built_in">type</span>: patch</span><br><span class="line">                options: &#123;peer=phy-br-provider&#125;</span><br><span class="line">        Port br-int</span><br><span class="line">            Interface br-int</span><br><span class="line">                <span class="built_in">type</span>: internal</span><br><span class="line">    ovs_version: <span class="string">"2.11.0"</span></span><br></pre></td></tr></table></figure></p>
+<p><code>br-int</code>下有4个port：<code>tapa333499b-e5</code>,<code>tape013286e-b7</code>,<code>qvoebeae637-5c</code>,<code>qvoa95f52ba-a2</code>，这4个接口在前面都有提及</p>
+<table>
+<thead>
+<tr>
+<th>port</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>tapa333499b-e5</td>
+<td>MyEx的dhcp相关，位于<code>qdhcp-04d375a6-76...</code>的namespace中</td>
+</tr>
+<tr>
+<td>tape013286e-b7</td>
+<td>net1的dhcp相关，位于<code>qdhcp-459c374c-d3...</code>的namespace中</td>
+</tr>
+<tr>
+<td>qvoebeae637-5c</td>
+<td>通过veth peer接口<code>qvbebeae637-5c</code>与vm-1连接</td>
+</tr>
+<tr>
+<td>qvoa95f52ba-a2</td>
+<td>通过veth peer接口<code>qvoa95f52ba-a2</code>与vm-2连接</td>
+</tr>
+</tbody>
+</table>
+<h3>ovs流表</h3>
+<blockquote>
+<p>为了方便观察，手动删除了<code>cookie</code>和<code>duration</code>字段</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line">table=0, n_packets=0, n_bytes=0, priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line">table=0, n_packets=0, n_bytes=0, priority=10,icmp6,in_port=<span class="string">"qvoebeae637-5c"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line">table=0, n_packets=0, n_bytes=0, priority=10,icmp6,in_port=<span class="string">"qvoa95f52ba-a2"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line">table=0, n_packets=1073, n_bytes=45066, priority=10,arp,in_port=<span class="string">"qvoebeae637-5c"</span> actions=resubmit(,24)</span><br><span class="line">table=0, n_packets=1072, n_bytes=45024, priority=10,arp,in_port=<span class="string">"qvoa95f52ba-a2"</span> actions=resubmit(,24)</span><br><span class="line">table=0, n_packets=3103, n_bytes=926990, priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line">table=0, n_packets=21, n_bytes=5096, priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line">table=0, n_packets=18494, n_bytes=1811307, priority=9,in_port=<span class="string">"qvoebeae637-5c"</span> actions=resubmit(,25)</span><br><span class="line">table=0, n_packets=18499, n_bytes=1811728, priority=9,in_port=<span class="string">"qvoa95f52ba-a2"</span> actions=resubmit(,25)</span><br><span class="line">table=0, n_packets=2654, n_bytes=849079, priority=3,in_port=<span class="string">"int-br-ext"</span>,vlan_tci=0x0000/0x1fff actions=mod_vlan_vid:2,resubmit(,60)</span><br><span class="line">table=0, n_packets=763992, n_bytes=72539656, priority=0 actions=resubmit(,60)</span><br><span class="line">table=23, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br><span class="line">table=24, n_packets=0, n_bytes=0, priority=2,icmp6,in_port=<span class="string">"qvoebeae637-5c"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fe17:60c2 actions=resubmit(,60)</span><br><span class="line">table=24, n_packets=0, n_bytes=0, priority=2,icmp6,in_port=<span class="string">"qvoa95f52ba-a2"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fe53:d550 actions=resubmit(,60)</span><br><span class="line">table=24, n_packets=1073, n_bytes=45066, priority=2,arp,in_port=<span class="string">"qvoebeae637-5c"</span>,arp_spa=200.0.0.16 actions=resubmit(,25)</span><br><span class="line">table=24, n_packets=1072, n_bytes=45024, priority=2,arp,in_port=<span class="string">"qvoa95f52ba-a2"</span>,arp_spa=200.0.0.224 actions=resubmit(,25)</span><br><span class="line">table=24, n_packets=0, n_bytes=0, priority=0 actions=drop</span><br><span class="line">table=25, n_packets=19555, n_bytes=1855533, priority=2,in_port=<span class="string">"qvoebeae637-5c"</span>,dl_src=fa:16:3e:17:60:c2 actions=resubmit(,60)</span><br><span class="line">table=25, n_packets=19560, n_bytes=1855982, priority=2,in_port=<span class="string">"qvoa95f52ba-a2"</span>,dl_src=fa:16:3e:53:d5:50 actions=resubmit(,60)</span><br><span class="line">table=60, n_packets=963419, n_bytes=92070282, priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>先忽略icmp6的流表</p>
+</blockquote>
+<p><strong>table=0</strong></p>
+<ul>
+<li>in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的arp报文送往table=24</li>
+<li>in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的其他报文送往table=25</li>
+<li>其他报文送往table=60</li>
+</ul>
+<p><strong>table=24</strong></p>
+<ul>
+<li>in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的arp报文，arp_spa分别是<code>200.0.0.224</code>和<code>200.0.0.16</code>的报文，送往table=25</li>
+</ul>
+<p><strong>table=25</strong></p>
+<ul>
+<li>in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的报文，目的mac分别为<code>fa:16:3e:17:60:c2</code>和<code>fa:16:3e:53:d5:50</code>的报文，送往table=60</li>
+</ul>
+<p><strong>table=60</strong></p>
+<ul>
+<li>正常转发</li>
+</ul>
+<blockquote>
+<p>通过上面一系列的流表，in_port为<code>qvoebeae637-5c</code>和<code>qvoa95f52ba-a2</code>的报文基本上都会在<code>br-int</code>上正常转发</p>
+</blockquote>
+<h3>梳理一下</h3>
+<p><img src="/2019/09/02/openstack-vm-traffic1/same_subnet.png" class title="same_subnet"></p>
+<ol>
+<li>vm通过vnet与一个tap接口相连</li>
+<li>tap接口与qvbxxx接口置于一个linux网桥中</li>
+<li>qvbxxx的veth peer置于br-int的ovs网桥中</li>
+<li>dhcp服务位于linux namespace中，使用了一个tap接口，而此tap接口同时位于br-int的ovs网桥中</li>
+</ol>
+<h2>报文跟踪</h2>
+<h3>vm之间互通</h3>
+<h4>分析</h4>
+<p>根据上面的图我们可以看到，vm-1访问vm-2的流量路径为：</p>
+<ol>
+<li>tapebeae637-5c</li>
+<li>qbrebeae637-5c</li>
+<li>qvbebeae637-5c</li>
+<li>qvoebeae637-5c</li>
+<li>br-int</li>
+<li>qvoa95f52ba-a2</li>
+<li>qvba95f52ba-a2</li>
+<li>qbra95f52ba-a2</li>
+<li>tapa95f52ba-a2</li>
+</ol>
+<h4>抓包</h4>
+<p>实际上这个抓包很无聊，因为每个上面看到的报文都是一样的，这里只列举其中一个的结果</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ tcpdump -i qvoebeae637-5c</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on qvoebeae637-5c, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">15:42:19.320342 IP 200.0.0.224 &gt; 200.0.0.16: ICMP <span class="built_in">echo</span> request, id 48897, seq 20449, length 64</span><br><span class="line">15:42:19.321219 IP 200.0.0.16 &gt; 200.0.0.224: ICMP <span class="built_in">echo</span> reply, id 48897, seq 20449, length 64</span><br><span class="line">15:42:20.321525 IP 200.0.0.224 &gt; 200.0.0.16: ICMP <span class="built_in">echo</span> request, id 48897, seq 20450, length 64</span><br><span class="line">15:42:20.322566 IP 200.0.0.16 &gt; 200.0.0.224: ICMP <span class="built_in">echo</span> reply, id 48897, seq 20450, length 64</span><br></pre></td></tr></table></figure></p>
+<h3>vm-1访问dhcp的port</h3>
+<h4>分析</h4>
+<p>而访问dhcp的通路，前面到达br-int的报文都一样，到了br-int后，会到达对应的namespace中</p>
+<p><strong>1. 在vm-1上ping 200.0.0.2</strong></p>
+<p><strong>2. 在ovs中抓包</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ovs-tcpdump -i tape013286e-b7</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ovsmi644603, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">16:00:35.469101 IP6 :: &gt; ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28</span><br><span class="line">16:00:35.552469 IP 200.0.0.16 &gt; 200.0.0.2: ICMP <span class="built_in">echo</span> request, id 48129, seq 480, length 64</span><br><span class="line">16:00:35.552507 IP 200.0.0.2 &gt; 200.0.0.16: ICMP <span class="built_in">echo</span> reply, id 48129, seq 480, length 64</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 在namespace中抓包</strong></p>
+<blockquote>
+<p>注意，在namespace中抓包，报文信息可能不会及时打印在屏幕上</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-459c374c-d347-4c3d-8dca-7dbb6b403f4f tcpdump -i tape013286e-b7</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on tape013286e-b7, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">16:02:00.643387 IP 200.0.0.16 &gt; 200.0.0.2: ICMP <span class="built_in">echo</span> request, id 48129, seq 565, length 64</span><br><span class="line">16:02:00.643461 IP 200.0.0.2 &gt; 200.0.0.16: ICMP <span class="built_in">echo</span> reply, id 48129, seq 565, length 64</span><br></pre></td></tr></table></figure></p>
+<h2>More</h2>
+<p>你或许已经发现了，在namespace中的接口的IP为<code>169.254.169.254</code>，这个地址是干嘛的？那么<code>200.0.0.2</code>到底在哪儿呢？</p>
+<h3>169.254.169.254</h3>
+<p>在openstack中，你会经常看到这个IP地址，它是metadata service的IP</p>
+<p>大多数cloud os实例启动时，都会向这个IP地址发起请求，获取一些信息，如以下实例启动日志中，获取<code>public-keys</code>和<code>user-data</code></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Starting network...</span><br><span class="line">udhcpc (v1.23.2) started</span><br><span class="line">Sending discover...</span><br><span class="line">Sending select <span class="keyword">for</span> 200.0.0.224...</span><br><span class="line">Lease of 200.0.0.224 obtained, lease time 86400</span><br><span class="line">route: SIOCADDRT: File exists</span><br><span class="line">WARN: failed: route add -net <span class="string">"0.0.0.0/0"</span> gw <span class="string">"200.0.0.1"</span></span><br><span class="line">checking http://169.254.169.254/2009-04-04/instance-id</span><br><span class="line">failed 1/20: up 24.66. request failed</span><br><span class="line">successful after 2/20 tries: up 37.29. iid=i-00000021</span><br><span class="line">failed to get http://169.254.169.254/2009-04-04/meta-data/public-keys</span><br><span class="line">warning: no ec2 metadata <span class="keyword">for</span> public-keys</span><br><span class="line">failed to get http://169.254.169.254/2009-04-04/user-data</span><br><span class="line">warning: no ec2 metadata <span class="keyword">for</span> user-data</span><br></pre></td></tr></table></figure></p>
+<h3>200.0.0.2在哪儿？</h3>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ps -aux | grep dnsmasq</span><br><span class="line">...</span><br><span class="line">nobody    3449  0.0  0.0  53332  2588 ?        S    09:49   0:00 dnsmasq --no-hosts --no-resolv --pid-file=/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/pid --dhcp-hostsfile=/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/host --addn-hosts=/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/addn_hosts --dhcp-optsfile=/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/opts --dhcp-leasefile=/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/leases --dhcp-match=<span class="built_in">set</span>:ipxe,175 --dhcp-userclass=<span class="built_in">set</span>:ipxe6,iPXE --<span class="built_in">local</span>-service --<span class="built_in">bind</span>-interfaces --dhcp-range=<span class="built_in">set</span>:tag0,200.0.0.0,static,255.255.255.0,86400s --dhcp-option-force=option:mtu,1450 --dhcp-lease-max=256 --conf-file= --domain=openstacklocal</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><code>--dhcp-leasefile</code>指向了<code>/var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/leases</code>，这个文件记录了dhcp分配的IP地址：</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ cat /var/lib/neutron/dhcp/459c374c-d347-4c3d-8dca-7dbb6b403f4f/leases</span><br><span class="line">1567498384 fa:16:3e:17:60:c2 200.0.0.16 host-200-0-0-16 01:fa:16:3e:17:60:c2</span><br><span class="line">1567475691 fa:16:3e:53:d5:50 200.0.0.224 host-200-0-0-224 01:fa:16:3e:53:d5:50</span><br><span class="line">1567475394 fa:16:3e:45:00:dc 200.0.0.2 host-200-0-0-2 *</span><br></pre></td></tr></table></figure></p>
+<p><code>200.0.0.2</code>的mac地址是<code>fa:16:3e:45:00:dc</code>，而这个mac正是<code>tape013286e-b7</code>的物理地址</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ ip netns <span class="built_in">exec</span> qdhcp-459c374c-d347-4c3d-8dca-7dbb6b403f4f ifconfig</span><br><span class="line">...</span><br><span class="line">tape013286e-b7: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1450</span><br><span class="line">        inet 169.254.169.254  netmask 255.255.0.0  broadcast 169.254.255.255</span><br><span class="line">        inet6 fe80::f816:3eff:fe45:dc  prefixlen 64  scopeid 0x20&lt;link&gt;</span><br><span class="line">        ether fa:16:3e:45:00:dc  txqueuelen 1000  (Ethernet)</span><br><span class="line">        RX packets 1639  bytes 130817 (130.8 KB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 1546  bytes 149118 (149.1 KB)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure></p>
+<h2>小结</h2>
+<p>在单节点状况下，同子网下的虚拟机相互访问，是一个非常简单的路径。</p>
+<p>通过tap接口、veth pair、linux网桥、ovs网桥以及ovs流表来实现了流量通路。</p>
+
       
     </div>
 
@@ -1130,18 +1721,123 @@
 
       
           <p>本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。</p>
-<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<h2>环境准备</h2>
 <blockquote>
 <p>系统： Ubuntu 16.04.6 LTS</p>
 </blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/16/linux-virtual-vm/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h3>实验topo</h3>
+<p><img src="/2019/08/16/linux-virtual-vm/qemu_topo.png" class title="TOPO"></p>
+<h3>软件包</h3>
+<p><strong>1. qemu</strong></p>
+<p>由于整套实验环境都是在虚拟机上完成，在没有开启诸如Intel-VTx技术的情况下，使用<code>qemu</code>作为虚拟机模拟器</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ apt install qemu</span><br><span class="line">$ apt install uml-utilities</span><br><span class="line">$ apt install bridge-utils</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 虚拟机镜像</strong></p>
+<p>本文使用<strong>cirros</strong>(当前版本：0.4.0)作为虚拟机镜像</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_64-disk.img</span><br><span class="line">$ cp cirros-0.4.0-x86_64-disk.img cirros.img</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. vncserver</strong></p>
+<p>使用qemu启动cirros需要用到图形界面，在纯命令行模式启动，需要使用vncserver</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt install tightvncserver</span><br></pre></td></tr></table></figure></p>
+<p><strong>4. 环境检查</strong></p>
+<p>先拉起个虚机试试</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img</span><br></pre></td></tr></table></figure></p>
+<p><strong>5. 测试</strong></p>
+<p>用vnc viewer连接当前虚拟机</p>
+<p><img src="/2019/08/16/linux-virtual-vm/qemu_vnc_example.png" class title="vnc viewer"></p>
+<h2>tap接口使用</h2>
+<p><strong>1. 创建虚拟机</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:99 cirros-0.4.0-x86_64-disk.img -netdev tap,id=mynet0,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet0</span><br></pre></td></tr></table></figure></p>
+<p>创建成功后，可以看到，自动创建了一个<code>tap1</code>的接口，但没有up</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig -a</span><br><span class="line">...</span><br><span class="line">tap1      Link encap:Ethernet  HWaddr 7a:d1:ba:68:06:b2</span><br><span class="line">          BROADCAST MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 测试连通性</strong></p>
+<ul>
+<li>配置host的tap1接口IP</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig tap1 192.168.1.1/24 up</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>配置虚拟机的IP</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(vm)$ sudo ifconfig eth0 192.168.1.2</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>ping</li>
+</ul>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(vm)$ ping 192.168.1.2</span><br><span class="line">PING 192.168.1.2 (192.168.1.2) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.1.2: icmp_seq=1 ttl=64 time=16.6 ms</span><br><span class="line">64 bytes from 192.168.1.2: icmp_seq=2 ttl=64 time=1.51 ms</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 小结</strong></p>
+<p>使用tap类型的netdev创建qemu虚拟机时，会自动创建一个tap接口，而这个tap接口与VM的接口相连。</p>
+<p>连接图如下：</p>
+<p><img src="/2019/08/16/linux-virtual-vm/qemu_tap.png" class title="tap"></p>
+<h2>虚拟机通信</h2>
+<p>理解了虚拟机使用tap接口之后，就可以考虑使用网桥方式进行2个甚至多个虚拟机之间通信了。</p>
+<p><strong>1. 创建虚拟机</strong></p>
+<p>先拉起4个VM，分别指定网络</p>
+<blockquote>
+<p>注意，必须为每个虚机指定MAC地址，否则，拉起的虚机将使用同样的MAC地址</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:10 cirros.img -netdev tap,id=mynet0,ifname=tap0,script=no,downscript=no -device e1000,netdev=mynet0,mac=52:54:98:76:54:30 &amp;</span><br><span class="line">(host)$ qemu-system-x86_64 -vnc 10.180.13.232:11 cirros.img -netdev tap,id=mynet1,ifname=tap1,script=no,downscript=no -device e1000,netdev=mynet1,mac=52:54:98:76:54:31 &amp;</span><br></pre></td></tr></table></figure></p>
+<p><strong>查看Host网卡</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ip link show</span><br><span class="line">...</span><br><span class="line">46: tap0: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether 42:47:1b:de:8e:07 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">47: tap1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000</span><br><span class="line">    link/ether f2:23:b1:c5:55:d3 brd ff:ff:ff:ff:ff:ff</span><br></pre></td></tr></table></figure></p>
+<p>可以看到随虚拟机启动，创建了4个tap接口</p>
+<p><strong>2. 配置IP</strong></p>
+<p><strong>VM1</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(vm1)$ sudo ifconfig eth0 192.168.1.10</span><br></pre></td></tr></table></figure></p>
+<p><strong>VM2</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(vm2)$ sudo ifconfig eth0 192.168.1.11</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 创建网桥</strong></p>
+<p><strong>Host</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(host)$ brctl addbr br0</span><br><span class="line">(host)$ brctl addif br0 tap0</span><br><span class="line">(host)$ brctl addif br0 tap1</span><br><span class="line">(host)$ bridge name bridge id               STP enabled interfaces</span><br><span class="line">  br0         8000.42471bde8e07       no          tap0</span><br><span class="line">                                                  tap1</span><br></pre></td></tr></table></figure></p>
+<p>尝试ping一下，发现还是ping不通。因为对应的tap接口及br0没有up</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig br0 up</span><br><span class="line">(host)$ ifconfig tap0 up</span><br><span class="line">(host)$ ifconfig tap1 up</span><br></pre></td></tr></table></figure></p>
+<p>现在，可以两个VM相互ping一下了</p>
+<p><strong>4. 访问外部PC</strong></p>
+<p>虚拟机需要访问外部网络，则需要添加物理接口，如下图</p>
+<p><img src="/2019/08/16/linux-virtual-vm/qemu_bridge.png" class title="bridge"></p>
+<p><strong>Host</strong></p>
+<p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig ens192 up</span><br><span class="line">(host)$ brctl addif br0 ens192</span><br></pre></td></tr></table></figure></p>
+<p><strong>VM1</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(vm1)$ ping 192.168.1.3</span><br><span class="line">PING 192.168.1.3 (192.168.1.3): 56 data bytes</span><br><span class="line">64 bytes from 192.168.1.3: seq=0 ttl=64 time=29.700 ms</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><strong>抓个包看看 - ens192</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(host)$ tcpdump -i ens192</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens192, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">11:15:02.317164 IP 192.168.1.11 &gt; 192.168.1.3: ICMP <span class="built_in">echo</span> request, id 47873, seq 0, length 64</span><br><span class="line">11:15:02.317527 IP 192.168.1.3 &gt; 192.168.1.11: ICMP <span class="built_in">echo</span> reply, id 47873, seq 0, length 64</span><br></pre></td></tr></table></figure></p>
+<p><strong>5. 小结</strong></p>
+<p>本节主要实验了虚拟机通过网桥进行相互通信及访问外网。对应了qemu网络的<strong>基于网桥的虚拟网卡</strong></p>
+<h2>NAT模式</h2>
+<blockquote>
+<p>Host需要开启转发功能</p>
+<p>临时修改：<code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
+</blockquote>
+<p>NAT模式主要通过iptables来实现。通过将虚拟机发出的报文的源地址转换为物理接口的IP，实现与外网的通信</p>
+<p>拓扑图如下：</p>
+<p><img src="/2019/08/16/linux-virtual-vm/qemu_nat.png" class title="nat"></p>
+<p><strong>1. 为网桥配置IP地址</strong></p>
+<p>用网桥的br0接口作为192.168.1.0/24网段的网关</p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ifconfig br0 192.168.1.1/24</span><br></pre></td></tr></table></figure></p>
+<p>测试host与外部网络连通性</p>
+<blockquote>
+<p>需要确保host有通往外部网络的路由</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(host)$ ping 223.5.5.5</span><br><span class="line">PING 223.5.5.5 (223.5.5.5) 56(84) bytes of data.</span><br><span class="line">64 bytes from 223.5.5.5: icmp_seq=1 ttl=115 time=11.7 ms</span><br></pre></td></tr></table></figure></p>
+<p><strong>2. 配置iptables</strong></p>
+<p>将192.168.1.0/24网段转换为发送出去的接口IP</p>
+<blockquote>
+<p>MASQUERADE: 用发送数据的网卡上的IP来替换源IP</p>
+</blockquote>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(host)$ iptables -t nat -A POSTROUTING -s 192.168.1.0/24 ! -d 192.168.1.0/24  -j MASQUERADE</span><br></pre></td></tr></table></figure></p>
+<p><strong>3. 虚拟机配置默认路由</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(vm1)$ route add -net 0.0.0.0/0 gw 192.168.1.1</span><br></pre></td></tr></table></figure></p>
+<p><strong>4. 测试连通性</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(vm1)$ ping 223.5.5.5</span><br><span class="line">PING 223.5.5.5 (223.5.5.5): 56 data bytes</span><br><span class="line">64 bytes from 223.5.5.5: seq=0 ttl=114 time=14.161 ms</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><strong>5. 抓包看看</strong></p>
+<p><strong>tap1</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(host)$ tcpdump -i tap0 -n</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on tap0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">14:33:41.158181 IP 192.168.1.10 &gt; 223.5.5.5: ICMP <span class="built_in">echo</span> request, id 53761, seq 0, length 64</span><br><span class="line">14:33:41.332908 IP 223.5.5.5 &gt; 192.168.1.10: ICMP <span class="built_in">echo</span> reply, id 53761, seq 0, length 64</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p><code>tap1</code>接口上体现了虚拟机的请求： 192.168.1.10 - 223.5.5.5</p>
+<p><strong>br0</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ tcpdump -i br0 -n</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on br0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">14:35:05.964841 IP 192.168.1.10 &gt; 223.5.5.5: ICMP <span class="built_in">echo</span> request, id 54017, seq 0, length 64</span><br><span class="line">14:35:06.028936 IP 223.5.5.5 &gt; 192.168.1.10: ICMP <span class="built_in">echo</span> reply, id 54017, seq 0, length 64</span><br></pre></td></tr></table></figure></p>
+<p>网桥接口<code>br0</code>上的报文于<code>tap0</code>相同，既当前并没有修改报文</p>
+<p><strong>ens160</strong></p>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ tcpdump -i ens160 -n host 223.5.5.5</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv <span class="keyword">for</span> full protocol decode</span><br><span class="line">listening on ens160, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">14:36:22.762002 IP 10.180.13.232 &gt; 223.5.5.5: ICMP <span class="built_in">echo</span> request, id 54273, seq 0, length 64</span><br><span class="line">14:36:22.775182 IP 223.5.5.5 &gt; 10.180.13.232: ICMP <span class="built_in">echo</span> reply, id 54273, seq 0, length 64</span><br></pre></td></tr></table></figure></p>
+<p>可以看到在<code>ens160</code>接口上，IP则变成了10.180.13.232 - 223.5.5.5之间的通信</p>
+<p><strong>6. 小结</strong></p>
+<p>在本节中，当虚拟机访问外部网络时，从虚拟机内部发出的报文，在主机上通过查路由的方式转发到外部网络中。而在转发出去之前，将源IP地址修改为当前主机的接口IP</p>
+
       
     </div>
 
@@ -1219,14 +1915,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -1238,7 +1934,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="适用对象"><a class="markdownIt-Anchor" href="#适用对象"></a> 适用对象</h2>
+          <h2>适用对象</h2>
 <ol>
 <li>北京领区</li>
 <li>在职人员</li>
@@ -1254,14 +1950,131 @@
 <li>流水余额取决于旅行时间，最少3W吧</li>
 </ul>
 </blockquote>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/08/15/spain-visa/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+<p>&lt;!-- more --&gt;</p>
+<h2>主要网站</h2>
+<p>西班牙签证申请中心：https://china.blsspainvisa.com/chinese/index.php</p>
+<h2>流程</h2>
+<ol>
+<li>准备资料</li>
+<li>预约</li>
+<li>前往签证中心</li>
+<li>坐等快递</li>
+</ol>
+<h2>资料清单</h2>
+<h3>官网文件</h3>
+<blockquote>
+<p>来源：<a href="https://china.blsspainvisa.com/chinese/index.php" target="_blank" rel="noopener">西班牙签证申请中心官网</a></p>
+<p>获取：首页 -&gt; 签证类型 -&gt; 短期 -&gt; 旅游。或直接点击<a href="https://china.blsspainvisa.com/chinese/short_term_visa_tourism.php" target="_blank" rel="noopener">这里</a></p>
+</blockquote>
+<ol>
+<li>检查清单（Checklist）</li>
+<li>签证申请表</li>
+<li>知悉声明</li>
+</ol>
+<h3>准备文件</h3>
+<p>相关填写及说明参看后续章节</p>
+<blockquote>
+<p>准备文件均来源于<strong>检查清单</strong>中</p>
+</blockquote>
+<h4>工作相关（必须）</h4>
+<ol>
+<li>公司营业执照复应件，需盖章</li>
+<li>在职证明（中文，英文各一份），可参看<a href="#%E5%9C%A8%E8%81%8C%E8%AF%81%E6%98%8E%E6%A8%A1%E7%89%88">在职证明模版</a>
+<ol>
+<li>任职公司的地址、电话及传真号码</li>
+<li>任职公司签字人的姓名和职务</li>
+<li>申请人姓名、职务、收入及工作年限</li>
+</ol>
+</li>
+</ol>
+<h4>旅行资料（必须）</h4>
+<ol>
+<li>完整旅行计划</li>
+<li>全部机票预订单</li>
+<li>所有住宿证明</li>
+<li>旅行保险（投保金额至少30000 欧元或等值的人民币）</li>
+</ol>
+<h4>身份证明（必须）</h4>
+<ol>
+<li>护照原件（如有旧护照，一并提供）</li>
+<li><strong>整本</strong>护照复印件（首页需要复印两张）</li>
+<li>户口本原件</li>
+<li>户口本所有页复印件</li>
+<li>照片</li>
+</ol>
+<h4>收入类（必须）</h4>
+<ol>
+<li>工资卡3-6个月的流水，无需存款证明</li>
+<li>收入证明（包含于在职证明）</li>
+</ol>
+<h4>辅助资料（非必须）</h4>
+<ol>
+<li>房产证及复印件</li>
+<li>机动车产权证</li>
+</ol>
+<h2>预约</h2>
+<p>在西班牙签证申请中心官网： 申请预约 -&gt; BLS签证中心 -&gt; 网上预约，或直接点击<a href="https://china.blsspainvisa.com/chinese/book_appointment.php" target="_blank" rel="noopener">这里</a></p>
+<h3>预约表单填写</h3>
+<p><strong>基本信息</strong></p>
+<p><img src="/2019/08/15/spain-visa/booking_1.png" class title="Booking form"></p>
+<p><strong>预约申请表</strong></p>
+<p><img src="/2019/08/15/spain-visa/booking_table.png" class title="Booking Table"></p>
+<p><strong>预约确认信</strong></p>
+<blockquote>
+<p>预约完成后，注意保存预约确认信，可打印也可保存在手机上</p>
+</blockquote>
+<p><img src="/2019/08/15/spain-visa/booking_confirm.png" class title="Confirm"></p>
+<h2>前往签证中心</h2>
+<h3>地址</h3>
+<blockquote>
+<p>签证中心楼下并没有明显的标示</p>
+</blockquote>
+<p>北京市朝阳区新源里16号琨莎中心 1号楼1006室</p>
+<h3>费用</h3>
+<blockquote>
+<p>签证中心当前只收现金</p>
+</blockquote>
+<ol>
+<li>签证费：469</li>
+<li>服务费：121</li>
+<li>快递费：60</li>
+</ol>
+<h3>流程</h3>
+<ol>
+<li>排队</li>
+<li>前台检查资料，填写快递单</li>
+<li>拿号</li>
+<li>递交材料</li>
+<li>缴费</li>
+<li>录指纹+拍照</li>
+</ol>
+<h3>回执</h3>
+<p>离开签证中心时，你手里应该有：</p>
+<ol>
+<li>缴费回执（上含受理号）</li>
+<li>一张护照首页复印件（上含受理号）</li>
+<li>其他文件原件（如户口本、房产证等）</li>
+<li>快递单照片（没有原件）</li>
+</ol>
+<h2>坐等快递</h2>
+<p>提交完所有资料后，你只需要在家等待签证的快递，是否通过，已经由不得你了。</p>
+<h3>查询进度</h3>
+<p>可以登陆<a href="https://china.blsspainvisa.com/chinese/index.php" target="_blank" rel="noopener">西班牙签证申请中心官网</a>，通过<strong>受理号</strong>在线查询您的申请</p>
+<p><img src="/2019/08/15/spain-visa/status.png" class title="Status"></p>
+<h2>在职证明模版</h2>
+<blockquote>
+<p>在职证明需要有公司名称、地址、电话并加盖公章</p>
+</blockquote>
+<h3>中文</h3>
+<p>兹证明<strong>张三</strong>，护照号：<strong>E12345678</strong>，自<strong>xxxx/xx/xx</strong>日入职至今，现在我司任职<strong>xxx</strong>，月收入税前人民币：<strong>xxxx</strong>元，大写： <strong>xxxx</strong>。经公司批准，他将于<strong>xxxx/xx/xx</strong>至<strong>xxxx/xx/xx</strong>休假。旅行期间的费用由他本人承担。</p>
+<p>他的假期期间，我公司将保留他的职务。贵处如需要其他信息，请随时联系我们。如果他的签证申请能顺利通过，我们将非常感激。</p>
+<h3>英文</h3>
+<p>Employment Certificate</p>
+<p>To Spain Visa Application Center:</p>
+<p>This is to certify that <strong>SAN ZHANG</strong>(Passport No.: <strong>E12345678</strong>) works for <strong>xxxxxxxx Co., Ltd</strong>. Since <strong>xxxx/xx/xx</strong> till present. He has been allowed for a leave from <strong>xxxx/xx/xx</strong> to <strong>xxxx/xx/xx</strong>. His position is <strong>xxxxxxxx</strong> and average monthly pre-tax salary is <strong>xxxxx</strong> RMB. All costs relating to his trip will be covered by himself.</p>
+<p>We will keep his position during his leave. Meanwhile, we guarantee that during this trip he will abide laws of your country and be back as scheduled. If any other information is needed, please feel free to contact us. It will be grateful if his visa is issued successfully.</p>
+<p><strong>最后，祝君好运</strong></p>
+
       
     </div>
 
@@ -1404,12 +2217,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">142k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>

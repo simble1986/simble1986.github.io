@@ -46,13 +46,13 @@
   };
 </script>
 
-  <meta name="description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了">
+  <meta name="description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了  &amp;lt;!-- more --&amp;gt;   安装必要工具 1$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common   安装阿里云的GPG证书 1$">
 <meta name="keywords" content="python,docker,Linux,Mac">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用国内资源（备忘）">
 <meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;01&#x2F;15&#x2F;cn_resources&#x2F;index.html">
 <meta property="og:site_name" content="Simble的小站">
-<meta property="og:description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了">
+<meta property="og:description" content="使用阿里云镜像安装Docker-CE  docker.com越来越难访问了  &amp;lt;!-- more --&amp;gt;   安装必要工具 1$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common   安装阿里云的GPG证书 1$">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-11-18T13:53:40.136Z">
 <meta name="twitter:card" content="summary">
@@ -255,7 +255,7 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>927</span>
+              <span>944</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -274,53 +274,53 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
+        <h2>使用阿里云镜像安装Docker-CE</h2>
 <blockquote>
 <p>docker.com越来越难访问了</p>
 </blockquote>
-<a id="more"></a>
+<p>&lt;!-- more --&gt;</p>
 <ol>
 <li>
 <p>安装必要工具</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update sudo apt-get -y install apt-transport-https ca-certificates curl software-properties-common</span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>安装阿里云的GPG证书</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -</span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>添加软件源</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ add-apt-repository <span class="string">"deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu <span class="variable">$(lsb_release -cs)</span> stable"</span></span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>拉取更新</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt update</span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>安装docker-ce</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get -y install docker-ce</span><br></pre></td></tr></table></figure></p>
 </li>
 </ol>
-<h2 id="使用阿里云的pip源"><a class="markdownIt-Anchor" href="#使用阿里云的pip源"></a> 使用阿里云的pip源</h2>
+<h2>使用阿里云的pip源</h2>
 <ol>
 <li>
 <p>安装pip</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">$ python get-pip.py</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</span><br><span class="line">$ python get-pip.py</span><br></pre></td></tr></table></figure></p>
 </li>
 <li>
 <p>修改pip源为阿里云（永久修改）</p>
 <p>在用户根目录创建 <code>.pip/pip.conf</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[global]</span><br><span class="line">index-url = http://mirrors.aliyun.com/pypi/simple</span><br><span class="line"></span><br><span class="line">[install]</span><br><span class="line">trusted-host=mirrors.aliyun.com</span><br></pre></td></tr></table></figure></p>
 </li>
 </ol>
-<h2 id="mac使用清华homebrew源"><a class="markdownIt-Anchor" href="#mac使用清华homebrew源"></a> MAC使用清华homebrew源</h2>
+<h2>MAC使用清华homebrew源</h2>
 <blockquote>
 <p>可直接访问<a href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/" target="_blank" rel="noopener">清华大学开源软件镜像站</a>获取</p>
 </blockquote>
 <ul>
 <li>
 <p>替换现有的git</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br><span class="line"></span><br><span class="line">$ brew update</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git</span><br><span class="line"></span><br><span class="line">$ <span class="built_in">cd</span> <span class="string">"<span class="variable">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core"</span></span><br><span class="line">$ git remote <span class="built_in">set</span>-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git</span><br><span class="line"></span><br><span class="line">$ brew update</span><br></pre></td></tr></table></figure></p>
 </li>
 </ul>
 
@@ -333,7 +333,7 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/05/03/dockerpty-usage/" rel="bookmark">dockerpty使用</a></div>
+      <div class="popular-posts-title"><a href="/2018/03/23/docker_study_cmd1/" rel="bookmark">docker基本操作（一）</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2019/02/05/pyenv-notebook/" rel="bookmark">pyenv使用笔记</a></div>
@@ -419,7 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用阿里云镜像安装docker-ce"><span class="nav-number">1.</span> <span class="nav-text"> 使用阿里云镜像安装Docker-CE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用阿里云的pip源"><span class="nav-number">2.</span> <span class="nav-text"> 使用阿里云的pip源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mac使用清华homebrew源"><span class="nav-number">3.</span> <span class="nav-text"> MAC使用清华homebrew源</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">使用阿里云镜像安装Docker-CE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">使用阿里云的pip源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">MAC使用清华homebrew源</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,12 +513,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">140k</span>
+    <span title="站点总字数">142k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:08</span>
+    <span title="站点阅读时长">2:09</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>
