@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.isimble.com/2020/06/23/kubernetesLearning03/</loc>
+    
+    <lastmod>2020-06-23T04:33:00.853Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/2020/06/17/kubernetesLearning02/</loc>
     
     <lastmod>2020-06-17T08:18:47.113Z</lastmod>
@@ -149,7 +156,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
+    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -163,14 +170,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
+    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
+    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -282,6 +289,13 @@
   </url>
   
   <url>
+    <loc>http://www.isimble.com/tags/index.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
@@ -296,7 +310,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
+    <loc>http://www.isimble.com/categories/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -310,7 +324,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/categories/index.html</loc>
+    <loc>http://www.isimble.com/guestbook/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -324,14 +338,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/tags/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/guestbook/index.html</loc>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
