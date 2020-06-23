@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>K8s学习笔记——深入理解容器镜像</title>
+    <title>K8s学习笔记——重新认识Docker容器</title>
     <url>/2020/06/23/kubernetesLearning04/</url>
     <content><![CDATA[<blockquote>
 <p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
