@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.isimble.com/2020/06/23/kubernetesLearning04/</loc>
+    
+    <lastmod>2020-06-23T04:54:09.038Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/2020/06/23/kubernetesLearning03/</loc>
     
     <lastmod>2020-06-23T04:33:00.853Z</lastmod>
@@ -163,7 +170,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
+    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -177,7 +184,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
+    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -289,14 +296,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/tags/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
+    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -310,7 +310,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/categories/index.html</loc>
+    <loc>http://www.isimble.com/tags/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -324,6 +324,13 @@
   </url>
   
   <url>
+    <loc>http://www.isimble.com/categories/index.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/guestbook/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
@@ -331,7 +338,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
+    <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
