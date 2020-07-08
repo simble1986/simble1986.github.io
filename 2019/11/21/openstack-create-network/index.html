@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -47,17 +47,19 @@
 </script>
 
   <meta name="description" content="搭建完测试环境后，拉起来个虚拟机看看，操作步骤 创建网络 - 创建虚拟机实例 - 创建路由器 本篇主要关注创建网络时主机上的行为">
-<meta name="keywords" content="openstack">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Openstack学习 —— 创建网络及子网">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;index.html">
+<meta property="og:url" content="http://www.isimble.com/2019/11/21/openstack-create-network/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="搭建完测试环境后，拉起来个虚拟机看看，操作步骤 创建网络 - 创建虚拟机实例 - 创建路由器 本篇主要关注创建网络时主机上的行为">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;create_network.png">
-<meta property="og:updated_time" content="2019-11-21T08:23:35.866Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.isimble.com/2019/11/21/openstack-create-network/create_network.png">
+<meta property="article:published_time" content="2019-11-21T00:22:03.000Z">
+<meta property="article:modified_time" content="2019-11-21T08:23:35.866Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="openstack">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;11&#x2F;21&#x2F;openstack-create-network&#x2F;create_network.png">
+<meta name="twitter:image" content="http://www.isimble.com/2019/11/21/openstack-create-network/create_network.png">
 
 <link rel="canonical" href="http://www.isimble.com/2019/11/21/openstack-create-network/">
 
@@ -305,7 +307,7 @@
 <li>创建了一个dhcp的namespace</li>
 <li>ovs在br-int上创建了dhcp的port，并将其置于dhcp的namespace中</li>
 </ol>
-<p><img src="/2019/11/21/openstack-create-network/create_network.png" alt="Create Network"></p>
+<p><img src="/2019/11/21/openstack-create-network/create_network.png" alt="Create Network" /></p>
 
     </div>
 
@@ -319,16 +321,16 @@
       <div class="popular-posts-title"><a href="/2019/11/22/openstack-cross-host-vm-1/" rel="bookmark">Openstack学习 —— 跨主机虚拟机访问1</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2019/11/27/openstack-cross-host-vm-2/" rel="bookmark">Openstack学习 —— 跨主机虚拟机访问2</a></div>
-    </li>
-    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2019/11/21/openstack-env/" rel="bookmark">Openstack学习 —— 实验环境介绍</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
+      <div class="popular-posts-title"><a href="/2019/11/27/openstack-cross-host-vm-2/" rel="bookmark">Openstack学习 —— 跨主机虚拟机访问2</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/09/11/openstack-metadata/" rel="bookmark">Ubuntu在Openstack中启动密码注入不生效问题定位1</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/11/openstack-neutron-problem1/" rel="bookmark">openstack接口状态异常</a></div>
     </li>
   </ul>
 
@@ -441,7 +443,7 @@
         <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
@@ -493,7 +495,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">181k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -531,9 +533,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

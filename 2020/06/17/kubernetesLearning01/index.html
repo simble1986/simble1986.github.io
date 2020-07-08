@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -47,14 +47,17 @@
 </script>
 
   <meta name="description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则. 对应章节：05 | 白话容器基础（一）：从进程说开去">
-<meta name="keywords" content="docker,Kubernetes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="K8s学习笔记——container之于进程">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2020&#x2F;06&#x2F;17&#x2F;kubernetesLearning01&#x2F;index.html">
+<meta property="og:url" content="http://www.isimble.com/2020/06/17/kubernetesLearning01/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则. 对应章节：05 | 白话容器基础（一）：从进程说开去">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-06-17T05:41:20.476Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-17T05:35:07.000Z">
+<meta property="article:modified_time" content="2020-06-17T05:41:20.476Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://www.isimble.com/2020/06/17/kubernetesLearning01/">
@@ -309,13 +312,13 @@
       <div class="popular-posts-title"><a href="/2019/07/19/k8s-env-prep/" rel="bookmark">k8s环境安装之差点儿我就放弃了</a></div>
     </li>
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/06/17/kubernetesLearning02/" rel="bookmark">K8s学习笔记——限制与隔离</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2020/06/23/kubernetesLearning03/" rel="bookmark">K8s学习笔记——深入理解容器镜像</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2020/06/23/kubernetesLearning04/" rel="bookmark">K8s学习笔记——重新认识Docker容器</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2020/07/06/kubernetesLearning05/" rel="bookmark">K8s学习笔记——为什么需要Pod</a></div>
     </li>
   </ul>
 
@@ -429,7 +432,7 @@
         <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
@@ -481,7 +484,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">181k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -519,9 +522,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

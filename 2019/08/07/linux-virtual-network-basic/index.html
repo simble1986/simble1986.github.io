@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -47,19 +47,22 @@
 </script>
 
   <meta name="description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
-<meta name="keywords" content="network,linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux虚拟网络学习笔记">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;07&#x2F;linux-virtual-network-basic&#x2F;index.html">
+<meta property="og:url" content="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。 本文通过实验的方式学习这些虚拟网络功能，包括tap设备，veth pair， bridge及router">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;07&#x2F;linux-virtual-network-basic&#x2F;bridge.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;07&#x2F;linux-virtual-network-basic&#x2F;router.jpg">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;07&#x2F;linux-virtual-network-basic&#x2F;tunnel.jpg">
-<meta property="og:updated_time" content="2019-08-12T03:42:30.737Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/bridge.jpg">
+<meta property="og:image" content="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/router.jpg">
+<meta property="og:image" content="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/tunnel.jpg">
+<meta property="article:published_time" content="2019-08-07T01:05:40.000Z">
+<meta property="article:modified_time" content="2019-08-12T03:42:30.737Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="network">
+<meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2019&#x2F;08&#x2F;07&#x2F;linux-virtual-network-basic&#x2F;bridge.jpg">
+<meta name="twitter:image" content="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/bridge.jpg">
 
 <link rel="canonical" href="http://www.isimble.com/2019/08/07/linux-virtual-network-basic/">
 
@@ -321,7 +324,7 @@
 <p>两个namespace中的网络可以通过veth pair访问，但3个之间甚至多个互通，veth pair就无法胜任，此时需要用到bridge/switch</p>
 </blockquote>
 <p>下面的实验模拟4个namespace中的接口通过bridge互通</p>
-<img src="/2019/08/07/linux-virtual-network-basic/bridge.jpg" class title="Rule List">
+<img src="/2019/08/07/linux-virtual-network-basic/bridge.jpg" class="" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip link add tap3 <span class="built_in">type</span> veth peer name tap3_peer</span><br><span class="line">$ ip link add tap4 <span class="built_in">type</span> veth peer name tap4_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -345,7 +348,7 @@
 <p>修改<code>/etc/sysctl.conf</code>文件，设置<code>net.ipv4.ip_forward=1</code>，重启生效</p>
 <p>临时修改： <code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></p>
 </blockquote>
-<img src="/2019/08/07/linux-virtual-network-basic/router.jpg" class title="Rule List">
+<img src="/2019/08/07/linux-virtual-network-basic/router.jpg" class="" title="Rule List">
 <p><strong>1. 创建veth pair</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap5 <span class="built_in">type</span> veth peer name tap5_peer</span><br><span class="line">$ ip link add tap6 <span class="built_in">type</span> veth peer name tap6_peer</span><br></pre></td></tr></table></figure>
 <p><strong>2. 创建namespace并迁移tap接口</strong></p>
@@ -361,7 +364,7 @@
 <p>tun应该是tunnel的缩写，启用了IP层隧道功能</p>
 <p>Linux原生支持5种隧道<code>{ ipip | gre | sit | isatap | vti }</code></p>
 </blockquote>
-<img src="/2019/08/07/linux-virtual-network-basic/tunnel.jpg" class title="Rule List">
+<img src="/2019/08/07/linux-virtual-network-basic/tunnel.jpg" class="" title="Rule List">
 <p>忽略上图中的tun1和tun2后，整个topo与router中的一样。那么先按照<a href="#router">router</a>章节创建两个ns及配置</p>
 <p><strong>1. 创建veth pair并分别迁移到对应的namespace</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ip link add tap1 <span class="built_in">type</span> veth peer name tap1_peer</span><br><span class="line">$ ip link add tap2 <span class="built_in">type</span> veth peer name tap2_peer</span><br><span class="line">$ ip netns add ns1</span><br><span class="line">$ ip netns add ns2</span><br><span class="line">$ ip link <span class="built_in">set</span> tap1 netns ns1</span><br><span class="line">$ ip link <span class="built_in">set</span> tap2 netns ns2</span><br></pre></td></tr></table></figure>
@@ -523,7 +526,7 @@
         <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
@@ -575,7 +578,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">181k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -613,9 +616,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -47,14 +47,18 @@
 </script>
 
   <meta name="description" content="安装及配置  简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
-<meta name="keywords" content="blog,markdown,hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用hexo搭建自己的博客——创建站点">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;03&#x2F;25&#x2F;setup-hexo-create-site&#x2F;index.html">
+<meta property="og:url" content="http://www.isimble.com/2018/03/25/setup-hexo-create-site/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="安装及配置  简介 Hexo是一个快速、简介且高效的博客框架，可以使用Markdown解析文章并生成网站">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-30T02:37:58.000Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-25T15:29:30.000Z">
+<meta property="article:modified_time" content="2018-03-30T02:37:58.000Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="markdown">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://www.isimble.com/2018/03/25/setup-hexo-create-site/">
@@ -303,7 +307,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <p><em>默认状况下，服务器将使用4000端口。可以通过<code>hexo server -p 80</code>来将server绑定至80端口</em></p>
 <ul>
-<li>部署网站<br>
+<li>部署网站<br />
 可将网站按照_config.yml中的配置直接部署于github等（后续看心情写步骤）</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
@@ -361,13 +365,13 @@
   <div class="popular-posts-header">相关文章</div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2018/09/13/hexo-enable-disqus/" rel="bookmark">Hexo开启disqus评论系统</a></div>
+    </li>
+    <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/03/27/hexo-next-valine/" rel="bookmark">Hexo+Next上开启Valine评论系统</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2018/06/21/marp/" rel="bookmark">使用markdown写PPT</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2018/09/13/hexo-enable-disqus/" rel="bookmark">Hexo开启disqus评论系统</a></div>
     </li>
   </ul>
 
@@ -375,9 +379,9 @@
       <footer class="post-footer">
           
           <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
               <a href="/tags/blog/" rel="tag"><i class="fa fa-tag"></i> blog</a>
               <a href="/tags/markdown/" rel="tag"><i class="fa fa-tag"></i> markdown</a>
-              <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
           </div>
 
         
@@ -482,7 +486,7 @@
         <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
@@ -534,7 +538,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">181k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -572,9 +576,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 

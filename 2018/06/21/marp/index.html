@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
+<meta name="generator" content="Hexo 4.2.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
@@ -47,18 +47,20 @@
 </script>
 
   <meta name="description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
-<meta name="keywords" content="markdown">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用markdown写PPT">
-<meta property="og:url" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;06&#x2F;21&#x2F;marp&#x2F;index.html">
+<meta property="og:url" content="http://www.isimble.com/2018/06/21/marp/index.html">
 <meta property="og:site_name" content="Simble的小站">
 <meta property="og:description" content="自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;yhatt&#x2F;marp&#x2F;master&#x2F;images&#x2F;marp.png">
-<meta property="og:image" content="http:&#x2F;&#x2F;www.isimble.com&#x2F;2018&#x2F;06&#x2F;21&#x2F;marp&#x2F;ppt1.png">
-<meta property="og:updated_time" content="2018-11-15T05:46:30.039Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png">
+<meta property="og:image" content="http://www.isimble.com/2018/06/21/marp/ppt1.png">
+<meta property="article:published_time" content="2018-06-21T05:42:00.000Z">
+<meta property="article:modified_time" content="2018-11-15T05:46:30.039Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="markdown">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;yhatt&#x2F;marp&#x2F;master&#x2F;images&#x2F;marp.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png">
 
 <link rel="canonical" href="http://www.isimble.com/2018/06/21/marp/">
 
@@ -277,10 +279,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="https://raw.githubusercontent.com/yhatt/marp/master/images/marp.png" alt></p>
+        <p><img src="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png" alt="" /></p>
 <p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
 <a id="more"></a>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.io/marp/" target="_blank" rel="noopener">Marp</a>。</p>
+<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.i/2018/06/21/marp/" target="_blank" rel="noopener">Marp</a>。</p>
 <h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
 <ul>
 <li>书写简单</li>
@@ -310,7 +312,7 @@
 <p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
 <p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
 <p>比如：</p>
-<img src="/2018/06/21/marp/ppt1.png" class title="效果">
+<img src="/2018/06/21/marp/ppt1.png" class="" title="效果">
 <p>则是用如下代码完成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
 <p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
@@ -445,7 +447,7 @@
         <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
       </span>
       <span class="links-of-author-item">
-        <a href="/mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
       </span>
       <span class="links-of-author-item">
         <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
@@ -497,7 +499,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">180k</span>
+    <span title="站点总字数">181k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
@@ -535,9 +537,17 @@
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
 <script src="/js/schemes/pisces.js"></script>
+
+
 <script src="/js/next-boot.js"></script>
+
 
 
 
