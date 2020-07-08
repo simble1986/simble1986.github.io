@@ -193,6 +193,61 @@
       </tags>
   </entry>
   <entry>
+    <title>Docker API一种连接到PTY的交互方法</title>
+    <url>/2018/05/04/docker-pexpect/</url>
+    <content><![CDATA[<p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
+<p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
+<a id="more"></a>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
+<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
+<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
+<h2 id="自动化思路"><a class="markdownIt-Anchor" href="#自动化思路"></a> 自动化思路</h2>
+<ol>
+<li>client通过python API连接到docker</li>
+<li>创建一个container并保持运行</li>
+<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
+<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
+</ol>
+<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
+<ul>
+<li>Docker开启remote API</li>
+</ul>
+<p>参见之前博文</p>
+<ul>
+<li>Docker Client</li>
+</ul>
+<p>安装必要的包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure>
+<h2 id="开始使用"><a class="markdownIt-Anchor" href="#开始使用"></a> 开始使用</h2>
+<ul>
+<li>创建container</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>连接container</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用pexpect连接</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
+<ul>
+<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
+<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
+</ul>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>pexpect</tag>
+        <tag>自动化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>docker基本操作（一）</title>
     <url>/2018/03/23/docker_study_cmd1/</url>
     <content><![CDATA[<p>本文作为docker使用笔记供小伙伴们参考</p>
@@ -277,61 +332,6 @@
       </categories>
       <tags>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker API一种连接到PTY的交互方法</title>
-    <url>/2018/05/04/docker-pexpect/</url>
-    <content><![CDATA[<p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
-<p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
-<a id="more"></a>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
-<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
-<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
-<h2 id="自动化思路"><a class="markdownIt-Anchor" href="#自动化思路"></a> 自动化思路</h2>
-<ol>
-<li>client通过python API连接到docker</li>
-<li>创建一个container并保持运行</li>
-<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
-<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
-</ol>
-<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
-<ul>
-<li>Docker开启remote API</li>
-</ul>
-<p>参见之前博文</p>
-<ul>
-<li>Docker Client</li>
-</ul>
-<p>安装必要的包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure>
-<h2 id="开始使用"><a class="markdownIt-Anchor" href="#开始使用"></a> 开始使用</h2>
-<ul>
-<li>创建container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>连接container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用pexpect连接</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
-<ul>
-<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
-<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
-</ul>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>pexpect</tag>
-        <tag>自动化</tag>
       </tags>
   </entry>
   <entry>
@@ -1192,6 +1192,81 @@
       </tags>
   </entry>
   <entry>
+    <title>K8s学习笔记——Pod的基本概念</title>
+    <url>/2020/07/08/kubernetesLearning14/</url>
+    <content><![CDATA[<blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则。动手实践并记录结果</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/40366" target="_blank" rel="noopener">14 | 深入解析Pod对象（一）：基本概念</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="hostaliases测试"><a class="markdownIt-Anchor" href="#hostaliases测试"></a> <code>hostAliases</code>测试</h2>
+<ul>
+<li>Pod配置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">my-first-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostAliases:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">ip:</span> <span class="number">10.9</span><span class="number">.8</span><span class="number">.7</span></span><br><span class="line">    <span class="attr">hostnames:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"host.test.site"</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">"host.aliases.test.site"</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看容器内的hosts信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> my-first-test -c my-test-container1 -- cat /etc/hosts</span><br><span class="line"><span class="comment"># Kubernetes-managed hosts file.</span></span><br><span class="line">127.0.0.1   localhost</span><br><span class="line">::1 localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0 ip6-localnet</span><br><span class="line">fe00::0 ip6-mcastprefix</span><br><span class="line">fe00::1 ip6-allnodes</span><br><span class="line">fe00::2 ip6-allrouters</span><br><span class="line">172.172.1.41    my-first-test</span><br><span class="line"></span><br><span class="line"><span class="comment"># Entries added by HostAliases.</span></span><br><span class="line">10.9.8.7    host.test.site  host.aliases.test.site</span><br><span class="line">$ kubectl <span class="built_in">exec</span> my-first-test -c my-test-container2 -- cat /etc/hosts</span><br><span class="line"><span class="comment"># Kubernetes-managed hosts file.</span></span><br><span class="line">127.0.0.1   localhost</span><br><span class="line">::1 localhost ip6-localhost ip6-loopback</span><br><span class="line">fe00::0 ip6-localnet</span><br><span class="line">fe00::0 ip6-mcastprefix</span><br><span class="line">fe00::1 ip6-allnodes</span><br><span class="line">fe00::2 ip6-allrouters</span><br><span class="line">172.172.1.41    my-first-test</span><br><span class="line"></span><br><span class="line"><span class="comment"># Entries added by HostAliases.</span></span><br><span class="line">10.9.8.7    host.test.site  host.aliases.test.site</span><br></pre></td></tr></table></figure>
+<h2 id="shareprocessnamespace"><a class="markdownIt-Anchor" href="#shareprocessnamespace"></a> <code>shareProcessNamespace</code></h2>
+<h3 id="不配置shareprocessnamespace"><a class="markdownIt-Anchor" href="#不配置shareprocessnamespace"></a> 不配置<code>shareProcessNamespace</code></h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="literal">no</span><span class="string">-share-process-ns-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shell</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过shell的container查看进程</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> no-share-process-ns-test -c shell -- ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br><span class="line"><span class="comment"># shell的容器仅能看到自己容器内的进程</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>container层面信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED              STATUS              PORTS               NAMES</span><br><span class="line">117497ca101c        2622e6cca7eb                                        <span class="string">"/docker-entrypoint.…"</span>   About a minute ago   Up About a minute                       k8s_web_no-share-process-ns-test_default_94884606-ea15-4038-9fa0-0e3b11ca4f31_0</span><br><span class="line">ca8b6e6a1796        1c35c4412082                                        <span class="string">"sh"</span>                     About a minute ago   Up About a minute                       k8s_shell_no-share-process-ns-test_default_94884606-ea15-4038-9fa0-0e3b11ca4f31_0</span><br><span class="line">eb0fd0f91677        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 About a minute ago   Up About a minute                       k8s_POD_no-share-process-ns-test_default_94884606-ea15-4038-9fa0-0e3b11ca4f31_0</span><br><span class="line">$ docker inspect ca8b6e6a1796 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 1561218,</span><br><span class="line">$ docker inspect 117497ca101c | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 1561252,</span><br><span class="line">$ ls -l /proc/1561218/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:41 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:41 mnt -&gt; <span class="string">'mnt:[4026532718]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:41 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:41 pid -&gt; <span class="string">'pid:[4026532723]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 pid_for_children -&gt; <span class="string">'pid:[4026532723]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:41 uts -&gt; <span class="string">'uts:[4026532721]'</span></span><br><span class="line">$ ls -l /proc/1561252/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 mnt -&gt; <span class="string">'mnt:[4026532724]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 pid -&gt; <span class="string">'pid:[4026532726]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 pid_for_children -&gt; <span class="string">'pid:[4026532726]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:43 uts -&gt; <span class="string">'uts:[4026532725]'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>两个container的<code>pid</code>和<code>pid_for_children</code>不同</p>
+</blockquote>
+<h3 id="开启shareprocessnamespace"><a class="markdownIt-Anchor" href="#开启shareprocessnamespace"></a> 开启shareProcessNamespace</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">share-process-ns-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">shareProcessNamespace:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shell</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过shell的container查看进程</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> share-process-ns-test -c shell -- ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 /pause</span><br><span class="line">    6 root      0:00 sh</span><br><span class="line">   12 root      0:00 nginx: master process nginx -g daemon off;</span><br><span class="line">   39 101       0:00 nginx: worker process</span><br><span class="line">   40 root      0:00 ps</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，名为shell的container中也能看到nginx的进程</p>
+</blockquote>
+<ul>
+<li>container层面</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">955d3e3b9cba        2622e6cca7eb                                        <span class="string">"/docker-entrypoint.…"</span>   2 minutes ago       Up 2 minutes                            k8s_web_share-process-ns-test_default_d1b8348e-5399-4d30-9d53-de91ffdb9746_0</span><br><span class="line">d065b6907db0        1c35c4412082                                        <span class="string">"sh"</span>                     2 minutes ago       Up 2 minutes                            k8s_shell_share-process-ns-test_default_d1b8348e-5399-4d30-9d53-de91ffdb9746_0</span><br><span class="line">79a59e6e245c        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 2 minutes ago       Up 2 minutes                            k8s_POD_share-process-ns-test_default_d1b8348e-5399-4d30-9d53-de91ffdb9746_0</span><br><span class="line">$ docker inspect 955d3e3b9cba | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 1564637,</span><br><span class="line">$ docker inspect d065b6907db0 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 1564603,</span><br><span class="line">$ ls -l /proc/1564637/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 mnt -&gt; <span class="string">'mnt:[4026532724]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 pid -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 pid_for_children -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 uts -&gt; <span class="string">'uts:[4026532725]'</span></span><br><span class="line">$ ls -l /proc/1564603/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:48 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:48 mnt -&gt; <span class="string">'mnt:[4026532721]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:48 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:48 pid -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 pid_for_children -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:51 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 17 14:48 uts -&gt; <span class="string">'uts:[4026532723]'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>shell的container和web的container的<code>pid</code>和<code>pid_for_children</code>都是<code>pid:[4026532626]</code>的namespace</p>
+</blockquote>
+<h2 id="hostnetwork练习"><a class="markdownIt-Anchor" href="#hostnetwork练习"></a> <code>hostNetwork</code>练习</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">host-net-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">hostNetwork:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shell</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> host-net-test -c shell -- ifconfig</span><br><span class="line">cni0      Link encap:Ethernet  HWaddr 16:80:F0:F9:A0:B4</span><br><span class="line">          inet addr:172.172.1.1  Bcast:0.0.0.0  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::1480:f0ff:fef9:a0b4/64 Scope:Link</span><br><span class="line">          UP BROADCAST MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:31 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:600 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:868 (868.0 B)  TX bytes:43824 (42.7 KiB)</span><br><span class="line"></span><br><span class="line">docker0   Link encap:Ethernet  HWaddr 02:42:BB:9B:62:76</span><br><span class="line">          inet addr:172.17.0.1  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          inet6 addr: fe80::42:bbff:fe9b:6276/64 Scope:Link</span><br><span class="line">          UP BROADCAST MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:19 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:1666 (1.6 KiB)</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>container中看到的网卡信息与host相同</p>
+</blockquote>
+<h2 id="lifecycle练习"><a class="markdownIt-Anchor" href="#lifecycle练习"></a> <code>lifecycle</code>练习</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">lifecycle-demo</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">lifecycle-demo-container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">lifecycle:</span></span><br><span class="line">      <span class="attr">postStart:</span></span><br><span class="line">        <span class="attr">exec:</span></span><br><span class="line">          <span class="attr">command:</span> <span class="string">["/bin/sh",</span> <span class="string">"-c"</span><span class="string">,</span> <span class="string">"echo Hello from the postStart handler &gt; /usr/share/message"</span><span class="string">]</span></span><br><span class="line">      <span class="attr">preStop:</span></span><br><span class="line">        <span class="attr">exec:</span></span><br><span class="line">          <span class="attr">command:</span> <span class="string">["/usr/sbin/nginx","-s","quit"]</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> lifecycle-demo -- cat /usr/share/message</span><br><span class="line">Hello from the postStart handler</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到container启动后就打印了</p>
+</blockquote>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>这章节主要是理解哪些操作是属于pod层面，而哪些操作是属于容器层面。比如hostAliases和shareProcessNamespace，都是属于整个pod层面，而imagePullPolicy和lifecycle则属于container层面。</p>
+<p>再次引用原文中的总结：</p>
+<blockquote>
+<p>**凡是 Pod 中的容器要共享宿主机的 Namespace，也一定是 Pod 级别的定义</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux虚拟网络学习笔记</title>
     <url>/2019/08/07/linux-virtual-network-basic/</url>
     <content><![CDATA[<p>Linux虚拟网络是近几年虚拟化及容器等技术的基础，掌握了这些基础，可以更深入的理解openstack、docker的网络功能，以及测试过程中的问题定位。</p>
@@ -1442,6 +1517,163 @@
       </tags>
   </entry>
   <entry>
+    <title>使用markdown写PPT</title>
+    <url>/2018/06/21/marp/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png" alt="" /></p>
+<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
+<a id="more"></a>
+<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.i/2018/06/21/marp/" target="_blank" rel="noopener">Marp</a>。</p>
+<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
+<ul>
+<li>书写简单</li>
+<li>提供两套模版</li>
+<li>可实时预览</li>
+<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
+<li>支持Mac，Win和Linux</li>
+</ul>
+<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
+<ul>
+<li>没有动画</li>
+<li>只能导出为pdf格式，不能生成PPT格式</li>
+<li>仅支持基础的markdown语法</li>
+</ul>
+<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
+<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
+<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
+<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
+<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
+<p>页码是可以随时开启，随时关闭的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
+<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
+<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
+<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
+<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
+<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
+<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
+<p>比如：</p>
+<img src="/2018/06/21/marp/ppt1.png" class="" title="效果">
+<p>则是用如下代码完成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
+<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
+<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
+<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
+<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
+<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
+<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
+<p>🐱</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mininet基础使用</title>
+    <url>/2018/11/07/mininet-base/</url>
+    <content><![CDATA[<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
+<p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
+<p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
+<a id="more"></a>
+<h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
+<ul>
+<li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
+<li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
+<li>支持<strong>系统级回归测试</strong>，这些<strong>测试</strong>可重复且易于打包</li>
+<li>支持<strong>复杂的拓扑测试</strong>，无需连接物理网络</li>
+<li>包括具有拓扑感知和OpenFlow感知的<strong>CLI</strong>，用于调试或运行网络范围的测试</li>
+<li>支持<strong>任意自定义拓扑</strong>，并包括一组基本的<strong>参数化拓扑</strong></li>
+<li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
+<li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
+</ul>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="ubuntu1604"><a class="markdownIt-Anchor" href="#ubuntu1604"></a> Ubuntu16.04</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure>
+<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
+<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
+<ul>
+<li>进入mininet命令行模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn</span></span><br><span class="line">*** No default OpenFlow controller found <span class="keyword">for</span> default switch!</span><br><span class="line">*** Falling back to OVS Bridge</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s1)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2</span><br><span class="line">*** Starting controller</span><br><span class="line"></span><br><span class="line">*** Starting 1 switches</span><br><span class="line">s1 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看节点</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; nodes</span><br><span class="line">available nodes are:</span><br><span class="line">h1 h2 s1</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到当前包含3个节点，包括两个host，一个switch</p>
+</blockquote>
+<ul>
+<li>查看连接状况</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; net</span><br><span class="line">h1 h1-eth0:s1-eth1</span><br><span class="line">h2 h2-eth0:s1-eth2</span><br><span class="line">s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>h1的eth0与s1的eth1相连<br />
+h2的eth0与s1的eth2相连</p>
+</blockquote>
+<ul>
+<li>查看详细信息</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; dump</span><br><span class="line">&lt;Host h1: h1-eth0:10.0.0.1 pid=6896&gt;</span><br><span class="line">&lt;Host h2: h2-eth0:10.0.0.2 pid=6899&gt;</span><br><span class="line">&lt;OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=6905&gt;</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>环境清理</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># mn -c</span></span><br><span class="line">*** Removing excess controllers/ofprotocols/ofdatapaths/pings/noxes</span><br><span class="line">killall controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">killall -9 controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">pkill -9 -f <span class="string">"sudo mnexec"</span></span><br><span class="line">*** Removing junk from /tmp</span><br><span class="line">rm -f /tmp/vconn* /tmp/vlogs* /tmp/*.out /tmp/*.<span class="built_in">log</span></span><br><span class="line">*** Removing old X11 tunnels</span><br><span class="line">*** Removing excess kernel datapaths</span><br><span class="line">ps ax | egrep -o <span class="string">'dp[0-9]+'</span> | sed <span class="string">'s/dp/nl:/'</span></span><br><span class="line">***  Removing OVS datapaths</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">*** Removing all links of the pattern foo-ethX</span><br><span class="line">ip link show | egrep -o <span class="string">'([-_.[:alnum:]]+-eth[[:digit:]]+)'</span></span><br><span class="line">ip link show</span><br><span class="line">*** Killing stale mininet node processes</span><br><span class="line">pkill -9 -f mininet:</span><br><span class="line">*** Shutting down stale tunnels</span><br><span class="line">pkill -9 -f Tunnel=Ethernet</span><br><span class="line">pkill -9 -f .ssh/mn</span><br><span class="line">rm -f ~/.ssh/mn/*</span><br><span class="line">*** Cleanup complete.</span><br><span class="line">root@mininet:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>节点命令</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h1 ifconfig</span><br><span class="line">h1-eth0   Link encap:Ethernet  HWaddr a2:5f:da:ed:6a:74</span><br><span class="line">          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: fe80::a05f:daff:feed:6a74/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1206 (1.2 KB)  TX bytes:648 (648.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Run http server</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h1 python -m SimpleHTTPServer 80 &amp;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Http client</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h2 wget h1</span><br><span class="line">--2018-11-07 10:52:29--  http://10.0.0.1/</span><br><span class="line">Connecting to 10.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 370 [text/html]</span><br><span class="line">Saving to: <span class="string">'index.html'</span></span><br><span class="line"></span><br><span class="line">index.html          100%[===================&gt;]     370  --.-KB/s    <span class="keyword">in</span> 0s</span><br><span class="line"></span><br><span class="line">2018-11-07 10:52:29 (62.3 MB/s) - <span class="string">'index.html'</span> saved [370/370]</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>sdn</category>
+      </categories>
+      <tags>
+        <tag>network</tag>
+        <tag>sdn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mininet自定义topo</title>
+    <url>/2018/11/08/mininet-user-define-topo/</url>
+    <content><![CDATA[<h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
+<p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mn --<span class="built_in">help</span></span><br><span class="line">Usage: mn [options]</span><br><span class="line">(<span class="built_in">type</span> mn -h <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  --topo=TOPO           linear|minimal|reversed|single|torus|tree[,param=value</span><br><span class="line">                        ...] linear=LinearTopo torus=TorusTopo tree=TreeTopo</span><br><span class="line">                        single=SingleSwitchTopo</span><br><span class="line">                        reversed=SingleSwitchReversedTopo minimal=MinimalTopo</span><br></pre></td></tr></table></figure>
+<h2 id="获取示例"><a class="markdownIt-Anchor" href="#获取示例"></a> 获取示例</h2>
+<p>Mininet提供了topo-2sw-2host的示例，可以通过<a href="https://github.com/mininet/mininet" target="_blank" rel="noopener">Mininet github</a>的custom目录下获取</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""Custom topology example</span></span><br><span class="line"><span class="string">Two directly connected switches plus a host for each switch:</span></span><br><span class="line"><span class="string">   host --- switch --- switch --- host</span></span><br><span class="line"><span class="string">Adding the 'topos' dict with a key/value pair to generate our newly defined</span></span><br><span class="line"><span class="string">topology enables one to pass in '--topo=mytopo' from the command line.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        leftHost = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        rightHost = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        leftSwitch = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line">        rightSwitch = self.addSwitch( <span class="string">'s4'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( leftHost, leftSwitch )</span><br><span class="line">        self.addLink( leftSwitch, rightSwitch )</span><br><span class="line">        self.addLink( rightSwitch, rightHost )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="自定义topo"><a class="markdownIt-Anchor" href="#自定义topo"></a> 自定义topo</h2>
+<p>如要创建如下topo</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">                         +------------+</span><br><span class="line">              +----------+     s3     +---------+</span><br><span class="line">              |          +------------+         |</span><br><span class="line">              |                                 |</span><br><span class="line">         +----+----+                       +----+----+</span><br><span class="line">   +-----+    s1   +-----+           +-----+   s2    +-----+</span><br><span class="line">   |     +---------+     |           |     +---------+     |</span><br><span class="line">   |                     |           |                     |</span><br><span class="line">+--+--+               +--+--+     +--+--+               +--+--+</span><br><span class="line">| h1  |               | h2  |     | h3  |               | h4  |</span><br><span class="line">+-----+               +-----+     +-----+               +-----+</span><br></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        h1 = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        h2 = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        h3 = self.addHost( <span class="string">'h3'</span> )</span><br><span class="line">        h4 = self.addHost( <span class="string">'h4'</span> )</span><br><span class="line">        s1 = self.addSwitch( <span class="string">'s1'</span> )</span><br><span class="line">        s2 = self.addSwitch( <span class="string">'s2'</span> )</span><br><span class="line">        s3 = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( h1, s1 )</span><br><span class="line">        self.addLink( s1, h2 )</span><br><span class="line">        self.addLink( s1, s3 )</span><br><span class="line">        self.addLink( s3, s2 )</span><br><span class="line">        self.addLink( h3, s2 )</span><br><span class="line">        self.addLink( s2, h4 )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用自定义topo"><a class="markdownIt-Anchor" href="#使用自定义topo"></a> 使用自定义topo</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn --custom ./testtopo.py --topo mytopo --controller=remote,ip=127.0.0.1,port=6633</span></span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1 s2 s3</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h3, s2) (s1, h2) (s1, s3) (s2, h4) (s3, s2)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Starting controller</span><br><span class="line">c0</span><br><span class="line">*** Starting 3 switches</span><br><span class="line">s1 s2 s3 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+<p>查看连接状态</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; links</span><br><span class="line">h1-eth0&lt;-&gt;s1-eth1 (OK OK)</span><br><span class="line">h3-eth0&lt;-&gt;s2-eth2 (OK OK)</span><br><span class="line">s1-eth2&lt;-&gt;h2-eth0 (OK OK)</span><br><span class="line">s1-eth3&lt;-&gt;s3-eth1 (OK OK)</span><br><span class="line">s2-eth3&lt;-&gt;h4-eth0 (OK OK)</span><br><span class="line">s3-eth2&lt;-&gt;s2-eth1 (OK OK)</span><br><span class="line">mininet&gt; pingall</span><br><span class="line">*** Ping: testing ping reachability</span><br><span class="line">h1 -&gt; h2 h3 h4</span><br><span class="line">h2 -&gt; h1 h3 h4</span><br><span class="line">h3 -&gt; h1 h2 h4</span><br><span class="line">h4 -&gt; h1 h2 h3</span><br><span class="line">*** Results: 0% dropped (12/12 received)</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>sdn</category>
+      </categories>
+      <tags>
+        <tag>network</tag>
+        <tag>sdn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>在树莓派上部署nodejs</title>
     <url>/2018/03/23/nodejs-setup-pi/</url>
     <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
@@ -1520,8 +1752,8 @@
       </categories>
       <tags>
         <tag>network</tag>
-        <tag>opendaylight</tag>
         <tag>sdn</tag>
+        <tag>opendaylight</tag>
       </tags>
   </entry>
   <entry>
@@ -2472,163 +2704,6 @@
       </categories>
       <tags>
         <tag>ovs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>使用markdown写PPT</title>
-    <url>/2018/06/21/marp/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png" alt="" /></p>
-<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
-<a id="more"></a>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.i/2018/06/21/marp/" target="_blank" rel="noopener">Marp</a>。</p>
-<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
-<ul>
-<li>书写简单</li>
-<li>提供两套模版</li>
-<li>可实时预览</li>
-<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
-<li>支持Mac，Win和Linux</li>
-</ul>
-<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
-<ul>
-<li>没有动画</li>
-<li>只能导出为pdf格式，不能生成PPT格式</li>
-<li>仅支持基础的markdown语法</li>
-</ul>
-<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
-<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
-<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
-<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
-<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
-<p>页码是可以随时开启，随时关闭的。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
-<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
-<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
-<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
-<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
-<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
-<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
-<p>比如：</p>
-<img src="/2018/06/21/marp/ppt1.png" class="" title="效果">
-<p>则是用如下代码完成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
-<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
-<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
-<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
-<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
-<p>比如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
-<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
-<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
-<p>🐱</p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mininet基础使用</title>
-    <url>/2018/11/07/mininet-base/</url>
-    <content><![CDATA[<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
-<p>Mininet是一个网络模拟器，可以创建虚拟主机，交换机，控制器和链接的网络。</p>
-<p>Mininet的交换机支持OpenFlow，可实现高度灵活的自定义路由和SDN，为开发和测试SDN提供实验环境</p>
-<a id="more"></a>
-<h2 id="mininet用途"><a class="markdownIt-Anchor" href="#mininet用途"></a> Mininet用途</h2>
-<ul>
-<li>为开发OpenFlow应用程序提供简单而廉价的<strong>网络测试平台</strong></li>
-<li>允许<strong>多个并发开发人员</strong>在同一拓扑上独立工作</li>
-<li>支持<strong>系统级回归测试</strong>，这些<strong>测试</strong>可重复且易于打包</li>
-<li>支持<strong>复杂的拓扑测试</strong>，无需连接物理网络</li>
-<li>包括具有拓扑感知和OpenFlow感知的<strong>CLI</strong>，用于调试或运行网络范围的测试</li>
-<li>支持<strong>任意自定义拓扑</strong>，并包括一组基本的<strong>参数化拓扑</strong></li>
-<li><strong>可以在</strong>没有编程<strong>的情况下开箱</strong>即<strong>用</strong></li>
-<li>提供了一个简单易用的**Python API，**用于网络创建和实验</li>
-</ul>
-<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
-<h3 id="ubuntu1604"><a class="markdownIt-Anchor" href="#ubuntu1604"></a> Ubuntu16.04</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install mininet</span><br></pre></td></tr></table></figure>
-<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo mn --<span class="built_in">test</span> pingall</span><br></pre></td></tr></table></figure>
-<h2 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h2>
-<h3 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h3>
-<ul>
-<li>进入mininet命令行模式</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn</span></span><br><span class="line">*** No default OpenFlow controller found <span class="keyword">for</span> default switch!</span><br><span class="line">*** Falling back to OVS Bridge</span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h2, s1)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2</span><br><span class="line">*** Starting controller</span><br><span class="line"></span><br><span class="line">*** Starting 1 switches</span><br><span class="line">s1 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>查看节点</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; nodes</span><br><span class="line">available nodes are:</span><br><span class="line">h1 h2 s1</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>可以看到当前包含3个节点，包括两个host，一个switch</p>
-</blockquote>
-<ul>
-<li>查看连接状况</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; net</span><br><span class="line">h1 h1-eth0:s1-eth1</span><br><span class="line">h2 h2-eth0:s1-eth2</span><br><span class="line">s1 lo:  s1-eth1:h1-eth0 s1-eth2:h2-eth0</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>h1的eth0与s1的eth1相连<br />
-h2的eth0与s1的eth2相连</p>
-</blockquote>
-<ul>
-<li>查看详细信息</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; dump</span><br><span class="line">&lt;Host h1: h1-eth0:10.0.0.1 pid=6896&gt;</span><br><span class="line">&lt;Host h2: h2-eth0:10.0.0.2 pid=6899&gt;</span><br><span class="line">&lt;OVSBridge s1: lo:127.0.0.1,s1-eth1:None,s1-eth2:None pid=6905&gt;</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>环境清理</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># mn -c</span></span><br><span class="line">*** Removing excess controllers/ofprotocols/ofdatapaths/pings/noxes</span><br><span class="line">killall controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">killall -9 controller ofprotocol ofdatapath ping nox_core lt-nox_core ovs-openflowd ovs-controller udpbwtest mnexec ivs 2&gt; /dev/null</span><br><span class="line">pkill -9 -f <span class="string">"sudo mnexec"</span></span><br><span class="line">*** Removing junk from /tmp</span><br><span class="line">rm -f /tmp/vconn* /tmp/vlogs* /tmp/*.out /tmp/*.<span class="built_in">log</span></span><br><span class="line">*** Removing old X11 tunnels</span><br><span class="line">*** Removing excess kernel datapaths</span><br><span class="line">ps ax | egrep -o <span class="string">'dp[0-9]+'</span> | sed <span class="string">'s/dp/nl:/'</span></span><br><span class="line">***  Removing OVS datapaths</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">ovs-vsctl --timeout=1 list-br</span><br><span class="line">*** Removing all links of the pattern foo-ethX</span><br><span class="line">ip link show | egrep -o <span class="string">'([-_.[:alnum:]]+-eth[[:digit:]]+)'</span></span><br><span class="line">ip link show</span><br><span class="line">*** Killing stale mininet node processes</span><br><span class="line">pkill -9 -f mininet:</span><br><span class="line">*** Shutting down stale tunnels</span><br><span class="line">pkill -9 -f Tunnel=Ethernet</span><br><span class="line">pkill -9 -f .ssh/mn</span><br><span class="line">rm -f ~/.ssh/mn/*</span><br><span class="line">*** Cleanup complete.</span><br><span class="line">root@mininet:~<span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>节点命令</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h1 ifconfig</span><br><span class="line">h1-eth0   Link encap:Ethernet  HWaddr a2:5f:da:ed:6a:74</span><br><span class="line">          inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: fe80::a05f:daff:feed:6a74/64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:1206 (1.2 KB)  TX bytes:648 (648.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1/128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Run http server</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h1 python -m SimpleHTTPServer 80 &amp;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Http client</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; h2 wget h1</span><br><span class="line">--2018-11-07 10:52:29--  http://10.0.0.1/</span><br><span class="line">Connecting to 10.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 370 [text/html]</span><br><span class="line">Saving to: <span class="string">'index.html'</span></span><br><span class="line"></span><br><span class="line">index.html          100%[===================&gt;]     370  --.-KB/s    <span class="keyword">in</span> 0s</span><br><span class="line"></span><br><span class="line">2018-11-07 10:52:29 (62.3 MB/s) - <span class="string">'index.html'</span> saved [370/370]</span><br><span class="line"></span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>sdn</category>
-      </categories>
-      <tags>
-        <tag>network</tag>
-        <tag>sdn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mininet自定义topo</title>
-    <url>/2018/11/08/mininet-user-define-topo/</url>
-    <content><![CDATA[<h2 id="mininet自带topo"><a class="markdownIt-Anchor" href="#mininet自带topo"></a> mininet自带topo</h2>
-<p>通过<code>mn -h</code>可以看到Mininet自带的几种topo类型，分别有Linear, minimal, reversed, single, torus和tree类型，但有时候这些类型无法满足需求，需要自定义topo</p>
-<a id="more"></a>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mn --<span class="built_in">help</span></span><br><span class="line">Usage: mn [options]</span><br><span class="line">(<span class="built_in">type</span> mn -h <span class="keyword">for</span> details)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  --topo=TOPO           linear|minimal|reversed|single|torus|tree[,param=value</span><br><span class="line">                        ...] linear=LinearTopo torus=TorusTopo tree=TreeTopo</span><br><span class="line">                        single=SingleSwitchTopo</span><br><span class="line">                        reversed=SingleSwitchReversedTopo minimal=MinimalTopo</span><br></pre></td></tr></table></figure>
-<h2 id="获取示例"><a class="markdownIt-Anchor" href="#获取示例"></a> 获取示例</h2>
-<p>Mininet提供了topo-2sw-2host的示例，可以通过<a href="https://github.com/mininet/mininet" target="_blank" rel="noopener">Mininet github</a>的custom目录下获取</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">"""Custom topology example</span></span><br><span class="line"><span class="string">Two directly connected switches plus a host for each switch:</span></span><br><span class="line"><span class="string">   host --- switch --- switch --- host</span></span><br><span class="line"><span class="string">Adding the 'topos' dict with a key/value pair to generate our newly defined</span></span><br><span class="line"><span class="string">topology enables one to pass in '--topo=mytopo' from the command line.</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        leftHost = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        rightHost = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        leftSwitch = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line">        rightSwitch = self.addSwitch( <span class="string">'s4'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( leftHost, leftSwitch )</span><br><span class="line">        self.addLink( leftSwitch, rightSwitch )</span><br><span class="line">        self.addLink( rightSwitch, rightHost )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="自定义topo"><a class="markdownIt-Anchor" href="#自定义topo"></a> 自定义topo</h2>
-<p>如要创建如下topo</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">                         +------------+</span><br><span class="line">              +----------+     s3     +---------+</span><br><span class="line">              |          +------------+         |</span><br><span class="line">              |                                 |</span><br><span class="line">         +----+----+                       +----+----+</span><br><span class="line">   +-----+    s1   +-----+           +-----+   s2    +-----+</span><br><span class="line">   |     +---------+     |           |     +---------+     |</span><br><span class="line">   |                     |           |                     |</span><br><span class="line">+--+--+               +--+--+     +--+--+               +--+--+</span><br><span class="line">| h1  |               | h2  |     | h3  |               | h4  |</span><br><span class="line">+-----+               +-----+     +-----+               +-----+</span><br></pre></td></tr></table></figure>
-<p>代码</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mininet.topo <span class="keyword">import</span> Topo</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTopo</span><span class="params">( Topo )</span>:</span></span><br><span class="line">    <span class="string">"Simple topology example."</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">( self )</span>:</span></span><br><span class="line">        <span class="string">"Create custom topo."</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># Initialize topology</span></span><br><span class="line">        Topo.__init__( self )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add hosts and switches</span></span><br><span class="line">        h1 = self.addHost( <span class="string">'h1'</span> )</span><br><span class="line">        h2 = self.addHost( <span class="string">'h2'</span> )</span><br><span class="line">        h3 = self.addHost( <span class="string">'h3'</span> )</span><br><span class="line">        h4 = self.addHost( <span class="string">'h4'</span> )</span><br><span class="line">        s1 = self.addSwitch( <span class="string">'s1'</span> )</span><br><span class="line">        s2 = self.addSwitch( <span class="string">'s2'</span> )</span><br><span class="line">        s3 = self.addSwitch( <span class="string">'s3'</span> )</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Add links</span></span><br><span class="line">        self.addLink( h1, s1 )</span><br><span class="line">        self.addLink( s1, h2 )</span><br><span class="line">        self.addLink( s1, s3 )</span><br><span class="line">        self.addLink( s3, s2 )</span><br><span class="line">        self.addLink( h3, s2 )</span><br><span class="line">        self.addLink( s2, h4 )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">topos = &#123; <span class="string">'mytopo'</span>: ( <span class="keyword">lambda</span>: MyTopo() ) &#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用自定义topo"><a class="markdownIt-Anchor" href="#使用自定义topo"></a> 使用自定义topo</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@mininet:~<span class="comment"># mn --custom ./testtopo.py --topo mytopo --controller=remote,ip=127.0.0.1,port=6633</span></span><br><span class="line">*** Creating network</span><br><span class="line">*** Adding controller</span><br><span class="line">*** Adding hosts:</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Adding switches:</span><br><span class="line">s1 s2 s3</span><br><span class="line">*** Adding links:</span><br><span class="line">(h1, s1) (h3, s2) (s1, h2) (s1, s3) (s2, h4) (s3, s2)</span><br><span class="line">*** Configuring hosts</span><br><span class="line">h1 h2 h3 h4</span><br><span class="line">*** Starting controller</span><br><span class="line">c0</span><br><span class="line">*** Starting 3 switches</span><br><span class="line">s1 s2 s3 ...</span><br><span class="line">*** Starting CLI:</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-<p>查看连接状态</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mininet&gt; links</span><br><span class="line">h1-eth0&lt;-&gt;s1-eth1 (OK OK)</span><br><span class="line">h3-eth0&lt;-&gt;s2-eth2 (OK OK)</span><br><span class="line">s1-eth2&lt;-&gt;h2-eth0 (OK OK)</span><br><span class="line">s1-eth3&lt;-&gt;s3-eth1 (OK OK)</span><br><span class="line">s2-eth3&lt;-&gt;h4-eth0 (OK OK)</span><br><span class="line">s3-eth2&lt;-&gt;s2-eth1 (OK OK)</span><br><span class="line">mininet&gt; pingall</span><br><span class="line">*** Ping: testing ping reachability</span><br><span class="line">h1 -&gt; h2 h3 h4</span><br><span class="line">h2 -&gt; h1 h3 h4</span><br><span class="line">h3 -&gt; h1 h2 h4</span><br><span class="line">h4 -&gt; h1 h2 h3</span><br><span class="line">*** Results: 0% dropped (12/12 received)</span><br><span class="line">mininet&gt;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>sdn</category>
-      </categories>
-      <tags>
-        <tag>network</tag>
-        <tag>sdn</tag>
       </tags>
   </entry>
   <entry>

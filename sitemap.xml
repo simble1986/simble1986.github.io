@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.isimble.com/2020/07/08/kubernetesLearning14/</loc>
+    
+    <lastmod>2020-07-08T05:36:41.106Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/2020/07/06/kubernetesLearning05/</loc>
     
     <lastmod>2020-07-06T05:42:24.357Z</lastmod>
@@ -170,20 +177,6 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
-    
-    <lastmod>2018-11-15T05:46:30.039Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
-    
-    <lastmod>2018-11-15T05:46:30.039Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
@@ -192,6 +185,20 @@
   
   <url>
     <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
+    
+    <lastmod>2018-11-15T05:46:30.039Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
+    
+    <lastmod>2018-11-15T05:46:30.039Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -303,7 +310,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
+    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -311,13 +325,6 @@
   
   <url>
     <loc>http://www.isimble.com/tags/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -352,7 +359,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
