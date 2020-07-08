@@ -1933,8 +1933,8 @@
         <category>tech</category>
       </categories>
       <tags>
-        <tag>python</tag>
         <tag>docker</tag>
+        <tag>python</tag>
         <tag>Linux</tag>
         <tag>Mac</tag>
       </tags>
@@ -3597,9 +3597,9 @@ h2的eth0与s1的eth2相连</p>
         <category>hexo</category>
       </categories>
       <tags>
-        <tag>hexo</tag>
         <tag>blog</tag>
         <tag>markdown</tag>
+        <tag>hexo</tag>
       </tags>
   </entry>
   <entry>
