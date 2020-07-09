@@ -586,26 +586,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2018/03/22/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hexo开启disqus评论系统</title>
     <url>/2018/09/13/hexo-enable-disqus/</url>
     <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
@@ -637,6 +617,26 @@
       <tags>
         <tag>hexo</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2018/03/22/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
+<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Hexo+Next上开启Valine评论系统</title>
@@ -775,43 +775,6 @@
       </tags>
   </entry>
   <entry>
-    <title>K8s学习笔记——container之于进程</title>
-    <url>/2020/06/17/kubernetesLearning01/</url>
-    <content><![CDATA[<blockquote>
-<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
-<p>秉持眼过千遍不如手过一遍的原则.</p>
-<p>对应章节：<a href="https://time.geekbang.org/column/article/14642" target="_blank" rel="noopener">05 | 白话容器基础（一）：从进程说开去</a></p>
-</blockquote>
-<a id="more"></a>
-<h2 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h2>
-<h3 id="start一个container"><a class="markdownIt-Anchor" href="#start一个container"></a> start一个container</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d busybox</span><br></pre></td></tr></table></figure>
-<h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">...</span><br><span class="line">root      2817  0.0  0.2 107700  2296 ?        Sl   05:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.run</span><br><span class="line">root      2851  0.0  0.0   1308     4 pts/0    Ss+  05:42   0:00 sh</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<h3 id="查看进程树"><a class="markdownIt-Anchor" href="#查看进程树"></a> 查看进程树</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pstree  -g</span><br><span class="line">systemd(1)─┬─VGAuthService(562)</span><br><span class="line">           ├─accounts-daemon(866)─┬─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           │                      └─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           ├─atd(928)</span><br><span class="line">           ├─containerd(1055)─┬─containerd-shim(2817)─┬─sh(2851)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       └─&#123;containerd-shim&#125;(2817)</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure>
-<h3 id="查看容器内进程"><a class="markdownIt-Anchor" href="#查看容器内进程"></a> 查看容器内进程</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br></pre></td></tr></table></figure>
-<h3 id="分别查看两个进程的namespace"><a class="markdownIt-Anchor" href="#分别查看两个进程的namespace"></a> 分别查看两个进程的namespace</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/proc/2817/ns<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; <span class="string">'ipc:[4026531839]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; <span class="string">'mnt:[4026531840]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 net -&gt; <span class="string">'net:[4026531993]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; <span class="string">'uts:[4026531838]</span></span><br><span class="line"><span class="string">/proc/2851/ns# ls -l</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; '</span>cgroup:[4026531835]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; '</span>ipc:[4026532571]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; '</span>mnt:[4026532569]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:42 net -&gt; '</span>net:[4026532574]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; '</span>user:[4026531837]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; '</span>uts:[4026532570]<span class="string">'</span></span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
-<ol>
-<li>启动一个docker容器后，会看到启动了一个2817的进程，这个进程是1055的子进程</li>
-<li>而因为busybox容器启动后，启动了<code>sh</code>，其实际上是2817的子进程2851</li>
-<li>而在容器中，能看到1号进程是<code>sh</code></li>
-<li>通过/proc下可以看到，进程2817和进程2851的ns下，cgroup是都是<code>4026531835</code></li>
-<li>而很明显，每个container都会创建<code>ipc</code>, <code>mnt</code>, <code>net</code>, <code>pid</code>, <code>pid_for_children</code>, <code>user</code>, <code>uts</code>这些namespace</li>
-</ol>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8s学习笔记——限制与隔离</title>
     <url>/2020/06/17/kubernetesLearning02/</url>
     <content><![CDATA[<blockquote>
@@ -844,6 +807,43 @@
 <p>可以看到容器内和容器外部看到的是一样的</p>
 <h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
 <p>主要使用了cgroup对一个进程的CPU使用率进行了限制，通过了解进程的CPU使用率限制机制，了解docker通过cgroup对相关资源使用的限制</p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s学习笔记——container之于进程</title>
+    <url>/2020/06/17/kubernetesLearning01/</url>
+    <content><![CDATA[<blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则.</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/14642" target="_blank" rel="noopener">05 | 白话容器基础（一）：从进程说开去</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="操作"><a class="markdownIt-Anchor" href="#操作"></a> 操作</h2>
+<h3 id="start一个container"><a class="markdownIt-Anchor" href="#start一个container"></a> start一个container</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d busybox</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux</span><br><span class="line">...</span><br><span class="line">root      2817  0.0  0.2 107700  2296 ?        Sl   05:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.run</span><br><span class="line">root      2851  0.0  0.0   1308     4 pts/0    Ss+  05:42   0:00 sh</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程树"><a class="markdownIt-Anchor" href="#查看进程树"></a> 查看进程树</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pstree  -g</span><br><span class="line">systemd(1)─┬─VGAuthService(562)</span><br><span class="line">           ├─accounts-daemon(866)─┬─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           │                      └─&#123;accounts-daemon&#125;(866)</span><br><span class="line">           ├─atd(928)</span><br><span class="line">           ├─containerd(1055)─┬─containerd-shim(2817)─┬─sh(2851)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       ├─&#123;containerd-shim&#125;(2817)</span><br><span class="line">           │                  │                       └─&#123;containerd-shim&#125;(2817)</span><br><span class="line"> ....</span><br></pre></td></tr></table></figure>
+<h3 id="查看容器内进程"><a class="markdownIt-Anchor" href="#查看容器内进程"></a> 查看容器内进程</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps</span><br><span class="line">PID   USER     TIME  COMMAND</span><br><span class="line">    1 root      0:00 sh</span><br><span class="line">    6 root      0:00 ps</span><br></pre></td></tr></table></figure>
+<h3 id="分别查看两个进程的namespace"><a class="markdownIt-Anchor" href="#分别查看两个进程的namespace"></a> 分别查看两个进程的namespace</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">/proc/2817/ns<span class="comment"># ls -l</span></span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; <span class="string">'ipc:[4026531839]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; <span class="string">'mnt:[4026531840]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 net -&gt; <span class="string">'net:[4026531993]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; <span class="string">'pid:[4026531836]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; <span class="string">'uts:[4026531838]</span></span><br><span class="line"><span class="string">/proc/2851/ns# ls -l</span></span><br><span class="line"><span class="string">total 0</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 cgroup -&gt; '</span>cgroup:[4026531835]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 ipc -&gt; '</span>ipc:[4026532571]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 mnt -&gt; '</span>mnt:[4026532569]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:42 net -&gt; '</span>net:[4026532574]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 pid -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 06:16 pid_for_children -&gt; '</span>pid:[4026532572]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 user -&gt; '</span>user:[4026531837]<span class="string">'</span></span><br><span class="line"><span class="string">lrwxrwxrwx 1 root root 0 Jun 11 05:43 uts -&gt; '</span>uts:[4026532570]<span class="string">'</span></span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<ol>
+<li>启动一个docker容器后，会看到启动了一个2817的进程，这个进程是1055的子进程</li>
+<li>而因为busybox容器启动后，启动了<code>sh</code>，其实际上是2817的子进程2851</li>
+<li>而在容器中，能看到1号进程是<code>sh</code></li>
+<li>通过/proc下可以看到，进程2817和进程2851的ns下，cgroup是都是<code>4026531835</code></li>
+<li>而很明显，每个container都会创建<code>ipc</code>, <code>mnt</code>, <code>net</code>, <code>pid</code>, <code>pid_for_children</code>, <code>user</code>, <code>uts</code>这些namespace</li>
+</ol>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -1086,112 +1086,6 @@
       </tags>
   </entry>
   <entry>
-    <title>K8s学习笔记——为什么需要Pod</title>
-    <url>/2020/07/06/kubernetesLearning05/</url>
-    <content><![CDATA[<blockquote>
-<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
-<p>秉持眼过千遍不如手过一遍的原则.</p>
-<p>对应章节：<a href="https://time.geekbang.org/column/article/40092" target="_blank" rel="noopener">13 | 为什么我们需要Pod？</a></p>
-</blockquote>
-<a id="more"></a>
-<h2 id="共享net的container"><a class="markdownIt-Anchor" href="#共享net的container"></a> 共享net的container</h2>
-<h3 id="先来起两个共享net和volume的容器"><a class="markdownIt-Anchor" href="#先来起两个共享net和volume的容器"></a> 先来起两个共享net和volume的容器</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d --name test1 busybox</span><br><span class="line">15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e</span><br><span class="line">$ docker run -it -d --network container:test1 --volumes-from test1 --name test2 busybox</span><br><span class="line">6e15995e63a4f2cc0b293be848a448c2e34a1502477645c434e529245ffaa1f3</span><br></pre></td></tr></table></figure>
-<h3 id="查看两个container的信息"><a class="markdownIt-Anchor" href="#查看两个container的信息"></a> 查看两个container的信息</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect test1</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e"</span>,</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"Pid"</span>: 2282,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"Networks"</span>: &#123;</span><br><span class="line">                <span class="string">"bridge"</span>: &#123;</span><br><span class="line">                    ...</span><br><span class="line">                    <span class="string">"NetworkID"</span>: <span class="string">"5bdb44786ae497e27f9626360b59ff35eead5c02f6f6da4392306132e8910ad0"</span>,</span><br><span class="line">                    <span class="string">"EndpointID"</span>: <span class="string">"8a9d1594a9949509e42eee8af6145d30e1162cc4c8384c0f7d7e8d7bece5cfdd"</span>,</span><br><span class="line">                    <span class="string">"Gateway"</span>: <span class="string">"172.17.0.1"</span>,</span><br><span class="line">                    <span class="string">"IPAddress"</span>: <span class="string">"172.17.0.2"</span>,</span><br><span class="line">                &#125;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">$ docker inspect test2</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"6e15995e63a4f2cc0b293be848a448c2e34a1502477645c434e529245ffaa1f3"</span>,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"Pid"</span>: 3555,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e"</span>,</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-<h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -l /proc/2282/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 ipc -&gt; <span class="string">'ipc:[4026532571]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 mnt -&gt; <span class="string">'mnt:[4026532569]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:16 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 pid -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 pid_for_children -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 uts -&gt; <span class="string">'uts:[4026532570]'</span></span><br><span class="line">$ ls -l /proc/3555/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 ipc -&gt; <span class="string">'ipc:[4026532630]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 mnt -&gt; <span class="string">'mnt:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 pid -&gt; <span class="string">'pid:[4026532631]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 pid_for_children -&gt; <span class="string">'pid:[4026532631]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 uts -&gt; <span class="string">'uts:[4026532629]'</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，cgroup、net和user是相同的</p>
-<blockquote>
-<p>实际上，在不指定共享net的container的时候，cgroup和user也都是相同的</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d ubuntu</span><br><span class="line">25b637a2facf0ba713403c14f300644ee21cd107b45fb57d47f7cb4be0fcc3ad</span><br><span class="line">$ docker inspect 25b637a2f | grep Pid</span><br><span class="line">      <span class="string">"Pid"</span>: 10895,</span><br><span class="line">      <span class="string">"PidMode"</span>: <span class="string">""</span>,</span><br><span class="line">         <span class="string">"PidsLimit"</span>: null,</span><br><span class="line">$ ls /proc/10895/ns/ -l</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 ipc -&gt; <span class="string">'ipc:[4026532706]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 mnt -&gt; <span class="string">'mnt:[4026532704]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 net -&gt; <span class="string">'net:[4026532709]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 pid -&gt; <span class="string">'pid:[4026532707]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 pid_for_children -&gt; <span class="string">'pid:[4026532707]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 uts -&gt; <span class="string">'uts:[4026532705]'</span></span><br></pre></td></tr></table></figure>
-</blockquote>
-<h3 id="查看网络"><a class="markdownIt-Anchor" href="#查看网络"></a> 查看网络</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it test1 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:19 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1522 (1.4 KiB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">$ docker <span class="built_in">exec</span> -it test2 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:19 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1522 (1.4 KiB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
-<p>两个container的eth0的IP，MAC等都相同</p>
-<h2 id="pod"><a class="markdownIt-Anchor" href="#pod"></a> Pod</h2>
-<h3 id="先起一个pod看看"><a class="markdownIt-Anchor" href="#先起一个pod看看"></a> 先起一个pod看看</h3>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">two-containers</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注：因为已经pull了image，所以这里设置了<code>imagePullPolicy: Never</code></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods</span><br><span class="line">NAME             READY   STATUS    RESTARTS   AGE</span><br><span class="line">two-containers   2/2     Running   0          3s</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED              STATUS              PORTS               NAMES</span><br><span class="line">14aea3a7ec58        1c35c4412082                                        <span class="string">"sh"</span>                     About a minute ago   Up About a minute                       k8s_my-test-container2_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br><span class="line">fb9a5a4e5ee2        1c35c4412082                                        <span class="string">"sh"</span>                     About a minute ago   Up About a minute                       k8s_my-test-container1_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br><span class="line">bac4514284b2        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 About a minute ago   Up About a minute                       k8s_POD_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br></pre></td></tr></table></figure>
-<p>可以看到，分别起了3个container：</p>
-<ul>
-<li>k8s_my-test-container1_two-containers_default</li>
-<li>k8s_my-test-container2_two-containers_default</li>
-<li>k8s_POD_two-containers_default</li>
-</ul>
-<p>其中，<code>k8s_POD_two-containers_default</code>的image是<code>pause</code></p>
-<h3 id="先看看namespace"><a class="markdownIt-Anchor" href="#先看看namespace"></a> 先看看namespace</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 14aea3a7ec58 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359647,</span><br><span class="line">$ docker inspect fb9a5a4e5ee2 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359614,</span><br><span class="line">$ docker inspect bac4514284b2 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359530,</span><br><span class="line">$ ls -l /proc/359647/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532715]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532717]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532717]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532716]'</span></span><br><span class="line">$ ls -l /proc/359614/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532710]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532714]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532714]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532713]'</span></span><br><span class="line">$ ls -l /proc/359530/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:38 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532623]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:38 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532624]'</span></span><br></pre></td></tr></table></figure>
-<h3 id="看看ip"><a class="markdownIt-Anchor" href="#看看ip"></a> 看看IP</h3>
-<ul>
-<li>Pod层面</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl describe pod two-containers</span><br><span class="line">Name:         two-containers</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         node2/10.160.18.181</span><br><span class="line">Start Time:   Mon, 15 Jun 2020 14:38:10 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  Status:  Running</span><br><span class="line">IP:           172.172.1.35</span><br><span class="line">IPs:</span><br><span class="line">  IP:  172.172.1.35</span><br><span class="line">Containers:</span><br><span class="line">  my-test-container1:</span><br><span class="line">    Container ID:   docker://fb9a5a4e5ee2eef15dddc159bdb507b435ebbbc189d3ceefbaca7d7d4dac994d</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">  my-test-container2:</span><br><span class="line">    Container ID:   docker://14aea3a7ec58e4f4220d6eea1266799a55fbdd945956d4845d4e062fce6542d7</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">...</span><br><span class="line">Volumes:</span><br><span class="line">  default-token-nlz8h:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-nlz8h</span><br><span class="line">    Optional:    <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>Container层面</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it 14aea3a7ec58 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 26:64:FF:FA:7D:BE</span><br><span class="line">          inet addr:172.172.1.35  Bcast:0.0.0.0  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1198 (1.1 KiB)  TX bytes:42 (42.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">$ docker <span class="built_in">exec</span> -it fb9a5a4e5ee2 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 26:64:FF:FA:7D:BE</span><br><span class="line">          inet addr:172.172.1.35  Bcast:0.0.0.0  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1198 (1.1 KiB)  TX bytes:42 (42.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
-<h2 id="pod共享volume"><a class="markdownIt-Anchor" href="#pod共享volume"></a> Pod共享volume</h2>
-<h3 id="pod配置"><a class="markdownIt-Anchor" href="#pod配置"></a> Pod配置</h3>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">two-containers-volume</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">    <span class="attr">hostPath:</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/data</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">c1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/data</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">c2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/data</span></span><br></pre></td></tr></table></figure>
-<h3 id="查看pod信息"><a class="markdownIt-Anchor" href="#查看pod信息"></a> 查看pod信息</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods</span><br><span class="line">NAME                    READY   STATUS    RESTARTS   AGE</span><br><span class="line">two-containers-volume   2/2     Running   0          5s</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl describe pod two-containers-volume</span><br><span class="line">Name:         two-containers-volume</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         node2/10.160.18.181</span><br><span class="line">Start Time:   Mon, 15 Jun 2020 14:53:43 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  Status:  Running</span><br><span class="line">IP:           172.172.1.36</span><br><span class="line">IPs:</span><br><span class="line">  IP:  172.172.1.36</span><br><span class="line">Containers:</span><br><span class="line">  c1:</span><br><span class="line">    Container ID:   docker://b5b285305aae0d9155fca8415a1002697b0a446d222ce8f8bb27456c51680bc0</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /data from shared-data (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">  c2:</span><br><span class="line">    Container ID:   docker://52767f5bfa9e246e79547b11bfca0eb5948f3458850beaf173fbd921e43aa949</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /data from shared-data (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">...</span><br><span class="line">Volumes:</span><br><span class="line">  shared-data:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /data</span><br><span class="line">    HostPathType:</span><br><span class="line">  default-token-nlz8h:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-nlz8h</span><br><span class="line">    Optional:    <span class="literal">false</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>对比之前的，可以看到，volumes中增加了一个<code>shared-data</code>的volume，每个container的<code>Mounts</code>中多了一个<code>/data from shared-data (rw)</code></p>
-</blockquote>
-<h3 id="查看container层面的信息"><a class="markdownIt-Anchor" href="#查看container层面的信息"></a> 查看container层面的信息</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">52767f5bfa9e        1c35c4412082                                        <span class="string">"sh"</span>                     6 minutes ago       Up 6 minutes                            k8s_c2_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br><span class="line">b5b285305aae        1c35c4412082                                        <span class="string">"sh"</span>                     6 minutes ago       Up 6 minutes                            k8s_c1_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br><span class="line">09b081c04b1b        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 6 minutes ago       Up 6 minutes                            k8s_POD_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 52767f5bfa9e</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_c2_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:09b081c04b1ba2b973d7fb31aadd7d796d8f6aef03113764f4a868022b6332ee"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            ...</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">$ docker inspect b5b285305aae</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_c1_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:09b081c04b1ba2b973d7fb31aadd7d796d8f6aef03113764f4a868022b6332ee"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">$ docker inspect 09b081c04b1b</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_POD_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"none"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [],</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"NetworkSettings"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"SandboxKey"</span>: <span class="string">"/var/run/docker/netns/cb1ed85e8f94"</span>,</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"Networks"</span>: &#123;</span><br><span class="line">                <span class="string">"none"</span>: &#123;</span><br><span class="line">                    ...</span><br><span class="line">                    <span class="string">"NetworkID"</span>: <span class="string">"d5b75ce86af4c81134a382c1b77ed2de74e8ec9d484a68a5002f52ed3905b239"</span>,</span><br><span class="line">                    <span class="string">"EndpointID"</span>: <span class="string">"f6ea091a8d1445dae3a4b961c6cfbfa05c671f604dab8c9284eca959d02e7867"</span>,</span><br><span class="line">                    ...</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>说明：</p>
-<ul>
-<li><code>k8s_POD_two-containers-volume_default</code>这个container的<code>NetworkSettings</code>字段声明有网络相关内容，但Mounts为空</li>
-<li><code>k8s_c1</code>和<code>k8s_c2</code>的container的<code>NetworkSettings</code>为空，但Mounts中则挂载了<code>/data</code>目录</li>
-</ul>
-</blockquote>
-<h2 id="init-container"><a class="markdownIt-Anchor" href="#init-container"></a> Init container</h2>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">init-container-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">    <span class="attr">emptyDir:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">data-container</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">["touch",</span> <span class="string">"/data/test.txt"</span><span class="string">]</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">"/data"</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">app-container</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">"/data"</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br></pre></td></tr></table></figure>
-<h3 id="查看pod状况"><a class="markdownIt-Anchor" href="#查看pod状况"></a> 查看pod状况</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pod</span><br><span class="line">NAME                  READY   STATUS    RESTARTS   AGE</span><br><span class="line">init-container-test   1/1     Running   0          5s</span><br></pre></td></tr></table></figure>
-<h3 id="查看container"><a class="markdownIt-Anchor" href="#查看container"></a> 查看container</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">ce67fd98bc68        1c35c4412082                                        <span class="string">"sh"</span>                     30 seconds ago      Up 29 seconds                           k8s_app-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">e75657cb2079        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 31 seconds ago      Up 30 seconds                           k8s_POD_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>会发现这里只有一个<code>k8s_app-container</code>和<code>k8s_POD</code>，而没有<code>init-container</code></p>
-<p>是因为</p>
-<blockquote>
-<p>在 Pod 中，所有 Init Container 定义的容器，都会比 spec.containers 定义的用户容器先启动。并且，Init Container 容器会按顺序逐一启动，而直到它们都启动并且退出了，用户容器才会启动。</p>
-</blockquote>
-<p>但k8s并没有在这个container结束运行后重启它</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE                                                COMMAND                  CREATED             STATUS                      PORTS               NAMES</span><br><span class="line">ce67fd98bc68        1c35c4412082                                         <span class="string">"sh"</span>                     36 seconds ago      Up 36 seconds                                   k8s_app-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">bbc45d10357c        1c35c4412082                                         <span class="string">"touch /data/test.txt"</span>   37 seconds ago      Exited (0) 37 seconds ago                       k8s_data-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">e75657cb2079        registry.aliyuncs.com/google_containers/pause:3.2    <span class="string">"/pause"</span>                 37 seconds ago      Up 37 seconds                                   k8s_POD_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>从这里可以看到， <code>data-container</code>已经<code>Exited (0) 37 seconds ago</code></p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> init-container-test -- ls /data</span><br><span class="line">test.txt</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>通过容器可以看到test.txt已经存在在<code>init-container-test</code>的<code>/data</code>目录下了</p>
-</blockquote>
-<h2 id="总结引用"><a class="markdownIt-Anchor" href="#总结引用"></a> 总结引用</h2>
-<ul>
-<li>一个运行在虚拟机里的应用，哪怕再简单，也是被管理在 systemd 或者 supervisord 之下的一组进程，而不是一个进程。</li>
-<li>对于容器来说，一个容器永远只能管理一个进程</li>
-<li>Pod，实际上是在扮演传统基础设施里“虚拟机”的角色；而容器，则是这个虚拟机里运行的用户程序。</li>
-</ul>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>K8s学习笔记——Pod的基本概念</title>
     <url>/2020/07/08/kubernetesLearning14/</url>
     <content><![CDATA[<blockquote>
@@ -1274,6 +1168,7 @@
 <p>秉持眼过千遍不如手过一遍的原则。动手实践并记录结果</p>
 <p>对应章节：<a href="https://time.geekbang.org/column/article/40466" target="_blank" rel="noopener">15 | 深入解析Pod对象（二）：使用进阶</a></p>
 </blockquote>
+<a id="more"></a>
 <h2 id="project-volume"><a class="markdownIt-Anchor" href="#project-volume"></a> Project Volume</h2>
 <p>Project Volume（投射数据卷）是为Pod提供事先定义好的一些数据，包括4种：</p>
 <ol>
@@ -1375,6 +1270,112 @@
 <li>Project Volume的4种类型</li>
 <li>健康状况检查和恢复</li>
 </ol>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s学习笔记——为什么需要Pod</title>
+    <url>/2020/07/06/kubernetesLearning05/</url>
+    <content><![CDATA[<blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则.</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/40092" target="_blank" rel="noopener">13 | 为什么我们需要Pod？</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="共享net的container"><a class="markdownIt-Anchor" href="#共享net的container"></a> 共享net的container</h2>
+<h3 id="先来起两个共享net和volume的容器"><a class="markdownIt-Anchor" href="#先来起两个共享net和volume的容器"></a> 先来起两个共享net和volume的容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d --name test1 busybox</span><br><span class="line">15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e</span><br><span class="line">$ docker run -it -d --network container:test1 --volumes-from test1 --name test2 busybox</span><br><span class="line">6e15995e63a4f2cc0b293be848a448c2e34a1502477645c434e529245ffaa1f3</span><br></pre></td></tr></table></figure>
+<h3 id="查看两个container的信息"><a class="markdownIt-Anchor" href="#查看两个container的信息"></a> 查看两个container的信息</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect test1</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e"</span>,</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"Pid"</span>: 2282,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"Networks"</span>: &#123;</span><br><span class="line">                <span class="string">"bridge"</span>: &#123;</span><br><span class="line">                    ...</span><br><span class="line">                    <span class="string">"NetworkID"</span>: <span class="string">"5bdb44786ae497e27f9626360b59ff35eead5c02f6f6da4392306132e8910ad0"</span>,</span><br><span class="line">                    <span class="string">"EndpointID"</span>: <span class="string">"8a9d1594a9949509e42eee8af6145d30e1162cc4c8384c0f7d7e8d7bece5cfdd"</span>,</span><br><span class="line">                    <span class="string">"Gateway"</span>: <span class="string">"172.17.0.1"</span>,</span><br><span class="line">                    <span class="string">"IPAddress"</span>: <span class="string">"172.17.0.2"</span>,</span><br><span class="line">                &#125;</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">$ docker inspect test2</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"6e15995e63a4f2cc0b293be848a448c2e34a1502477645c434e529245ffaa1f3"</span>,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"Pid"</span>: 3555,</span><br><span class="line">        ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:15dafb04a3fae857c0db7ce09c02d6ebc565de71a49df2511eded48457e0945e"</span>,</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程"><a class="markdownIt-Anchor" href="#查看进程"></a> 查看进程</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -l /proc/2282/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 ipc -&gt; <span class="string">'ipc:[4026532571]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 mnt -&gt; <span class="string">'mnt:[4026532569]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:16 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 pid -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 pid_for_children -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:31 uts -&gt; <span class="string">'uts:[4026532570]'</span></span><br><span class="line">$ ls -l /proc/3555/ns/</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 ipc -&gt; <span class="string">'ipc:[4026532630]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 mnt -&gt; <span class="string">'mnt:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 pid -&gt; <span class="string">'pid:[4026532631]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 pid_for_children -&gt; <span class="string">'pid:[4026532631]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:45 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 12 06:42 uts -&gt; <span class="string">'uts:[4026532629]'</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，cgroup、net和user是相同的</p>
+<blockquote>
+<p>实际上，在不指定共享net的container的时候，cgroup和user也都是相同的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d ubuntu</span><br><span class="line">25b637a2facf0ba713403c14f300644ee21cd107b45fb57d47f7cb4be0fcc3ad</span><br><span class="line">$ docker inspect 25b637a2f | grep Pid</span><br><span class="line">      <span class="string">"Pid"</span>: 10895,</span><br><span class="line">      <span class="string">"PidMode"</span>: <span class="string">""</span>,</span><br><span class="line">         <span class="string">"PidsLimit"</span>: null,</span><br><span class="line">$ ls /proc/10895/ns/ -l</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 ipc -&gt; <span class="string">'ipc:[4026532706]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 mnt -&gt; <span class="string">'mnt:[4026532704]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 net -&gt; <span class="string">'net:[4026532709]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 pid -&gt; <span class="string">'pid:[4026532707]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 pid_for_children -&gt; <span class="string">'pid:[4026532707]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 03:10 uts -&gt; <span class="string">'uts:[4026532705]'</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="查看网络"><a class="markdownIt-Anchor" href="#查看网络"></a> 查看网络</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it test1 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:19 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1522 (1.4 KiB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">$ docker <span class="built_in">exec</span> -it test2 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 02:42:AC:11:00:02</span><br><span class="line">          inet addr:172.17.0.2  Bcast:172.17.255.255  Mask:255.255.0.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:19 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1522 (1.4 KiB)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+<p>两个container的eth0的IP，MAC等都相同</p>
+<h2 id="pod"><a class="markdownIt-Anchor" href="#pod"></a> Pod</h2>
+<h3 id="先起一个pod看看"><a class="markdownIt-Anchor" href="#先起一个pod看看"></a> 先起一个pod看看</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">two-containers</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">my-test-container2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：因为已经pull了image，所以这里设置了<code>imagePullPolicy: Never</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods</span><br><span class="line">NAME             READY   STATUS    RESTARTS   AGE</span><br><span class="line">two-containers   2/2     Running   0          3s</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED              STATUS              PORTS               NAMES</span><br><span class="line">14aea3a7ec58        1c35c4412082                                        <span class="string">"sh"</span>                     About a minute ago   Up About a minute                       k8s_my-test-container2_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br><span class="line">fb9a5a4e5ee2        1c35c4412082                                        <span class="string">"sh"</span>                     About a minute ago   Up About a minute                       k8s_my-test-container1_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br><span class="line">bac4514284b2        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 About a minute ago   Up About a minute                       k8s_POD_two-containers_default_dd628b40-a070-4d9d-9837-7d3031092e86_0</span><br></pre></td></tr></table></figure>
+<p>可以看到，分别起了3个container：</p>
+<ul>
+<li>k8s_my-test-container1_two-containers_default</li>
+<li>k8s_my-test-container2_two-containers_default</li>
+<li>k8s_POD_two-containers_default</li>
+</ul>
+<p>其中，<code>k8s_POD_two-containers_default</code>的image是<code>pause</code></p>
+<h3 id="先看看namespace"><a class="markdownIt-Anchor" href="#先看看namespace"></a> 先看看namespace</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 14aea3a7ec58 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359647,</span><br><span class="line">$ docker inspect fb9a5a4e5ee2 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359614,</span><br><span class="line">$ docker inspect bac4514284b2 | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 359530,</span><br><span class="line">$ ls -l /proc/359647/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532715]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532717]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532717]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532716]'</span></span><br><span class="line">$ ls -l /proc/359614/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532710]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532714]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532714]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532713]'</span></span><br><span class="line">$ ls -l /proc/359530/ns</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:38 ipc -&gt; <span class="string">'ipc:[4026532625]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 mnt -&gt; <span class="string">'mnt:[4026532623]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:38 net -&gt; <span class="string">'net:[4026532628]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 pid_for_children -&gt; <span class="string">'pid:[4026532626]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 15 14:41 uts -&gt; <span class="string">'uts:[4026532624]'</span></span><br></pre></td></tr></table></figure>
+<h3 id="看看ip"><a class="markdownIt-Anchor" href="#看看ip"></a> 看看IP</h3>
+<ul>
+<li>Pod层面</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl describe pod two-containers</span><br><span class="line">Name:         two-containers</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         node2/10.160.18.181</span><br><span class="line">Start Time:   Mon, 15 Jun 2020 14:38:10 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  Status:  Running</span><br><span class="line">IP:           172.172.1.35</span><br><span class="line">IPs:</span><br><span class="line">  IP:  172.172.1.35</span><br><span class="line">Containers:</span><br><span class="line">  my-test-container1:</span><br><span class="line">    Container ID:   docker://fb9a5a4e5ee2eef15dddc159bdb507b435ebbbc189d3ceefbaca7d7d4dac994d</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">  my-test-container2:</span><br><span class="line">    Container ID:   docker://14aea3a7ec58e4f4220d6eea1266799a55fbdd945956d4845d4e062fce6542d7</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">...</span><br><span class="line">Volumes:</span><br><span class="line">  default-token-nlz8h:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-nlz8h</span><br><span class="line">    Optional:    <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>Container层面</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it 14aea3a7ec58 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 26:64:FF:FA:7D:BE</span><br><span class="line">          inet addr:172.172.1.35  Bcast:0.0.0.0  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1198 (1.1 KiB)  TX bytes:42 (42.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br><span class="line"></span><br><span class="line">$ docker <span class="built_in">exec</span> -it fb9a5a4e5ee2 ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 26:64:FF:FA:7D:BE</span><br><span class="line">          inet addr:172.172.1.35  Bcast:0.0.0.0  Mask:255.255.255.0</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1450  Metric:1</span><br><span class="line">          RX packets:15 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:1 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0</span><br><span class="line">          RX bytes:1198 (1.1 KiB)  TX bytes:42 (42.0 B)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback</span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:0 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000</span><br><span class="line">          RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)</span><br></pre></td></tr></table></figure>
+<h2 id="pod共享volume"><a class="markdownIt-Anchor" href="#pod共享volume"></a> Pod共享volume</h2>
+<h3 id="pod配置"><a class="markdownIt-Anchor" href="#pod配置"></a> Pod配置</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">two-containers-volume</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">    <span class="attr">hostPath:</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">/data</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">c1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/data</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">c2</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">shared-data</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/data</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看pod信息"><a class="markdownIt-Anchor" href="#查看pod信息"></a> 查看pod信息</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods</span><br><span class="line">NAME                    READY   STATUS    RESTARTS   AGE</span><br><span class="line">two-containers-volume   2/2     Running   0          5s</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl describe pod two-containers-volume</span><br><span class="line">Name:         two-containers-volume</span><br><span class="line">Namespace:    default</span><br><span class="line">Priority:     0</span><br><span class="line">Node:         node2/10.160.18.181</span><br><span class="line">Start Time:   Mon, 15 Jun 2020 14:53:43 +0800</span><br><span class="line">Labels:       &lt;none&gt;</span><br><span class="line">Annotations:  Status:  Running</span><br><span class="line">IP:           172.172.1.36</span><br><span class="line">IPs:</span><br><span class="line">  IP:  172.172.1.36</span><br><span class="line">Containers:</span><br><span class="line">  c1:</span><br><span class="line">    Container ID:   docker://b5b285305aae0d9155fca8415a1002697b0a446d222ce8f8bb27456c51680bc0</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /data from shared-data (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">  c2:</span><br><span class="line">    Container ID:   docker://52767f5bfa9e246e79547b11bfca0eb5948f3458850beaf173fbd921e43aa949</span><br><span class="line">    Image:          busybox</span><br><span class="line">    ...</span><br><span class="line">    Mounts:</span><br><span class="line">      /data from shared-data (rw)</span><br><span class="line">      /var/run/secrets/kubernetes.io/serviceaccount from default-token-nlz8h (ro)</span><br><span class="line">...</span><br><span class="line">Volumes:</span><br><span class="line">  shared-data:</span><br><span class="line">    Type:          HostPath (bare host directory volume)</span><br><span class="line">    Path:          /data</span><br><span class="line">    HostPathType:</span><br><span class="line">  default-token-nlz8h:</span><br><span class="line">    Type:        Secret (a volume populated by a Secret)</span><br><span class="line">    SecretName:  default-token-nlz8h</span><br><span class="line">    Optional:    <span class="literal">false</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>对比之前的，可以看到，volumes中增加了一个<code>shared-data</code>的volume，每个container的<code>Mounts</code>中多了一个<code>/data from shared-data (rw)</code></p>
+</blockquote>
+<h3 id="查看container层面的信息"><a class="markdownIt-Anchor" href="#查看container层面的信息"></a> 查看container层面的信息</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">52767f5bfa9e        1c35c4412082                                        <span class="string">"sh"</span>                     6 minutes ago       Up 6 minutes                            k8s_c2_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br><span class="line">b5b285305aae        1c35c4412082                                        <span class="string">"sh"</span>                     6 minutes ago       Up 6 minutes                            k8s_c1_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br><span class="line">09b081c04b1b        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 6 minutes ago       Up 6 minutes                            k8s_POD_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 52767f5bfa9e</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_c2_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:09b081c04b1ba2b973d7fb31aadd7d796d8f6aef03113764f4a868022b6332ee"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            ...</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">$ docker inspect b5b285305aae</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_c1_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"container:09b081c04b1ba2b973d7fb31aadd7d796d8f6aef03113764f4a868022b6332ee"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/data"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            ...</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">$ docker inspect 09b081c04b1b</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Name"</span>: <span class="string">"/k8s_POD_two-containers-volume_default_a66c7066-35c2-4be6-b58a-0df6ede9d95d_0"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"HostConfig"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"NetworkMode"</span>: <span class="string">"none"</span>,</span><br><span class="line">            ...</span><br><span class="line">        &#125;,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [],</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"NetworkSettings"</span>: &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"SandboxKey"</span>: <span class="string">"/var/run/docker/netns/cb1ed85e8f94"</span>,</span><br><span class="line">            ...</span><br><span class="line">            <span class="string">"Networks"</span>: &#123;</span><br><span class="line">                <span class="string">"none"</span>: &#123;</span><br><span class="line">                    ...</span><br><span class="line">                    <span class="string">"NetworkID"</span>: <span class="string">"d5b75ce86af4c81134a382c1b77ed2de74e8ec9d484a68a5002f52ed3905b239"</span>,</span><br><span class="line">                    <span class="string">"EndpointID"</span>: <span class="string">"f6ea091a8d1445dae3a4b961c6cfbfa05c671f604dab8c9284eca959d02e7867"</span>,</span><br><span class="line">                    ...</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>说明：</p>
+<ul>
+<li><code>k8s_POD_two-containers-volume_default</code>这个container的<code>NetworkSettings</code>字段声明有网络相关内容，但Mounts为空</li>
+<li><code>k8s_c1</code>和<code>k8s_c2</code>的container的<code>NetworkSettings</code>为空，但Mounts中则挂载了<code>/data</code>目录</li>
+</ul>
+</blockquote>
+<h2 id="init-container"><a class="markdownIt-Anchor" href="#init-container"></a> Init container</h2>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">init-container-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">    <span class="attr">emptyDir:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">  <span class="attr">initContainers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">data-container</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">["touch",</span> <span class="string">"/data/test.txt"</span><span class="string">]</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">"/data"</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">Never</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">app-container</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">mountPath:</span> <span class="string">"/data"</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">app-volume</span></span><br></pre></td></tr></table></figure>
+<h3 id="查看pod状况"><a class="markdownIt-Anchor" href="#查看pod状况"></a> 查看pod状况</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pod</span><br><span class="line">NAME                  READY   STATUS    RESTARTS   AGE</span><br><span class="line">init-container-test   1/1     Running   0          5s</span><br></pre></td></tr></table></figure>
+<h3 id="查看container"><a class="markdownIt-Anchor" href="#查看container"></a> 查看container</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE                                               COMMAND                  CREATED             STATUS              PORTS               NAMES</span><br><span class="line">ce67fd98bc68        1c35c4412082                                        <span class="string">"sh"</span>                     30 seconds ago      Up 29 seconds                           k8s_app-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">e75657cb2079        registry.aliyuncs.com/google_containers/pause:3.2   <span class="string">"/pause"</span>                 31 seconds ago      Up 30 seconds                           k8s_POD_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>会发现这里只有一个<code>k8s_app-container</code>和<code>k8s_POD</code>，而没有<code>init-container</code></p>
+<p>是因为</p>
+<blockquote>
+<p>在 Pod 中，所有 Init Container 定义的容器，都会比 spec.containers 定义的用户容器先启动。并且，Init Container 容器会按顺序逐一启动，而直到它们都启动并且退出了，用户容器才会启动。</p>
+</blockquote>
+<p>但k8s并没有在这个container结束运行后重启它</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps -a</span><br><span class="line">CONTAINER ID        IMAGE                                                COMMAND                  CREATED             STATUS                      PORTS               NAMES</span><br><span class="line">ce67fd98bc68        1c35c4412082                                         <span class="string">"sh"</span>                     36 seconds ago      Up 36 seconds                                   k8s_app-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">bbc45d10357c        1c35c4412082                                         <span class="string">"touch /data/test.txt"</span>   37 seconds ago      Exited (0) 37 seconds ago                       k8s_data-container_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br><span class="line">e75657cb2079        registry.aliyuncs.com/google_containers/pause:3.2    <span class="string">"/pause"</span>                 37 seconds ago      Up 37 seconds                                   k8s_POD_init-container-test_default_5960cae6-00b3-48ae-9991-741d73077dc4_0</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>从这里可以看到， <code>data-container</code>已经<code>Exited (0) 37 seconds ago</code></p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> init-container-test -- ls /data</span><br><span class="line">test.txt</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>通过容器可以看到test.txt已经存在在<code>init-container-test</code>的<code>/data</code>目录下了</p>
+</blockquote>
+<h2 id="总结引用"><a class="markdownIt-Anchor" href="#总结引用"></a> 总结引用</h2>
+<ul>
+<li>一个运行在虚拟机里的应用，哪怕再简单，也是被管理在 systemd 或者 supervisord 之下的一组进程，而不是一个进程。</li>
+<li>对于容器来说，一个容器永远只能管理一个进程</li>
+<li>Pod，实际上是在扮演传统基础设施里“虚拟机”的角色；而容器，则是这个虚拟机里运行的用户程序。</li>
+</ul>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -1691,6 +1692,40 @@
       </tags>
   </entry>
   <entry>
+    <title>在树莓派上部署nodejs</title>
+    <url>/2018/03/23/nodejs-setup-pi/</url>
+    <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
+<a id="more"></a>
+<h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
+<p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
+<h3 id="安装包获取"><a class="markdownIt-Anchor" href="#安装包获取"></a> 安装包获取</h3>
+<p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
+<p>获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz" target="_blank" rel="noopener">安装包</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure>
+<h3 id="安装nodejs-2"><a class="markdownIt-Anchor" href="#安装nodejs-2"></a> 安装nodejs</h3>
+<p>解压缩</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tar -Jxv -f node-v8.10.0-linux-armv7l.tar.xz</span><br><span class="line">node-v8.10.0-linux-armv7l/</span><br><span class="line">node-v8.10.0-linux-armv7l/README.md</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/node</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/npm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可根据个人喜好重命名文件夹，此处重命名为node，分别验证版本信息</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ ./bin/node -v</span><br><span class="line">v8.10.0</span><br><span class="line">pi@raspberrypi:~/node $ ./bin/npm -v</span><br><span class="line">5.6.0</span><br></pre></td></tr></table></figure>
+<p>配置node和npm为全局命令</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ sudo ln /home/pi/node/bin/node /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">pi@raspberrypi:~/node $ sudo ln -s /home/pi/node/lib/node_modules/npm/bin/npm /usr/<span class="built_in">local</span>/bin/npm</span><br></pre></td></tr></table></figure>
+<p>此时执行npm会报错</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ npm -v</span><br><span class="line">module.js:471</span><br><span class="line">    throw err;</span><br><span class="line">    ^</span><br><span class="line"></span><br><span class="line">Error: Cannot find module <span class="string">'/usr/local/bin/node_modules/npm/bin/npm-cli.js'</span></span><br></pre></td></tr></table></figure>
+<p>需要修改/usr/local/bin/目录下的npm文件，将$basedir替换为绝对路径，此处为/home/pi/node/</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">#!/bin/<span class="keyword">sh</span></span><br><span class="line">(set -o igncr) 2&gt;/dev/null &amp;&amp; set -o igncr; # cygwin encoding fix</span><br><span class="line"></span><br><span class="line">basedir=`dirname <span class="string">"$0"</span>`</span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">NODE_EXE=<span class="string">"/home/pi/node/bin/node.exe"</span></span><br><span class="line">if ! [ -x "$NODE_EXE" ]; then</span><br><span class="line">  NODE_EXE=node</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">NPM_CLI_JS=<span class="string">"/home/pi/node/lib/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">  *MINGW*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">  *CYGWIN*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line"><span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> <span class="string">"$@"</span></span><br></pre></td></tr></table></figure>
+<p>再次验证，npm已经可以正常工作</p>
+]]></content>
+      <categories>
+        <category>树莓派</category>
+      </categories>
+      <tags>
+        <tag>树莓派</tag>
+        <tag>nodejs</tag>
+        <tag>pi</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mininet基础使用</title>
     <url>/2018/11/07/mininet-base/</url>
     <content><![CDATA[<h2 id="mininet是什么"><a class="markdownIt-Anchor" href="#mininet是什么"></a> Mininet是什么</h2>
@@ -1789,40 +1824,6 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>network</tag>
         <tag>sdn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>在树莓派上部署nodejs</title>
-    <url>/2018/03/23/nodejs-setup-pi/</url>
-    <content><![CDATA[<p>终于有时间在树莓派上部署一个自己的小博客了，平时用惯了ubuntu，到了树莓派上，发现并没有那么简单。首先就是apt install nodejs，安装完没有npm。不过，经过一番折腾，便有了现在的小站点</p>
-<a id="more"></a>
-<h2 id="安装nodejs"><a class="markdownIt-Anchor" href="#安装nodejs"></a> 安装nodejs</h2>
-<p><a href="https://nodejs.org" target="_blank" rel="noopener">nodejs</a>可以使用源码编译和二进制包来安装。考虑到树莓派的处理能力，要编译一个nodejs，太过耗时。直接选用官网提供的二进制包完成安装</p>
-<h3 id="安装包获取"><a class="markdownIt-Anchor" href="#安装包获取"></a> 安装包获取</h3>
-<p>官网上ARM的bin包有3个，分别是v6，v7和v8。而树莓派的版本是v7</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ uname -a</span><br><span class="line">Linux raspberrypi 4.9.80-v7+ <span class="comment">#1098 SMP Fri Mar 9 19:11:42 GMT 2018 armv7l GNU/Linux</span></span><br></pre></td></tr></table></figure>
-<p>获取<a href="https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz" target="_blank" rel="noopener">安装包</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ wget https://nodejs.org/dist/v8.10.0/node-v8.10.0-linux-armv7l.tar.xz</span><br></pre></td></tr></table></figure>
-<h3 id="安装nodejs-2"><a class="markdownIt-Anchor" href="#安装nodejs-2"></a> 安装nodejs</h3>
-<p>解压缩</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tar -Jxv -f node-v8.10.0-linux-armv7l.tar.xz</span><br><span class="line">node-v8.10.0-linux-armv7l/</span><br><span class="line">node-v8.10.0-linux-armv7l/README.md</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/node</span><br><span class="line">node-v8.10.0-linux-armv7l/bin/npm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>可根据个人喜好重命名文件夹，此处重命名为node，分别验证版本信息</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ ./bin/node -v</span><br><span class="line">v8.10.0</span><br><span class="line">pi@raspberrypi:~/node $ ./bin/npm -v</span><br><span class="line">5.6.0</span><br></pre></td></tr></table></figure>
-<p>配置node和npm为全局命令</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ sudo ln /home/pi/node/bin/node /usr/<span class="built_in">local</span>/bin/node</span><br><span class="line">pi@raspberrypi:~/node $ sudo ln -s /home/pi/node/lib/node_modules/npm/bin/npm /usr/<span class="built_in">local</span>/bin/npm</span><br></pre></td></tr></table></figure>
-<p>此时执行npm会报错</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pi@raspberrypi:~/node $ npm -v</span><br><span class="line">module.js:471</span><br><span class="line">    throw err;</span><br><span class="line">    ^</span><br><span class="line"></span><br><span class="line">Error: Cannot find module <span class="string">'/usr/local/bin/node_modules/npm/bin/npm-cli.js'</span></span><br></pre></td></tr></table></figure>
-<p>需要修改/usr/local/bin/目录下的npm文件，将$basedir替换为绝对路径，此处为/home/pi/node/</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">#!/bin/<span class="keyword">sh</span></span><br><span class="line">(set -o igncr) 2&gt;/dev/null &amp;&amp; set -o igncr; # cygwin encoding fix</span><br><span class="line"></span><br><span class="line">basedir=`dirname <span class="string">"$0"</span>`</span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">    *CYGWIN*) basedir=`cygpath -w "$basedir"`;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line">NODE_EXE=<span class="string">"/home/pi/node/bin/node.exe"</span></span><br><span class="line">if ! [ -x "$NODE_EXE" ]; then</span><br><span class="line">  NODE_EXE=node</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">NPM_CLI_JS=<span class="string">"/home/pi/node/lib/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line"></span><br><span class="line">case `uname` in</span><br><span class="line">  *MINGW*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">  *CYGWIN*)</span><br><span class="line">    NPM_PREFIX=`<span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> prefix -g`</span><br><span class="line">    NPM_PREFIX_NPM_CLI_JS=<span class="string">"$NPM_PREFIX/node_modules/npm/bin/npm-cli.js"</span></span><br><span class="line">    if [ -f "$NPM_PREFIX_NPM_CLI_JS" ]; then</span><br><span class="line">      NPM_CLI_JS=<span class="string">"$NPM_PREFIX_NPM_CLI_JS"</span></span><br><span class="line">    fi</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line"></span><br><span class="line"><span class="string">"$NODE_EXE"</span> <span class="string">"$NPM_CLI_JS"</span> <span class="string">"$@"</span></span><br></pre></td></tr></table></figure>
-<p>再次验证，npm已经可以正常工作</p>
-]]></content>
-      <categories>
-        <category>树莓派</category>
-      </categories>
-      <tags>
-        <tag>树莓派</tag>
-        <tag>nodejs</tag>
-        <tag>pi</tag>
       </tags>
   </entry>
   <entry>
@@ -2038,105 +2039,6 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
-    <title>Openstack学习 —— 跨主机虚拟机访问2</title>
-    <url>/2019/11/27/openstack-cross-host-vm-2/</url>
-    <content><![CDATA[<p>上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。</p>
-<p>本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。</p>
-<a id="more"></a>
-<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node.png" alt="create_vm_with_2node" /></p>
-<h3 id="br-tun"><a class="markdownIt-Anchor" href="#br-tun"></a> br-tun</h3>
-<p><strong>在前面收集信息时，你或许已经关注到了linux bridge和ovs中还有其他变化，那么，来看看 <code>br-tun</code></strong></p>
-<ul>
-<li>ovs</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-<p>当环境搭建完毕后，并不会立即创建这个接口，而是当创建了虚拟机后，会创建VXLAN的VTEP接口。</p>
-<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node_vxlan.png" alt="create_vm_with_2node_vxlan" /></p>
-<h3 id="流表"><a class="markdownIt-Anchor" href="#流表"></a> 流表</h3>
-<h4 id="node0"><a class="markdownIt-Anchor" href="#node0"></a> node0</h4>
-<ul>
-<li><strong>br-int</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure>
-<p><strong>table 0</strong></p>
-<ol>
-<li>从<code>qvo02407769-97</code>送入的icmp，arp报文，送往table 24</li>
-<li>从<code>qvo02407769-97</code>送入其他报文送往table 25</li>
-<li>其他报文送table 60</li>
-</ol>
-<p><strong>table 24</strong></p>
-<ol>
-<li>从<code>qvo02407769-97</code>送入的报文，送往table 60。<code>fe80::f816:3eff:fead:669e</code>是vm-1的IPv6地址</li>
-<li>从<code>qvo02407769-97</code>送入的arp报文，arp源地址为<code>200.0.0.219</code>即vm-1来的报文，送往table 25</li>
-</ol>
-<p><strong>table 25</strong></p>
-<p>从<code>qvo02407769-97</code>送入的报文，源mac为<code>fa:16:3e:ad:66:9e</code>即vm-1来的报文，送往table 60</p>
-<p><strong>table 60</strong></p>
-<p>正常转发</p>
-<blockquote>
-<p>综上，从vm-1来的报文以及其他报文，都将正常在<code>br-int</code>上转发</p>
-</blockquote>
-<ul>
-<li><strong>br-tun</strong></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure>
-<p><strong>table 0</strong></p>
-<ol>
-<li>从<code>br-int</code>来的报文（即需要从本节点送出的报文），送到table 2</li>
-<li>从<code>vxlan-ac0a000b</code>送来的报文（即从其他节点送到node 0的），送到table 4</li>
-</ol>
-<p><strong>table 2</strong>： 将要送出本节点的报文</p>
-<ol>
-<li>送往table 20</li>
-<li>送往table 22</li>
-</ol>
-<p><strong>table 4</strong>： 从其他节点送到本节点的报文</p>
-<p>tun_id为15（0xf）的报文，打上vlan标签1，送往table 10</p>
-<blockquote>
-<p>即从vxlan的tunnel出来的报文，如果tunnel id是15，则报文设置vlan为1</p>
-<p>而<code>qvo02407769-97</code>（与vm-1相连）和<code>tap17a89323-fd</code>（DHCP的tap接口）的vlan tag正是<code>1</code></p>
-</blockquote>
-<p><strong>table 10</strong></p>
-<blockquote>
-<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0…11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:“patch-int”</p>
-</blockquote>
-<p>这个action是如此的复杂，但不看<code>learn()</code>中的内容，报文最终被送往了<code>br-int</code></p>
-<blockquote>
-<p>learn则是在table20中增加对于回程报文的转发规则</p>
-</blockquote>
-<p><strong>table 20</strong></p>
-<p>送往table 22</p>
-<p><strong>table 22</strong></p>
-<p>VLAN tag为1的报文，去掉VLAN，设置tun_id为15（0xf）后，送往<code>vxlan-ac0a000b</code></p>
-<blockquote>
-<p>综上：</p>
-<ol>
-<li>从vm-1送来的报文，携带VLAN tag为1，去掉VLAN tag，设置tun_id为15，从vxlan接口送出</li>
-<li>从其他节点送来的报文，如果tun_id为15，设置VLAN tag为1，送往br-int</li>
-</ol>
-</blockquote>
-<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
-<p>完整的分析了node0上的流表，node1上的流表内容基本相似，就不再展开。</p>
-<p>至此，跨节点的虚拟机相互访问的实验及分析正式完结。你会发现</p>
-<ol>
-<li>每一个port在连接到虚拟机的时候，都创建了一个网桥</li>
-<li>每个虚拟机连在br-int上的接口，都按照subnet分配了一个VLAN tag，且每个节点的并不相同</li>
-<li>当虚拟机的报文要送出/进入当前节点时，会有VLAN tag和VXLAN的tun_id相互转换</li>
-</ol>
-<p>现在，思考一下：</p>
-<ol>
-<li>node1上的vm-1是如何通过DHCP获取IP地址的？</li>
-<li>为什么虚拟机不直接连在br-int上，而是要通过一个linux bridge连接到br-int上呢？</li>
-</ol>
-]]></content>
-      <categories>
-        <category>cloud</category>
-      </categories>
-      <tags>
-        <tag>openstack</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Openstack学习 —— 实验环境介绍</title>
     <url>/2019/11/21/openstack-env/</url>
     <content><![CDATA[<p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
@@ -2248,6 +2150,105 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>Openstack学习 —— 跨主机虚拟机访问2</title>
+    <url>/2019/11/27/openstack-cross-host-vm-2/</url>
+    <content><![CDATA[<p>上篇文章梳理了分别在两个node上创建了VM后，底层的Linux系统上的namespace、linux bridge以及ovs中发生的事情。</p>
+<p>本文将来着重关注两个node上的VM相互访问的流量通路。特别是令人头疼的ovs流表以及两个node是如何通过VXLAN网络将两台虚拟机连在了一起的。</p>
+<a id="more"></a>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node.png" alt="create_vm_with_2node" /></p>
+<h3 id="br-tun"><a class="markdownIt-Anchor" href="#br-tun"></a> br-tun</h3>
+<p><strong>在前面收集信息时，你或许已经关注到了linux bridge和ovs中还有其他变化，那么，来看看 <code>br-tun</code></strong></p>
+<ul>
+<li>ovs</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(node0)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000b"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.10"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.11"</span>&#125;</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">(node1)$ ovs-vsctl show</span><br><span class="line">...</span><br><span class="line">    Bridge br-tun</span><br><span class="line">        ...</span><br><span class="line">        Port <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">            Interface <span class="string">"vxlan-ac0a000a"</span></span><br><span class="line">                <span class="built_in">type</span>: vxlan</span><br><span class="line">                options: &#123;df_default=<span class="string">"true"</span>, in_key=flow, local_ip=<span class="string">"172.10.0.11"</span>, out_key=flow, remote_ip=<span class="string">"172.10.0.10"</span>&#125;</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
+<p>当环境搭建完毕后，并不会立即创建这个接口，而是当创建了虚拟机后，会创建VXLAN的VTEP接口。</p>
+<p><img src="/2019/11/27/openstack-cross-host-vm-2/create_vm_with_2node_vxlan.png" alt="create_vm_with_2node_vxlan" /></p>
+<h3 id="流表"><a class="markdownIt-Anchor" href="#流表"></a> 流表</h3>
+<h4 id="node0"><a class="markdownIt-Anchor" href="#node0"></a> node0</h4>
+<ul>
+<li><strong>br-int</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-int</span><br><span class="line"> table=0, ..., priority=65535,vlan_tci=0x0fff/0x1fff actions=drop</span><br><span class="line"> table=0, ..., priority=10,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136 actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=10,arp,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,24)</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-provider"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=2,in_port=<span class="string">"int-br-ext"</span> actions=drop</span><br><span class="line"> table=0, ..., priority=9,in_port=<span class="string">"qvo02407769-97"</span> actions=resubmit(,25)</span><br><span class="line"> table=0, ..., priority=0 actions=resubmit(,60)</span><br><span class="line"> table=23, ..., priority=0 actions=drop</span><br><span class="line"> table=24, ..., priority=2,icmp6,in_port=<span class="string">"qvo02407769-97"</span>,icmp_type=136,nd_target=fe80::f816:3eff:fead:669e actions=resubmit(,60)</span><br><span class="line"> table=24, ..., priority=2,arp,in_port=<span class="string">"qvo02407769-97"</span>,arp_spa=200.0.0.219 actions=resubmit(,25)</span><br><span class="line"> table=24, ..., priority=0 actions=drop</span><br><span class="line"> table=25, ..., priority=2,in_port=<span class="string">"qvo02407769-97"</span>,dl_src=fa:16:3e:ad:66:9e actions=resubmit(,60)</span><br><span class="line"> table=60, ..., priority=3 actions=NORMAL</span><br></pre></td></tr></table></figure>
+<p><strong>table 0</strong></p>
+<ol>
+<li>从<code>qvo02407769-97</code>送入的icmp，arp报文，送往table 24</li>
+<li>从<code>qvo02407769-97</code>送入其他报文送往table 25</li>
+<li>其他报文送table 60</li>
+</ol>
+<p><strong>table 24</strong></p>
+<ol>
+<li>从<code>qvo02407769-97</code>送入的报文，送往table 60。<code>fe80::f816:3eff:fead:669e</code>是vm-1的IPv6地址</li>
+<li>从<code>qvo02407769-97</code>送入的arp报文，arp源地址为<code>200.0.0.219</code>即vm-1来的报文，送往table 25</li>
+</ol>
+<p><strong>table 25</strong></p>
+<p>从<code>qvo02407769-97</code>送入的报文，源mac为<code>fa:16:3e:ad:66:9e</code>即vm-1来的报文，送往table 60</p>
+<p><strong>table 60</strong></p>
+<p>正常转发</p>
+<blockquote>
+<p>综上，从vm-1来的报文以及其他报文，都将正常在<code>br-int</code>上转发</p>
+</blockquote>
+<ul>
+<li><strong>br-tun</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ovs-ofctl dump-flows br-tun</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"patch-int"</span> actions=resubmit(,2)</span><br><span class="line"> table=0, ..., priority=1,in_port=<span class="string">"vxlan-ac0a000b"</span> actions=resubmit(,4)</span><br><span class="line"> table=0, ..., priority=0 actions=drop</span><br><span class="line"> table=2, ..., priority=0,dl_dst=00:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,20)</span><br><span class="line"> table=2, ..., priority=0,dl_dst=01:00:00:00:00:00/01:00:00:00:00:00 actions=resubmit(,22)</span><br><span class="line"> table=3, ..., priority=0 actions=drop</span><br><span class="line"> table=4, ..., priority=1,tun_id=0xf actions=mod_vlan_vid:1,resubmit(,10)</span><br><span class="line"> table=4, ..., priority=0 actions=drop</span><br><span class="line"> table=6, ..., priority=0 actions=drop</span><br><span class="line"> table=10, ..., priority=1 actions=learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0..11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:<span class="string">"patch-int"</span></span><br><span class="line"> table=20, ..., priority=2,dl_vlan=1,dl_dst=fa:16:3e:f5:ca:f5 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., hard_timeout=300, priority=1,vlan_tci=0x0001/0x0fff,dl_dst=fa:16:3e:f5:ca:f5 actions=load:0-&gt;NXM_OF_VLAN_TCI[],load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=20, ..., priority=0 actions=resubmit(,22)</span><br><span class="line"> table=22, ..., priority=1,dl_vlan=1 actions=strip_vlan,load:0xf-&gt;NXM_NX_TUN_ID[],output:<span class="string">"vxlan-ac0a000b"</span></span><br><span class="line"> table=22, ..., priority=0 actions=drop</span><br></pre></td></tr></table></figure>
+<p><strong>table 0</strong></p>
+<ol>
+<li>从<code>br-int</code>来的报文（即需要从本节点送出的报文），送到table 2</li>
+<li>从<code>vxlan-ac0a000b</code>送来的报文（即从其他节点送到node 0的），送到table 4</li>
+</ol>
+<p><strong>table 2</strong>： 将要送出本节点的报文</p>
+<ol>
+<li>送往table 20</li>
+<li>送往table 22</li>
+</ol>
+<p><strong>table 4</strong>： 从其他节点送到本节点的报文</p>
+<p>tun_id为15（0xf）的报文，打上vlan标签1，送往table 10</p>
+<blockquote>
+<p>即从vxlan的tunnel出来的报文，如果tunnel id是15，则报文设置vlan为1</p>
+<p>而<code>qvo02407769-97</code>（与vm-1相连）和<code>tap17a89323-fd</code>（DHCP的tap接口）的vlan tag正是<code>1</code></p>
+</blockquote>
+<p><strong>table 10</strong></p>
+<blockquote>
+<p>learn(table=20,hard_timeout=300,priority=1,cookie=0x9c915752f14d2544,NXM_OF_VLAN_TCI[0…11],NXM_OF_ETH_DST[]=NXM_OF_ETH_SRC[],load:0-&gt;NXM_OF_VLAN_TCI[],load:NXM_NX_TUN_ID[]-&gt;NXM_NX_TUN_ID[],output:OXM_OF_IN_PORT[]),output:“patch-int”</p>
+</blockquote>
+<p>这个action是如此的复杂，但不看<code>learn()</code>中的内容，报文最终被送往了<code>br-int</code></p>
+<blockquote>
+<p>learn则是在table20中增加对于回程报文的转发规则</p>
+</blockquote>
+<p><strong>table 20</strong></p>
+<p>送往table 22</p>
+<p><strong>table 22</strong></p>
+<p>VLAN tag为1的报文，去掉VLAN，设置tun_id为15（0xf）后，送往<code>vxlan-ac0a000b</code></p>
+<blockquote>
+<p>综上：</p>
+<ol>
+<li>从vm-1送来的报文，携带VLAN tag为1，去掉VLAN tag，设置tun_id为15，从vxlan接口送出</li>
+<li>从其他节点送来的报文，如果tun_id为15，设置VLAN tag为1，送往br-int</li>
+</ol>
+</blockquote>
+<h3 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h3>
+<p>完整的分析了node0上的流表，node1上的流表内容基本相似，就不再展开。</p>
+<p>至此，跨节点的虚拟机相互访问的实验及分析正式完结。你会发现</p>
+<ol>
+<li>每一个port在连接到虚拟机的时候，都创建了一个网桥</li>
+<li>每个虚拟机连在br-int上的接口，都按照subnet分配了一个VLAN tag，且每个节点的并不相同</li>
+<li>当虚拟机的报文要送出/进入当前节点时，会有VLAN tag和VXLAN的tun_id相互转换</li>
+</ol>
+<p>现在，思考一下：</p>
+<ol>
+<li>node1上的vm-1是如何通过DHCP获取IP地址的？</li>
+<li>为什么虚拟机不直接连在br-int上，而是要通过一个linux bridge连接到br-int上呢？</li>
+</ol>
+]]></content>
+      <categories>
+        <category>cloud</category>
+      </categories>
+      <tags>
+        <tag>openstack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>openstack接口状态异常</title>
     <url>/2018/09/11/openstack-neutron-problem1/</url>
     <content><![CDATA[<h2 id="错误信息"><a class="markdownIt-Anchor" href="#错误信息"></a> 错误信息</h2>
@@ -2278,6 +2279,114 @@ h2的eth0与s1的eth2相连</p>
 </blockquote>
 <p>经查看controller上，发现一个bridge和一个无力网卡配置了同样的IP，可能是因为之前使用flat网络后切换为vlan网络，没有清理openstack中创建的配置导致。</p>
 <p>将bridge上的IP地址删除后，恢复正常</p>
+]]></content>
+      <categories>
+        <category>cloud</category>
+      </categories>
+      <tags>
+        <tag>openstack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Openstack学习笔记1</title>
+    <url>/2018/06/28/openstack-study1/</url>
+    <content><![CDATA[<p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
+<a id="more"></a>
+<h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
+<h3 id="服务说明"><a class="markdownIt-Anchor" href="#服务说明"></a> 服务说明</h3>
+<ul>
+<li>keystone - 必选</li>
+</ul>
+<p>认证服务，是其他所有服务的基础</p>
+<ul>
+<li>glance - 必选</li>
+</ul>
+<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
+<ul>
+<li>nova - 必选</li>
+</ul>
+<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
+<ul>
+<li>neutron - 必选</li>
+</ul>
+<p>网络服务</p>
+<ul>
+<li>horizon - 可选（推荐选择）</li>
+</ul>
+<p>管理界面，图形化管理界面，方便使用</p>
+<ul>
+<li>cinder - 可选</li>
+</ul>
+<p>块存储服务，用来创建虚拟机的磁盘</p>
+<h3 id="一些理解"><a class="markdownIt-Anchor" href="#一些理解"></a> 一些理解</h3>
+<p>openstack可以理解为插件型的，灵活就体现于此。</p>
+<ul>
+<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
+<li>同样，可以在任意一个节点上起块存储服务</li>
+</ul>
+<h3 id="关于网络"><a class="markdownIt-Anchor" href="#关于网络"></a> 关于网络</h3>
+<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
+<p>需要说明的是：</p>
+<ul>
+<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
+<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
+<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
+<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
+<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
+<li>在openstack的UI上看到的网口，都是代号</li>
+</ul>
+<h2 id="测试环境准备"><a class="markdownIt-Anchor" href="#测试环境准备"></a> 测试环境准备</h2>
+<h3 id="两台虚拟机当然也可以all-in-one"><a class="markdownIt-Anchor" href="#两台虚拟机当然也可以all-in-one"></a> 两台虚拟机（当然也可以all in one）</h3>
+<h4 id="硬件准备"><a class="markdownIt-Anchor" href="#硬件准备"></a> 硬件准备</h4>
+<p>每台虚拟机应包含</p>
+<ol>
+<li>虚机可上网</li>
+<li>另外包含一张额外的网卡</li>
+<li>内存尽量多（8G）</li>
+<li>CPU尽量多（8 cpus）</li>
+<li>controller硬盘稍微大一些</li>
+</ol>
+<h4 id="基本准备"><a class="markdownIt-Anchor" href="#基本准备"></a> 基本准备</h4>
+<blockquote>
+<p>Ubuntu16.04 + Q版本（Queens）</p>
+</blockquote>
+<h5 id="配置ntp"><a class="markdownIt-Anchor" href="#配置ntp"></a> 配置NTP</h5>
+<h5 id="安装openstack基础包"><a class="markdownIt-Anchor" href="#安装openstack基础包"></a> 安装Openstack基础包</h5>
+<ul>
+<li>准备仓库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装openstack包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure>
+<h4 id="controller"><a class="markdownIt-Anchor" href="#controller"></a> controller</h4>
+<p>controller上需要安装的东西最多</p>
+<h5 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h5>
+<ul>
+<li>数据库: MariaDB</li>
+<li>消息队列: RabbitMQ</li>
+<li>服务及身份认证: Memcached</li>
+<li>etcd</li>
+</ul>
+<h5 id="openstack服务"><a class="markdownIt-Anchor" href="#openstack服务"></a> openstack服务</h5>
+<ul>
+<li>认证服务: keystone</li>
+<li>镜像服务: glance</li>
+<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
+<li>网络服务（网络管理，调度等服务）: neutron</li>
+<li>管理界面: horizon</li>
+<li>块存储服务（可选）: cinder</li>
+</ul>
+<h4 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> compute</h4>
+<p>计算节点相对来说简单了很多</p>
+<h5 id="openstack服务-2"><a class="markdownIt-Anchor" href="#openstack服务-2"></a> openstack服务</h5>
+<ul>
+<li>计算服务（专指计算服务）: nova-compute</li>
+<li>网络服务: neutron</li>
+</ul>
+<p><strong>可在controller上同样起计算服务</strong></p>
+<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
 ]]></content>
       <categories>
         <category>cloud</category>
@@ -2391,114 +2500,6 @@ h2的eth0与s1的eth2相连</p>
       </categories>
       <tags>
         <tag>ovs</tag>
-        <tag>openstack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Openstack学习笔记1</title>
-    <url>/2018/06/28/openstack-study1/</url>
-    <content><![CDATA[<p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
-<a id="more"></a>
-<h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
-<h3 id="服务说明"><a class="markdownIt-Anchor" href="#服务说明"></a> 服务说明</h3>
-<ul>
-<li>keystone - 必选</li>
-</ul>
-<p>认证服务，是其他所有服务的基础</p>
-<ul>
-<li>glance - 必选</li>
-</ul>
-<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
-<ul>
-<li>nova - 必选</li>
-</ul>
-<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
-<ul>
-<li>neutron - 必选</li>
-</ul>
-<p>网络服务</p>
-<ul>
-<li>horizon - 可选（推荐选择）</li>
-</ul>
-<p>管理界面，图形化管理界面，方便使用</p>
-<ul>
-<li>cinder - 可选</li>
-</ul>
-<p>块存储服务，用来创建虚拟机的磁盘</p>
-<h3 id="一些理解"><a class="markdownIt-Anchor" href="#一些理解"></a> 一些理解</h3>
-<p>openstack可以理解为插件型的，灵活就体现于此。</p>
-<ul>
-<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
-<li>同样，可以在任意一个节点上起块存储服务</li>
-</ul>
-<h3 id="关于网络"><a class="markdownIt-Anchor" href="#关于网络"></a> 关于网络</h3>
-<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
-<p>需要说明的是：</p>
-<ul>
-<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
-<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
-<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
-<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
-<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
-<li>在openstack的UI上看到的网口，都是代号</li>
-</ul>
-<h2 id="测试环境准备"><a class="markdownIt-Anchor" href="#测试环境准备"></a> 测试环境准备</h2>
-<h3 id="两台虚拟机当然也可以all-in-one"><a class="markdownIt-Anchor" href="#两台虚拟机当然也可以all-in-one"></a> 两台虚拟机（当然也可以all in one）</h3>
-<h4 id="硬件准备"><a class="markdownIt-Anchor" href="#硬件准备"></a> 硬件准备</h4>
-<p>每台虚拟机应包含</p>
-<ol>
-<li>虚机可上网</li>
-<li>另外包含一张额外的网卡</li>
-<li>内存尽量多（8G）</li>
-<li>CPU尽量多（8 cpus）</li>
-<li>controller硬盘稍微大一些</li>
-</ol>
-<h4 id="基本准备"><a class="markdownIt-Anchor" href="#基本准备"></a> 基本准备</h4>
-<blockquote>
-<p>Ubuntu16.04 + Q版本（Queens）</p>
-</blockquote>
-<h5 id="配置ntp"><a class="markdownIt-Anchor" href="#配置ntp"></a> 配置NTP</h5>
-<h5 id="安装openstack基础包"><a class="markdownIt-Anchor" href="#安装openstack基础包"></a> 安装Openstack基础包</h5>
-<ul>
-<li>准备仓库</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>安装openstack包</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure>
-<h4 id="controller"><a class="markdownIt-Anchor" href="#controller"></a> controller</h4>
-<p>controller上需要安装的东西最多</p>
-<h5 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h5>
-<ul>
-<li>数据库: MariaDB</li>
-<li>消息队列: RabbitMQ</li>
-<li>服务及身份认证: Memcached</li>
-<li>etcd</li>
-</ul>
-<h5 id="openstack服务"><a class="markdownIt-Anchor" href="#openstack服务"></a> openstack服务</h5>
-<ul>
-<li>认证服务: keystone</li>
-<li>镜像服务: glance</li>
-<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
-<li>网络服务（网络管理，调度等服务）: neutron</li>
-<li>管理界面: horizon</li>
-<li>块存储服务（可选）: cinder</li>
-</ul>
-<h4 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> compute</h4>
-<p>计算节点相对来说简单了很多</p>
-<h5 id="openstack服务-2"><a class="markdownIt-Anchor" href="#openstack服务-2"></a> openstack服务</h5>
-<ul>
-<li>计算服务（专指计算服务）: nova-compute</li>
-<li>网络服务: neutron</li>
-</ul>
-<p><strong>可在controller上同样起计算服务</strong></p>
-<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
-]]></content>
-      <categories>
-        <category>cloud</category>
-      </categories>
-      <tags>
         <tag>openstack</tag>
       </tags>
   </entry>
@@ -2825,78 +2826,6 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
-    <title>OpenvSwitch学习笔记1</title>
-    <url>/2018/09/21/ovs-study-overview/</url>
-    <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
-<ol>
-<li>VLAN with trunk and access ports</li>
-<li>绑定NIC(with/without LAC)</li>
-<li>可见性：NetFlow, sFlow®, and mirroring</li>
-<li>QoS</li>
-<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
-<li>连接故障管理</li>
-<li>openflow 1.0及其扩展</li>
-<li>使用Linux内核进行高性能转发</li>
-</ol>
-<a id="more"></a>
-<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
-<ul>
-<li>
-<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
-</li>
-<li>
-<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
-</li>
-<li>
-<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
-</li>
-<li>
-<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
-</li>
-<li>
-<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
-</li>
-</ul>
-<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
-<p>多服务器虚拟化部署场景</p>
-<ul>
-<li>高动态的end-points</li>
-<li>维护的是逻辑抽象</li>
-<li>状态迁移</li>
-<li>响应网络动态修改</li>
-<li>维护逻辑标签</li>
-</ul>
-<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
-<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class="" title="arch">
-<p>如上图</p>
-<ol>
-<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
-<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
-<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
-<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
-</ol>
-<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
-<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class="" title="module">
-<ol>
-<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
-<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
-<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
-<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
-<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
-<li>通过reinject，使用netlink将包重新送回内核</li>
-<li>匹配流表项并根据相应的动作执行</li>
-</ol>
-]]></content>
-      <categories>
-        <category>network</category>
-      </categories>
-      <tags>
-        <tag>ovs</tag>
-        <tag>network</tag>
-        <tag>openvswitch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OVS学习笔记——常用命令练习</title>
     <url>/2018/11/13/ovs-study2/</url>
     <content><![CDATA[<h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
@@ -3187,6 +3116,78 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>ovs</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenvSwitch学习笔记1</title>
+    <url>/2018/09/21/ovs-study-overview/</url>
+    <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
+<ol>
+<li>VLAN with trunk and access ports</li>
+<li>绑定NIC(with/without LAC)</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
+<li>QoS</li>
+<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
+<li>连接故障管理</li>
+<li>openflow 1.0及其扩展</li>
+<li>使用Linux内核进行高性能转发</li>
+</ol>
+<a id="more"></a>
+<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
+<ul>
+<li>
+<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
+</li>
+<li>
+<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
+</li>
+<li>
+<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
+</li>
+<li>
+<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
+</li>
+<li>
+<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
+</li>
+</ul>
+<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
+<p>多服务器虚拟化部署场景</p>
+<ul>
+<li>高动态的end-points</li>
+<li>维护的是逻辑抽象</li>
+<li>状态迁移</li>
+<li>响应网络动态修改</li>
+<li>维护逻辑标签</li>
+</ul>
+<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class="" title="arch">
+<p>如上图</p>
+<ol>
+<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
+<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
+<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
+<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
+</ol>
+<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class="" title="module">
+<ol>
+<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
+<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
+<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
+<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
+<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
+<li>通过reinject，使用netlink将包重新送回内核</li>
+<li>匹配流表项并根据相应的动作执行</li>
+</ol>
+]]></content>
+      <categories>
+        <category>network</category>
+      </categories>
+      <tags>
+        <tag>ovs</tag>
+        <tag>network</tag>
+        <tag>openvswitch</tag>
       </tags>
   </entry>
   <entry>
@@ -3704,6 +3705,41 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>美签记录</title>
+    <url>/2018/07/30/us-visa/</url>
+    <content><![CDATA[<p>记第一次拿到十年美签</p>
+<h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
+<ul>
+<li>提交DS160: 2018-07-08</li>
+<li>预约面签时间: 2018-07-27 前面排队人太多</li>
+<li>Issued: 2018-07-30</li>
+<li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li>
+<li>收到护照: 2018-08-02</li>
+</ul>
+<h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4>
+<ul>
+<li>面签持续时间：1分钟不到</li>
+<li>AP持续时间：2个工作日</li>
+<li>Issued到送到苏州：3个工作日</li>
+</ul>
+<h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1>
+<ol>
+<li>你去美国干什么？</li>
+<li>要去美国多久？</li>
+<li>你是做什么工作的？</li>
+<li>你们公司是做什么的？</li>
+<li>你是一个人去么？</li>
+</ol>
+<p>“你通过了！”</p>
+]]></content>
+      <categories>
+        <category>旅行</category>
+      </categories>
+      <tags>
+        <tag>visa</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>国内源安装k8s——Ubuntu</title>
     <url>/2020/05/19/ubuntu-install-k8s-aliyun/</url>
     <content><![CDATA[<ul>
@@ -3806,41 +3842,6 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>docker</tag>
         <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>美签记录</title>
-    <url>/2018/07/30/us-visa/</url>
-    <content><![CDATA[<p>记第一次拿到十年美签</p>
-<h1 id="时间"><a class="markdownIt-Anchor" href="#时间"></a> 时间</h1>
-<ul>
-<li>提交DS160: 2018-07-08</li>
-<li>预约面签时间: 2018-07-27 前面排队人太多</li>
-<li>Issued: 2018-07-30</li>
-<li>护照已从领事馆那边收回，目前正在安排运送: 2018-07-30</li>
-<li>收到护照: 2018-08-02</li>
-</ul>
-<h4 id="持续时间"><a class="markdownIt-Anchor" href="#持续时间"></a> 持续时间</h4>
-<ul>
-<li>面签持续时间：1分钟不到</li>
-<li>AP持续时间：2个工作日</li>
-<li>Issued到送到苏州：3个工作日</li>
-</ul>
-<h1 id="面签问题"><a class="markdownIt-Anchor" href="#面签问题"></a> 面签问题</h1>
-<ol>
-<li>你去美国干什么？</li>
-<li>要去美国多久？</li>
-<li>你是做什么工作的？</li>
-<li>你们公司是做什么的？</li>
-<li>你是一个人去么？</li>
-</ol>
-<p>“你通过了！”</p>
-]]></content>
-      <categories>
-        <category>旅行</category>
-      </categories>
-      <tags>
-        <tag>visa</tag>
       </tags>
   </entry>
   <entry>

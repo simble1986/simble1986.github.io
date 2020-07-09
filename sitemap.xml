@@ -4,7 +4,7 @@
   <url>
     <loc>http://www.isimble.com/2020/07/09/kubernetesLearning15/</loc>
     
-    <lastmod>2020-07-09T03:06:00.505Z</lastmod>
+    <lastmod>2020-07-09T03:14:55.847Z</lastmod>
     
   </url>
   
@@ -317,14 +317,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
+    <loc>http://www.isimble.com/2018/03/22/hello-world/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -339,13 +339,6 @@
   
   <url>
     <loc>http://www.isimble.com/about/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/categories/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -367,6 +360,13 @@
   
   <url>
     <loc>http://www.isimble.com/tags/index.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.isimble.com/categories/index.html</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
