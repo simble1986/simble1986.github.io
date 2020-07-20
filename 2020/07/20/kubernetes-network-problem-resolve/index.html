@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题 本文主要解决以下几个问题：  pod无法访问ClusterIP busybox做dns查询 pod间互访及访问外网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s网络相关问题及解决">
+<meta property="og:url" content="http://www.isimble.com/2020/07/20/kubernetes-network-problem-resolve/index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题 本文主要解决以下几个问题：  pod无法访问ClusterIP busybox做dns查询 pod间互访及访问外网">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-07-20T07:55:15.000Z">
+<meta property="article:modified_time" content="2020-07-20T08:00:25.911Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.isimble.com/2020/07/20/kubernetes-network-problem-resolve/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>K8s网络相关问题及解决 | Simble的小站</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-152780270-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simble的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">晒晒狗 vs 练练手</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">49</span></a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-fw fa-comments"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2020/07/20/kubernetes-network-problem-resolve/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          K8s网络相关问题及解决
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-07-20 15:55:15 / 修改时间：16:00:25" itemprop="dateCreated datePublished" datetime="2020-07-20T15:55:15+08:00">2020-07-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/07/20/kubernetes-network-problem-resolve/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/07/20/kubernetes-network-problem-resolve/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题</p>
+<p>本文主要解决以下几个问题：</p>
+<ol>
+<li>pod无法访问ClusterIP</li>
+<li>busybox做dns查询</li>
+<li>pod间互访及访问外网</li>
+</ol>
+<a id="more"></a>
+<h2 id="问题1-pod无法访问clusterip"><a class="markdownIt-Anchor" href="#问题1-pod无法访问clusterip"></a> 问题1: pod无法访问ClusterIP</h2>
+<blockquote>
+<p>这个问题困扰了我好些天，最后，配置了IPVS就OK了</p>
+</blockquote>
+<h3 id="step0-kube-proxy日志"><a class="markdownIt-Anchor" href="#step0-kube-proxy日志"></a> step0 - kube-proxy日志</h3>
+<p>从kube-proxy的日志中看到<code>Unknown proxy mode &quot;&quot;, assuming iptables proxy</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-5n29r | more</span><br><span class="line">W0720 03:22:47.942827       1 server_others.go:559] Unknown proxy mode <span class="string">""</span>, assuming iptables proxy</span><br><span class="line">I0720 03:22:48.245820       1 node.go:136] Successfully retrieved node IP: 10.160.18.183</span><br><span class="line">I0720 03:22:48.245876       1 server_others.go:186] Using iptables Proxier.</span><br><span class="line">I0720 03:22:48.246253       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 03:22:48.395170       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_max'</span> to 131072</span><br><span class="line">I0720 03:22:48.395210       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 03:22:48.395578       1 conntrack.go:83] Setting conntrack hashsize to 32768</span><br><span class="line">I0720 03:22:48.414004       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_established'</span> to 86400</span><br><span class="line">I0720 03:22:48.414067       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_close_wait'</span> to 3600</span><br><span class="line">I0720 03:22:48.533638       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 03:22:48.533673       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 03:22:48.533997       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 03:22:48.534016       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br></pre></td></tr></table></figure>
+<h3 id="step1-安装相关包"><a class="markdownIt-Anchor" href="#step1-安装相关包"></a> step1 - 安装相关包</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在所有节点上</span></span><br><span class="line">$ apt install ipset ipvsadm</span><br></pre></td></tr></table></figure>
+<h3 id="step2-加载module"><a class="markdownIt-Anchor" href="#step2-加载module"></a> step2 - 加载module</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">$ modprobe -- ip_vs</span><br><span class="line">$ modprobe -- ip_vs_rr</span><br><span class="line">$ modprobe -- ip_vs_wrr</span><br><span class="line">$ modprobe -- ip_vs_sh</span><br><span class="line">$ modprobe -- nf_conntrack</span><br><span class="line"><span class="comment"># 注：很多帖子上都写的是nf_conntrack_ipv4，但在Ubuntu20.04上，这个已经变成了nf_conntrack</span></span><br><span class="line"><span class="comment"># 检查配置</span></span><br><span class="line">$ lsmod | grep -e ipvs -e nf_conntrack</span><br><span class="line">nf_conntrack_netlink    45056  0</span><br><span class="line">nfnetlink              16384  3 nf_conntrack_netlink,ip_set</span><br><span class="line">nf_conntrack          139264  5 xt_conntrack,nf_nat,nf_conntrack_netlink,xt_MASQUERADE,ip_vs</span><br><span class="line">nf_defrag_ipv6         24576  2 nf_conntrack,ip_vs</span><br><span class="line">nf_defrag_ipv4         16384  1 nf_conntrack</span><br><span class="line">libcrc32c              16384  3 nf_conntrack,nf_nat,ip_vs</span><br><span class="line"><span class="comment"># 再注：Ubuntu 20.04上这些module可能默认已经加载了</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：如果ipvs默认没有加载的话，需要写一个脚本，系统重启时也需要加载</p>
+</blockquote>
+<h3 id="step3-修改kube-proxy配置文件"><a class="markdownIt-Anchor" href="#step3-修改kube-proxy配置文件"></a> step3 - 修改kube-proxy配置文件</h3>
+<p>修改kube-proxy的configmap中的mode字段为<code>ipvs</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl edit configmap kube-proxy -n kube-system</span><br><span class="line">...</span><br><span class="line">     kind: KubeProxyConfiguration</span><br><span class="line">     metricsBindAddress: <span class="string">""</span></span><br><span class="line">     mode: <span class="string">"ipvs"</span></span><br><span class="line">     nodePortAddresses: null</span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
+<h3 id="step4-重启kube-proxy"><a class="markdownIt-Anchor" href="#step4-重启kube-proxy"></a> step4 - 重启kube-proxy</h3>
+<p>可以逐个删除kube-proxy的pod，由k8s自动重启，也可以批量删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pod -n kube-system | grep kube-proxy |awk <span class="string">'&#123;system("kubectl delete pod "$1" -n kube-system")&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>查看kube-proxy的日志</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-44zw5</span><br><span class="line">I0720 05:37:30.026304       1 node.go:136] Successfully retrieved node IP: 10.160.18.181</span><br><span class="line">I0720 05:37:30.026349       1 server_others.go:259] Using ipvs Proxier.</span><br><span class="line">W0720 05:37:30.026600       1 proxier.go:429] IPVS scheduler not specified, use rr by default</span><br><span class="line">I0720 05:37:30.026814       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 05:37:30.027200       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 05:37:30.027452       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 05:37:30.027474       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.027507       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 05:37:30.027529       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 05:37:30.127736       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.127790       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> service config</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>Using ipvs Proxier.</code>，说明IPVS已经启用了</p>
+<p><strong>现在，可以启动一个busybox的container来ping一下coredns的clusterIP了</strong></p>
+<h2 id="问题2-busybox做dns查询失败"><a class="markdownIt-Anchor" href="#问题2-busybox做dns查询失败"></a> 问题2: busybox做dns查询失败</h2>
+<h3 id="step0-问题现象"><a class="markdownIt-Anchor" href="#step0-问题现象"></a> step0 - 问题现象</h3>
+<p>在解决了pod无法访问dns clusterIP的问题之后，发现busybox还是无法解析到某个service的IP</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">;; connection timed out; no servers could be reached</span></span><br></pre></td></tr></table></figure>
+<p>上网查完后发现：busybox的版本高于1.28.4都存在这个问题</p>
+<h3 id="step1-解决方法"><a class="markdownIt-Anchor" href="#step1-解决方法"></a> step1 - 解决方法</h3>
+<p>使用1.28.4的busybox镜像执行dns查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-0.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.2.175 web-0.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ # ping web-0.nginx</span></span><br><span class="line"><span class="string">PING web-0.nginx (172.1.2.175): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=0 ttl=62 time=1.050 ms</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=1 ttl=62 time=0.432 ms</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题3-pod互访及访问外网不通"><a class="markdownIt-Anchor" href="#问题3-pod互访及访问外网不通"></a> 问题3: pod互访及访问外网不通</h2>
+<p><strong>问题原因</strong>：iptables</p>
+<p><strong>解决方法</strong>：</p>
+<p>分别在每个节点上执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ iptables -P INPUT ACCEPT</span><br><span class="line">$ iptables -P FORWARD ACCEPT</span><br><span class="line">$ iptables -F</span><br><span class="line">$ iptables -L -n</span><br><span class="line">$ iptables -t nat -I POSTROUTING -s 172.1.2.0/24 -j MASQUERADE</span><br><span class="line"><span class="comment"># 注：172.1.2.0/24是每个节点的pod-network-cidr</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 connect-test --restart=Never --rm -- /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.10 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.10 (10.96.0.10): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.10: seq=0 ttl=64 time=0.082 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.10 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.082/0.082/0.082 ms</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.1 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.1 (10.96.0.1): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.1: seq=0 ttl=64 time=0.072 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.1 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.072/0.072/0.072 ms</span></span><br><span class="line"><span class="string">/ # ping 172.1.1.193 -c 1</span></span><br><span class="line"><span class="string">PING 172.1.1.193 (172.1.1.193): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.1.193: seq=0 ttl=64 time=0.108 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 172.1.1.193 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.108/0.108/0.108 ms</span></span><br><span class="line"><span class="string">/ # ping 223.5.5.5 -c 1</span></span><br><span class="line"><span class="string">PING 223.5.5.5 (223.5.5.5): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 223.5.5.5: seq=0 ttl=114 time=5.659 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 223.5.5.5 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 5.659/5.659/5.659 ms</span></span><br><span class="line"><span class="string">/ #</span></span><br><span class="line"><span class="string"># 注: 10.96.0.1为kube-apiserver的ClusterIP</span></span><br><span class="line"><span class="string">#     10.96.0.10为coredns的ClusterIP</span></span><br><span class="line"><span class="string">#     172.1.1.193为一个pod的IP</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/06/17/kubernetesLearning02/" rel="bookmark">K8s学习笔记——限制与隔离</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/05/19/ubuntu-install-k8s-aliyun/" rel="bookmark">国内源安装k8s——Ubuntu</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/09/kubernetesLearning15/" rel="bookmark">K8s学习笔记——Pod使用进阶</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/08/kubernetesLearning14/" rel="bookmark">K8s学习笔记——Pod的基本概念</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/06/kubernetesLearning05/" rel="bookmark">K8s学习笔记——为什么需要Pod</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/07/09/kubernetesLearning15/" rel="next" title="K8s学习笔记——Pod使用进阶">
+                  <i class="fa fa-chevron-left"></i> K8s学习笔记——Pod使用进阶
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题1-pod无法访问clusterip"><span class="nav-number">1.</span> <span class="nav-text"> 问题1: pod无法访问ClusterIP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step0-kube-proxy日志"><span class="nav-number">1.1.</span> <span class="nav-text"> step0 - kube-proxy日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-安装相关包"><span class="nav-number">1.2.</span> <span class="nav-text"> step1 - 安装相关包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step2-加载module"><span class="nav-number">1.3.</span> <span class="nav-text"> step2 - 加载module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step3-修改kube-proxy配置文件"><span class="nav-number">1.4.</span> <span class="nav-text"> step3 - 修改kube-proxy配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step4-重启kube-proxy"><span class="nav-number">1.5.</span> <span class="nav-text"> step4 - 重启kube-proxy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题2-busybox做dns查询失败"><span class="nav-number">2.</span> <span class="nav-text"> 问题2: busybox做dns查询失败</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#step0-问题现象"><span class="nav-number">2.1.</span> <span class="nav-text"> step0 - 问题现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#step1-解决方法"><span class="nav-number">2.2.</span> <span class="nav-text"> step1 - 解决方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题3-pod互访及访问外网不通"><span class="nav-number">3.</span> <span class="nav-text"> 问题3: pod互访及访问外网不通</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Simble"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Simble</p>
+  <div class="site-description" itemprop="description">记录一些技术的或者旅行的东东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/simble1986" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://zpzhou.com/" title="https:&#x2F;&#x2F;zpzhou.com&#x2F;" rel="noopener" target="_blank">ZPDEV</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://10101.io/" title="https:&#x2F;&#x2F;10101.io&#x2F;" rel="noopener" target="_blank">WithdewHua</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simble</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">202k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:04</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://simble.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://www.isimble.com/2020/07/20/kubernetes-network-problem-resolve/",
+            identifier: "2020/07/20/kubernetes-network-problem-resolve/",
+            title: "K8s网络相关问题及解决"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://simble.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+</body>
+</html>
