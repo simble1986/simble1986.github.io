@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Docker中无密码apt安装mysql</title>
-    <url>/2018/03/30/docker-install-mysql-server-no-passwd/</url>
-    <content><![CDATA[<h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
-<p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
-<a id="more"></a>
-<h3 id="解决思路"><a class="markdownIt-Anchor" href="#解决思路"></a> 解决思路</h3>
-<p>如果将安装好的mysql-server使用apt remove从系统中卸载后，再次重新安装，则不再需要输入密码。另外当安装完一些软件后，可以使用dpkg-config来重新配置。</p>
-<p>这样，就可以在安装软件前先对系统做好相关配置。接下来，就是需要获取软件的必要配置项</p>
-<h3 id="获取软件必要配置项"><a class="markdownIt-Anchor" href="#获取软件必要配置项"></a> 获取软件必要配置项</h3>
-<h4 id="下载软件包"><a class="markdownIt-Anchor" href="#下载软件包"></a> 下载软件包</h4>
-<p>可以通过网上搜索方式下载相关的deb包，但众所周知，Linux的软件包版本多，很多情况下并不知道需要安装哪个版本。但可以使用apt来下载相应的软件包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt-get -d install -y mysql-server</span><br></pre></td></tr></table></figure>
-<p>使用apt-get的-d参数，将只会下载，不进行安装。下载完毕后，软件包位于<code>/var/cache/apt/archives</code>目录下。</p>
-<h4 id="获取配置项"><a class="markdownIt-Anchor" href="#获取配置项"></a> 获取配置项</h4>
-<p>进入软件包的存放目录，然后执行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg-preconfigure mysql-server-5.1_5.1.49-3_amd64.deb</span><br></pre></td></tr></table></figure>
-<p>使用<code>debconfig-show</code>来查看相应的配置项</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ debconf-show mysql-server</span><br><span class="line">  mysql-server/root_password: (password omitted)</span><br><span class="line">  mysql-server/root_password_again: (password omitted)</span><br><span class="line">  mysql-server/error_setting_password:</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
-<p>可以看到，有两项是必须配置的：<code>mysql-server/root_password</code>和<code>mysql-server/root_password_again</code></p>
-<h4 id="预配置"><a class="markdownIt-Anchor" href="#预配置"></a> 预配置</h4>
-<ul>
-<li>创建配置文件</li>
-</ul>
-<p>在合适的目录下创建一个文件，例如<code>mysql-passwd</code>，输入以下内容</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">debconf mysql-server/root_password password <span class="number">123456</span></span><br><span class="line">debconf mysql-server/root_password_again password <span class="number">123456</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>加载配置</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ debconf-set-selections mysql-passwd</span><br></pre></td></tr></table></figure>
-<h4 id="测试结果"><a class="markdownIt-Anchor" href="#测试结果"></a> 测试结果</h4>
-<p>再次安装mysql-server，将不再需要输入密码</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt-get install -y mysql-server</span><br></pre></td></tr></table></figure>
-<h3 id="dockerfile处理"><a class="markdownIt-Anchor" href="#dockerfile处理"></a> DockerFile处理</h3>
-<p>DockerFile应当尽量避免不需要的操作，所以，获取配置项的操作可以提前在实验环境中完成。</p>
-<p>可将获取的命令行保存为本地文件，使用时copy过去。</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> ./mysql-passwd /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure>
-<p>或者是在DockerFile中直接生成，这时则可以将mysql passwd设置为参数</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> debconf mysql-server/root_password password 123456 &gt; /tmp/mysql-passwd &amp;&amp; <span class="built_in">echo</span> debconf mysql-server/root_password_again password 123456 &gt;&gt; /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>docker</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>DockerFile</tag>
-        <tag>mysql-server</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用国内资源（备忘）</title>
     <url>/2019/01/15/cn_resources/</url>
     <content><![CDATA[<h2 id="使用阿里云镜像安装docker-ce"><a class="markdownIt-Anchor" href="#使用阿里云镜像安装docker-ce"></a> 使用阿里云镜像安装Docker-CE</h2>
@@ -106,65 +57,59 @@
         <category>tech</category>
       </categories>
       <tags>
-        <tag>docker</tag>
         <tag>python</tag>
+        <tag>docker</tag>
         <tag>Linux</tag>
         <tag>Mac</tag>
       </tags>
   </entry>
   <entry>
-    <title>Docker API一种连接到PTY的交互方法</title>
-    <url>/2018/05/04/docker-pexpect/</url>
-    <content><![CDATA[<p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
-<p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
+    <title>Docker中无密码apt安装mysql</title>
+    <url>/2018/03/30/docker-install-mysql-server-no-passwd/</url>
+    <content><![CDATA[<h3 id="问题出现"><a class="markdownIt-Anchor" href="#问题出现"></a> 问题出现</h3>
+<p>Linux在第一次安装有些软件时会有交互的输入的需求，比如mysql在首次安装时需要设置root的密码。这在正常配置过程中没什么问题，但在使用DockerFile创建docker镜像时，则遇到了麻烦。</p>
 <a id="more"></a>
-<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
-<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
-<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
-<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
-<h2 id="自动化思路"><a class="markdownIt-Anchor" href="#自动化思路"></a> 自动化思路</h2>
-<ol>
-<li>client通过python API连接到docker</li>
-<li>创建一个container并保持运行</li>
-<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
-<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
-</ol>
-<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
+<h3 id="解决思路"><a class="markdownIt-Anchor" href="#解决思路"></a> 解决思路</h3>
+<p>如果将安装好的mysql-server使用apt remove从系统中卸载后，再次重新安装，则不再需要输入密码。另外当安装完一些软件后，可以使用dpkg-config来重新配置。</p>
+<p>这样，就可以在安装软件前先对系统做好相关配置。接下来，就是需要获取软件的必要配置项</p>
+<h3 id="获取软件必要配置项"><a class="markdownIt-Anchor" href="#获取软件必要配置项"></a> 获取软件必要配置项</h3>
+<h4 id="下载软件包"><a class="markdownIt-Anchor" href="#下载软件包"></a> 下载软件包</h4>
+<p>可以通过网上搜索方式下载相关的deb包，但众所周知，Linux的软件包版本多，很多情况下并不知道需要安装哪个版本。但可以使用apt来下载相应的软件包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt-get -d install -y mysql-server</span><br></pre></td></tr></table></figure>
+<p>使用apt-get的-d参数，将只会下载，不进行安装。下载完毕后，软件包位于<code>/var/cache/apt/archives</code>目录下。</p>
+<h4 id="获取配置项"><a class="markdownIt-Anchor" href="#获取配置项"></a> 获取配置项</h4>
+<p>进入软件包的存放目录，然后执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dpkg-preconfigure mysql-server-5.1_5.1.49-3_amd64.deb</span><br></pre></td></tr></table></figure>
+<p>使用<code>debconfig-show</code>来查看相应的配置项</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ debconf-show mysql-server</span><br><span class="line">  mysql-server/root_password: (password omitted)</span><br><span class="line">  mysql-server/root_password_again: (password omitted)</span><br><span class="line">  mysql-server/error_setting_password:</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>可以看到，有两项是必须配置的：<code>mysql-server/root_password</code>和<code>mysql-server/root_password_again</code></p>
+<h4 id="预配置"><a class="markdownIt-Anchor" href="#预配置"></a> 预配置</h4>
 <ul>
-<li>Docker开启remote API</li>
+<li>创建配置文件</li>
 </ul>
-<p>参见之前博文</p>
+<p>在合适的目录下创建一个文件，例如<code>mysql-passwd</code>，输入以下内容</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">debconf mysql-server/root_password password <span class="number">123456</span></span><br><span class="line">debconf mysql-server/root_password_again password <span class="number">123456</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>Docker Client</li>
+<li>加载配置</li>
 </ul>
-<p>安装必要的包</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure>
-<h2 id="开始使用"><a class="markdownIt-Anchor" href="#开始使用"></a> 开始使用</h2>
-<ul>
-<li>创建container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>连接container</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用pexpect连接</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
-<ul>
-<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
-<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
-</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ debconf-set-selections mysql-passwd</span><br></pre></td></tr></table></figure>
+<h4 id="测试结果"><a class="markdownIt-Anchor" href="#测试结果"></a> 测试结果</h4>
+<p>再次安装mysql-server，将不再需要输入密码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt-get install -y mysql-server</span><br></pre></td></tr></table></figure>
+<h3 id="dockerfile处理"><a class="markdownIt-Anchor" href="#dockerfile处理"></a> DockerFile处理</h3>
+<p>DockerFile应当尽量避免不需要的操作，所以，获取配置项的操作可以提前在实验环境中完成。</p>
+<p>可将获取的命令行保存为本地文件，使用时copy过去。</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="bash"> ./mysql-passwd /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure>
+<p>或者是在DockerFile中直接生成，这时则可以将mysql passwd设置为参数</p>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="bash"> <span class="built_in">echo</span> debconf mysql-server/root_password password 123456 &gt; /tmp/mysql-passwd &amp;&amp; <span class="built_in">echo</span> debconf mysql-server/root_password_again password 123456 &gt;&gt; /tmp/mysql-passwd</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> apt-get update &amp;&amp; debconf-set-selections /tmp/mysql-passwd &amp;&amp; apt-get install -yqq mysql-server  &amp;&amp; rm -rf /var/lib/apt/lists/*</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>docker</category>
       </categories>
       <tags>
         <tag>docker</tag>
-        <tag>pexpect</tag>
-        <tag>自动化</tag>
+        <tag>DockerFile</tag>
+        <tag>mysql-server</tag>
       </tags>
   </entry>
   <entry>
@@ -245,6 +190,61 @@
       <tags>
         <tag>docker</tag>
         <tag>ovs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker API一种连接到PTY的交互方法</title>
+    <url>/2018/05/04/docker-pexpect/</url>
+    <content><![CDATA[<p>折腾了一周多，终于搞定了在docker的python API下，当执行exec_run时，如何连接container的PTY。</p>
+<p>当弄明白之后，才发现原来是那么简单。之前几乎搜遍了google和百度，都没有找到相关的文章</p>
+<a id="more"></a>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>这两年，docker的发展如火如荼，作为网络测试，我们也在尝试着将docker引入测试中，来更多的模拟真实用户，并实现自动化。</p>
+<p>Pexpect是一个非常强大且好用的工具，当需要与设备和PC连接时，基本上都会用到。而之前都直接使用spawn一个命令行来进行连接</p>
+<p>本篇博文将介绍一种使用pexpect的fdspawn，通过socket方式连接到container的方法，以便与远程的container进行交互</p>
+<h2 id="自动化思路"><a class="markdownIt-Anchor" href="#自动化思路"></a> 自动化思路</h2>
+<ol>
+<li>client通过python API连接到docker</li>
+<li>创建一个container并保持运行</li>
+<li>使用exec_run()新建一个连接，运行<code>/bin/bash</code>，并开启socket方式</li>
+<li>使用pexpect的fdspawn连接exec_run()返回的socket</li>
+</ol>
+<h3 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h3>
+<ul>
+<li>Docker开启remote API</li>
+</ul>
+<p>参见之前博文</p>
+<ul>
+<li>Docker Client</li>
+</ul>
+<p>安装必要的包</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pip install docker</span><br><span class="line">$ pip install pexpect</span><br></pre></td></tr></table></figure>
+<h2 id="开始使用"><a class="markdownIt-Anchor" href="#开始使用"></a> 开始使用</h2>
+<ul>
+<li>创建container</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> docker</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>client=docker.DockerClient(base_url=<span class="string">'tcp://10.0.0.10:1234'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>c1 = client.containers.run(<span class="string">"ubuntu"</span>, detach=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>连接container</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = c1.exec_run(<span class="string">"/bin/bash"</span>, socket=<span class="literal">True</span>, stdin=<span class="literal">True</span>, tty=<span class="literal">True</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>res</span><br><span class="line">ExecResult(exit_code=<span class="literal">None</span>, output=&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock = res.output</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>sock</span><br><span class="line">&lt;socket object, fd=<span class="number">15</span>, family=<span class="number">1</span>, type=<span class="number">1</span>, protocol=<span class="number">0</span>&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用pexpect连接</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> pexpect.fdpexpect</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session=pexpect.fdpexpect.fdspawn(sock.fileno(),timeout=<span class="number">10</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>&gt;&gt;&gt; session.send(<span class="string">"ls\n"</span>)</span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.expect(<span class="string">"#"</span>)</span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.before</span><br><span class="line"><span class="string">' ls\r\n\x1b[0m\x1b[01;34mbin\x1b[0m   \x1b[01;34mdev\x1b[0m  \x1b[01;34mhome\x1b[0m  \x1b[01;34mlib64\x1b[0m  \x1b[01;34mmnt\x1b[0m  \x1b[01;34mproc\x1b[0m  \x1b[01;34mrun\x1b[0m   \x1b[01;34msrv\x1b[0m  \x1b[30;42mtmp\x1b[0m  \x1b[01;34mvar\x1b[0m\r\n\x1b[01;34mboot\x1b[0m  \x1b[01;34metc\x1b[0m  \x1b[01;34mlib\x1b[0m   \x1b[01;34mmedia\x1b[0m  \x1b[01;34mopt\x1b[0m  \x1b[01;34mroot\x1b[0m  \x1b[01;34msbin\x1b[0m  \x1b[01;34msys\x1b[0m  \x1b[01;34musr\x1b[0m\r\n\x1b]0;root@6a097ddbe55d: /\x07root@6a097ddbe55d:/'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>session.after</span><br><span class="line"><span class="string">'#'</span></span><br><span class="line">&gt;&gt;&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
+<ul>
+<li>在使用exec_run()执行开启命令时，需要指定<code>stdin=True</code>，否则，pexpect的send()将无法将命令发送至container</li>
+<li>同样，在使用exec_run()时，需要指定<code>tty=True</code>，否则，将没有命令行提示符，无法进行匹配</li>
+</ul>
+]]></content>
+      <categories>
+        <category>docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>pexpect</tag>
+        <tag>自动化</tag>
       </tags>
   </entry>
   <entry>
@@ -502,26 +502,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2018/03/22/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>gitbook+gitlab发布私有的图书仓库</title>
     <url>/2018/05/11/gitbook-gitlab/</url>
     <content><![CDATA[<p>近期带着一些同事学习python，开始用markdown的格式写了很多练习题，一直有想法将其发布成一本电子书在公司内部分享。但由于有些内容可能涉及公司相关，无法直接对外发布。而公司内部自建了一个gitlab服务器，一直用于托管一些不是很重要的代码。所以，便有了将markdown托管到gitlab上，然后使用gitbook在内部进行发布。</p>
@@ -604,6 +584,26 @@
       <categories>
         <category>docker</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2018/03/22/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
+<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>Hexo开启disqus评论系统</title>
@@ -707,68 +707,6 @@
       </tags>
   </entry>
   <entry>
-    <title>K8s网络相关问题及解决</title>
-    <url>/2020/07/20/kubernetes-network-problem-resolve/</url>
-    <content><![CDATA[<p>随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题</p>
-<p>本文主要解决以下几个问题：</p>
-<ol>
-<li>pod无法访问ClusterIP</li>
-<li>busybox做dns查询</li>
-<li>pod间互访及访问外网</li>
-</ol>
-<a id="more"></a>
-<h2 id="问题1-pod无法访问clusterip"><a class="markdownIt-Anchor" href="#问题1-pod无法访问clusterip"></a> 问题1: pod无法访问ClusterIP</h2>
-<blockquote>
-<p>这个问题困扰了我好些天，最后，配置了IPVS就OK了</p>
-</blockquote>
-<h3 id="step0-kube-proxy日志"><a class="markdownIt-Anchor" href="#step0-kube-proxy日志"></a> step0 - kube-proxy日志</h3>
-<p>从kube-proxy的日志中看到<code>Unknown proxy mode &quot;&quot;, assuming iptables proxy</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-5n29r | more</span><br><span class="line">W0720 03:22:47.942827       1 server_others.go:559] Unknown proxy mode <span class="string">""</span>, assuming iptables proxy</span><br><span class="line">I0720 03:22:48.245820       1 node.go:136] Successfully retrieved node IP: 10.160.18.183</span><br><span class="line">I0720 03:22:48.245876       1 server_others.go:186] Using iptables Proxier.</span><br><span class="line">I0720 03:22:48.246253       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 03:22:48.395170       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_max'</span> to 131072</span><br><span class="line">I0720 03:22:48.395210       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 03:22:48.395578       1 conntrack.go:83] Setting conntrack hashsize to 32768</span><br><span class="line">I0720 03:22:48.414004       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_established'</span> to 86400</span><br><span class="line">I0720 03:22:48.414067       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_close_wait'</span> to 3600</span><br><span class="line">I0720 03:22:48.533638       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 03:22:48.533673       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 03:22:48.533997       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 03:22:48.534016       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br></pre></td></tr></table></figure>
-<h3 id="step1-安装相关包"><a class="markdownIt-Anchor" href="#step1-安装相关包"></a> step1 - 安装相关包</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在所有节点上</span></span><br><span class="line">$ apt install ipset ipvsadm</span><br></pre></td></tr></table></figure>
-<h3 id="step2-加载module"><a class="markdownIt-Anchor" href="#step2-加载module"></a> step2 - 加载module</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ modprobe -- ip_vs</span><br><span class="line">$ modprobe -- ip_vs_rr</span><br><span class="line">$ modprobe -- ip_vs_wrr</span><br><span class="line">$ modprobe -- ip_vs_sh</span><br><span class="line">$ modprobe -- nf_conntrack</span><br><span class="line"><span class="comment"># 注：很多帖子上都写的是nf_conntrack_ipv4，但在Ubuntu20.04上，这个已经变成了nf_conntrack</span></span><br><span class="line"><span class="comment"># 检查配置</span></span><br><span class="line">$ lsmod | grep -e ipvs -e nf_conntrack</span><br><span class="line">nf_conntrack_netlink    45056  0</span><br><span class="line">nfnetlink              16384  3 nf_conntrack_netlink,ip_set</span><br><span class="line">nf_conntrack          139264  5 xt_conntrack,nf_nat,nf_conntrack_netlink,xt_MASQUERADE,ip_vs</span><br><span class="line">nf_defrag_ipv6         24576  2 nf_conntrack,ip_vs</span><br><span class="line">nf_defrag_ipv4         16384  1 nf_conntrack</span><br><span class="line">libcrc32c              16384  3 nf_conntrack,nf_nat,ip_vs</span><br><span class="line"><span class="comment"># 再注：Ubuntu 20.04上这些module可能默认已经加载了</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注：如果ipvs默认没有加载的话，需要写一个脚本，系统重启时也需要加载</p>
-</blockquote>
-<h3 id="step3-修改kube-proxy配置文件"><a class="markdownIt-Anchor" href="#step3-修改kube-proxy配置文件"></a> step3 - 修改kube-proxy配置文件</h3>
-<p>修改kube-proxy的configmap中的mode字段为<code>ipvs</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl edit configmap kube-proxy -n kube-system</span><br><span class="line">...</span><br><span class="line">     kind: KubeProxyConfiguration</span><br><span class="line">     metricsBindAddress: <span class="string">""</span></span><br><span class="line">     mode: <span class="string">"ipvs"</span></span><br><span class="line">     nodePortAddresses: null</span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
-<h3 id="step4-重启kube-proxy"><a class="markdownIt-Anchor" href="#step4-重启kube-proxy"></a> step4 - 重启kube-proxy</h3>
-<p>可以逐个删除kube-proxy的pod，由k8s自动重启，也可以批量删除</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pod -n kube-system | grep kube-proxy |awk <span class="string">'&#123;system("kubectl delete pod "$1" -n kube-system")&#125;'</span></span><br></pre></td></tr></table></figure>
-<p>查看kube-proxy的日志</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-44zw5</span><br><span class="line">I0720 05:37:30.026304       1 node.go:136] Successfully retrieved node IP: 10.160.18.181</span><br><span class="line">I0720 05:37:30.026349       1 server_others.go:259] Using ipvs Proxier.</span><br><span class="line">W0720 05:37:30.026600       1 proxier.go:429] IPVS scheduler not specified, use rr by default</span><br><span class="line">I0720 05:37:30.026814       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 05:37:30.027200       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 05:37:30.027452       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 05:37:30.027474       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.027507       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 05:37:30.027529       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 05:37:30.127736       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.127790       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> service config</span><br></pre></td></tr></table></figure>
-<p>可以看到<code>Using ipvs Proxier.</code>，说明IPVS已经启用了</p>
-<p><strong>现在，可以启动一个busybox的container来ping一下coredns的clusterIP了</strong></p>
-<h2 id="问题2-busybox做dns查询失败"><a class="markdownIt-Anchor" href="#问题2-busybox做dns查询失败"></a> 问题2: busybox做dns查询失败</h2>
-<h3 id="step0-问题现象"><a class="markdownIt-Anchor" href="#step0-问题现象"></a> step0 - 问题现象</h3>
-<p>在解决了pod无法访问dns clusterIP的问题之后，发现busybox还是无法解析到某个service的IP</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">;; connection timed out; no servers could be reached</span></span><br></pre></td></tr></table></figure>
-<p>上网查完后发现：busybox的版本高于1.28.4都存在这个问题</p>
-<h3 id="step1-解决方法"><a class="markdownIt-Anchor" href="#step1-解决方法"></a> step1 - 解决方法</h3>
-<p>使用1.28.4的busybox镜像执行dns查询</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-0.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.2.175 web-0.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ # ping web-0.nginx</span></span><br><span class="line"><span class="string">PING web-0.nginx (172.1.2.175): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=0 ttl=62 time=1.050 ms</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=1 ttl=62 time=0.432 ms</span></span><br></pre></td></tr></table></figure>
-<h2 id="问题3-pod互访及访问外网不通"><a class="markdownIt-Anchor" href="#问题3-pod互访及访问外网不通"></a> 问题3: pod互访及访问外网不通</h2>
-<p><strong>问题原因</strong>：iptables</p>
-<p><strong>解决方法</strong>：</p>
-<p>分别在每个节点上执行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ iptables -P INPUT ACCEPT</span><br><span class="line">$ iptables -P FORWARD ACCEPT</span><br><span class="line">$ iptables -F</span><br><span class="line">$ iptables -L -n</span><br><span class="line">$ iptables -t nat -I POSTROUTING -s 172.1.2.0/24 -j MASQUERADE</span><br><span class="line"><span class="comment"># 注：172.1.2.0/24是每个节点的pod-network-cidr</span></span><br></pre></td></tr></table></figure>
-<p><strong>测试</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 connect-test --restart=Never --rm -- /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.10 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.10 (10.96.0.10): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.10: seq=0 ttl=64 time=0.082 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.10 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.082/0.082/0.082 ms</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.1 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.1 (10.96.0.1): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.1: seq=0 ttl=64 time=0.072 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.1 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.072/0.072/0.072 ms</span></span><br><span class="line"><span class="string">/ # ping 172.1.1.193 -c 1</span></span><br><span class="line"><span class="string">PING 172.1.1.193 (172.1.1.193): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.1.193: seq=0 ttl=64 time=0.108 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 172.1.1.193 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.108/0.108/0.108 ms</span></span><br><span class="line"><span class="string">/ # ping 223.5.5.5 -c 1</span></span><br><span class="line"><span class="string">PING 223.5.5.5 (223.5.5.5): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 223.5.5.5: seq=0 ttl=114 time=5.659 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 223.5.5.5 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 5.659/5.659/5.659 ms</span></span><br><span class="line"><span class="string">/ #</span></span><br><span class="line"><span class="string"># 注: 10.96.0.1为kube-apiserver的ClusterIP</span></span><br><span class="line"><span class="string">#     10.96.0.10为coredns的ClusterIP</span></span><br><span class="line"><span class="string">#     172.1.1.193为一个pod的IP</span></span><br></pre></td></tr></table></figure>
-<p><strong>使iptables规则重启生效</strong></p>
-<p>分别在每个节点上执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ iptables-save &gt; /etc/iptables.up.rules</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">'#!/bin/bash\n/sbin/iptables-restore &lt; /etc/iptables.up.rules'</span> &gt; /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br><span class="line">$ chmod +x /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>k8s环境安装之差点儿我就放弃了</title>
     <url>/2019/07/19/k8s-env-prep/</url>
     <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br />
@@ -834,6 +772,68 @@
         <tag>docker</tag>
         <tag>Kubernetes</tag>
         <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s网络相关问题及解决</title>
+    <url>/2020/07/20/kubernetes-network-problem-resolve/</url>
+    <content><![CDATA[<p>随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题</p>
+<p>本文主要解决以下几个问题：</p>
+<ol>
+<li>pod无法访问ClusterIP</li>
+<li>busybox做dns查询</li>
+<li>pod间互访及访问外网</li>
+</ol>
+<a id="more"></a>
+<h2 id="问题1-pod无法访问clusterip"><a class="markdownIt-Anchor" href="#问题1-pod无法访问clusterip"></a> 问题1: pod无法访问ClusterIP</h2>
+<blockquote>
+<p>这个问题困扰了我好些天，最后，配置了IPVS就OK了</p>
+</blockquote>
+<h3 id="step0-kube-proxy日志"><a class="markdownIt-Anchor" href="#step0-kube-proxy日志"></a> step0 - kube-proxy日志</h3>
+<p>从kube-proxy的日志中看到<code>Unknown proxy mode &quot;&quot;, assuming iptables proxy</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-5n29r | more</span><br><span class="line">W0720 03:22:47.942827       1 server_others.go:559] Unknown proxy mode <span class="string">""</span>, assuming iptables proxy</span><br><span class="line">I0720 03:22:48.245820       1 node.go:136] Successfully retrieved node IP: 10.160.18.183</span><br><span class="line">I0720 03:22:48.245876       1 server_others.go:186] Using iptables Proxier.</span><br><span class="line">I0720 03:22:48.246253       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 03:22:48.395170       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_max'</span> to 131072</span><br><span class="line">I0720 03:22:48.395210       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 03:22:48.395578       1 conntrack.go:83] Setting conntrack hashsize to 32768</span><br><span class="line">I0720 03:22:48.414004       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_established'</span> to 86400</span><br><span class="line">I0720 03:22:48.414067       1 conntrack.go:100] Set sysctl <span class="string">'net/netfilter/nf_conntrack_tcp_timeout_close_wait'</span> to 3600</span><br><span class="line">I0720 03:22:48.533638       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 03:22:48.533673       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 03:22:48.533997       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 03:22:48.534016       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br></pre></td></tr></table></figure>
+<h3 id="step1-安装相关包"><a class="markdownIt-Anchor" href="#step1-安装相关包"></a> step1 - 安装相关包</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在所有节点上</span></span><br><span class="line">$ apt install ipset ipvsadm</span><br></pre></td></tr></table></figure>
+<h3 id="step2-加载module"><a class="markdownIt-Anchor" href="#step2-加载module"></a> step2 - 加载module</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ modprobe -- ip_vs</span><br><span class="line">$ modprobe -- ip_vs_rr</span><br><span class="line">$ modprobe -- ip_vs_wrr</span><br><span class="line">$ modprobe -- ip_vs_sh</span><br><span class="line">$ modprobe -- nf_conntrack</span><br><span class="line"><span class="comment"># 注：很多帖子上都写的是nf_conntrack_ipv4，但在Ubuntu20.04上，这个已经变成了nf_conntrack</span></span><br><span class="line"><span class="comment"># 检查配置</span></span><br><span class="line">$ lsmod | grep -e ipvs -e nf_conntrack</span><br><span class="line">nf_conntrack_netlink    45056  0</span><br><span class="line">nfnetlink              16384  3 nf_conntrack_netlink,ip_set</span><br><span class="line">nf_conntrack          139264  5 xt_conntrack,nf_nat,nf_conntrack_netlink,xt_MASQUERADE,ip_vs</span><br><span class="line">nf_defrag_ipv6         24576  2 nf_conntrack,ip_vs</span><br><span class="line">nf_defrag_ipv4         16384  1 nf_conntrack</span><br><span class="line">libcrc32c              16384  3 nf_conntrack,nf_nat,ip_vs</span><br><span class="line"><span class="comment"># 再注：Ubuntu 20.04上这些module可能默认已经加载了</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：如果ipvs默认没有加载的话，需要写一个脚本，系统重启时也需要加载</p>
+</blockquote>
+<h3 id="step3-修改kube-proxy配置文件"><a class="markdownIt-Anchor" href="#step3-修改kube-proxy配置文件"></a> step3 - 修改kube-proxy配置文件</h3>
+<p>修改kube-proxy的configmap中的mode字段为<code>ipvs</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl edit configmap kube-proxy -n kube-system</span><br><span class="line">...</span><br><span class="line">     kind: KubeProxyConfiguration</span><br><span class="line">     metricsBindAddress: <span class="string">""</span></span><br><span class="line">     mode: <span class="string">"ipvs"</span></span><br><span class="line">     nodePortAddresses: null</span><br><span class="line">     ...</span><br></pre></td></tr></table></figure>
+<h3 id="step4-重启kube-proxy"><a class="markdownIt-Anchor" href="#step4-重启kube-proxy"></a> step4 - 重启kube-proxy</h3>
+<p>可以逐个删除kube-proxy的pod，由k8s自动重启，也可以批量删除</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pod -n kube-system | grep kube-proxy |awk <span class="string">'&#123;system("kubectl delete pod "$1" -n kube-system")&#125;'</span></span><br></pre></td></tr></table></figure>
+<p>查看kube-proxy的日志</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl logs -n kube-system kube-proxy-44zw5</span><br><span class="line">I0720 05:37:30.026304       1 node.go:136] Successfully retrieved node IP: 10.160.18.181</span><br><span class="line">I0720 05:37:30.026349       1 server_others.go:259] Using ipvs Proxier.</span><br><span class="line">W0720 05:37:30.026600       1 proxier.go:429] IPVS scheduler not specified, use rr by default</span><br><span class="line">I0720 05:37:30.026814       1 server.go:583] Version: v1.18.3</span><br><span class="line">I0720 05:37:30.027200       1 conntrack.go:52] Setting nf_conntrack_max to 131072</span><br><span class="line">I0720 05:37:30.027452       1 config.go:133] Starting endpoints config controller</span><br><span class="line">I0720 05:37:30.027474       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.027507       1 config.go:315] Starting service config controller</span><br><span class="line">I0720 05:37:30.027529       1 shared_informer.go:223] Waiting <span class="keyword">for</span> caches to sync <span class="keyword">for</span> service config</span><br><span class="line">I0720 05:37:30.127736       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> endpoints config</span><br><span class="line">I0720 05:37:30.127790       1 shared_informer.go:230] Caches are synced <span class="keyword">for</span> service config</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>Using ipvs Proxier.</code>，说明IPVS已经启用了</p>
+<p><strong>现在，可以启动一个busybox的container来ping一下coredns的clusterIP了</strong></p>
+<h2 id="问题2-busybox做dns查询失败"><a class="markdownIt-Anchor" href="#问题2-busybox做dns查询失败"></a> 问题2: busybox做dns查询失败</h2>
+<h3 id="step0-问题现象"><a class="markdownIt-Anchor" href="#step0-问题现象"></a> step0 - 问题现象</h3>
+<p>在解决了pod无法访问dns clusterIP的问题之后，发现busybox还是无法解析到某个service的IP</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl run -i --tty --image busybox dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">;; connection timed out; no servers could be reached</span></span><br></pre></td></tr></table></figure>
+<p>上网查完后发现：busybox的版本高于1.28.4都存在这个问题</p>
+<h3 id="step1-解决方法"><a class="markdownIt-Anchor" href="#step1-解决方法"></a> step1 - 解决方法</h3>
+<p>使用1.28.4的busybox镜像执行dns查询</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 dns-test --restart=Never --rm /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-0.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.2.175 web-0.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ # ping web-0.nginx</span></span><br><span class="line"><span class="string">PING web-0.nginx (172.1.2.175): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=0 ttl=62 time=1.050 ms</span></span><br><span class="line"><span class="string">64 bytes from 172.1.2.175: seq=1 ttl=62 time=0.432 ms</span></span><br></pre></td></tr></table></figure>
+<h2 id="问题3-pod互访及访问外网不通"><a class="markdownIt-Anchor" href="#问题3-pod互访及访问外网不通"></a> 问题3: pod互访及访问外网不通</h2>
+<p><strong>问题原因</strong>：iptables</p>
+<p><strong>解决方法</strong>：</p>
+<p>分别在每个节点上执行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ iptables -P INPUT ACCEPT</span><br><span class="line">$ iptables -P FORWARD ACCEPT</span><br><span class="line">$ iptables -F</span><br><span class="line">$ iptables -L -n</span><br><span class="line">$ iptables -t nat -I POSTROUTING -s 172.1.2.0/24 -j MASQUERADE</span><br><span class="line"><span class="comment"># 注：172.1.2.0/24是每个节点的pod-network-cidr</span></span><br></pre></td></tr></table></figure>
+<p><strong>测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 connect-test --restart=Never --rm -- /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.10 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.10 (10.96.0.10): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.10: seq=0 ttl=64 time=0.082 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.10 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.082/0.082/0.082 ms</span></span><br><span class="line"><span class="string">/ # ping 10.96.0.1 -c 1</span></span><br><span class="line"><span class="string">PING 10.96.0.1 (10.96.0.1): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 10.96.0.1: seq=0 ttl=64 time=0.072 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 10.96.0.1 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.072/0.072/0.072 ms</span></span><br><span class="line"><span class="string">/ # ping 172.1.1.193 -c 1</span></span><br><span class="line"><span class="string">PING 172.1.1.193 (172.1.1.193): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 172.1.1.193: seq=0 ttl=64 time=0.108 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 172.1.1.193 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 0.108/0.108/0.108 ms</span></span><br><span class="line"><span class="string">/ # ping 223.5.5.5 -c 1</span></span><br><span class="line"><span class="string">PING 223.5.5.5 (223.5.5.5): 56 data bytes</span></span><br><span class="line"><span class="string">64 bytes from 223.5.5.5: seq=0 ttl=114 time=5.659 ms</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">--- 223.5.5.5 ping statistics ---</span></span><br><span class="line"><span class="string">1 packets transmitted, 1 packets received, 0% packet loss</span></span><br><span class="line"><span class="string">round-trip min/avg/max = 5.659/5.659/5.659 ms</span></span><br><span class="line"><span class="string">/ #</span></span><br><span class="line"><span class="string"># 注: 10.96.0.1为kube-apiserver的ClusterIP</span></span><br><span class="line"><span class="string">#     10.96.0.10为coredns的ClusterIP</span></span><br><span class="line"><span class="string">#     172.1.1.193为一个pod的IP</span></span><br></pre></td></tr></table></figure>
+<p><strong>使iptables规则重启生效</strong></p>
+<p>分别在每个节点上执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ iptables-save &gt; /etc/iptables.up.rules</span><br><span class="line">$ <span class="built_in">echo</span> -e <span class="string">'#!/bin/bash\n/sbin/iptables-restore &lt; /etc/iptables.up.rules'</span> &gt; /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br><span class="line">$ chmod +x /etc/network/<span class="keyword">if</span>-pre-up.d/iptables</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
       </tags>
   </entry>
   <entry>
@@ -1684,62 +1684,6 @@
       </tags>
   </entry>
   <entry>
-    <title>使用markdown写PPT</title>
-    <url>/2018/06/21/marp/</url>
-    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png" alt="" /></p>
-<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
-<a id="more"></a>
-<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.i/2018/06/21/marp/" target="_blank" rel="noopener">Marp</a>。</p>
-<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
-<ul>
-<li>书写简单</li>
-<li>提供两套模版</li>
-<li>可实时预览</li>
-<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
-<li>支持Mac，Win和Linux</li>
-</ul>
-<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
-<ul>
-<li>没有动画</li>
-<li>只能导出为pdf格式，不能生成PPT格式</li>
-<li>仅支持基础的markdown语法</li>
-</ul>
-<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
-<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
-<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
-<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
-<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
-<p>页码是可以随时开启，随时关闭的。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
-<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
-<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
-<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
-<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
-<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
-<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
-<p>比如：</p>
-<img src="/2018/06/21/marp/ppt1.png" class="" title="效果">
-<p>则是用如下代码完成</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
-<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
-<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
-<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
-<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
-<p>比如：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
-<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
-<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
-<p>🐱</p>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linux虚拟网络之虚拟机</title>
     <url>/2019/08/16/linux-virtual-vm/</url>
     <content><![CDATA[<p>本文将通过实验来理解Linux上的虚拟机如何通过tap、bridge、router以及iptables实现相关的网络访问功能。</p>
@@ -1866,6 +1810,62 @@
       <tags>
         <tag>network</tag>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用markdown写PPT</title>
+    <url>/2018/06/21/marp/</url>
+    <content><![CDATA[<p><img src="https://raw.githubusercontent.com/yhat/2018/06/21/marp/master/images/marp.png" alt="" /></p>
+<p>自打接触Markdown以来，深深的爱上了这种格式的书写，先是弄网站，然后又弄电子书。最近要给新员工培训，要准备4个PPT，于是就想有没有直接用md来写PPT的呢？上网一搜，还真有。</p>
+<a id="more"></a>
+<p>有Reveal.js, LandSlide, GitPitch等，但也许是我研究的不深吧，gitpitch是在线的，LandSlide要用pip来安装。Reveal.js倒是之前见team里的大神有写过，但现在好像变成了slides了，也是在线的。最终，主角出场，我选择了<a href="https://yhatt.github.i/2018/06/21/marp/" target="_blank" rel="noopener">Marp</a>。</p>
+<h3 id="优点"><a class="markdownIt-Anchor" href="#优点"></a> 优点</h3>
+<ul>
+<li>书写简单</li>
+<li>提供两套模版</li>
+<li>可实时预览</li>
+<li>只需要一个md文件即可，不需要其他诸如yaml之类的东西</li>
+<li>支持Mac，Win和Linux</li>
+</ul>
+<h3 id="缺点"><a class="markdownIt-Anchor" href="#缺点"></a> 缺点</h3>
+<ul>
+<li>没有动画</li>
+<li>只能导出为pdf格式，不能生成PPT格式</li>
+<li>仅支持基础的markdown语法</li>
+</ul>
+<p><strong>虽然有着上面的缺点，然而，对于写技术类PPT，我觉得够用了</strong></p>
+<h3 id="用法"><a class="markdownIt-Anchor" href="#用法"></a> 用法</h3>
+<p>Marp提供两套主题，都说专治选择障碍。特别是默认主题，简直是选择障碍患者的福音。</p>
+<p>下载完安装后，两个例子中已经有比较基本的说明了。但有一些东西还是很容易被忽略。</p>
+<h4 id="设置页码"><a class="markdownIt-Anchor" href="#设置页码"></a> 设置页码</h4>
+<p>页码是可以随时开启，随时关闭的。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- page_number: true --&gt;</span><br></pre></td></tr></table></figure>
+<p>在任意页输入以上代码就可以开启，但如果你要在哪页关闭显示页码，可以用false</p>
+<h4 id="背景设置"><a class="markdownIt-Anchor" href="#背景设置"></a> 背景设置</h4>
+<p>因为只有两套模版，所以，想要好看点，还是需要一些背景图片的。刚开始我只知道用<code>![bg](aaa.png)</code>的方式引入背景，但后来发现背景图片其实是和背景主题叠加了的。</p>
+<p>后来细细看了文档才发现，原来可以用开关开启，还可以设置背景的大小</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg original 70%](aaa.png)</span><br></pre></td></tr></table></figure>
+<p>使用了<code>original</code>之后，背景就变成了纯图片，而70%则可以指定图片大小。</p>
+<p>当然，更有趣的是，可以用多个背景并排的方式来完成部分植入。</p>
+<p>比如：</p>
+<img src="/2018/06/21/marp/ppt1.png" class="" title="效果">
+<p>则是用如下代码完成</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">![bg 450% original](robot2.png)</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg]()</span><br><span class="line">![bg 450% original](robot2.png)</span><br></pre></td></tr></table></figure>
+<p>还有一个有意思的是，如果不设置图片的比例，那么会按照扩充满整个屏幕来设置，但如果设置比例，如上面的代码，则100%是整个页面宽度/6之后的图片大小。</p>
+<p>当然，灵活运用这一个特性，也能带来很多意想不到的效果。</p>
+<h4 id="emoji"><a class="markdownIt-Anchor" href="#emoji"></a> emoji</h4>
+<p>值得一提的是Marp的emoji表情选择的很是我喜欢的那种，而且可以按照段落来调整大小</p>
+<p>比如：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line"># :cat:</span><br><span class="line">## :fish:</span><br><span class="line">### :tiger:</span><br><span class="line">#### :bird:</span><br></pre></td></tr></table></figure>
+<p>表情的大小会随着段落比较而变化。还是很不错的。</p>
+<p><strong>另外，似乎软件的作者正在开发新的软件，很是期待</strong></p>
+<p>🐱</p>
+]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -2315,6 +2315,54 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>Openstack学习 —— 实验环境介绍</title>
+    <url>/2019/11/21/openstack-env/</url>
+    <content><![CDATA[<p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
+<p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
+<a id="more"></a>
+<h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3>
+<p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p>
+<p><img src="/2019/11/21/openstack-env/test_env_brief.png" alt="test_env_brief" /></p>
+<h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3>
+<ul>
+<li>
+<p>Openstack： stein（1 controller node + 1 compute node）</p>
+</li>
+<li>
+<p>Host： Ubuntu 18.04</p>
+</li>
+<li>
+<p>Network driver： openvswitch</p>
+</li>
+</ul>
+<h3 id="节点说明"><a class="markdownIt-Anchor" href="#节点说明"></a> 节点说明</h3>
+<ol>
+<li>node0既做为控制节点，也同时为网络节点、存储节点</li>
+<li>node1为计算节点</li>
+</ol>
+<h3 id="网桥说明"><a class="markdownIt-Anchor" href="#网桥说明"></a> 网桥说明</h3>
+<ol>
+<li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li>
+<li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li>
+<li>在node0上创建<strong>br-ext</strong>作为外部网络网桥并绑定物理接口</li>
+</ol>
+<blockquote>
+<p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p>
+</blockquote>
+<h3 id="tunnel相关配置"><a class="markdownIt-Anchor" href="#tunnel相关配置"></a> tunnel相关配置</h3>
+<ol>
+<li><code>tunnel_type</code>当前设置为<code>vxlan</code></li>
+<li><code>local_ip</code>配置于<code>br-provider</code>上</li>
+</ol>
+]]></content>
+      <categories>
+        <category>cloud</category>
+      </categories>
+      <tags>
+        <tag>openstack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Ubuntu在Openstack中启动密码注入不生效问题定位1</title>
     <url>/2018/09/11/openstack-metadata/</url>
     <content><![CDATA[<h2 id="问题说明"><a class="markdownIt-Anchor" href="#问题说明"></a> 问题说明</h2>
@@ -2369,54 +2417,6 @@ h2的eth0与s1的eth2相连</p>
 <blockquote>
 <p>然而，这竟然不是最终原因，最终的问题发现是<strong>网络问题</strong></p>
 </blockquote>
-]]></content>
-      <categories>
-        <category>cloud</category>
-      </categories>
-      <tags>
-        <tag>openstack</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Openstack学习 —— 实验环境介绍</title>
-    <url>/2019/11/21/openstack-env/</url>
-    <content><![CDATA[<p>本文作为个人学习笔记整理归档。如果你在学习openstack的过程中看到了本文，希望也能为你带来更加深入的理解。</p>
-<p>CloudMan的每天5分钟系列作为入门书，确实让我了解了不少东西。一边看书，一边实验并且加以理解，才是更好的理解其中实现的原理。但老话说的，自己理解了和能给别人讲清楚，还是有很大差异。本着试着把里面的内容讲清楚的目的，进行一系列实验来验证，从而提升自己对相关内容的理解。</p>
-<a id="more"></a>
-<h3 id="环境概览"><a class="markdownIt-Anchor" href="#环境概览"></a> 环境概览</h3>
-<p>Openstack的环境搭建有很多方法，这里仅对我当前环境组网加以说明。</p>
-<p><img src="/2019/11/21/openstack-env/test_env_brief.png" alt="test_env_brief" /></p>
-<h3 id="版本说明"><a class="markdownIt-Anchor" href="#版本说明"></a> 版本说明</h3>
-<ul>
-<li>
-<p>Openstack： stein（1 controller node + 1 compute node）</p>
-</li>
-<li>
-<p>Host： Ubuntu 18.04</p>
-</li>
-<li>
-<p>Network driver： openvswitch</p>
-</li>
-</ul>
-<h3 id="节点说明"><a class="markdownIt-Anchor" href="#节点说明"></a> 节点说明</h3>
-<ol>
-<li>node0既做为控制节点，也同时为网络节点、存储节点</li>
-<li>node1为计算节点</li>
-</ol>
-<h3 id="网桥说明"><a class="markdownIt-Anchor" href="#网桥说明"></a> 网桥说明</h3>
-<ol>
-<li><strong>br-tun</strong>和<strong>br-int</strong>以及其连接关系皆由openstack的neutron-openvswitch-agent自动创建</li>
-<li>分别在两个node上手工创建了<strong>br-provider</strong>并将物理接口绑定其中</li>
-<li>在node0上创建<strong>br-ext</strong>作为外部网络网桥并绑定物理接口</li>
-</ol>
-<blockquote>
-<p>在<code>/etc/neutron/plugins/ml2/openvswitch_agent.ini</code>中配置了<code>bridge_mappings = provider:br-provider,external:br-ext</code>后，重启neutron-openvswitch-agent后，系统会自动创建br-int与相关网桥的连接</p>
-</blockquote>
-<h3 id="tunnel相关配置"><a class="markdownIt-Anchor" href="#tunnel相关配置"></a> tunnel相关配置</h3>
-<ol>
-<li><code>tunnel_type</code>当前设置为<code>vxlan</code></li>
-<li><code>local_ip</code>配置于<code>br-provider</code>上</li>
-</ol>
 ]]></content>
       <categories>
         <category>cloud</category>
@@ -3437,6 +3437,54 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>python virtenv环境搭建</title>
+    <url>/2018/05/07/python-virtenv/</url>
+    <content><![CDATA[<p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
+<p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
+<a id="more"></a>
+<h4 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h4>
+<p>安装virtualenv</p>
+<ul>
+<li>python2.7</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install virtualenv</span><br></pre></td></tr></table></figure>
+<ul>
+<li>python3</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install virtualenv</span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h4>
+<ul>
+<li>创建工作目录</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># mkdir myproject</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># cd myproject</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>创建独立的python运行环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># virtualenv venv</span></span><br><span class="line">New python executable <span class="keyword">in</span> /home/<span class="built_in">test</span>/myproject/venv/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...done.</span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>引用新的环境变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># source venv/bin/activate</span></span><br><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>开始使用</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># pip install docker</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>退出当前venv环境</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># deactivate</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="一个小问题"><a class="markdownIt-Anchor" href="#一个小问题"></a> 一个小问题</h3>
+<p>git clone时遇到<code>server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none</code>的解决方法</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GIT_SSL_NO_VERIFY=1</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用hexo搭建自己的博客——创建站点</title>
     <url>/2018/03/25/setup-hexo-create-site/</url>
     <content><![CDATA[<h2 id="安装及配置"><a class="markdownIt-Anchor" href="#安装及配置"></a> 安装及配置</h2>
@@ -3606,54 +3654,6 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
-    <title>python virtenv环境搭建</title>
-    <url>/2018/05/07/python-virtenv/</url>
-    <content><![CDATA[<p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
-<p>virtualenv的环境建立并不复杂，但每次都需要去查一番。特此记录</p>
-<a id="more"></a>
-<h4 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h4>
-<p>安装virtualenv</p>
-<ul>
-<li>python2.7</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install virtualenv</span><br></pre></td></tr></table></figure>
-<ul>
-<li>python3</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip3 install virtualenv</span><br></pre></td></tr></table></figure>
-<h4 id="使用"><a class="markdownIt-Anchor" href="#使用"></a> 使用</h4>
-<ul>
-<li>创建工作目录</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># mkdir myproject</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># cd myproject</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>创建独立的python运行环境</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># virtualenv venv</span></span><br><span class="line">New python executable <span class="keyword">in</span> /home/<span class="built_in">test</span>/myproject/venv/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...done.</span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>引用新的环境变量</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment"># source venv/bin/activate</span></span><br><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>开始使用</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># pip install docker</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>退出当前venv环境</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">(venv)root@vm1:/home/<span class="built_in">test</span><span class="comment"># deactivate</span></span><br><span class="line">root@vm1:/home/<span class="built_in">test</span><span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<h3 id="一个小问题"><a class="markdownIt-Anchor" href="#一个小问题"></a> 一个小问题</h3>
-<p>git clone时遇到<code>server certificate verification failed. CAfile: /etc/ssl/certs/ca-certificates.crt CRLfile: none</code>的解决方法</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> GIT_SSL_NO_VERIFY=1</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>西班牙申根签证快速攻略</title>
     <url>/2019/08/15/spain-visa/</url>
     <content><![CDATA[<h2 id="适用对象"><a class="markdownIt-Anchor" href="#适用对象"></a> 适用对象</h2>
@@ -3806,6 +3806,82 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>sqlalchemy连接docker的mysql问题记录</title>
+    <url>/2018/08/15/sqlalchemy-mysql-docker/</url>
+    <content><![CDATA[<p>又开始鼓捣flask+mysql了 👶</p>
+<p>不成想，又一次踩了好多雷 😂</p>
+<p>有一种打怪升级的感觉</p>
+<a id="more"></a>
+<h3 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h3>
+<ol>
+<li>Mac+flask</li>
+<li>docker+mysql</li>
+</ol>
+<h3 id="问题1-create_engine报错"><a class="markdownIt-Anchor" href="#问题1-create_engine报错"></a> 问题1 create_engine报错</h3>
+<ul>
+<li>错误信息</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@localhost/beta_monitor'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/__init__.py"</span>, line <span class="number">424</span>, <span class="keyword">in</span> create_engine</span><br><span class="line">    <span class="keyword">return</span> strategy.create(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/strategies.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> create</span><br><span class="line">    dbapi = dialect_cls.dbapi(**dbapi_args)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/dialects/mysql/mysqldb.py"</span>, line <span class="number">102</span>, <span class="keyword">in</span> dbapi</span><br><span class="line">    <span class="keyword">return</span> __import__(<span class="string">'MySQLdb'</span>)</span><br><span class="line">ImportError: No module named MySQLdb</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p>没有安装python的mysql包，需要安装<code>mysql-python</code>和/或<code>mysqlclient</code>，然后就遇到了第二个问题</p>
+<h3 id="问题2-pip-install-mysql-python失败"><a class="markdownIt-Anchor" href="#问题2-pip-install-mysql-python失败"></a> 问题2 <code>pip install mysql-python</code>失败</h3>
+<ul>
+<li>错误信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">⇒ pip install mysql-python</span><br><span class="line">Collecting mysql-python</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip (108kB)</span><br><span class="line">    100% |████████████████████████████████| 112kB 153kB/s</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    sh: mysql_config: command not found</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/setup.py", line 17, in &lt;module&gt;</span><br><span class="line">        metadata, options = get_config()</span><br><span class="line">      File "setup_posix.py", line 43, in get_config</span><br><span class="line">        libs = mysql_config("libs_r")</span><br><span class="line">      File "setup_posix.py", line 25, in mysql_config</span><br><span class="line">        raise EnvironmentError("%s not found" % (mysql_config.path,))</span><br><span class="line">    EnvironmentError: mysql_config not found</span><br><span class="line"></span><br><span class="line">    ----------------------------------------</span><br><span class="line">Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p><code>mysql_config</code>不存在，原来是系统必须安装mysql客户端</p>
+<ul>
+<li>解决方法 <code>brew install mysql</code></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">⇒ brew install mysql</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">==&gt; Pouring mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h3 id="问题3-连接mysql服务器失败"><a class="markdownIt-Anchor" href="#问题3-连接mysql服务器失败"></a> 问题3 连接mysql服务器失败</h3>
+<ul>
+<li>错误信息 <code>Authentication plugin 'caching_sha2_password' cannot be loaded</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@127.0.0.1/beta_monitor'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>connection = engine.connect()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/base.py"</span>, line <span class="number">2102</span>, <span class="keyword">in</span> connect</span><br><span class="line">    <span class="keyword">return</span> self._connection_cls(self, **kwargs)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/__init__.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> Connect</span><br><span class="line">    <span class="keyword">return</span> Connection(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/connections.py"</span>, line <span class="number">193</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super(Connection, self).__init__(*args, **kwargs2)</span><br><span class="line">sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (<span class="number">2059</span>, <span class="string">"Authentication plugin 'caching_sha2_password' cannot be loaded: dlopen(/usr/local/Cellar/mysql/5.7.22/lib/plugin/caching_sha2_password.so, 2): image not found"</span>) (Background on this error at: http://sqlalche.me/e/e3q8)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因</li>
+</ul>
+<p>上网查了一通，似乎说从某个版本开始，mysql用了一种认证方式导致问题。根据解决方法看，更换了认证方式就可以了</p>
+<ul>
+<li>解决方法</li>
+</ul>
+<ol>
+<li>用docker启动mysql时增加参数 <code>--default-authentication-plugin=mysql_native_password</code></li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~|⇒ docker run -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=beta_monitor -e MYSQL_USER=test -e MYSQL_PASSWORD=123456 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">d8f5e623dc595df19b9d6cce52780381b625c1565622f5867f2ad3aeafdca499</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>如果安装在服务器上，则在my.cnf中修改相关配置</li>
+</ol>
+<ul>
+<li>测试</li>
+</ul>
+<ol>
+<li>本地连接测试</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~|⇒ mysql -utest -p123456 -h 127.0.0.1</span><br><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server at &#39;reading initial communication packet&#39;, system error: 0</span><br><span class="line">~|⇒ mysql -utest -p -h 127.0.0.1</span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 8</span><br><span class="line">Server version: 8.0.12 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2018, Oracle and&#x2F;or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and&#x2F;or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>通过<code>connection = engine.connect()</code>无异常</li>
+</ol>
+<blockquote>
+<p>作为一个暗夜精灵玩家，强烈谴责希尔瓦纳斯烧了我老家的卑劣行径，暴雪怎么洗也没用</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>sqlalchemy</tag>
+        <tag>flask</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>国内源安装k8s——Ubuntu</title>
     <url>/2020/05/19/ubuntu-install-k8s-aliyun/</url>
     <content><![CDATA[<ul>
@@ -3908,82 +3984,6 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>docker</tag>
         <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>sqlalchemy连接docker的mysql问题记录</title>
-    <url>/2018/08/15/sqlalchemy-mysql-docker/</url>
-    <content><![CDATA[<p>又开始鼓捣flask+mysql了 👶</p>
-<p>不成想，又一次踩了好多雷 😂</p>
-<p>有一种打怪升级的感觉</p>
-<a id="more"></a>
-<h3 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h3>
-<ol>
-<li>Mac+flask</li>
-<li>docker+mysql</li>
-</ol>
-<h3 id="问题1-create_engine报错"><a class="markdownIt-Anchor" href="#问题1-create_engine报错"></a> 问题1 create_engine报错</h3>
-<ul>
-<li>错误信息</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> sqlalchemy <span class="keyword">import</span> create_engine</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@localhost/beta_monitor'</span>)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/__init__.py"</span>, line <span class="number">424</span>, <span class="keyword">in</span> create_engine</span><br><span class="line">    <span class="keyword">return</span> strategy.create(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/strategies.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> create</span><br><span class="line">    dbapi = dialect_cls.dbapi(**dbapi_args)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/dialects/mysql/mysqldb.py"</span>, line <span class="number">102</span>, <span class="keyword">in</span> dbapi</span><br><span class="line">    <span class="keyword">return</span> __import__(<span class="string">'MySQLdb'</span>)</span><br><span class="line">ImportError: No module named MySQLdb</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题原因</li>
-</ul>
-<p>没有安装python的mysql包，需要安装<code>mysql-python</code>和/或<code>mysqlclient</code>，然后就遇到了第二个问题</p>
-<h3 id="问题2-pip-install-mysql-python失败"><a class="markdownIt-Anchor" href="#问题2-pip-install-mysql-python失败"></a> 问题2 <code>pip install mysql-python</code>失败</h3>
-<ul>
-<li>错误信息</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">⇒ pip install mysql-python</span><br><span class="line">Collecting mysql-python</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/a5/e9/51b544da85a36a68debe7a7091f068d802fc515a3a202652828c73453cad/MySQL-python-1.2.5.zip (108kB)</span><br><span class="line">    100% |████████████████████████████████| 112kB 153kB/s</span><br><span class="line">    Complete output from command python setup.py egg_info:</span><br><span class="line">    sh: mysql_config: command not found</span><br><span class="line">    Traceback (most recent call last):</span><br><span class="line">      File "&lt;string&gt;", line 1, in &lt;module&gt;</span><br><span class="line">      File "/private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/setup.py", line 17, in &lt;module&gt;</span><br><span class="line">        metadata, options = get_config()</span><br><span class="line">      File "setup_posix.py", line 43, in get_config</span><br><span class="line">        libs = mysql_config("libs_r")</span><br><span class="line">      File "setup_posix.py", line 25, in mysql_config</span><br><span class="line">        raise EnvironmentError("%s not found" % (mysql_config.path,))</span><br><span class="line">    EnvironmentError: mysql_config not found</span><br><span class="line"></span><br><span class="line">    ----------------------------------------</span><br><span class="line">Command "python setup.py egg_info" failed with error code 1 in /private/var/folders/3z/tqw46wwj7xb1d2ftp578x5vm0000gn/T/pip-install-ViJMnc/mysql-python/</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题原因</li>
-</ul>
-<p><code>mysql_config</code>不存在，原来是系统必须安装mysql客户端</p>
-<ul>
-<li>解决方法 <code>brew install mysql</code></li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">⇒ brew install mysql</span><br><span class="line">Updating Homebrew...</span><br><span class="line">==&gt; Downloading https://homebrew.bintray.com/bottles/mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">####################################################################### 100.0%</span></span></span><br><span class="line">==&gt; Pouring mysql-5.7.22.high_sierra.bottle.tar.gz</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<h3 id="问题3-连接mysql服务器失败"><a class="markdownIt-Anchor" href="#问题3-连接mysql服务器失败"></a> 问题3 连接mysql服务器失败</h3>
-<ul>
-<li>错误信息 <code>Authentication plugin 'caching_sha2_password' cannot be loaded</code></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>engine = create_engine(<span class="string">'mysql+mysqldb://root:123456@127.0.0.1/beta_monitor'</span>)</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>connection = engine.connect()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/sqlalchemy/engine/base.py"</span>, line <span class="number">2102</span>, <span class="keyword">in</span> connect</span><br><span class="line">    <span class="keyword">return</span> self._connection_cls(self, **kwargs)</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/__init__.py"</span>, line <span class="number">81</span>, <span class="keyword">in</span> Connect</span><br><span class="line">    <span class="keyword">return</span> Connection(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/bqi/venv/beta-monitor/lib/python2.7/site-packages/MySQLdb/connections.py"</span>, line <span class="number">193</span>, <span class="keyword">in</span> __init__</span><br><span class="line">    super(Connection, self).__init__(*args, **kwargs2)</span><br><span class="line">sqlalchemy.exc.OperationalError: (_mysql_exceptions.OperationalError) (<span class="number">2059</span>, <span class="string">"Authentication plugin 'caching_sha2_password' cannot be loaded: dlopen(/usr/local/Cellar/mysql/5.7.22/lib/plugin/caching_sha2_password.so, 2): image not found"</span>) (Background on this error at: http://sqlalche.me/e/e3q8)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题原因</li>
-</ul>
-<p>上网查了一通，似乎说从某个版本开始，mysql用了一种认证方式导致问题。根据解决方法看，更换了认证方式就可以了</p>
-<ul>
-<li>解决方法</li>
-</ul>
-<ol>
-<li>用docker启动mysql时增加参数 <code>--default-authentication-plugin=mysql_native_password</code></li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">~|⇒ docker run -p 3306:3306 -d -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=beta_monitor -e MYSQL_USER=test -e MYSQL_PASSWORD=123456 mysql --default-authentication-plugin=mysql_native_password</span><br><span class="line">d8f5e623dc595df19b9d6cce52780381b625c1565622f5867f2ad3aeafdca499</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>如果安装在服务器上，则在my.cnf中修改相关配置</li>
-</ol>
-<ul>
-<li>测试</li>
-</ul>
-<ol>
-<li>本地连接测试</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">~|⇒ mysql -utest -p123456 -h 127.0.0.1</span><br><span class="line">mysql: [Warning] Using a password on the command line interface can be insecure.</span><br><span class="line">ERROR 2013 (HY000): Lost connection to MySQL server at &#39;reading initial communication packet&#39;, system error: 0</span><br><span class="line">~|⇒ mysql -utest -p -h 127.0.0.1</span><br><span class="line">Enter password:</span><br><span class="line">Welcome to the MySQL monitor.  Commands end with ; or \g.</span><br><span class="line">Your MySQL connection id is 8</span><br><span class="line">Server version: 8.0.12 MySQL Community Server - GPL</span><br><span class="line"></span><br><span class="line">Copyright (c) 2000, 2018, Oracle and&#x2F;or its affiliates. All rights reserved.</span><br><span class="line"></span><br><span class="line">Oracle is a registered trademark of Oracle Corporation and&#x2F;or its</span><br><span class="line">affiliates. Other names may be trademarks of their respective</span><br><span class="line">owners.</span><br><span class="line"></span><br><span class="line">Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.</span><br><span class="line"></span><br><span class="line">mysql&gt; quit</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>通过<code>connection = engine.connect()</code>无异常</li>
-</ol>
-<blockquote>
-<p>作为一个暗夜精灵玩家，强烈谴责希尔瓦纳斯烧了我老家的卑劣行径，暴雪怎么洗也没用</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-        <tag>sqlalchemy</tag>
-        <tag>flask</tag>
       </tags>
   </entry>
   <entry>
