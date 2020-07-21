@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.isimble.com/2020/07/21/kubernetes-with-nfs/</loc>
+    <lastmod>2020-07-21</lastmod>
+  </url>  <url>
     <loc>http://www.isimble.com/2020/07/20/kubernetesLearning16/</loc>
     <lastmod>2020-07-20</lastmod>
   </url>  <url>
@@ -85,13 +88,13 @@
     <loc>http://www.isimble.com/2018/06/21/marp/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
+    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
+    <lastmod>2018-11-15</lastmod>
+  </url>  <url>
     <loc>http://www.isimble.com/2018/05/07/python-virtenv/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
     <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
-    <lastmod>2018-11-15</lastmod>
-  </url>  <url>
-    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
     <lastmod>2018-11-15</lastmod>
   </url>  <url>
     <loc>http://www.isimble.com/2018/11/13/ovs-study2/</loc>

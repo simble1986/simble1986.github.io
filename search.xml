@@ -392,70 +392,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Ubuntu16.04上安装DPDK</title>
-    <url>/2018/11/15/dpdk-setup/</url>
-    <content><![CDATA[<h1 id="dpdk安装"><a class="markdownIt-Anchor" href="#dpdk安装"></a> DPDK安装</h1>
-<blockquote>
-<p>DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库</p>
-</blockquote>
-<h2 id="从git获取源码"><a class="markdownIt-Anchor" href="#从git获取源码"></a> 从git获取源码</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://dpdk.org/dpdk</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="创建环境变量"><a class="markdownIt-Anchor" href="#创建环境变量"></a> 创建环境变量</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ <span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br></pre></td></tr></table></figure>
-<p>因为这些环境变量总是会用到，可以将其放入一个文件，如<code>env.source</code>，使用<code>source env.source</code></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ more env.source</span><br><span class="line"><span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br><span class="line">$ <span class="built_in">source</span> env.source</span><br></pre></td></tr></table></figure>
-<h2 id="开始安装"><a class="markdownIt-Anchor" href="#开始安装"></a> 开始安装</h2>
-<blockquote>
-<p>使用<code>dpdk-setup.sh</code>脚本进行安装</p>
-</blockquote>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./usertools/dpdk-setup.sh</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_SDK exported as /root/dpdk</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 1: Select the DPDK environment to build</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[1] arm64-armv8a-linuxapp-clang</span><br><span class="line">[2] arm64-armv8a-linuxapp-gcc</span><br><span class="line">[3] arm64-dpaa2-linuxapp-gcc</span><br><span class="line">[4] arm64-dpaa-linuxapp-gcc</span><br><span class="line">[5] arm64-stingray-linuxapp-gcc</span><br><span class="line">[6] arm64-thunderx-linuxapp-gcc</span><br><span class="line">[7] arm64-xgene1-linuxapp-gcc</span><br><span class="line">[8] arm-armv7a-linuxapp-gcc</span><br><span class="line">[9] i686-native-linuxapp-gcc</span><br><span class="line">[10] i686-native-linuxapp-icc</span><br><span class="line">[11] ppc_64-power8-linuxapp-gcc</span><br><span class="line">[12] x86_64-native-bsdapp-clang</span><br><span class="line">[13] x86_64-native-bsdapp-gcc</span><br><span class="line">[14] x86_64-native-linuxapp-clang</span><br><span class="line">[15] x86_64-native-linuxapp-gcc</span><br><span class="line">[16] x86_64-native-linuxapp-icc</span><br><span class="line">[17] x86_x32-native-linuxapp-gcc</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 2: Setup linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[18] Insert IGB UIO module</span><br><span class="line">[19] Insert VFIO module</span><br><span class="line">[20] Insert KNI module</span><br><span class="line">[21] Setup hugepage mappings <span class="keyword">for</span> non-NUMA systems</span><br><span class="line">[22] Setup hugepage mappings <span class="keyword">for</span> NUMA systems</span><br><span class="line">[23] Display current Ethernet/Crypto device settings</span><br><span class="line">[24] Bind Ethernet/Crypto device to IGB UIO module</span><br><span class="line">[25] Bind Ethernet/Crypto device to VFIO module</span><br><span class="line">[26] Setup VFIO permissions</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 3: Run <span class="built_in">test</span> application <span class="keyword">for</span> linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[27] Run <span class="built_in">test</span> application (<span class="variable">$RTE_TARGET</span>/app/<span class="built_in">test</span>)</span><br><span class="line">[28] Run testpmd application <span class="keyword">in</span> interactive mode (<span class="variable">$RTE_TARGET</span>/app/testpmd)</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 4: Other tools</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[29] List hugepage info from /proc/meminfo</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 5: Uninstall and system cleanup</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[30] Unbind devices from IGB UIO or VFIO driver</span><br><span class="line">[31] Remove IGB UIO module</span><br><span class="line">[32] Remove VFIO module</span><br><span class="line">[33] Remove KNI module</span><br><span class="line">[34] Remove hugepage mappings</span><br><span class="line"></span><br><span class="line">[35] Exit Script</span><br><span class="line"></span><br><span class="line">Option:</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Step1</li>
-</ul>
-<p>根据自己环境选择相应的build，如我是64位的Intel架构的环境，则选择**[15]**</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">Installation <span class="keyword">in</span> /root/dpdk/ complete</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_TARGET exported as x86_64-native-linuxapp-gcc</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Step2</li>
-</ul>
-<ol>
-<li>选择**[18]**来家在哪里<code>igb_uio</code>模块</li>
-<li>选择**[21]**来创建Hugepage，这里我输入了128</li>
-<li>选择**[24]**来绑定PCI网卡</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Option: 21</span><br><span class="line"></span><br><span class="line">Removing currently reserved hugepages</span><br><span class="line">Unmounting /mnt/huge and removing directory</span><br><span class="line"></span><br><span class="line">  Input the number of 2048kB hugepages</span><br><span class="line">  Example: to have 128MB of hugepages available <span class="keyword">in</span> a 2MB huge page system,</span><br><span class="line">  enter <span class="string">'64'</span> to reserve 64 * 2MB pages</span><br><span class="line">Number of pages: 128</span><br><span class="line">Reserving hugepages</span><br><span class="line">Creating /mnt/huge and mounting as hugetlbfs</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Option: 24</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Other Compress devices</span><br><span class="line">======================</span><br><span class="line">&lt;none&gt;</span><br><span class="line"></span><br><span class="line">Enter PCI address of device to <span class="built_in">bind</span> to IGB UIO driver: 0b:00.0</span><br><span class="line"></span><br><span class="line">Network devices using DPDK-compatible driver</span><br><span class="line">============================================</span><br><span class="line">0000:0b:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br><span class="line">0000:13:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br></pre></td></tr></table></figure>
-<p>确认需要使用的PCI网卡为<strong>drv=igb_uio</strong>则说明绑定成功</p>
-<ul>
-<li>Step3 - 测试</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Option: 27</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute <span class="built_in">test</span> app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/<span class="built_in">test</span>: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Option: 28</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute testpmd app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/testpmd: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
-<p>执行27和28都有可能报错，提示<code>command not found</code>，此时，可以先退出安装脚本</p>
-<p>进入<code>/dpdk/x86_64-native-linuxapp-gcc/app</code>目录，会看到<code>testpmd</code>存在于目录下，运行测试，正常状况时，会如下显示</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: Probing VFIO support...</span><br><span class="line">EAL: PCI device 0000:03:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:0b:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:13:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">testpmd: create a new mbuf pool &lt;mbuf_pool_socket_0&gt;: n=203456, size=2176, socket=0</span><br><span class="line">testpmd: preferred mempool ops selected: ring_mp_mc</span><br><span class="line">Configuring Port 0 (socket 0)</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">    TX queue: 0</span><br><span class="line">      TX desc=0 - TX free threshold=0</span><br><span class="line">      TX threshold registers: pthresh=0 hthresh=0  wthresh=0</span><br><span class="line">      TX offloads=0x0 - TX RS bit threshold=0</span><br><span class="line">Press enter to <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">Telling cores to stop...</span><br><span class="line">Waiting <span class="keyword">for</span> lcores to finish...</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 0  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 1  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  +++++++++++++++ Accumulated forward statistics <span class="keyword">for</span> all ports+++++++++++++++</span><br><span class="line">  RX-packets: 114            RX-dropped: 0             RX-total: 114</span><br><span class="line">  TX-packets: 114            TX-dropped: 0             TX-total: 114</span><br><span class="line">  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">Done.</span><br><span class="line"></span><br><span class="line">Shutting down port 0...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Shutting down port 1...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Bye...</span><br></pre></td></tr></table></figure>
-<h2 id="hugepage问题解决"><a class="markdownIt-Anchor" href="#hugepage问题解决"></a> HugePage问题解决</h2>
-<ul>
-<li>问题</li>
-</ul>
-<p>当运行测试时或者<code>testpmd</code>，可能会遇到如下问题</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: FATAL: Cannot get hugepage information.</span><br><span class="line">EAL: Cannot get hugepage information.</span><br><span class="line">PANIC <span class="keyword">in</span> main():</span><br><span class="line">Cannot init EAL</span><br><span class="line">5: [./testpmd(_start+0x29) [0x498829]]</span><br><span class="line">4: [/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f8a0fee0830]]</span><br><span class="line">3: [./testpmd(main+0xc48) [0x48f528]]</span><br><span class="line">2: [./testpmd(__rte_panic+0xbb) [0x47eb09]]</span><br><span class="line">1: [./testpmd(rte_dump_stack+0x2b) [0x5c8a1b]]</span><br><span class="line">Aborted (core dumped)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>问题原因及解决</li>
-</ul>
-<p>这说明Hugepage不够用，可以先查看系统内存状况</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:     665</span><br><span class="line">HugePages_Free:        0</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:      537</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure>
-<p>很显然，这里总共有665，太小了，不够用，需要修改系统相关内容</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 2048 &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</span><br><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:    2048</span><br><span class="line">HugePages_Free:     1080</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:        0</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong> 如果系统重启或者重新编译，则该值会被重新刷新为默认值，需要重新设置</p>
-]]></content>
-      <categories>
-        <category>network</category>
-      </categories>
-      <tags>
-        <tag>dpdk</tag>
-        <tag>network</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>在Ubuntu 16.04上开启Docker的Remote API</title>
     <url>/2018/03/27/enable-docker-remote-api/</url>
     <content><![CDATA[<p>由于自动化的考虑，需要用docker的remote API，尝试了多种方法，最终才找到了可行的方法</p>
@@ -500,6 +436,26 @@
         <tag>docker</tag>
         <tag>自动化</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2018/03/22/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
+<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>gitbook+gitlab发布私有的图书仓库</title>
@@ -586,26 +542,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Hello World</title>
-    <url>/2018/03/22/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="quick-start"><a class="markdownIt-Anchor" href="#quick-start"></a> Quick Start</h2>
-<h3 id="create-a-new-post"><a class="markdownIt-Anchor" href="#create-a-new-post"></a> Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="run-server"><a class="markdownIt-Anchor" href="#run-server"></a> Run server</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="generate-static-files"><a class="markdownIt-Anchor" href="#generate-static-files"></a> Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="deploy-to-remote-sites"><a class="markdownIt-Anchor" href="#deploy-to-remote-sites"></a> Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>Hexo开启disqus评论系统</title>
     <url>/2018/09/13/hexo-enable-disqus/</url>
     <content><![CDATA[<p>之前一直使用Hexo的Next主题，开启的是Valine评论系统。有<a href="http://www.simble.site/post/a072bce6.html" target="_blank" rel="noopener">博文</a>来说明配置过程。然而，一个主题再好，看的时间久了，还是想要换换。于是使用了现在的<a href="https://github.com/stkevintan/hexo-theme-material-flow" target="_blank" rel="noopener">MaterialFlow</a>，刚好也换换评论系统</p>
@@ -636,74 +572,6 @@
       </categories>
       <tags>
         <tag>hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo+Next上开启Valine评论系统</title>
-    <url>/2018/03/27/hexo-next-valine/</url>
-    <content><![CDATA[<p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
-<a id="more"></a>
-<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
-<h3 id="valine"><a class="markdownIt-Anchor" href="#valine"></a> Valine</h3>
-<p><a href="https://valine.js.org/" target="_blank" rel="noopener">Valine</a>是一款基于<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>的快速、简洁且高效的无后端评论系统。</p>
-<h3 id="leancloud"><a class="markdownIt-Anchor" href="#leancloud"></a> Leancloud</h3>
-<p>我的理解，<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>相当于是一个数据托管平台，可以帮助应用存储相关数据。Valine主要用到的是其中的数据存储——comments</p>
-<h2 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h2>
-<p>使用了最新版的<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>以及最新版的<a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">Next主题</a></p>
-<h2 id="获取appid"><a class="markdownIt-Anchor" href="#获取appid"></a> 获取AppID</h2>
-<h3 id="注册leancloud"><a class="markdownIt-Anchor" href="#注册leancloud"></a> 注册Leancloud</h3>
-<p>访问<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>，点击<a href="https://leancloud.cn/dashboard/login.html#/signup" target="_blank" rel="noopener">免费试用</a>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
-<img src="/2018/03/27/hexo-next-valine/leancloud_signup.png" class="" title="注册页面">
-<p><em>注册完后需要验证邮箱</em></p>
-<h3 id="创建应用"><a class="markdownIt-Anchor" href="#创建应用"></a> 创建应用</h3>
-<p>访问<a href="https://leancloud.cn/applist.html" target="_blank" rel="noopener">控制台</a>，在控制台中创建新应用</p>
-<img src="/2018/03/27/hexo-next-valine/leancloud_new_app.png" class="" title="创建应用">
-<h3 id="获取应用key"><a class="markdownIt-Anchor" href="#获取应用key"></a> 获取应用Key</h3>
-<p>点击新创建的应用——设置——应用Key，保存页面上的App ID以及App Key以备后续使用</p>
-<img src="/2018/03/27/hexo-next-valine/leancloud_appkey.png" class="" title="应用Key">
-<h2 id="配置valine"><a class="markdownIt-Anchor" href="#配置valine"></a> 配置Valine</h2>
-<p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<a href="https://valine.js.org/#/hexo?id=hexo-theme-next" target="_blank" rel="noopener">Hexo中使用Valine</a>，点击<a href="https://github.com/iissnan/hexo-theme-next/pull/1983" target="_blank" rel="noopener">merged</a>，会跳转到Next主题的merge历史</p>
-<h3 id="检查相关文件"><a class="markdownIt-Anchor" href="#检查相关文件"></a> 检查相关文件</h3>
-<p>可以再次检查并确认<span id="inline-yellow">主题配置文件</span>_config.xml，<code>layout/_macro/post.swig</code>和<code>layout/_third-party/comments/valine.swig</code>是否都已经合入了相关代码</p>
-<h3 id="配置appkey"><a class="markdownIt-Anchor" href="#配置appkey"></a> 配置AppKey</h3>
-<p>编辑<span id="inline-yellow">主题配置文件</span>_config.xml中的valine部分内容</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  enable: true</span><br><span class="line">  appid: $Your APP ID # your leancloud application appid</span><br><span class="line">  appkey: $Your APP Key # your leancloud application appkey</span><br><span class="line">  notify: false # mail notifier , http<span class="variable">s:</span>//github.<span class="keyword">com</span>/xCss/Valine/wiki</span><br><span class="line">  verify: false # Verification code</span><br><span class="line">  placeholder: 随便说些什么吧 # comment box placeholder</span><br><span class="line">  avatar: mm # gravatar style</span><br><span class="line">  guest_info: nick,mail,link # custom comment header</span><br><span class="line">  pageSize: <span class="number">10</span> # pagination size</span><br></pre></td></tr></table></figure>
-<h3 id="重新生成页面"><a class="markdownIt-Anchor" href="#重新生成页面"></a> 重新生成页面</h3>
-<p>执行命令，重新生成并部署</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
-<p><strong>到这里，查看页面已经可以看到评论系统</strong></p>
-<h2 id="创建留言页面"><a class="markdownIt-Anchor" href="#创建留言页面"></a> 创建留言页面</h2>
-<p>可以为站点创建一个单独的留言板页面</p>
-<h3 id="创建页面"><a class="markdownIt-Anchor" href="#创建页面"></a> 创建页面</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page guestbook</span><br></pre></td></tr></table></figure>
-<h3 id="配置主题"><a class="markdownIt-Anchor" href="#配置主题"></a> 配置主题</h3>
-<ul>
-<li>修改主题配置文件</li>
-</ul>
-<p>在<span id="inline-yellow">主题配置文件</span>_config.xml的menu字段新增guestbook字段</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> /<span class="keyword">tags</span>/ || <span class="keyword">tags</span></span><br><span class="line">  categorie<span class="variable">s:</span> /categories/ || <span class="keyword">th</span></span><br><span class="line">  archive<span class="variable">s:</span> /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonwea<span class="variable">l:</span> /<span class="number">404</span>/ || heartbeat</span><br><span class="line">  abou<span class="variable">t:</span> /about/ || user</span><br><span class="line">  guestbook: /guestbook/ || comments</span><br></pre></td></tr></table></figure>
-<p><em>可以访问<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">fontawesome</a>选择自己喜欢的图标来作为留言板的图标</em></p>
-<ul>
-<li>本地化处理</li>
-</ul>
-<p>编辑对应语言的配置文件<code>themes/next/languages/zh-CN.yml</code>，在menu中增加guestbook的中文</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: 首页</span><br><span class="line">  archive<span class="variable">s:</span> 归档</span><br><span class="line">  categorie<span class="variable">s:</span> 分类</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> 标签</span><br><span class="line">  abou<span class="variable">t:</span> 关于</span><br><span class="line">  <span class="built_in">search</span>: 搜索</span><br><span class="line">  schedule: 日程表</span><br><span class="line">  sitemap: 站点地图</span><br><span class="line">  commonwea<span class="variable">l:</span> 公益 <span class="number">404</span></span><br><span class="line">  guestbook: 留言</span><br></pre></td></tr></table></figure>
-<h3 id="编辑页面"><a class="markdownIt-Anchor" href="#编辑页面"></a> 编辑页面</h3>
-<p>编辑之前生成的guestbook页面</p>
-<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 留言板</span><br><span class="line">date: <span class="number">2018</span>-<span class="number">03</span>-<span class="number">26</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">19</span></span><br><span class="line">comment<span class="variable">s:</span> true</span><br><span class="line">---</span><br><span class="line"><span class="symbol">&lt;center&gt;</span>既然来了，就是一种缘分，留下点什么吧:<span class="keyword">ca</span><span class="variable">t:</span>&lt;/<span class="keyword">center</span>&gt;</span><br></pre></td></tr></table></figure>
-<p>重新部署之后就可以看到留言板了 😃</p>
-<h2 id="清除测试留言"><a class="markdownIt-Anchor" href="#清除测试留言"></a> 清除测试留言</h2>
-<p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<a href="https://leancloud.cn/dashboard/applist.html#/apps" target="_blank" rel="noopener">控制台</a>清除测试数据</p>
-<p>点击<em>myblog</em>——存储——Comments，即可查看当前留言，选中测试时的留言，删除即可</p>
-<img src="/2018/03/27/hexo-next-valine/leancloud_cleancomments.png" class="" title="清除测试留言">
-]]></content>
-      <categories>
-        <category>hexo</category>
-      </categories>
-      <tags>
-        <tag>blog</tag>
-        <tag>Next</tag>
-        <tag>Valine</tag>
       </tags>
   </entry>
   <entry>
@@ -775,6 +643,74 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo+Next上开启Valine评论系统</title>
+    <url>/2018/03/27/hexo-next-valine/</url>
+    <content><![CDATA[<p>朋友之前问怎么没有开评论系统，倒不是不想开，而是刚开始建站的时候浏览了好多博文，似乎很多原来的接口都在hexo不太好用了。特别是很多博文都是两年前写的，当然，大多数其他功能都没问题</p>
+<a id="more"></a>
+<h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
+<h3 id="valine"><a class="markdownIt-Anchor" href="#valine"></a> Valine</h3>
+<p><a href="https://valine.js.org/" target="_blank" rel="noopener">Valine</a>是一款基于<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>的快速、简洁且高效的无后端评论系统。</p>
+<h3 id="leancloud"><a class="markdownIt-Anchor" href="#leancloud"></a> Leancloud</h3>
+<p>我的理解，<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>相当于是一个数据托管平台，可以帮助应用存储相关数据。Valine主要用到的是其中的数据存储——comments</p>
+<h2 id="环境说明"><a class="markdownIt-Anchor" href="#环境说明"></a> 环境说明</h2>
+<p>使用了最新版的<a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>以及最新版的<a href="https://github.com/theme-next/hexo-theme-next" target="_blank" rel="noopener">Next主题</a></p>
+<h2 id="获取appid"><a class="markdownIt-Anchor" href="#获取appid"></a> 获取AppID</h2>
+<h3 id="注册leancloud"><a class="markdownIt-Anchor" href="#注册leancloud"></a> 注册Leancloud</h3>
+<p>访问<a href="https://leancloud.cn/" target="_blank" rel="noopener">Leancloud</a>，点击<a href="https://leancloud.cn/dashboard/login.html#/signup" target="_blank" rel="noopener">免费试用</a>就会跳转到注册/登陆页面。当前支持通过Github，Weibo以及QQ进行注册</p>
+<img src="/2018/03/27/hexo-next-valine/leancloud_signup.png" class="" title="注册页面">
+<p><em>注册完后需要验证邮箱</em></p>
+<h3 id="创建应用"><a class="markdownIt-Anchor" href="#创建应用"></a> 创建应用</h3>
+<p>访问<a href="https://leancloud.cn/applist.html" target="_blank" rel="noopener">控制台</a>，在控制台中创建新应用</p>
+<img src="/2018/03/27/hexo-next-valine/leancloud_new_app.png" class="" title="创建应用">
+<h3 id="获取应用key"><a class="markdownIt-Anchor" href="#获取应用key"></a> 获取应用Key</h3>
+<p>点击新创建的应用——设置——应用Key，保存页面上的App ID以及App Key以备后续使用</p>
+<img src="/2018/03/27/hexo-next-valine/leancloud_appkey.png" class="" title="应用Key">
+<h2 id="配置valine"><a class="markdownIt-Anchor" href="#配置valine"></a> 配置Valine</h2>
+<p>在最新版的Next主题中，已经合入了Valine的配置代码，使得配置起来非常快捷。访问<a href="https://valine.js.org/#/hexo?id=hexo-theme-next" target="_blank" rel="noopener">Hexo中使用Valine</a>，点击<a href="https://github.com/iissnan/hexo-theme-next/pull/1983" target="_blank" rel="noopener">merged</a>，会跳转到Next主题的merge历史</p>
+<h3 id="检查相关文件"><a class="markdownIt-Anchor" href="#检查相关文件"></a> 检查相关文件</h3>
+<p>可以再次检查并确认<span id="inline-yellow">主题配置文件</span>_config.xml，<code>layout/_macro/post.swig</code>和<code>layout/_third-party/comments/valine.swig</code>是否都已经合入了相关代码</p>
+<h3 id="配置appkey"><a class="markdownIt-Anchor" href="#配置appkey"></a> 配置AppKey</h3>
+<p>编辑<span id="inline-yellow">主题配置文件</span>_config.xml中的valine部分内容</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">valine:</span><br><span class="line">  enable: true</span><br><span class="line">  appid: $Your APP ID # your leancloud application appid</span><br><span class="line">  appkey: $Your APP Key # your leancloud application appkey</span><br><span class="line">  notify: false # mail notifier , http<span class="variable">s:</span>//github.<span class="keyword">com</span>/xCss/Valine/wiki</span><br><span class="line">  verify: false # Verification code</span><br><span class="line">  placeholder: 随便说些什么吧 # comment box placeholder</span><br><span class="line">  avatar: mm # gravatar style</span><br><span class="line">  guest_info: nick,mail,link # custom comment header</span><br><span class="line">  pageSize: <span class="number">10</span> # pagination size</span><br></pre></td></tr></table></figure>
+<h3 id="重新生成页面"><a class="markdownIt-Anchor" href="#重新生成页面"></a> 重新生成页面</h3>
+<p>执行命令，重新生成并部署</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<p><strong>到这里，查看页面已经可以看到评论系统</strong></p>
+<h2 id="创建留言页面"><a class="markdownIt-Anchor" href="#创建留言页面"></a> 创建留言页面</h2>
+<p>可以为站点创建一个单独的留言板页面</p>
+<h3 id="创建页面"><a class="markdownIt-Anchor" href="#创建页面"></a> 创建页面</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new page guestbook</span><br></pre></td></tr></table></figure>
+<h3 id="配置主题"><a class="markdownIt-Anchor" href="#配置主题"></a> 配置主题</h3>
+<ul>
+<li>修改主题配置文件</li>
+</ul>
+<p>在<span id="inline-yellow">主题配置文件</span>_config.xml的menu字段新增guestbook字段</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: / || home</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> /<span class="keyword">tags</span>/ || <span class="keyword">tags</span></span><br><span class="line">  categorie<span class="variable">s:</span> /categories/ || <span class="keyword">th</span></span><br><span class="line">  archive<span class="variable">s:</span> /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonwea<span class="variable">l:</span> /<span class="number">404</span>/ || heartbeat</span><br><span class="line">  abou<span class="variable">t:</span> /about/ || user</span><br><span class="line">  guestbook: /guestbook/ || comments</span><br></pre></td></tr></table></figure>
+<p><em>可以访问<a href="https://fontawesome.com/v4.7.0/icons/" target="_blank" rel="noopener">fontawesome</a>选择自己喜欢的图标来作为留言板的图标</em></p>
+<ul>
+<li>本地化处理</li>
+</ul>
+<p>编辑对应语言的配置文件<code>themes/next/languages/zh-CN.yml</code>，在menu中增加guestbook的中文</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line"><span class="keyword">menu</span>:</span><br><span class="line">  home: 首页</span><br><span class="line">  archive<span class="variable">s:</span> 归档</span><br><span class="line">  categorie<span class="variable">s:</span> 分类</span><br><span class="line">  <span class="keyword">tag</span><span class="variable">s:</span> 标签</span><br><span class="line">  abou<span class="variable">t:</span> 关于</span><br><span class="line">  <span class="built_in">search</span>: 搜索</span><br><span class="line">  schedule: 日程表</span><br><span class="line">  sitemap: 站点地图</span><br><span class="line">  commonwea<span class="variable">l:</span> 公益 <span class="number">404</span></span><br><span class="line">  guestbook: 留言</span><br></pre></td></tr></table></figure>
+<h3 id="编辑页面"><a class="markdownIt-Anchor" href="#编辑页面"></a> 编辑页面</h3>
+<p>编辑之前生成的guestbook页面</p>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">---</span><br><span class="line">title: 留言板</span><br><span class="line">date: <span class="number">2018</span>-<span class="number">03</span>-<span class="number">26</span> <span class="number">23</span>:<span class="number">36</span>:<span class="number">19</span></span><br><span class="line">comment<span class="variable">s:</span> true</span><br><span class="line">---</span><br><span class="line"><span class="symbol">&lt;center&gt;</span>既然来了，就是一种缘分，留下点什么吧:<span class="keyword">ca</span><span class="variable">t:</span>&lt;/<span class="keyword">center</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>重新部署之后就可以看到留言板了 😃</p>
+<h2 id="清除测试留言"><a class="markdownIt-Anchor" href="#清除测试留言"></a> 清除测试留言</h2>
+<p>为了确保留言功能已经正常工作，都会测试一下。测试完毕后，可以通过Leancloud的<a href="https://leancloud.cn/dashboard/applist.html#/apps" target="_blank" rel="noopener">控制台</a>清除测试数据</p>
+<p>点击<em>myblog</em>——存储——Comments，即可查看当前留言，选中测试时的留言，删除即可</p>
+<img src="/2018/03/27/hexo-next-valine/leancloud_cleancomments.png" class="" title="清除测试留言">
+]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>blog</tag>
+        <tag>Next</tag>
+        <tag>Valine</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s网络相关问题及解决</title>
     <url>/2020/07/20/kubernetes-network-problem-resolve/</url>
     <content><![CDATA[<p>随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题</p>
@@ -837,6 +773,76 @@
       </tags>
   </entry>
   <entry>
+    <title>K8s使用NFS跨节点数据持久化</title>
+    <url>/2020/07/21/kubernetes-with-nfs/</url>
+    <content><![CDATA[<p>《深入剖析Kubernetes》中使用了Rook来搭建存储，而K8s本身也支持直接使用NFS。本次实验主要为后续学习做铺垫，使用现有NFS存储做为跨节点数据持久化，并简单的学习其实现原理。</p>
+<a id="more"></a>
+<h2 id="安装nfs客户端"><a class="markdownIt-Anchor" href="#安装nfs客户端"></a> 安装NFS客户端</h2>
+<p>分别在各个node上安装</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt install nfs-common</span><br></pre></td></tr></table></figure>
+<p><strong>测试</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mount -t nfs 10.160.12.7:/data/share /mnt</span><br></pre></td></tr></table></figure>
+<h2 id="nfs的pv及pvc测试"><a class="markdownIt-Anchor" href="#nfs的pv及pvc测试"></a> NFS的PV及PVC测试</h2>
+<h3 id="新建pv"><a class="markdownIt-Anchor" href="#新建pv"></a> 新建PV</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolume</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nfs-pv</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">capacity:</span></span><br><span class="line">    <span class="attr">storage:</span> <span class="string">100Gi</span></span><br><span class="line">  <span class="attr">volumeMode:</span> <span class="string">Filesystem</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">persistentVolumeReclaimPolicy:</span> <span class="string">Recycle</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br><span class="line">  <span class="attr">mountOptions:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">hard</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">nfsvers=4.1</span></span><br><span class="line">  <span class="attr">nfs:</span></span><br><span class="line">    <span class="attr">path:</span> <span class="string">/data/share/bqi</span></span><br><span class="line">    <span class="attr">server:</span> <span class="number">10.160</span><span class="number">.12</span><span class="number">.7</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pv</span><br><span class="line">NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS   REASON   AGE</span><br><span class="line">nfs-pv   100Gi      RWO            Recycle          Bound    default/pvc-nfs-test   nfs-client              28m</span><br></pre></td></tr></table></figure>
+<h3 id="新建pvc"><a class="markdownIt-Anchor" href="#新建pvc"></a> 新建PVC</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolumeClaim</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pvc-nfs-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">    <span class="attr">requests:</span></span><br><span class="line">      <span class="attr">storage:</span> <span class="string">1Gi</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注：storageClassName同PV的storageClassName</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pvc</span><br><span class="line">NAME           STATUS   VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">pvc-nfs-test   Bound    nfs-pv   100Gi      RWO            nfs-client     7m41s</span><br></pre></td></tr></table></figure>
+<h3 id="测试pvc"><a class="markdownIt-Anchor" href="#测试pvc"></a> 测试PVC</h3>
+<p>测试思路：</p>
+<ol>
+<li>创建一个pod，使用pvc</li>
+<li>在挂载目录下创建文件</li>
+<li>再次创建一个pod，挂载pvc，检查其中文件</li>
+<li>删除两个pod，重新创建一个使用pvc的pod，然后检查数据</li>
+<li>同步检查跨节点时的状况</li>
+</ol>
+<h3 id="1-创建一个pod使用pvc"><a class="markdownIt-Anchor" href="#1-创建一个pod使用pvc"></a> 1. 创建一个pod，使用pvc</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pvc-test-pod1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc-busybox</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/mnt</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">    <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">      <span class="attr">claimName:</span> <span class="string">pvc-nfs-test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods -o wide</span><br><span class="line">NAME            READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">pvc-test-pod1   1/1     Running   0          83s   172.1.1.229   node2           &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="2-在挂载目录下创建文件"><a class="markdownIt-Anchor" href="#2-在挂载目录下创建文件"></a> 2. 在挂载目录下创建文件</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> -it pvc-test-pod1 -- /bin/sh</span><br><span class="line">/ <span class="comment"># echo "hello nfs pvc" &gt; /mnt/test.txt</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-创建第二个pod"><a class="markdownIt-Anchor" href="#3-创建第二个pod"></a> 3. 创建第二个pod</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pvc-test-pod2</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc-busybox</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/mnt</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">    <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">      <span class="attr">claimName:</span> <span class="string">pvc-nfs-test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods -o wide</span><br><span class="line">NAME            READY   STATUS    RESTARTS   AGE     IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">pvc-test-pod1   1/1     Running   0          5m26s   172.1.1.229   node2           &lt;none&gt;           &lt;none&gt;</span><br><span class="line">pvc-test-pod2   1/1     Running   0          2s      172.1.1.231   node2           &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> -it pvc-test-pod2 -- ls /mnt/</span><br><span class="line">test.txt</span><br><span class="line">$ kubectl <span class="built_in">exec</span> -it pvc-test-pod2 -- cat /mnt/test.txt</span><br><span class="line">hello nfs pvc</span><br></pre></td></tr></table></figure>
+<h3 id="4-删除原来的pod并重建新的pod"><a class="markdownIt-Anchor" href="#4-删除原来的pod并重建新的pod"></a> 4. 删除原来的pod并重建新的pod</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl delete pod pvc-test-pod1</span><br><span class="line">pod <span class="string">"pvc-test-pod1"</span> deleted</span><br><span class="line">$ kubectl delete pod pvc-test-pod2</span><br><span class="line">pod <span class="string">"pvc-test-pod2"</span> deleted</span><br></pre></td></tr></table></figure>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pvc-test-pod3</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc-busybox</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">    <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/mnt</span></span><br><span class="line">  <span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">    <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">      <span class="attr">claimName:</span> <span class="string">pvc-nfs-test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods -o wide</span><br><span class="line">NAME            READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">pvc-test-pod3   1/1     Running   0          7s    172.1.1.232   node2           &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> -it pvc-test-pod3 -- ls /mnt</span><br><span class="line">test.txt</span><br><span class="line">$ kubectl <span class="built_in">exec</span> -it pvc-test-pod3 -- cat /mnt/test.txt</span><br><span class="line">hello nfs pvc</span><br></pre></td></tr></table></figure>
+<h3 id="5-测试跨节点"><a class="markdownIt-Anchor" href="#5-测试跨节点"></a> 5. 测试跨节点</h3>
+<p>由于总是调度在node2上，不得已，使用deployment</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nfs-pvc-dp</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">busybox</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">5</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">busybox</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">busybox</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">busybox</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">busybox</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">stdin:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">tty:</span> <span class="literal">true</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/mnt</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">pvc</span></span><br><span class="line">        <span class="attr">persistentVolumeClaim:</span></span><br><span class="line">          <span class="attr">claimName:</span> <span class="string">pvc-nfs-test</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get pods -o wide</span><br><span class="line">NAME                          READY   STATUS    RESTARTS   AGE    IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">nfs-pvc-dp-559d75db66-dg6th   1/1     Running   0          119s   172.1.1.233   node2           &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nfs-pvc-dp-559d75db66-kwrnk   1/1     Running   0          119s   172.1.2.210   bqi-k8s-node3   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nfs-pvc-dp-559d75db66-qk4pr   1/1     Running   0          119s   172.1.2.209   bqi-k8s-node3   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nfs-pvc-dp-559d75db66-z224z   1/1     Running   0          119s   172.1.1.234   node2           &lt;none&gt;           &lt;none&gt;</span><br><span class="line">nfs-pvc-dp-559d75db66-z4xs5   1/1     Running   0          119s   172.1.2.211   bqi-k8s-node3   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> -it nfs-pvc-dp-559d75db66-dg6th -- cat /mnt/test.txt</span><br><span class="line">hello nfs pvc</span><br><span class="line">$ kubectl <span class="built_in">exec</span> -it nfs-pvc-dp-559d75db66-kwrnk -- cat /mnt/test.txt</span><br><span class="line">hello nfs pvc</span><br></pre></td></tr></table></figure>
+<h3 id="看看底层"><a class="markdownIt-Anchor" href="#看看底层"></a> 看看底层</h3>
+<p>可以使用Linux的mount命令查看两个worker节点上的mount状况</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># node2</span></span><br><span class="line">$ mount | grep 10.160.12.7</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/d2375620-7164-468e-a212-0f73042983d7/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.181,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/015ee988-c22e-4a8e-aa9d-7a85d0dd6045/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.181,local_lock=none,addr=10.160.12.7)</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mount | grep 10.160.12.7</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/2ff007b3-6568-4b90-9c76-2c994c18f71c/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/aa545d93-0178-4adc-87b5-df27ac070a2e/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/2098028e-8be5-44fd-b5d8-b358baf40791/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br></pre></td></tr></table></figure>
+<p>可以看出：<code>10.160.12.7:/data/share/bqi</code>被分别挂载到了对应的pod的目录下</p>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>本次实验主要是想通过NFS创建PV及PVC，以提供跨节点数据持久化</p>
+<blockquote>
+<p>注：没有演示搭建nfs服务器的方法，网上教程很多</p>
+</blockquote>
+<ol>
+<li>在创建PV时，指定了nfs方式</li>
+<li>基于nfs的PV创建PVC，分布于多个节点上的pod可以共享数据</li>
+</ol>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s学习笔记——container之于进程</title>
     <url>/2020/06/17/kubernetesLearning01/</url>
     <content><![CDATA[<blockquote>
@@ -874,6 +880,70 @@
       </tags>
   </entry>
   <entry>
+    <title>Ubuntu16.04上安装DPDK</title>
+    <url>/2018/11/15/dpdk-setup/</url>
+    <content><![CDATA[<h1 id="dpdk安装"><a class="markdownIt-Anchor" href="#dpdk安装"></a> DPDK安装</h1>
+<blockquote>
+<p>DPDK（Data Plane Development Kit）是一个用来进行包数据处理加速的软件库</p>
+</blockquote>
+<h2 id="从git获取源码"><a class="markdownIt-Anchor" href="#从git获取源码"></a> 从git获取源码</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">clone</span> git://dpdk.org/dpdk</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="创建环境变量"><a class="markdownIt-Anchor" href="#创建环境变量"></a> 创建环境变量</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ <span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line">$ <span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br></pre></td></tr></table></figure>
+<p>因为这些环境变量总是会用到，可以将其放入一个文件，如<code>env.source</code>，使用<code>source env.source</code></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> ~/dpdk</span><br><span class="line">$ more env.source</span><br><span class="line"><span class="built_in">export</span> RTE_SDK=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> DESTDIR=`<span class="built_in">pwd</span>`</span><br><span class="line"><span class="built_in">export</span> RTE_TARGET=x86_64-default-linuxapp-gcc</span><br><span class="line">$ <span class="built_in">source</span> env.source</span><br></pre></td></tr></table></figure>
+<h2 id="开始安装"><a class="markdownIt-Anchor" href="#开始安装"></a> 开始安装</h2>
+<blockquote>
+<p>使用<code>dpdk-setup.sh</code>脚本进行安装</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./usertools/dpdk-setup.sh</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_SDK exported as /root/dpdk</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 1: Select the DPDK environment to build</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[1] arm64-armv8a-linuxapp-clang</span><br><span class="line">[2] arm64-armv8a-linuxapp-gcc</span><br><span class="line">[3] arm64-dpaa2-linuxapp-gcc</span><br><span class="line">[4] arm64-dpaa-linuxapp-gcc</span><br><span class="line">[5] arm64-stingray-linuxapp-gcc</span><br><span class="line">[6] arm64-thunderx-linuxapp-gcc</span><br><span class="line">[7] arm64-xgene1-linuxapp-gcc</span><br><span class="line">[8] arm-armv7a-linuxapp-gcc</span><br><span class="line">[9] i686-native-linuxapp-gcc</span><br><span class="line">[10] i686-native-linuxapp-icc</span><br><span class="line">[11] ppc_64-power8-linuxapp-gcc</span><br><span class="line">[12] x86_64-native-bsdapp-clang</span><br><span class="line">[13] x86_64-native-bsdapp-gcc</span><br><span class="line">[14] x86_64-native-linuxapp-clang</span><br><span class="line">[15] x86_64-native-linuxapp-gcc</span><br><span class="line">[16] x86_64-native-linuxapp-icc</span><br><span class="line">[17] x86_x32-native-linuxapp-gcc</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 2: Setup linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[18] Insert IGB UIO module</span><br><span class="line">[19] Insert VFIO module</span><br><span class="line">[20] Insert KNI module</span><br><span class="line">[21] Setup hugepage mappings <span class="keyword">for</span> non-NUMA systems</span><br><span class="line">[22] Setup hugepage mappings <span class="keyword">for</span> NUMA systems</span><br><span class="line">[23] Display current Ethernet/Crypto device settings</span><br><span class="line">[24] Bind Ethernet/Crypto device to IGB UIO module</span><br><span class="line">[25] Bind Ethernet/Crypto device to VFIO module</span><br><span class="line">[26] Setup VFIO permissions</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 3: Run <span class="built_in">test</span> application <span class="keyword">for</span> linuxapp environment</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[27] Run <span class="built_in">test</span> application (<span class="variable">$RTE_TARGET</span>/app/<span class="built_in">test</span>)</span><br><span class="line">[28] Run testpmd application <span class="keyword">in</span> interactive mode (<span class="variable">$RTE_TARGET</span>/app/testpmd)</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 4: Other tools</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[29] List hugepage info from /proc/meminfo</span><br><span class="line"></span><br><span class="line">----------------------------------------------------------</span><br><span class="line"> Step 5: Uninstall and system cleanup</span><br><span class="line">----------------------------------------------------------</span><br><span class="line">[30] Unbind devices from IGB UIO or VFIO driver</span><br><span class="line">[31] Remove IGB UIO module</span><br><span class="line">[32] Remove VFIO module</span><br><span class="line">[33] Remove KNI module</span><br><span class="line">[34] Remove hugepage mappings</span><br><span class="line"></span><br><span class="line">[35] Exit Script</span><br><span class="line"></span><br><span class="line">Option:</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step1</li>
+</ul>
+<p>根据自己环境选择相应的build，如我是64位的Intel架构的环境，则选择**[15]**</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">...</span><br><span class="line"></span><br><span class="line">Installation <span class="keyword">in</span> /root/dpdk/ complete</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"> RTE_TARGET exported as x86_64-native-linuxapp-gcc</span><br><span class="line">------------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step2</li>
+</ul>
+<ol>
+<li>选择**[18]**来家在哪里<code>igb_uio</code>模块</li>
+<li>选择**[21]**来创建Hugepage，这里我输入了128</li>
+<li>选择**[24]**来绑定PCI网卡</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Option: 21</span><br><span class="line"></span><br><span class="line">Removing currently reserved hugepages</span><br><span class="line">Unmounting /mnt/huge and removing directory</span><br><span class="line"></span><br><span class="line">  Input the number of 2048kB hugepages</span><br><span class="line">  Example: to have 128MB of hugepages available <span class="keyword">in</span> a 2MB huge page system,</span><br><span class="line">  enter <span class="string">'64'</span> to reserve 64 * 2MB pages</span><br><span class="line">Number of pages: 128</span><br><span class="line">Reserving hugepages</span><br><span class="line">Creating /mnt/huge and mounting as hugetlbfs</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Option: 24</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">Other Compress devices</span><br><span class="line">======================</span><br><span class="line">&lt;none&gt;</span><br><span class="line"></span><br><span class="line">Enter PCI address of device to <span class="built_in">bind</span> to IGB UIO driver: 0b:00.0</span><br><span class="line"></span><br><span class="line">Network devices using DPDK-compatible driver</span><br><span class="line">============================================</span><br><span class="line">0000:0b:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br><span class="line">0000:13:00.0 <span class="string">'VMXNET3 Ethernet Controller 07b0'</span> drv=igb_uio unused=vmxnet3,uio_pci_generic</span><br></pre></td></tr></table></figure>
+<p>确认需要使用的PCI网卡为<strong>drv=igb_uio</strong>则说明绑定成功</p>
+<ul>
+<li>Step3 - 测试</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">Option: 27</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute <span class="built_in">test</span> app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/<span class="built_in">test</span>: <span class="built_in">command</span> not found</span><br><span class="line"></span><br><span class="line">Press enter to <span class="built_in">continue</span> ...</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">Option: 28</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  Enter hex bitmask of cores to execute testpmd app on</span><br><span class="line">  Example: to execute app on cores 0 to 7, enter 0xff</span><br><span class="line">bitmask: 0x3</span><br><span class="line">Launching app</span><br><span class="line">sudo: x86_64-default-linuxapp-gcc/app/testpmd: <span class="built_in">command</span> not found</span><br></pre></td></tr></table></figure>
+<p>执行27和28都有可能报错，提示<code>command not found</code>，此时，可以先退出安装脚本</p>
+<p>进入<code>/dpdk/x86_64-native-linuxapp-gcc/app</code>目录，会看到<code>testpmd</code>存在于目录下，运行测试，正常状况时，会如下显示</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: Probing VFIO support...</span><br><span class="line">EAL: PCI device 0000:03:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:0b:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">EAL: PCI device 0000:13:00.0 on NUMA socket -1</span><br><span class="line">EAL:   Invalid NUMA socket, default to 0</span><br><span class="line">EAL:   probe driver: 15ad:7b0 net_vmxnet3</span><br><span class="line">testpmd: create a new mbuf pool &lt;mbuf_pool_socket_0&gt;: n=203456, size=2176, socket=0</span><br><span class="line">testpmd: preferred mempool ops selected: ring_mp_mc</span><br><span class="line">Configuring Port 0 (socket 0)</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">    TX queue: 0</span><br><span class="line">      TX desc=0 - TX free threshold=0</span><br><span class="line">      TX threshold registers: pthresh=0 hthresh=0  wthresh=0</span><br><span class="line">      TX offloads=0x0 - TX RS bit threshold=0</span><br><span class="line">Press enter to <span class="built_in">exit</span></span><br><span class="line"></span><br><span class="line">Telling cores to stop...</span><br><span class="line">Waiting <span class="keyword">for</span> lcores to finish...</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 0  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  ---------------------- Forward statistics <span class="keyword">for</span> port 1  ----------------------</span><br><span class="line">  RX-packets: 57             RX-dropped: 0             RX-total: 57</span><br><span class="line">  TX-packets: 57             TX-dropped: 0             TX-total: 57</span><br><span class="line">  ----------------------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">  +++++++++++++++ Accumulated forward statistics <span class="keyword">for</span> all ports+++++++++++++++</span><br><span class="line">  RX-packets: 114            RX-dropped: 0             RX-total: 114</span><br><span class="line">  TX-packets: 114            TX-dropped: 0             TX-total: 114</span><br><span class="line">  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++</span><br><span class="line"></span><br><span class="line">Done.</span><br><span class="line"></span><br><span class="line">Shutting down port 0...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Shutting down port 1...</span><br><span class="line">Stopping ports...</span><br><span class="line">Done</span><br><span class="line">Closing ports...</span><br><span class="line">Done</span><br><span class="line"></span><br><span class="line">Bye...</span><br></pre></td></tr></table></figure>
+<h2 id="hugepage问题解决"><a class="markdownIt-Anchor" href="#hugepage问题解决"></a> HugePage问题解决</h2>
+<ul>
+<li>问题</li>
+</ul>
+<p>当运行测试时或者<code>testpmd</code>，可能会遇到如下问题</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./testpmd</span><br><span class="line">EAL: Detected 8 lcore(s)</span><br><span class="line">EAL: Detected 1 NUMA nodes</span><br><span class="line">EAL: Multi-process socket /var/run/dpdk/rte/mp_socket</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: No free hugepages reported <span class="keyword">in</span> hugepages-2048kB</span><br><span class="line">EAL: FATAL: Cannot get hugepage information.</span><br><span class="line">EAL: Cannot get hugepage information.</span><br><span class="line">PANIC <span class="keyword">in</span> main():</span><br><span class="line">Cannot init EAL</span><br><span class="line">5: [./testpmd(_start+0x29) [0x498829]]</span><br><span class="line">4: [/lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xf0) [0x7f8a0fee0830]]</span><br><span class="line">3: [./testpmd(main+0xc48) [0x48f528]]</span><br><span class="line">2: [./testpmd(__rte_panic+0xbb) [0x47eb09]]</span><br><span class="line">1: [./testpmd(rte_dump_stack+0x2b) [0x5c8a1b]]</span><br><span class="line">Aborted (core dumped)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题原因及解决</li>
+</ul>
+<p>这说明Hugepage不够用，可以先查看系统内存状况</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:     665</span><br><span class="line">HugePages_Free:        0</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:      537</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure>
+<p>很显然，这里总共有665，太小了，不够用，需要修改系统相关内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">echo</span> 2048 &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</span><br><span class="line">$ cat /proc/meminfo | grep Huge</span><br><span class="line">AnonHugePages:         0 kB</span><br><span class="line">HugePages_Total:    2048</span><br><span class="line">HugePages_Free:     1080</span><br><span class="line">HugePages_Rsvd:        0</span><br><span class="line">HugePages_Surp:        0</span><br><span class="line">Hugepagesize:       2048 kB</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong> 如果系统重启或者重新编译，则该值会被重新刷新为默认值，需要重新设置</p>
+]]></content>
+      <categories>
+        <category>network</category>
+      </categories>
+      <tags>
+        <tag>dpdk</tag>
+        <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s学习笔记——限制与隔离</title>
     <url>/2020/06/17/kubernetesLearning02/</url>
     <content><![CDATA[<blockquote>
@@ -906,119 +976,6 @@
 <p>可以看到容器内和容器外部看到的是一样的</p>
 <h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
 <p>主要使用了cgroup对一个进程的CPU使用率进行了限制，通过了解进程的CPU使用率限制机制，了解docker通过cgroup对相关资源使用的限制</p>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>Kubernetes</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>K8s学习笔记——重新认识Docker容器</title>
-    <url>/2020/06/23/kubernetesLearning04/</url>
-    <content><![CDATA[<blockquote>
-<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
-<p>秉持眼过千遍不如手过一遍的原则.</p>
-<p>对应章节：<a href="https://time.geekbang.org/column/article/18119" target="_blank" rel="noopener">08 | 白话容器基础（四）：重新认识Docker容器</a></p>
-</blockquote>
-<a id="more"></a>
-<h2 id="build一个镜像"><a class="markdownIt-Anchor" href="#build一个镜像"></a> build一个镜像</h2>
-<h3 id="创建flask相关文件"><a class="markdownIt-Anchor" href="#创建flask相关文件"></a> 创建Flask相关文件</h3>
-<ul>
-<li><a href="http://app.py" target="_blank" rel="noopener">app.py</a></li>
-</ul>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    html = <span class="string">"&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;"</span> \</span><br><span class="line">           <span class="string">"&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;"</span>           </span><br><span class="line">    <span class="keyword">return</span> html.format(name=os.getenv(<span class="string">"NAME"</span>, <span class="string">"world"</span>), hostname=socket.gethostname())</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>requirements.txt</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Flask</span><br></pre></td></tr></table></figure>
-<h3 id="创建dockerfile"><a class="markdownIt-Anchor" href="#创建dockerfile"></a> 创建Dockerfile</h3>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># app.py和requirements.txt都放在当前文件夹的app目录下</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./app /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用pip命令安装这个应用所需要的依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install --trusted-host pypi.python.org -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许外界访问容器的80端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> NAME World</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置容器进程为：python app.py，即：这个Python应用的启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"python"</span>, <span class="string">"app.py"</span>]</span></span><br></pre></td></tr></table></figure>
-<p>当前目录结构</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── app</span><br><span class="line">│   ├── app.py</span><br><span class="line">│   └── requirements.txt</span><br><span class="line">└── Dockerfile</span><br><span class="line"></span><br><span class="line">1 directory, 3 files</span><br></pre></td></tr></table></figure>
-<h3 id="build-docker镜像"><a class="markdownIt-Anchor" href="#build-docker镜像"></a> build docker镜像</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t flaskapp .</span><br></pre></td></tr></table></figure>
-<p>当build镜像时：</p>
-<ol>
-<li>docker每执行一行，会以上一层为基础拉起一个容器</li>
-<li>然后在这个容器里执行对应的命令</li>
-<li>完成后，将这一层提交成一个image</li>
-</ol>
-<h3 id="查看镜像的build-history"><a class="markdownIt-Anchor" href="#查看镜像的build-history"></a> 查看镜像的build history</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">history</span> 06e1a19665ce</span><br><span class="line">IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT</span><br><span class="line">06e1a19665ce        5 weeks ago         /bin/sh -c apk update &amp;&amp; apk add nginx          2.98MB</span><br><span class="line">f70734b6a266        2 months ago        /bin/sh -c <span class="comment">#(nop)  CMD ["/bin/sh"]              0B</span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="comment">#(nop) ADD file:b91adb67b670d3a6f…   5.61MB</span></span><br></pre></td></tr></table></figure>
-<h2 id="docker-exec的本质"><a class="markdownIt-Anchor" href="#docker-exec的本质"></a> docker exec的本质</h2>
-<h3 id="进入一个namespace"><a class="markdownIt-Anchor" href="#进入一个namespace"></a> 进入一个namespace</h3>
-<ul>
-<li><code>set_ns.c</code></li>
-</ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> errExit(msg) do &#123; perror(msg); exit(EXIT_FAILURE);&#125; while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    </span><br><span class="line">    fd = <span class="built_in">open</span>(argv[<span class="number">1</span>], O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (setns(fd, <span class="number">0</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">        errExit(<span class="string">"setns"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    execvp(argv[<span class="number">2</span>], &amp;argv[<span class="number">2</span>]); </span><br><span class="line">    errExit(<span class="string">"execvp"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gcc -o set_ns set_ns.c</span><br></pre></td></tr></table></figure>
-<h3 id="启动一个container"><a class="markdownIt-Anchor" href="#启动一个container"></a> 启动一个container</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d --rm ubuntu</span><br><span class="line">59ed1b0423ac42b5659e9c3d1759000e934c8383f605875d86db42b6ae7bf098</span><br><span class="line">$ docker inspect 59ed1b0423a | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 14123,</span><br></pre></td></tr></table></figure>
-<h3 id="查看进程相关ns"><a class="markdownIt-Anchor" href="#查看进程相关ns"></a> 查看进程相关ns</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /proc/14123/ns/ -l</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 ipc -&gt; <span class="string">'ipc:[4026532571]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 mnt -&gt; <span class="string">'mnt:[4026532569]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:32 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 pid -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 pid_for_children -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 uts -&gt; <span class="string">'uts:[4026532570]'</span></span><br></pre></td></tr></table></figure>
-<h3 id="以net的namespace运行ifconfig"><a class="markdownIt-Anchor" href="#以net的namespace运行ifconfig"></a> 以net的namespace运行ifconfig</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./set_ns /proc/14123/ns/net /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255</span><br><span class="line">        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 13  bytes 1046 (1.0 KB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
-<h3 id="分别用set_ns和docker-exec查看"><a class="markdownIt-Anchor" href="#分别用set_ns和docker-exec查看"></a> 分别用set_ns和docker exec查看</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14123  0.0  0.3   4112  3288 pts/0    Ss+  07:32   0:00 /bin/bash</span><br><span class="line">root     14682  0.0  5.8 706028 58772 pts/3    Sl+  07:47   0:00 docker <span class="built_in">exec</span> -it 59ed1b0423ac /bin/bash</span><br><span class="line">root     14698  0.0  0.3   4112  3376 pts/1    Ss+  07:47   0:00 /bin/bash</span><br><span class="line">root     14722  0.0  0.3  20416  3792 pts/4    S+   07:52   0:00 /bin/bash</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -l /proc/14123/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:32 /proc/14123/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">$ ls -l /proc/14698/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:49 /proc/14698/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">$ ls -l /proc/14722/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:52 /proc/14722/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>可以看出，最终都指向了同一个net namespace</p>
-</blockquote>
-<blockquote>
-<p>Linux的ip命令也支持创建一个network namespace，如：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip netns add ns_test</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns_test /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line"><span class="comment"># 由于并没有为这个namespace设定接口，所以，这里显示为空</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14956  0.0  0.4  20416  4056 pts/0    S+   08:33   0:00 /bin/bash</span><br><span class="line">$ ls -l /proc/14956/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 08:33 /proc/14956/ns/net -&gt; <span class="string">'net:[4026532629]'</span></span><br></pre></td></tr></table></figure>
-<p>当然，同样可以使用前面的set_ns的工具进行查看</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./set_ns /proc/14956/ns/net /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line"><span class="comment"># 这里同样没有内容输出</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14956  0.0  0.4  20416  4056 pts/0    S+   08:33   0:00 /bin/bash</span><br><span class="line">root     14992  0.0  0.4  20416  4084 pts/4    S+   08:42   0:00 /bin/bash</span><br><span class="line">$ ls -l /proc/14992/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 08:45 /proc/14992/ns/net -&gt; <span class="string">'net:[4026532629]'</span></span><br></pre></td></tr></table></figure>
-<p>可以看到，使用ip命令进入namespace和set_ns进入namespace后的的<code>/bin/bash</code>的ns</p>
-</blockquote>
-<h2 id="volume的本质"><a class="markdownIt-Anchor" href="#volume的本质"></a> Volume的本质</h2>
-<h3 id="启动一个挂载volume的容器"><a class="markdownIt-Anchor" href="#启动一个挂载volume的容器"></a> 启动一个挂载volume的容器</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run --rm -it -d -v /<span class="built_in">test</span> ubuntu</span><br><span class="line">65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96</span><br><span class="line">$ docker volume ls</span><br><span class="line">DRIVER              VOLUME NAME</span><br><span class="line"><span class="built_in">local</span>               ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 65f6fa</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">                <span class="string">"Name"</span>: <span class="string">"ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>可以看到，在不指定本地目录的时候，docker会自动创建一个volume，且在<code>/var/lib/docker/volumes</code>下创建一个目录</p>
-<h3 id="启动一个挂载本地目录的容器"><a class="markdownIt-Anchor" href="#启动一个挂载本地目录的容器"></a> 启动一个挂载本地目录的容器</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run --rm -it -d -v /<span class="built_in">test</span>:/<span class="built_in">test</span> ubuntu</span><br><span class="line">ddbbb888a84a3b700a321db79e0743576d894a2c6c6b9be58f73142d921b60aa</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect ddbbb8</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"ddbbb888a84a3b700a321db79e0743576d894a2c6c6b9be58f73142d921b60aa"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<h3 id="volume挂载的真相"><a class="markdownIt-Anchor" href="#volume挂载的真相"></a> Volume挂载的真相</h3>
-<p><strong>这一段话有必要引述</strong></p>
-<blockquote>
-<p>Docker 又是如何做到把一个宿主机上的目录或者文件，挂载到容器里面去呢？难道又是 Mount Namespace 的黑科技吗？</p>
-<p>实际上，并不需要这么麻烦。在《白话容器基础（三）：深入理解容器镜像》的分享中，我已经介绍过，当容器进程被创建之后，尽管开启了 Mount Namespace，但是在它执行 chroot（或者 pivot_root）之前，容器进程一直可以看到宿主机上的整个文件系统。而宿主机上的文件系统，也自然包括了我们要使用的容器镜像。这个镜像的各个层，保存在 /var/lib/docker/aufs/diff 目录下，在容器进程启动后，它们会被联合挂载在 /var/lib/docker/aufs/mnt/ 目录中，这样容器所需的 rootfs 就准备好了。</p>
-<p>所以，我们只需要在 rootfs 准备好之后，在执行 chroot 之前，把 Volume 指定的宿主机目录（比如 /home 目录），挂载到指定的容器目录（比如 /test 目录）在宿主机上对应的目录（即 /var/lib/docker/aufs/mnt/[可读写层 ID]/test）上，这个 Volume 的挂载工作就完成了</p>
-</blockquote>
-<p>由此可见，如果要将一个目录挂载到一个容器里，其操作是：</p>
-<ul>
-<li>进入mount namespace</li>
-<li>将需要挂载的目录挂载到容器的目录上</li>
-<li><code>chroot</code>切换到对应的文件系统</li>
-</ul>
-<h4 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line">65f6facb7c3c        ubuntu              <span class="string">"/bin/bash"</span>         14 minutes ago      Up 14 minutes                           recursing_clarke</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 65f6facb7c3c</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"GraphDriver"</span>: &#123;</span><br><span class="line">            <span class="string">"Data"</span>: &#123;</span><br><span class="line">                <span class="string">"LowerDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754-init/diff:/var/lib/docker/overlay2/17bd5da0cda20e8ecd1d4955d25f49609ff0d7aa72fe45a0388a357fcc5b625f/diff:/var/lib/docker/overlay2/823e415d4256d05fb0101af4dcc42a4389d44cf6467972d654e93e0cc575cd9b/diff:/var/lib/docker/overlay2/37d3e588905fae55c8a0481e9cda7be36177af874631abb15724c893887e260b/diff:/var/lib/docker/overlay2/40d198d6f624e455800254766eb6a7190ce02442fc48f02f6f16f72105cefd0d/diff"</span>,</span><br><span class="line">                <span class="string">"MergedDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/merged"</span>,</span><br><span class="line">                <span class="string">"UpperDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/diff"</span>,</span><br><span class="line">                <span class="string">"WorkDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/work"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"Name"</span>: <span class="string">"overlay2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">                <span class="string">"Name"</span>: <span class="string">"ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>可以看到<code>Mounts</code>中的<code>/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data</code></p>
-<p><code>UpperDir</code>中已经可以看到test目录了</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/diff/</span><br><span class="line"><span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<p>现在，在docker中创建一个文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it 65f6facb7c3c touch /<span class="built_in">test</span>/test.txt</span><br><span class="line">$ ls /var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data/</span><br><span class="line">test.txt</span><br></pre></td></tr></table></figure>
-<h3 id="绑定挂载机制"><a class="markdownIt-Anchor" href="#绑定挂载机制"></a> 绑定挂载机制</h3>
-<p>可以将一个目录绑定挂载到另外一个目录</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 没有挂载前，目录为空</span></span><br><span class="line"><span class="comment"># 挂载tmp目录</span></span><br><span class="line">$ mount --<span class="built_in">bind</span> /tmp /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># /test目录与/tmp目录内容一致</span></span><br><span class="line">$ ls /tmp</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># umount</span></span><br><span class="line">$ umount /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 目录为空</span></span><br></pre></td></tr></table></figure>
-<p>但是，启动容器前host上的目录没有挂载内容，容器启动后，host上挂载目录，查看容器中的内容</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 无内容</span></span><br><span class="line">$ docker run -it -d --rm -v /<span class="built_in">test</span>:/<span class="built_in">test</span> ubuntu</span><br><span class="line">5f2aaad59abb7546ecd4b7a47ede09fb6a1541c4bda27b79de893bd27350b93c</span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 无内容</span></span><br><span class="line">$ mount --<span class="built_in">bind</span> /tmp /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 依旧没有内容</span></span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 touch /<span class="built_in">test</span>/test.txt</span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># 咦，test.txt去哪儿了呢</span></span><br><span class="line">$ umount /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">test.txt</span><br><span class="line"><span class="comment"># 这样就有了</span></span><br></pre></td></tr></table></figure>
-<p>如果/test目录已经mount了呢？</p>
-<h3 id="会不会将本地挂载的目录提交到image里面呢"><a class="markdownIt-Anchor" href="#会不会将本地挂载的目录提交到image里面呢"></a> 会不会将本地挂载的目录提交到image里面呢？</h3>
-<blockquote>
-<p><strong>不会</strong></p>
-<p>容器的镜像操作，比如 docker commit，都是发生在宿主机空间的。而由于 Mount Namespace 的隔离作用，宿主机并不知道这个绑定挂载的存在。所以，在宿主机看来，容器中可读写层的 /test 目录（/var/lib/docker/aufs/mnt/[可读写层 ID]/test），始终是空的。</p>
-</blockquote>
-<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
-<p>本节主要学习了DockerFile编写、镜像的build方法。以及docker exec和volume的底层实现原理。</p>
-<p>通过所有前面几节的实验，不难发现，docker就是通过linux namespace进行隔离，cgroup对资源进行限制，rootfs作为容器的文件系统。无论是docker镜像还是docker容器，以及网络和volume，都是在linux的这些基础功能的基础上实现起来的。</p>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -1138,6 +1095,119 @@
 <li>启动容器进程时，将多个增量的rootfs联合挂载成一个完整的rootfs</li>
 <li>启动容器时，会只读模式挂载一个init层，以及一个可写的层</li>
 </ol>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s学习笔记——重新认识Docker容器</title>
+    <url>/2020/06/23/kubernetesLearning04/</url>
+    <content><![CDATA[<blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则.</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/18119" target="_blank" rel="noopener">08 | 白话容器基础（四）：重新认识Docker容器</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="build一个镜像"><a class="markdownIt-Anchor" href="#build一个镜像"></a> build一个镜像</h2>
+<h3 id="创建flask相关文件"><a class="markdownIt-Anchor" href="#创建flask相关文件"></a> 创建Flask相关文件</h3>
+<ul>
+<li><a href="http://app.py" target="_blank" rel="noopener">app.py</a></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route('/')</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></span><br><span class="line">    html = <span class="string">"&lt;h3&gt;Hello &#123;name&#125;!&lt;/h3&gt;"</span> \</span><br><span class="line">           <span class="string">"&lt;b&gt;Hostname:&lt;/b&gt; &#123;hostname&#125;&lt;br/&gt;"</span>           </span><br><span class="line">    <span class="keyword">return</span> html.format(name=os.getenv(<span class="string">"NAME"</span>, <span class="string">"world"</span>), hostname=socket.gethostname())</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, port=<span class="number">80</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>requirements.txt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Flask</span><br></pre></td></tr></table></figure>
+<h3 id="创建dockerfile"><a class="markdownIt-Anchor" href="#创建dockerfile"></a> 创建Dockerfile</h3>
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">2.7</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># app.py和requirements.txt都放在当前文件夹的app目录下</span></span><br><span class="line"><span class="keyword">ADD</span><span class="bash"> ./app /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用pip命令安装这个应用所需要的依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="bash"> pip install --trusted-host pypi.python.org -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 允许外界访问容器的80端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> NAME World</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置容器进程为：python app.py，即：这个Python应用的启动命令</span></span><br><span class="line"><span class="keyword">CMD</span><span class="bash"> [<span class="string">"python"</span>, <span class="string">"app.py"</span>]</span></span><br></pre></td></tr></table></figure>
+<p>当前目录结构</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ tree .</span><br><span class="line">.</span><br><span class="line">├── app</span><br><span class="line">│   ├── app.py</span><br><span class="line">│   └── requirements.txt</span><br><span class="line">└── Dockerfile</span><br><span class="line"></span><br><span class="line">1 directory, 3 files</span><br></pre></td></tr></table></figure>
+<h3 id="build-docker镜像"><a class="markdownIt-Anchor" href="#build-docker镜像"></a> build docker镜像</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker build -t flaskapp .</span><br></pre></td></tr></table></figure>
+<p>当build镜像时：</p>
+<ol>
+<li>docker每执行一行，会以上一层为基础拉起一个容器</li>
+<li>然后在这个容器里执行对应的命令</li>
+<li>完成后，将这一层提交成一个image</li>
+</ol>
+<h3 id="查看镜像的build-history"><a class="markdownIt-Anchor" href="#查看镜像的build-history"></a> 查看镜像的build history</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">history</span> 06e1a19665ce</span><br><span class="line">IMAGE               CREATED             CREATED BY                                      SIZE                COMMENT</span><br><span class="line">06e1a19665ce        5 weeks ago         /bin/sh -c apk update &amp;&amp; apk add nginx          2.98MB</span><br><span class="line">f70734b6a266        2 months ago        /bin/sh -c <span class="comment">#(nop)  CMD ["/bin/sh"]              0B</span></span><br><span class="line">&lt;missing&gt;           2 months ago        /bin/sh -c <span class="comment">#(nop) ADD file:b91adb67b670d3a6f…   5.61MB</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-exec的本质"><a class="markdownIt-Anchor" href="#docker-exec的本质"></a> docker exec的本质</h2>
+<h3 id="进入一个namespace"><a class="markdownIt-Anchor" href="#进入一个namespace"></a> 进入一个namespace</h3>
+<ul>
+<li><code>set_ns.c</code></li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _GNU_SOURCE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sched.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> errExit(msg) do &#123; perror(msg); exit(EXIT_FAILURE);&#125; while (0)</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> fd;</span><br><span class="line">    </span><br><span class="line">    fd = <span class="built_in">open</span>(argv[<span class="number">1</span>], O_RDONLY);</span><br><span class="line">    <span class="keyword">if</span> (setns(fd, <span class="number">0</span>) == <span class="number">-1</span>) &#123;</span><br><span class="line">        errExit(<span class="string">"setns"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    execvp(argv[<span class="number">2</span>], &amp;argv[<span class="number">2</span>]); </span><br><span class="line">    errExit(<span class="string">"execvp"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ gcc -o set_ns set_ns.c</span><br></pre></td></tr></table></figure>
+<h3 id="启动一个container"><a class="markdownIt-Anchor" href="#启动一个container"></a> 启动一个container</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run -it -d --rm ubuntu</span><br><span class="line">59ed1b0423ac42b5659e9c3d1759000e934c8383f605875d86db42b6ae7bf098</span><br><span class="line">$ docker inspect 59ed1b0423a | grep \"Pid\"</span><br><span class="line">            <span class="string">"Pid"</span>: 14123,</span><br></pre></td></tr></table></figure>
+<h3 id="查看进程相关ns"><a class="markdownIt-Anchor" href="#查看进程相关ns"></a> 查看进程相关ns</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /proc/14123/ns/ -l</span><br><span class="line">total 0</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 cgroup -&gt; <span class="string">'cgroup:[4026531835]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 ipc -&gt; <span class="string">'ipc:[4026532571]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 mnt -&gt; <span class="string">'mnt:[4026532569]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:32 net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 pid -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 pid_for_children -&gt; <span class="string">'pid:[4026532572]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 user -&gt; <span class="string">'user:[4026531837]'</span></span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:34 uts -&gt; <span class="string">'uts:[4026532570]'</span></span><br></pre></td></tr></table></figure>
+<h3 id="以net的namespace运行ifconfig"><a class="markdownIt-Anchor" href="#以net的namespace运行ifconfig"></a> 以net的namespace运行ifconfig</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./set_ns /proc/14123/ns/net /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line">eth0: flags=4163&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu 1500</span><br><span class="line">        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255</span><br><span class="line">        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)</span><br><span class="line">        RX packets 13  bytes 1046 (1.0 KB)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br><span class="line"></span><br><span class="line">lo: flags=73&lt;UP,LOOPBACK,RUNNING&gt;  mtu 65536</span><br><span class="line">        inet 127.0.0.1  netmask 255.0.0.0</span><br><span class="line">        loop  txqueuelen 1000  (Local Loopback)</span><br><span class="line">        RX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        RX errors 0  dropped 0  overruns 0  frame 0</span><br><span class="line">        TX packets 0  bytes 0 (0.0 B)</span><br><span class="line">        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0</span><br></pre></td></tr></table></figure>
+<h3 id="分别用set_ns和docker-exec查看"><a class="markdownIt-Anchor" href="#分别用set_ns和docker-exec查看"></a> 分别用set_ns和docker exec查看</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14123  0.0  0.3   4112  3288 pts/0    Ss+  07:32   0:00 /bin/bash</span><br><span class="line">root     14682  0.0  5.8 706028 58772 pts/3    Sl+  07:47   0:00 docker <span class="built_in">exec</span> -it 59ed1b0423ac /bin/bash</span><br><span class="line">root     14698  0.0  0.3   4112  3376 pts/1    Ss+  07:47   0:00 /bin/bash</span><br><span class="line">root     14722  0.0  0.3  20416  3792 pts/4    S+   07:52   0:00 /bin/bash</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls -l /proc/14123/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:32 /proc/14123/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">$ ls -l /proc/14698/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:49 /proc/14698/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br><span class="line">$ ls -l /proc/14722/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 07:52 /proc/14722/ns/net -&gt; <span class="string">'net:[4026532574]'</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看出，最终都指向了同一个net namespace</p>
+</blockquote>
+<blockquote>
+<p>Linux的ip命令也支持创建一个network namespace，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ip netns add ns_test</span><br><span class="line">$ ip netns <span class="built_in">exec</span> ns_test /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line"><span class="comment"># 由于并没有为这个namespace设定接口，所以，这里显示为空</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14956  0.0  0.4  20416  4056 pts/0    S+   08:33   0:00 /bin/bash</span><br><span class="line">$ ls -l /proc/14956/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 08:33 /proc/14956/ns/net -&gt; <span class="string">'net:[4026532629]'</span></span><br></pre></td></tr></table></figure>
+<p>当然，同样可以使用前面的set_ns的工具进行查看</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ./set_ns /proc/14956/ns/net /bin/bash</span><br><span class="line">$ ifconfig</span><br><span class="line"><span class="comment"># 这里同样没有内容输出</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps -aux | grep /bin/bash</span><br><span class="line">root     14956  0.0  0.4  20416  4056 pts/0    S+   08:33   0:00 /bin/bash</span><br><span class="line">root     14992  0.0  0.4  20416  4084 pts/4    S+   08:42   0:00 /bin/bash</span><br><span class="line">$ ls -l /proc/14992/ns/net</span><br><span class="line">lrwxrwxrwx 1 root root 0 Jun 16 08:45 /proc/14992/ns/net -&gt; <span class="string">'net:[4026532629]'</span></span><br></pre></td></tr></table></figure>
+<p>可以看到，使用ip命令进入namespace和set_ns进入namespace后的的<code>/bin/bash</code>的ns</p>
+</blockquote>
+<h2 id="volume的本质"><a class="markdownIt-Anchor" href="#volume的本质"></a> Volume的本质</h2>
+<h3 id="启动一个挂载volume的容器"><a class="markdownIt-Anchor" href="#启动一个挂载volume的容器"></a> 启动一个挂载volume的容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run --rm -it -d -v /<span class="built_in">test</span> ubuntu</span><br><span class="line">65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96</span><br><span class="line">$ docker volume ls</span><br><span class="line">DRIVER              VOLUME NAME</span><br><span class="line"><span class="built_in">local</span>               ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 65f6fa</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">                <span class="string">"Name"</span>: <span class="string">"ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>可以看到，在不指定本地目录的时候，docker会自动创建一个volume，且在<code>/var/lib/docker/volumes</code>下创建一个目录</p>
+<h3 id="启动一个挂载本地目录的容器"><a class="markdownIt-Anchor" href="#启动一个挂载本地目录的容器"></a> 启动一个挂载本地目录的容器</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker run --rm -it -d -v /<span class="built_in">test</span>:/<span class="built_in">test</span> ubuntu</span><br><span class="line">ddbbb888a84a3b700a321db79e0743576d894a2c6c6b9be58f73142d921b60aa</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect ddbbb8</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"ddbbb888a84a3b700a321db79e0743576d894a2c6c6b9be58f73142d921b60aa"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"bind"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">"rprivate"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="volume挂载的真相"><a class="markdownIt-Anchor" href="#volume挂载的真相"></a> Volume挂载的真相</h3>
+<p><strong>这一段话有必要引述</strong></p>
+<blockquote>
+<p>Docker 又是如何做到把一个宿主机上的目录或者文件，挂载到容器里面去呢？难道又是 Mount Namespace 的黑科技吗？</p>
+<p>实际上，并不需要这么麻烦。在《白话容器基础（三）：深入理解容器镜像》的分享中，我已经介绍过，当容器进程被创建之后，尽管开启了 Mount Namespace，但是在它执行 chroot（或者 pivot_root）之前，容器进程一直可以看到宿主机上的整个文件系统。而宿主机上的文件系统，也自然包括了我们要使用的容器镜像。这个镜像的各个层，保存在 /var/lib/docker/aufs/diff 目录下，在容器进程启动后，它们会被联合挂载在 /var/lib/docker/aufs/mnt/ 目录中，这样容器所需的 rootfs 就准备好了。</p>
+<p>所以，我们只需要在 rootfs 准备好之后，在执行 chroot 之前，把 Volume 指定的宿主机目录（比如 /home 目录），挂载到指定的容器目录（比如 /test 目录）在宿主机上对应的目录（即 /var/lib/docker/aufs/mnt/[可读写层 ID]/test）上，这个 Volume 的挂载工作就完成了</p>
+</blockquote>
+<p>由此可见，如果要将一个目录挂载到一个容器里，其操作是：</p>
+<ul>
+<li>进入mount namespace</li>
+<li>将需要挂载的目录挂载到容器的目录上</li>
+<li><code>chroot</code>切换到对应的文件系统</li>
+</ul>
+<h4 id="示例"><a class="markdownIt-Anchor" href="#示例"></a> 示例</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker ps</span><br><span class="line">CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES</span><br><span class="line">65f6facb7c3c        ubuntu              <span class="string">"/bin/bash"</span>         14 minutes ago      Up 14 minutes                           recursing_clarke</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker inspect 65f6facb7c3c</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="string">"Id"</span>: <span class="string">"65f6facb7c3c8e2f239bed07481e70ca7e0d09fc61617d0ef07e00a066ae7f96"</span>,</span><br><span class="line">        ...</span><br><span class="line">        <span class="string">"GraphDriver"</span>: &#123;</span><br><span class="line">            <span class="string">"Data"</span>: &#123;</span><br><span class="line">                <span class="string">"LowerDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754-init/diff:/var/lib/docker/overlay2/17bd5da0cda20e8ecd1d4955d25f49609ff0d7aa72fe45a0388a357fcc5b625f/diff:/var/lib/docker/overlay2/823e415d4256d05fb0101af4dcc42a4389d44cf6467972d654e93e0cc575cd9b/diff:/var/lib/docker/overlay2/37d3e588905fae55c8a0481e9cda7be36177af874631abb15724c893887e260b/diff:/var/lib/docker/overlay2/40d198d6f624e455800254766eb6a7190ce02442fc48f02f6f16f72105cefd0d/diff"</span>,</span><br><span class="line">                <span class="string">"MergedDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/merged"</span>,</span><br><span class="line">                <span class="string">"UpperDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/diff"</span>,</span><br><span class="line">                <span class="string">"WorkDir"</span>: <span class="string">"/var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/work"</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="string">"Name"</span>: <span class="string">"overlay2"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="string">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">                <span class="string">"Name"</span>: <span class="string">"ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614"</span>,</span><br><span class="line">                <span class="string">"Source"</span>: <span class="string">"/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data"</span>,</span><br><span class="line">                <span class="string">"Destination"</span>: <span class="string">"/test"</span>,</span><br><span class="line">                <span class="string">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">                <span class="string">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="string">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="string">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        ...</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>Mounts</code>中的<code>/var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data</code></p>
+<p><code>UpperDir</code>中已经可以看到test目录了</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /var/lib/docker/overlay2/9f0bd8e84ddffd8663f01c959a0ced115a4d598b096896be15b3c680039d7754/diff/</span><br><span class="line"><span class="built_in">test</span></span><br></pre></td></tr></table></figure>
+<p>现在，在docker中创建一个文件</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it 65f6facb7c3c touch /<span class="built_in">test</span>/test.txt</span><br><span class="line">$ ls /var/lib/docker/volumes/ca1683d1e9cc06657c7857d8b8c7196176a59e409d74fc72ff30f0a76f98d614/_data/</span><br><span class="line">test.txt</span><br></pre></td></tr></table></figure>
+<h3 id="绑定挂载机制"><a class="markdownIt-Anchor" href="#绑定挂载机制"></a> 绑定挂载机制</h3>
+<p>可以将一个目录绑定挂载到另外一个目录</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 没有挂载前，目录为空</span></span><br><span class="line"><span class="comment"># 挂载tmp目录</span></span><br><span class="line">$ mount --<span class="built_in">bind</span> /tmp /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># /test目录与/tmp目录内容一致</span></span><br><span class="line">$ ls /tmp</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># umount</span></span><br><span class="line">$ umount /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 目录为空</span></span><br></pre></td></tr></table></figure>
+<p>但是，启动容器前host上的目录没有挂载内容，容器启动后，host上挂载目录，查看容器中的内容</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 无内容</span></span><br><span class="line">$ docker run -it -d --rm -v /<span class="built_in">test</span>:/<span class="built_in">test</span> ubuntu</span><br><span class="line">5f2aaad59abb7546ecd4b7a47ede09fb6a1541c4bda27b79de893bd27350b93c</span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 无内容</span></span><br><span class="line">$ mount --<span class="built_in">bind</span> /tmp /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 ls /<span class="built_in">test</span></span><br><span class="line"><span class="comment"># 依旧没有内容</span></span><br><span class="line">$ docker <span class="built_in">exec</span> -it 5f2 touch /<span class="built_in">test</span>/test.txt</span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-resolved.service-A5ml7i   vmware-root_550-2991137472</span><br><span class="line">systemd-private-0ea54a48e403454ba91e8c8d816d2cbd-systemd-timesyncd.service-qu9LFm</span><br><span class="line"><span class="comment"># 咦，test.txt去哪儿了呢</span></span><br><span class="line">$ umount /<span class="built_in">test</span></span><br><span class="line">$ ls /<span class="built_in">test</span></span><br><span class="line">test.txt</span><br><span class="line"><span class="comment"># 这样就有了</span></span><br></pre></td></tr></table></figure>
+<p>如果/test目录已经mount了呢？</p>
+<h3 id="会不会将本地挂载的目录提交到image里面呢"><a class="markdownIt-Anchor" href="#会不会将本地挂载的目录提交到image里面呢"></a> 会不会将本地挂载的目录提交到image里面呢？</h3>
+<blockquote>
+<p><strong>不会</strong></p>
+<p>容器的镜像操作，比如 docker commit，都是发生在宿主机空间的。而由于 Mount Namespace 的隔离作用，宿主机并不知道这个绑定挂载的存在。所以，在宿主机看来，容器中可读写层的 /test 目录（/var/lib/docker/aufs/mnt/[可读写层 ID]/test），始终是空的。</p>
+</blockquote>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>本节主要学习了DockerFile编写、镜像的build方法。以及docker exec和volume的底层实现原理。</p>
+<p>通过所有前面几节的实验，不难发现，docker就是通过linux namespace进行隔离，cgroup对资源进行限制，rootfs作为容器的文件系统。无论是docker镜像还是docker容器，以及网络和volume，都是在linux的这些基础功能的基础上实现起来的。</p>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -2933,78 +3003,6 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
-    <title>OpenvSwitch学习笔记1</title>
-    <url>/2018/09/21/ovs-study-overview/</url>
-    <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
-<ol>
-<li>VLAN with trunk and access ports</li>
-<li>绑定NIC(with/without LAC)</li>
-<li>可见性：NetFlow, sFlow®, and mirroring</li>
-<li>QoS</li>
-<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
-<li>连接故障管理</li>
-<li>openflow 1.0及其扩展</li>
-<li>使用Linux内核进行高性能转发</li>
-</ol>
-<a id="more"></a>
-<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
-<ul>
-<li>
-<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
-</li>
-<li>
-<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
-</li>
-<li>
-<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
-</li>
-<li>
-<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
-</li>
-<li>
-<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
-</li>
-</ul>
-<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
-<p>多服务器虚拟化部署场景</p>
-<ul>
-<li>高动态的end-points</li>
-<li>维护的是逻辑抽象</li>
-<li>状态迁移</li>
-<li>响应网络动态修改</li>
-<li>维护逻辑标签</li>
-</ul>
-<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
-<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class="" title="arch">
-<p>如上图</p>
-<ol>
-<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
-<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
-<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
-<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
-</ol>
-<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
-<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class="" title="module">
-<ol>
-<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
-<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
-<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
-<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
-<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
-<li>通过reinject，使用netlink将包重新送回内核</li>
-<li>匹配流表项并根据相应的动作执行</li>
-</ol>
-]]></content>
-      <categories>
-        <category>network</category>
-      </categories>
-      <tags>
-        <tag>ovs</tag>
-        <tag>network</tag>
-        <tag>openvswitch</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>OVS学习笔记——常用命令练习</title>
     <url>/2018/11/13/ovs-study2/</url>
     <content><![CDATA[<h1 id="控制管理"><a class="markdownIt-Anchor" href="#控制管理"></a> 控制管理</h1>
@@ -3295,6 +3293,78 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>ovs</tag>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>OpenvSwitch学习笔记1</title>
+    <url>/2018/09/21/ovs-study-overview/</url>
+    <content><![CDATA[<h2 id="功能支持"><a class="markdownIt-Anchor" href="#功能支持"></a> 功能支持</h2>
+<ol>
+<li>VLAN with trunk and access ports</li>
+<li>绑定NIC(with/without LAC)</li>
+<li>可见性：NetFlow, sFlow®, and mirroring</li>
+<li>QoS</li>
+<li>Geneve, GRE, VXLAN, STT, and LISP 隧道</li>
+<li>连接故障管理</li>
+<li>openflow 1.0及其扩展</li>
+<li>使用Linux内核进行高性能转发</li>
+</ol>
+<a id="more"></a>
+<h2 id="主要组成部分"><a class="markdownIt-Anchor" href="#主要组成部分"></a> 主要组成部分</h2>
+<ul>
+<li>
+<p>ovs-vswitchd: 实现交换功能的守护进程，与Linux内核模块实现flow-based switching</p>
+</li>
+<li>
+<p>ovsdb-server: 用以保存ovs配置信息的轻量级的数据库</p>
+</li>
+<li>
+<p>ovs-dpctl: 用以配置交换机内核模块的工具</p>
+</li>
+<li>
+<p>ovs-vsctl: 查看和更新ovs配置信息的工具</p>
+</li>
+<li>
+<p>ovs-ofctl: 配置和查看OpenFlow的控制和交换。主要用来操作OpenFlow流表</p>
+</li>
+</ul>
+<h2 id="场景"><a class="markdownIt-Anchor" href="#场景"></a> 场景</h2>
+<p>多服务器虚拟化部署场景</p>
+<ul>
+<li>高动态的end-points</li>
+<li>维护的是逻辑抽象</li>
+<li>状态迁移</li>
+<li>响应网络动态修改</li>
+<li>维护逻辑标签</li>
+</ul>
+<h3 id="包处理流程"><a class="markdownIt-Anchor" href="#包处理流程"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-arch.png" class="" title="arch">
+<p>如上图</p>
+<ol>
+<li>当包被从物理网卡上收到之后，如果是第一次收到包，ovs的kernel datapath不知道该如何处理，于是，将其送往ovs-vswitchd。</li>
+<li>ovs-vswitchd决定这个包该如何处理之后，回送到kernel datapath</li>
+<li>kernel datapath根据ovs-vswitchd执行相应的动作，并缓存这个动作</li>
+<li>当再次收到相关包之后，kernel datapath已经存在之前缓存好的动作，则直接执行该动作</li>
+</ol>
+<h3 id="包处理流程-2"><a class="markdownIt-Anchor" href="#包处理流程-2"></a> 包处理流程</h3>
+<img src="/2018/09/21/ovs-study-overview/ovs-module.png" class="" title="module">
+<ol>
+<li>因为Flow table在内核中有一份，当从物理网卡收到包后，通过key查找内核中的flow table，即可以得到action，然后执行action</li>
+<li>如果没有查找到，则通过upcall调用，将数据包以netlink协议上传到vswitchd</li>
+<li>vswitchd将数据包在ovsdb中进行查表匹配，若能匹配，则转到第五步</li>
+<li>若不能匹配，则通过 OpenFlow协议与控制器通信，控制器下发流表项，Vswitchd解析流表项得到相应的动作，同时将流表存入ovsdb。</li>
+<li>将匹配的流表项通过netlink下发到内核的Flow-table中</li>
+<li>通过reinject，使用netlink将包重新送回内核</li>
+<li>匹配流表项并根据相应的动作执行</li>
+</ol>
+]]></content>
+      <categories>
+        <category>network</category>
+      </categories>
+      <tags>
+        <tag>ovs</tag>
+        <tag>network</tag>
+        <tag>openvswitch</tag>
       </tags>
   </entry>
   <entry>
