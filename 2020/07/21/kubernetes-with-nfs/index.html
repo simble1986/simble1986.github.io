@@ -54,7 +54,7 @@
 <meta property="og:description" content="《深入剖析Kubernetes》中使用了Rook来搭建存储，而K8s本身也支持直接使用NFS。本次实验主要为后续学习做铺垫，使用现有NFS存储做为跨节点数据持久化，并简单的学习其实现原理。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-21T07:35:34.000Z">
-<meta property="article:modified_time" content="2020-07-21T07:41:35.181Z">
+<meta property="article:modified_time" content="2020-07-23T03:10:23.534Z">
 <meta property="article:author" content="Simble">
 <meta property="article:tag" content="Kubernetes">
 <meta name="twitter:card" content="summary">
@@ -215,10 +215,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-07-21 15:35:34 / 修改时间：15:41:35" itemprop="dateCreated datePublished" datetime="2020-07-21T15:35:34+08:00">2020-07-21</time>
+              <time title="创建时间：2020-07-21 15:35:34" itemprop="dateCreated datePublished" datetime="2020-07-21T15:35:34+08:00">2020-07-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-07-23 11:10:23" itemprop="dateModified" datetime="2020-07-23T11:10:23+08:00">2020-07-23</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -251,14 +257,14 @@
                 <i class="fa fa-file-word-o"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.6k</span>
+              <span>8.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="fa fa-clock-o"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>7 分钟</span>
             </span>
 
         </div>
@@ -320,6 +326,42 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># node2</span></span><br><span class="line">$ mount | grep 10.160.12.7</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/d2375620-7164-468e-a212-0f73042983d7/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.181,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/015ee988-c22e-4a8e-aa9d-7a85d0dd6045/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.181,local_lock=none,addr=10.160.12.7)</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ mount | grep 10.160.12.7</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/2ff007b3-6568-4b90-9c76-2c994c18f71c/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/aa545d93-0178-4adc-87b5-df27ac070a2e/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br><span class="line">10.160.12.7:/data/share/bqi on /var/lib/kubelet/pods/2098028e-8be5-44fd-b5d8-b358baf40791/volumes/kubernetes.io~nfs/nfs-pv <span class="built_in">type</span> nfs4 (rw,relatime,vers=4.1,rsize=1048576,wsize=1048576,namlen=255,hard,proto=tcp,timeo=600,retrans=2,sec=sys,clientaddr=10.160.18.183,local_lock=none,addr=10.160.12.7)</span><br></pre></td></tr></table></figure>
 <p>可以看出：<code>10.160.12.7:/data/share/bqi</code>被分别挂载到了对应的pod的目录下</p>
+<h2 id="自动创建pv及pvc"><a class="markdownIt-Anchor" href="#自动创建pv及pvc"></a> 自动创建PV及PVC</h2>
+<p>当我以为这样就完了的时候，用着用着，我发现，一个PV只能被一个PVC绑定。所以，实际上之前的操作，都局限在将一个nfs的目录变成了一个PV，然后绑定到了PVC，最后挂载到了某个pod上。</p>
+<p>而后续实验中发现，存储状态的实验需要不同的pod用不同的PVC。那我不可能总是手工去创建一个PV。于是，需要用到<code>nfs-client-provisioner</code></p>
+<h3 id="nfs-client-provisioner"><a class="markdownIt-Anchor" href="#nfs-client-provisioner"></a> nfs-client-provisioner</h3>
+<p><code>nfs-client-provisioner</code>可以利用NFS Server给Kubernetes作为持久存储的后端，并且动态提供PV。可以参考https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client</p>
+<p>安装方式也有多种，这里采用<strong>helm</strong>方式安装，非常简单</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ helm install --<span class="built_in">set</span> nfs.server=10.160.12.7 --<span class="built_in">set</span> nfs.path=/data/share/bqi stable/nfs-client-provisioner</span><br></pre></td></tr></table></figure>
+<p>参数说明：</p>
+<ol>
+<li>nfs.server - nfs服务器的地址</li>
+<li>nfs.path - nfs共享出来的目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ helm list</span><br><span class="line">NAME              REVISION    UPDATED                     STATUS      CHART                           APP VERSION    NAMESPACE</span><br><span class="line">crusty-penguin    1           Wed Jul 22 19:07:19 2020    DEPLOYED    nfs-client-provisioner-1.2.8    3.1.0          default</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">$ helm status crusty-penguin</span><br><span class="line">LAST DEPLOYED: Wed Jul 22 19:07:19 2020</span><br><span class="line">NAMESPACE: default</span><br><span class="line">STATUS: DEPLOYED</span><br><span class="line"></span><br><span class="line">RESOURCES:</span><br><span class="line">==&gt; v1/ClusterRole</span><br><span class="line">NAME                                          CREATED AT</span><br><span class="line">crusty-penguin-nfs-client-provisioner-runner  2020-07-22T11:07:19Z</span><br><span class="line"></span><br><span class="line">==&gt; v1/ClusterRoleBinding</span><br><span class="line">NAME                                       ROLE                                                      AGE</span><br><span class="line">run-crusty-penguin-nfs-client-provisioner  ClusterRole/crusty-penguin-nfs-client-provisioner-runner  15h</span><br><span class="line"></span><br><span class="line">==&gt; v1/Deployment</span><br><span class="line">NAME                                   READY  UP-TO-DATE  AVAILABLE  AGE</span><br><span class="line">crusty-penguin-nfs-client-provisioner  1/1    1           1          15h</span><br><span class="line"></span><br><span class="line">==&gt; v1/Pod(related)</span><br><span class="line">NAME                                                    READY  STATUS   RESTARTS  AGE</span><br><span class="line">crusty-penguin-nfs-client-provisioner-579d48f95f-vncxw  1/1    Running  1         15h</span><br><span class="line"></span><br><span class="line">==&gt; v1/Role</span><br><span class="line">NAME                                                  CREATED AT</span><br><span class="line">leader-locking-crusty-penguin-nfs-client-provisioner  2020-07-22T11:07:19Z</span><br><span class="line"></span><br><span class="line">==&gt; v1/RoleBinding</span><br><span class="line">NAME                                                  ROLE                                                       AGE</span><br><span class="line">leader-locking-crusty-penguin-nfs-client-provisioner  Role/leader-locking-crusty-penguin-nfs-client-provisioner  15h</span><br><span class="line"></span><br><span class="line">==&gt; v1/ServiceAccount</span><br><span class="line">NAME                                   SECRETS  AGE</span><br><span class="line">crusty-penguin-nfs-client-provisioner  1        15h</span><br><span class="line"></span><br><span class="line">==&gt; v1/StorageClass</span><br><span class="line">NAME        PROVISIONER                                          RECLAIMPOLICY  VOLUMEBINDINGMODE  ALLOWVOLUMEEXPANSION  AGE</span><br><span class="line">nfs-client  cluster.local/crusty-penguin-nfs-client-provisioner  Delete         Immediate          <span class="literal">true</span>                  15h</span><br></pre></td></tr></table></figure>
+<p>可以看到，主要部署了：</p>
+<ol>
+<li>Role, roleBinding, serviceAccount</li>
+<li>Deployment</li>
+<li>StorageClass</li>
+</ol>
+<p>其中，比较重要的是<code>StorageClass</code>，当前为<code>nfs-client</code>。当创建PVC时，指定了<code>storageClassName</code>为<code>nfs-client</code>后，将会自动创建PV及PVC</p>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<ol>
+<li>创建pvc</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">PersistentVolumeClaim</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">pvc-nfs-test</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">accessModes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">ReadWriteOnce</span></span><br><span class="line">  <span class="attr">storageClassName:</span> <span class="string">nfs-client</span></span><br><span class="line">  <span class="attr">resources:</span></span><br><span class="line">    <span class="attr">requests:</span></span><br><span class="line">      <span class="attr">storage:</span> <span class="string">1Gi</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>查看pv及pvc</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pvc</span><br><span class="line">NAME           STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">pvc-nfs-test   Bound    pvc-cd18aa33-8734-461c-81a5-f5cf2aa0ad8f   1Gi        RWO            nfs-client     3s</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pv</span><br><span class="line">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                  STORAGECLASS   REASON   AGE</span><br><span class="line">pvc-cd18aa33-8734-461c-81a5-f5cf2aa0ad8f   1Gi        RWO            Delete           Bound    default/pvc-nfs-test   nfs-client              10s</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>查看nfs服务器上的目录</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l</span><br><span class="line">total 0</span><br><span class="line">drwxrwxrwx 2 root root 10 Jul 23 11:01 default-pvc-nfs-test-pvc-cd18aa33-8734-461c-81a5-f5cf2aa0ad8f</span><br></pre></td></tr></table></figure>
+<p>可以看到，对应的nfs服务器上的目录中创建了一个目录</p>
 <h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
 <p>本次实验主要是想通过NFS创建PV及PVC，以提供跨节点数据持久化</p>
 <blockquote>
@@ -328,6 +370,7 @@
 <ol>
 <li>在创建PV时，指定了nfs方式</li>
 <li>基于nfs的PV创建PVC，分布于多个节点上的pod可以共享数据</li>
+<li>使用nfs-client-provisioner自动创建PV及PVC</li>
 </ol>
 
     </div>
@@ -345,13 +388,13 @@
       <div class="popular-posts-title"><a href="/2019/07/19/k8s-env-prep/" rel="bookmark">k8s环境安装之差点儿我就放弃了</a></div>
     </li>
     <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2020/07/20/kubernetes-network-problem-resolve/" rel="bookmark">K8s网络相关问题及解决</a></div>
-    </li>
-    <li class="popular-posts-item">
-      <div class="popular-posts-title"><a href="/2020/06/23/kubernetesLearning03/" rel="bookmark">K8s学习笔记——深入理解容器镜像</a></div>
+      <div class="popular-posts-title"><a href="/2020/06/17/kubernetesLearning02/" rel="bookmark">K8s学习笔记——限制与隔离</a></div>
     </li>
     <li class="popular-posts-item">
       <div class="popular-posts-title"><a href="/2020/06/23/kubernetesLearning04/" rel="bookmark">K8s学习笔记——重新认识Docker容器</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/20/kubernetes-network-problem-resolve/" rel="bookmark">K8s网络相关问题及解决</a></div>
     </li>
   </ul>
 
@@ -419,7 +462,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nfs客户端"><span class="nav-number">1.</span> <span class="nav-text"> 安装NFS客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nfs的pv及pvc测试"><span class="nav-number">2.</span> <span class="nav-text"> NFS的PV及PVC测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建pv"><span class="nav-number">2.1.</span> <span class="nav-text"> 新建PV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建pvc"><span class="nav-number">2.2.</span> <span class="nav-text"> 新建PVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试pvc"><span class="nav-number">2.3.</span> <span class="nav-text"> 测试PVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建一个pod使用pvc"><span class="nav-number">2.4.</span> <span class="nav-text"> 1. 创建一个pod，使用pvc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在挂载目录下创建文件"><span class="nav-number">2.5.</span> <span class="nav-text"> 2. 在挂载目录下创建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建第二个pod"><span class="nav-number">2.6.</span> <span class="nav-text"> 3. 创建第二个pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-删除原来的pod并重建新的pod"><span class="nav-number">2.7.</span> <span class="nav-text"> 4. 删除原来的pod并重建新的pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-测试跨节点"><span class="nav-number">2.8.</span> <span class="nav-text"> 5. 测试跨节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看看底层"><span class="nav-number">2.9.</span> <span class="nav-text"> 看看底层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text"> 小结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装nfs客户端"><span class="nav-number">1.</span> <span class="nav-text"> 安装NFS客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nfs的pv及pvc测试"><span class="nav-number">2.</span> <span class="nav-text"> NFS的PV及PVC测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建pv"><span class="nav-number">2.1.</span> <span class="nav-text"> 新建PV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建pvc"><span class="nav-number">2.2.</span> <span class="nav-text"> 新建PVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试pvc"><span class="nav-number">2.3.</span> <span class="nav-text"> 测试PVC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建一个pod使用pvc"><span class="nav-number">2.4.</span> <span class="nav-text"> 1. 创建一个pod，使用pvc</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-在挂载目录下创建文件"><span class="nav-number">2.5.</span> <span class="nav-text"> 2. 在挂载目录下创建文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-创建第二个pod"><span class="nav-number">2.6.</span> <span class="nav-text"> 3. 创建第二个pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-删除原来的pod并重建新的pod"><span class="nav-number">2.7.</span> <span class="nav-text"> 4. 删除原来的pod并重建新的pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-测试跨节点"><span class="nav-number">2.8.</span> <span class="nav-text"> 5. 测试跨节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#看看底层"><span class="nav-number">2.9.</span> <span class="nav-text"> 看看底层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自动创建pv及pvc"><span class="nav-number">3.</span> <span class="nav-text"> 自动创建PV及PVC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#nfs-client-provisioner"><span class="nav-number">3.1.</span> <span class="nav-text"> nfs-client-provisioner</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#测试"><span class="nav-number">3.2.</span> <span class="nav-text"> 测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text"> 小结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -513,12 +556,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">211k</span>
+    <span title="站点总字数">213k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">3:12</span>
+    <span title="站点阅读时长">3:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
   </div>
