@@ -707,6 +707,74 @@
       </tags>
   </entry>
   <entry>
+    <title>k8s环境安装之差点儿我就放弃了</title>
+    <url>/2019/07/19/k8s-env-prep/</url>
+    <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br />
+在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
+<a id="more"></a>
+<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
+<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<a href="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md" target="_blank" rel="noopener">官方文档</a></p>
+<ol>
+<li>一台Linux虚拟机(Ubuntu16.04 server或CentOS 7 Minimal)</li>
+<li>内存需要2G</li>
+<li>硬盘30G</li>
+</ol>
+<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
+<h3 id="下载文件"><a class="markdownIt-Anchor" href="#下载文件"></a> 下载文件</h3>
+<p>github的说明文档提供的下载方式，我其实都疑惑了，因为有一个<code>${release}</code>，并非开箱即食。可以这样做</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/easzlab/kubeasz.git</span><br></pre></td></tr></table></figure>
+<p>随后，进入kubeasz目录，使用工具脚本下载</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> kubeasz</span><br><span class="line">$ bash tools/easzup -D</span><br></pre></td></tr></table></figure>
+<h3 id="安装-2"><a class="markdownIt-Anchor" href="#安装-2"></a> 安装</h3>
+<p>下面就是按部就班的运行了，注意，你也不需要提前安装docker，所有的都是自动下载及安装的</p>
+<ol>
+<li>容器化运行 kubeasz</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bash tools/easzup -S</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用默认配置安装 aio 集群</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it kubeasz easzctl start-aio</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如遇到失败，可再次尝试执行</p>
+</blockquote>
+<h3 id="验证安装"><a class="markdownIt-Anchor" href="#验证安装"></a> 验证安装</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl version                   <span class="comment"># 验证集群版本     </span></span><br><span class="line">$ kubectl get componentstatus       <span class="comment"># 验证 scheduler/controller-manager/etcd等组件状态</span></span><br><span class="line">$ kubectl get node                  <span class="comment"># 验证节点就绪 (Ready) 状态</span></span><br><span class="line">$ kubectl get pod --all-namespaces  <span class="comment"># 验证集群pod状态，默认已安装网络插件、coredns、metrics-server等</span></span><br><span class="line">$ kubectl get svc --all-namespaces  <span class="comment"># 验证集群服务状态</span></span><br></pre></td></tr></table></figure>
+<h3 id="登陆dashboard"><a class="markdownIt-Anchor" href="#登陆dashboard"></a> 登陆dashboard</h3>
+<p>安装完成后，dashboard已经准备好了，只需要获取登陆方式即可。</p>
+<p>按照官方文档的说法，登陆dashboard有好几种方式，选择一种即可。如token方式</p>
+<h4 id="获取port"><a class="markdownIt-Anchor" href="#获取port"></a> 获取port</h4>
+<p>按照以上方式安装完成后，默认的port应该是34980，所以，可以访问<code>https://当前IP:34980</code>，即可登陆dashboard</p>
+<p>也可以查看dashboard的端口开放状况</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl get svc --all-namespaces</span><br><span class="line">NAMESPACE     NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE</span><br><span class="line">default       kubernetes                ClusterIP   10.68.0.1       &lt;none&gt;        443/TCP                       30m</span><br><span class="line">kube-system   heapster                  ClusterIP   10.68.91.148    &lt;none&gt;        80/TCP                        114s</span><br><span class="line">kube-system   kube-dns                  ClusterIP   10.68.0.2       &lt;none&gt;        53/UDP,53/TCP,9153/TCP        2m20s</span><br><span class="line">kube-system   kubernetes-dashboard      NodePort    10.68.23.76     &lt;none&gt;        443:34980/TCP                 118s</span><br><span class="line">kube-system   metrics-server            ClusterIP   10.68.29.183    &lt;none&gt;        443/TCP                       2m13s</span><br><span class="line">kube-system   traefik-ingress-service   NodePort    10.68.226.239   &lt;none&gt;        80:23456/TCP,8080:38858/TCP   105s</span><br></pre></td></tr></table></figure>
+<h4 id="获取token"><a class="markdownIt-Anchor" href="#获取token"></a> 获取token</h4>
+<ul>
+<li>查看如下文件是否存在</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取token</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl apply -f /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">====</span><br><span class="line">ca.crt:     1350 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWRoNjYyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmZDdjZjc4Mi1hOTM0LTExZTktOTA1Zi0wMDBjMjlhMzc1YmYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.KXFNuuibxRpF7AJHZBRkGgvpiVl4axfGA0A8haLIR3coX0HHPrQph8sO9GKl7C0KP6YXN-43VIxlpDXy-i_UkimxDJRVS08IW4r39Z4HhD-rKFYafQJROMrFG9lcbn1pZWTLBRGsO3lFCI1DyRDC7W_HSb63mgO2IoiQXGhgdhEWc7OnyNfxovkbtQA5xfsVqWqeWE-Dn4Jeo0lFe630I-iREMXPQvF5I7UNJFMJLCgFV0fG8J7__MYBf8xVnYL3ryaMBwKjQxQVsD3IOGS6TAk7RLZzjevySl-pXE1CcE8fosQQwJsOjOoKn5u1LGK3XUkIJR2rOf3jVMoQYYqe1Q</span><br></pre></td></tr></table></figure>
+<h2 id="踩过的坑"><a class="markdownIt-Anchor" href="#踩过的坑"></a> 踩过的坑</h2>
+<h3 id="node出于notready状态"><a class="markdownIt-Anchor" href="#node出于notready状态"></a> node出于NotReady状态</h3>
+<ul>
+<li>排查思路</li>
+</ul>
+<p>查看服务状态及相关错误信息</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ journalctl -f -u kubelet</span><br></pre></td></tr></table></figure>
+<p>最终发现我的内存因为是1G导致运行失败</p>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+        <tag>k8s</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>K8s网络相关问题及解决</title>
     <url>/2020/07/20/kubernetes-network-problem-resolve/</url>
     <content><![CDATA[<p>随着学习日渐深入，遇到了不少问题。有问题，度娘+谷哥。学习阶段，我只是各种文章的搬运工。先解决用的问题</p>
@@ -1653,6 +1721,47 @@
 <blockquote>
 <p>Deployment 实际上是一个两层控制器。首先，它通过 ReplicaSet 的个数来描述应用的版本；然后，它再通过 ReplicaSet 的属性（比如 replicas 的值），来保证 Pod 的副本数量。</p>
 </blockquote>
+]]></content>
+      <categories>
+        <category>k8s</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>Kubernetes</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>K8s学习笔记——StatefulSet之拓扑状态</title>
+    <url>/2020/07/29/kubernetesLearning18/</url>
+    <content><![CDATA[<blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则。动手实践并记录结果</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/41017" target="_blank" rel="noopener">18 | 深入理解StatefulSet（一）：拓扑状态</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="headless-service"><a class="markdownIt-Anchor" href="#headless-service"></a> Headless Service</h2>
+<h3 id="创建service"><a class="markdownIt-Anchor" href="#创建service"></a> 创建service</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">nginx</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl get service</span><br><span class="line">NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE</span><br><span class="line">nginx        ClusterIP   None         &lt;none&gt;        80/TCP    129m</span><br></pre></td></tr></table></figure>
+<h3 id="创建statefulset"><a class="markdownIt-Anchor" href="#创建statefulset"></a> 创建StatefulSet</h3>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">web</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">"nginx"</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">IfNotPresent</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">web</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl apply -f statefulset.yaml</span><br><span class="line">statefulset.apps/web created</span><br><span class="line">$ kubectl get pods -w -l app=nginx</span><br><span class="line">NAME    READY   STATUS              RESTARTS   AGE</span><br><span class="line">web-0   1/1     Running             0          2s</span><br><span class="line">web-1   0/1     ContainerCreating   0          1s</span><br><span class="line">web-1   1/1     Running             0          2s</span><br><span class="line">$ kubectl get statefulset -o wide</span><br><span class="line">NAME   READY   AGE   CONTAINERS   IMAGES</span><br><span class="line">web    2/2     52s   nginx        nginx</span><br><span class="line">$ kubectl get pods -o wide</span><br><span class="line">NAME    READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">web-0   1/1     Running   0          85s   172.1.1.199   node2           &lt;none&gt;           &lt;none&gt;</span><br><span class="line">web-1   1/1     Running   0          81s   172.1.2.180   bqi-k8s-node3   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看出，statefulset创建出来的pod，名字是固定的，而不再像deployment中的，pod名字会变化</p>
+<h3 id="验证"><a class="markdownIt-Anchor" href="#验证"></a> 验证</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl <span class="built_in">exec</span> web-0 -- sh -c <span class="string">'hostname'</span></span><br><span class="line">web-0</span><br><span class="line">$ kubectl <span class="built_in">exec</span> web-1 -- sh -c <span class="string">'hostname'</span></span><br><span class="line">web-1</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 web-test --restart=Never --rm -- /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-0.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.1.199 web-0.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ # nslookup web-1.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-1.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.2.180 web-1.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ #</span></span><br></pre></td></tr></table></figure>
+<h3 id="重建pod"><a class="markdownIt-Anchor" href="#重建pod"></a> 重建pod</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl delete pod -l app=nginx</span><br><span class="line">pod <span class="string">"web-0"</span> deleted</span><br><span class="line">pod <span class="string">"web-1"</span> deleted</span><br><span class="line"><span class="comment"># 快速执行</span></span><br><span class="line">$ kubectl get pod -w -l app=nginx</span><br><span class="line">NAME    READY   STATUS              RESTARTS   AGE</span><br><span class="line">web-0   0/1     ContainerCreating   0          0s</span><br><span class="line">web-0   1/1     Running             0          1s</span><br><span class="line">web-1   0/1     Pending             0          0s</span><br><span class="line">web-1   0/1     Pending             0          0s</span><br><span class="line">web-1   0/1     ContainerCreating   0          0s</span><br><span class="line">web-1   1/1     Running             0          3s</span><br><span class="line">$  kubectl get pods -o wide</span><br><span class="line">NAME    READY   STATUS    RESTARTS   AGE   IP            NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">web-0   1/1     Running   0          85s   172.1.1.201   node2           &lt;none&gt;           &lt;none&gt;</span><br><span class="line">web-1   1/1     Running   0          81s   172.1.2.181   bqi-k8s-node3   &lt;none&gt;           &lt;none&gt;</span><br></pre></td></tr></table></figure>
+<p>可以看到，当删除了相关的pod后，kubernetes会以同样的名字重建pod</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl run -i --tty --image busybox:1.28.4 connect-test --restart=Never --rm -- /bin/sh</span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">/ # nslookup web-0.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-0.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.1.201 web-0.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ # nslookup web-1.nginx</span></span><br><span class="line"><span class="string">Server:    10.96.0.10</span></span><br><span class="line"><span class="string">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">Name:      web-1.nginx</span></span><br><span class="line"><span class="string">Address 1: 172.1.2.181 web-1.nginx.default.svc.cluster.local</span></span><br><span class="line"><span class="string">/ #</span></span><br></pre></td></tr></table></figure>
+<p>重建后，依然可以访问<code>web-0.nginx</code>，但IP地址发生了变化</p>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<p>本节课程主要学习了StatefulSet这个控制器，K8s在按照pod模版进行创建时：</p>
+<ol>
+<li>对pod进行编号并逐一完成创建工作</li>
+<li>当重建发生时，也会按照编号对pod逐一进行操作</li>
+<li>通过headless service，StatefulSet 为每个 Pod 创建了一个固定并且稳定的 DNS 记录</li>
+</ol>
 ]]></content>
       <categories>
         <category>k8s</category>
@@ -2673,6 +2782,114 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
+    <title>Openstack学习笔记1</title>
+    <url>/2018/06/28/openstack-study1/</url>
+    <content><![CDATA[<p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
+<a id="more"></a>
+<h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
+<h3 id="服务说明"><a class="markdownIt-Anchor" href="#服务说明"></a> 服务说明</h3>
+<ul>
+<li>keystone - 必选</li>
+</ul>
+<p>认证服务，是其他所有服务的基础</p>
+<ul>
+<li>glance - 必选</li>
+</ul>
+<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
+<ul>
+<li>nova - 必选</li>
+</ul>
+<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
+<ul>
+<li>neutron - 必选</li>
+</ul>
+<p>网络服务</p>
+<ul>
+<li>horizon - 可选（推荐选择）</li>
+</ul>
+<p>管理界面，图形化管理界面，方便使用</p>
+<ul>
+<li>cinder - 可选</li>
+</ul>
+<p>块存储服务，用来创建虚拟机的磁盘</p>
+<h3 id="一些理解"><a class="markdownIt-Anchor" href="#一些理解"></a> 一些理解</h3>
+<p>openstack可以理解为插件型的，灵活就体现于此。</p>
+<ul>
+<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
+<li>同样，可以在任意一个节点上起块存储服务</li>
+</ul>
+<h3 id="关于网络"><a class="markdownIt-Anchor" href="#关于网络"></a> 关于网络</h3>
+<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
+<p>需要说明的是：</p>
+<ul>
+<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
+<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
+<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
+<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
+<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
+<li>在openstack的UI上看到的网口，都是代号</li>
+</ul>
+<h2 id="测试环境准备"><a class="markdownIt-Anchor" href="#测试环境准备"></a> 测试环境准备</h2>
+<h3 id="两台虚拟机当然也可以all-in-one"><a class="markdownIt-Anchor" href="#两台虚拟机当然也可以all-in-one"></a> 两台虚拟机（当然也可以all in one）</h3>
+<h4 id="硬件准备"><a class="markdownIt-Anchor" href="#硬件准备"></a> 硬件准备</h4>
+<p>每台虚拟机应包含</p>
+<ol>
+<li>虚机可上网</li>
+<li>另外包含一张额外的网卡</li>
+<li>内存尽量多（8G）</li>
+<li>CPU尽量多（8 cpus）</li>
+<li>controller硬盘稍微大一些</li>
+</ol>
+<h4 id="基本准备"><a class="markdownIt-Anchor" href="#基本准备"></a> 基本准备</h4>
+<blockquote>
+<p>Ubuntu16.04 + Q版本（Queens）</p>
+</blockquote>
+<h5 id="配置ntp"><a class="markdownIt-Anchor" href="#配置ntp"></a> 配置NTP</h5>
+<h5 id="安装openstack基础包"><a class="markdownIt-Anchor" href="#安装openstack基础包"></a> 安装Openstack基础包</h5>
+<ul>
+<li>准备仓库</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>安装openstack包</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure>
+<h4 id="controller"><a class="markdownIt-Anchor" href="#controller"></a> controller</h4>
+<p>controller上需要安装的东西最多</p>
+<h5 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h5>
+<ul>
+<li>数据库: MariaDB</li>
+<li>消息队列: RabbitMQ</li>
+<li>服务及身份认证: Memcached</li>
+<li>etcd</li>
+</ul>
+<h5 id="openstack服务"><a class="markdownIt-Anchor" href="#openstack服务"></a> openstack服务</h5>
+<ul>
+<li>认证服务: keystone</li>
+<li>镜像服务: glance</li>
+<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
+<li>网络服务（网络管理，调度等服务）: neutron</li>
+<li>管理界面: horizon</li>
+<li>块存储服务（可选）: cinder</li>
+</ul>
+<h4 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> compute</h4>
+<p>计算节点相对来说简单了很多</p>
+<h5 id="openstack服务-2"><a class="markdownIt-Anchor" href="#openstack服务-2"></a> openstack服务</h5>
+<ul>
+<li>计算服务（专指计算服务）: nova-compute</li>
+<li>网络服务: neutron</li>
+</ul>
+<p><strong>可在controller上同样起计算服务</strong></p>
+<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
+]]></content>
+      <categories>
+        <category>cloud</category>
+      </categories>
+      <tags>
+        <tag>openstack</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Openstack网络——虚拟机通信实验1</title>
     <url>/2019/09/02/openstack-vm-traffic1/</url>
     <content><![CDATA[<p>Openstack中的虚拟机流量通常被分为东西向和南北向。而测试环境中可能会遇到各种流量问题，搞清楚每种流量的通路有助于出现问题后的快速定位。</p>
@@ -3360,75 +3577,6 @@ h2的eth0与s1的eth2相连</p>
       </tags>
   </entry>
   <entry>
-    <title>pyenv使用笔记</title>
-    <url>/2019/02/05/pyenv-notebook/</url>
-    <content><![CDATA[<p>OSX上的python版本纷繁复杂。</p>
-<ul>
-<li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
-<li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
-</ul>
-<a id="more"></a>
-<p>经常搞不清楚用的是哪里的python。遇到要升级python版本，又提心吊胆的怕把系统的那个给搞挂了。于是，便试着用pyenv来管理版本</p>
-<h2 id="关于pyenv"><a class="markdownIt-Anchor" href="#关于pyenv"></a> 关于Pyenv</h2>
-<blockquote>
-<p>pyenv是Python版本管理工具，能够使你轻松的在多个python版本之间进行切换</p>
-</blockquote>
-<ul>
-<li>
-<p>pyenv当前在<a href="https://github.com/pyenv/pyenv" target="_blank" rel="noopener">github</a>上有14k的关注量</p>
-</li>
-<li>
-<p>安装说明参看github上的<a href="https://github.com/pyenv/pyenv#installation" target="_blank" rel="noopener">安装文档</a></p>
-</li>
-</ul>
-<h2 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h2>
-<p>使用<code>pyenv commands</code>可以查看所有命令或者通过<code>pyenv -h</code>来查看常用命令</p>
-<h3 id="版本管理"><a class="markdownIt-Anchor" href="#版本管理"></a> 版本管理</h3>
-<h4 id="查看已安装的python版本"><a class="markdownIt-Anchor" href="#查看已安装的python版本"></a> 查看已安装的python版本</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (<span class="built_in">set</span> by /Users/xxx/.pyenv/version)</span><br><span class="line">  3.7.0</span><br></pre></td></tr></table></figure>
-<h4 id="查看可以安装的版本"><a class="markdownIt-Anchor" href="#查看可以安装的版本"></a> 查看可以安装的版本</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv install -l</span><br><span class="line">Available versions:</span><br><span class="line">  2.1.3</span><br><span class="line">  2.2.3</span><br><span class="line">  ...</span><br><span class="line">  stackless-3.5.4</span><br></pre></td></tr></table></figure>
-<p>可以看到，可安装的版本有python2, python3, activepython, anaconda, ironpython, jython, pypy, stackless, etc.</p>
-<h4 id="安装指定版本"><a class="markdownIt-Anchor" href="#安装指定版本"></a> 安装指定版本</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv install 2.7.15</span><br><span class="line">python-build: use openssl from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-2.7.15...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installed Python-2.7.15 to /Users/xxx/.pyenv/versions/2.7.15</span><br></pre></td></tr></table></figure>
-<p><strong>注</strong>：Mac上安装可能会遇到<code>The Python zlib extension was not compiled. Missing the zlib?</code>的错误，可以尝试<code>CFLAGS=&quot;-I$(xcrun --show-sdk-path)/usr/include&quot; pyenv install 2.7.15</code></p>
-<p><em>更多错误，可查看项目的wiki中的<a href="https://github.com/pyenv/pyenv/wiki/Common-build-problems" target="_blank" rel="noopener">常见问题</a></em></p>
-<blockquote>
-<p>安装完毕一个python版本后，需要执行<code>pyenv rehash</code>来更新后，才能看到已安装的版本</p>
-</blockquote>
-<h3 id="优先级"><a class="markdownIt-Anchor" href="#优先级"></a> 优先级</h3>
-<p>可以为当前目录、当前shell以及全局进行不同的python版本定义</p>
-<p>遵循<strong>shell&gt;local&gt;global</strong>的优先级顺序</p>
-<h4 id="设置版本"><a class="markdownIt-Anchor" href="#设置版本"></a> 设置版本</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv global 2.7.15 <span class="comment">#设置全局版本，版本信息记录在~/.pyenv/version</span></span><br><span class="line">$ pyenv <span class="built_in">local</span> 3.7.0 <span class="comment">#设置当前目录的python版本，将在当前目录生成.python-version文件</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>当需要为一个目录设置特定的python版本时，可以先进入该目录下执行<code>pyenv local xxx</code></li>
-<li>当需要为该目录下的一个子目录设置特定的python版本，可进入该子目录设置local</li>
-<li>设置完毕后，会在响应的目录下生成<code>.python-version</code>的文件</li>
-<li>使用时，将从当前目录开始查找，如果不存在<code>.python-version</code>文件，则向上一级查找，直到根目录为止</li>
-<li>如果到跟目录任然没有查找到，则使用global的设置</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv shell 3.6.0 <span class="comment">#为当前shell设置python版本，将通过环境变量的方式设置</span></span><br><span class="line">$ env | grep PYENV_VERSION</span><br><span class="line">PYENV_VERSION=2.7.15</span><br><span class="line">$ pyenv shell --<span class="built_in">unset</span> <span class="comment">#</span></span><br></pre></td></tr></table></figure>
-<h3 id="virtualenv"><a class="markdownIt-Anchor" href="#virtualenv"></a> virtualenv</h3>
-<p>默认情况下，安装pyenv后会安装<strong>pyenv-virtualenv</strong>的插件，可以通过<code>pyenv virtualenv</code>创建虚拟环境</p>
-<h4 id="查看已有的virtualenv"><a class="markdownIt-Anchor" href="#查看已有的virtualenv"></a> 查看已有的virtualenv</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv virtualenvs</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br></pre></td></tr></table></figure>
-<h4 id="创建virtualenv"><a class="markdownIt-Anchor" href="#创建virtualenv"></a> 创建virtualenv</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv virtualenv 2.7.15 my2.7.15</span><br><span class="line">Collecting virtualenv</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/8f/f1/c0b069ca6cb44f9681715232e6d3d65c75866dd231c5e4a88e80a46634bb/virtualenv-16.3.0-py2.py3-none-any.whl (2.0MB)</span><br><span class="line">    100% |████████████████████████████████| 2.0MB 117kB/s</span><br><span class="line">Requirement already satisfied: setuptools&gt;=18.0.0 <span class="keyword">in</span> ./.pyenv/versions/2.7.15/lib/python2.7/site-packages (from virtualenv) (39.0.1)</span><br><span class="line">Installing collected packages: virtualenv</span><br><span class="line">Successfully installed virtualenv-16.3.0</span><br><span class="line">New python executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python2.7</span><br><span class="line">Also creating executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line">Requirement already satisfied: setuptools <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line">Requirement already satisfied: pip <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line"></span><br><span class="line">$ pyenv virtualenvs</span><br><span class="line">  2.7.15/envs/my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br></pre></td></tr></table></figure>
-<h4 id="active-deactive"><a class="markdownIt-Anchor" href="#active-deactive"></a> active &amp; deactive</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv activate my2.7.15</span><br><span class="line">(my2.7.15) $</span><br><span class="line">(my2.7.15) $ pyenv deactivate</span><br></pre></td></tr></table></figure>
-<h4 id="删除virtualenv"><a class="markdownIt-Anchor" href="#删除virtualenv"></a> 删除virtualenv</h4>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv uninstall my2.7.15</span><br><span class="line">pyenv-virtualenv: remove /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15? Y</span><br></pre></td></tr></table></figure>
-<p><strong>Have Fun</strong> 😄</p>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>python</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>python virtenv环境搭建</title>
     <url>/2018/05/07/python-virtenv/</url>
     <content><![CDATA[<p>近期由于组内测试框架更新频繁，且由于框架采用了插件形式，安装包很多。当使用同一台服务器来安装时，可能会导致生产环境破坏。为此，必须采用virtenv方式。</p>
@@ -3564,6 +3712,75 @@ h2的eth0与s1的eth2相连</p>
         <tag>hexo</tag>
         <tag>blog</tag>
         <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>pyenv使用笔记</title>
+    <url>/2019/02/05/pyenv-notebook/</url>
+    <content><![CDATA[<p>OSX上的python版本纷繁复杂。</p>
+<ul>
+<li>有系统自带的: /System/Library/Frameworks/Python.framework/Versions/</li>
+<li>有后来安装的: /Library/Frameworks/Python.framework/Versions/</li>
+</ul>
+<a id="more"></a>
+<p>经常搞不清楚用的是哪里的python。遇到要升级python版本，又提心吊胆的怕把系统的那个给搞挂了。于是，便试着用pyenv来管理版本</p>
+<h2 id="关于pyenv"><a class="markdownIt-Anchor" href="#关于pyenv"></a> 关于Pyenv</h2>
+<blockquote>
+<p>pyenv是Python版本管理工具，能够使你轻松的在多个python版本之间进行切换</p>
+</blockquote>
+<ul>
+<li>
+<p>pyenv当前在<a href="https://github.com/pyenv/pyenv" target="_blank" rel="noopener">github</a>上有14k的关注量</p>
+</li>
+<li>
+<p>安装说明参看github上的<a href="https://github.com/pyenv/pyenv#installation" target="_blank" rel="noopener">安装文档</a></p>
+</li>
+</ul>
+<h2 id="常用命令"><a class="markdownIt-Anchor" href="#常用命令"></a> 常用命令</h2>
+<p>使用<code>pyenv commands</code>可以查看所有命令或者通过<code>pyenv -h</code>来查看常用命令</p>
+<h3 id="版本管理"><a class="markdownIt-Anchor" href="#版本管理"></a> 版本管理</h3>
+<h4 id="查看已安装的python版本"><a class="markdownIt-Anchor" href="#查看已安装的python版本"></a> 查看已安装的python版本</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv versions</span><br><span class="line">* system (<span class="built_in">set</span> by /Users/xxx/.pyenv/version)</span><br><span class="line">  3.7.0</span><br></pre></td></tr></table></figure>
+<h4 id="查看可以安装的版本"><a class="markdownIt-Anchor" href="#查看可以安装的版本"></a> 查看可以安装的版本</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv install -l</span><br><span class="line">Available versions:</span><br><span class="line">  2.1.3</span><br><span class="line">  2.2.3</span><br><span class="line">  ...</span><br><span class="line">  stackless-3.5.4</span><br></pre></td></tr></table></figure>
+<p>可以看到，可安装的版本有python2, python3, activepython, anaconda, ironpython, jython, pypy, stackless, etc.</p>
+<h4 id="安装指定版本"><a class="markdownIt-Anchor" href="#安装指定版本"></a> 安装指定版本</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv install 2.7.15</span><br><span class="line">python-build: use openssl from homebrew</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installing Python-2.7.15...</span><br><span class="line">python-build: use readline from homebrew</span><br><span class="line">Installed Python-2.7.15 to /Users/xxx/.pyenv/versions/2.7.15</span><br></pre></td></tr></table></figure>
+<p><strong>注</strong>：Mac上安装可能会遇到<code>The Python zlib extension was not compiled. Missing the zlib?</code>的错误，可以尝试<code>CFLAGS=&quot;-I$(xcrun --show-sdk-path)/usr/include&quot; pyenv install 2.7.15</code></p>
+<p><em>更多错误，可查看项目的wiki中的<a href="https://github.com/pyenv/pyenv/wiki/Common-build-problems" target="_blank" rel="noopener">常见问题</a></em></p>
+<blockquote>
+<p>安装完毕一个python版本后，需要执行<code>pyenv rehash</code>来更新后，才能看到已安装的版本</p>
+</blockquote>
+<h3 id="优先级"><a class="markdownIt-Anchor" href="#优先级"></a> 优先级</h3>
+<p>可以为当前目录、当前shell以及全局进行不同的python版本定义</p>
+<p>遵循<strong>shell&gt;local&gt;global</strong>的优先级顺序</p>
+<h4 id="设置版本"><a class="markdownIt-Anchor" href="#设置版本"></a> 设置版本</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv global 2.7.15 <span class="comment">#设置全局版本，版本信息记录在~/.pyenv/version</span></span><br><span class="line">$ pyenv <span class="built_in">local</span> 3.7.0 <span class="comment">#设置当前目录的python版本，将在当前目录生成.python-version文件</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>当需要为一个目录设置特定的python版本时，可以先进入该目录下执行<code>pyenv local xxx</code></li>
+<li>当需要为该目录下的一个子目录设置特定的python版本，可进入该子目录设置local</li>
+<li>设置完毕后，会在响应的目录下生成<code>.python-version</code>的文件</li>
+<li>使用时，将从当前目录开始查找，如果不存在<code>.python-version</code>文件，则向上一级查找，直到根目录为止</li>
+<li>如果到跟目录任然没有查找到，则使用global的设置</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv shell 3.6.0 <span class="comment">#为当前shell设置python版本，将通过环境变量的方式设置</span></span><br><span class="line">$ env | grep PYENV_VERSION</span><br><span class="line">PYENV_VERSION=2.7.15</span><br><span class="line">$ pyenv shell --<span class="built_in">unset</span> <span class="comment">#</span></span><br></pre></td></tr></table></figure>
+<h3 id="virtualenv"><a class="markdownIt-Anchor" href="#virtualenv"></a> virtualenv</h3>
+<p>默认情况下，安装pyenv后会安装<strong>pyenv-virtualenv</strong>的插件，可以通过<code>pyenv virtualenv</code>创建虚拟环境</p>
+<h4 id="查看已有的virtualenv"><a class="markdownIt-Anchor" href="#查看已有的virtualenv"></a> 查看已有的virtualenv</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv virtualenvs</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br></pre></td></tr></table></figure>
+<h4 id="创建virtualenv"><a class="markdownIt-Anchor" href="#创建virtualenv"></a> 创建virtualenv</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv virtualenv 2.7.15 my2.7.15</span><br><span class="line">Collecting virtualenv</span><br><span class="line">  Downloading https://files.pythonhosted.org/packages/8f/f1/c0b069ca6cb44f9681715232e6d3d65c75866dd231c5e4a88e80a46634bb/virtualenv-16.3.0-py2.py3-none-any.whl (2.0MB)</span><br><span class="line">    100% |████████████████████████████████| 2.0MB 117kB/s</span><br><span class="line">Requirement already satisfied: setuptools&gt;=18.0.0 <span class="keyword">in</span> ./.pyenv/versions/2.7.15/lib/python2.7/site-packages (from virtualenv) (39.0.1)</span><br><span class="line">Installing collected packages: virtualenv</span><br><span class="line">Successfully installed virtualenv-16.3.0</span><br><span class="line">New python executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python2.7</span><br><span class="line">Also creating executable <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/bin/python</span><br><span class="line">Installing setuptools, pip, wheel...</span><br><span class="line"><span class="keyword">done</span>.</span><br><span class="line">Requirement already satisfied: setuptools <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line">Requirement already satisfied: pip <span class="keyword">in</span> /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15/lib/python2.7/site-packages</span><br><span class="line"></span><br><span class="line">$ pyenv virtualenvs</span><br><span class="line">  2.7.15/envs/my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br><span class="line">  3.7.0/envs/common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  common3 (created from /Users/abc/.pyenv/versions/3.7.0)</span><br><span class="line">  my2.7.15 (created from /Users/abc/.pyenv/versions/2.7.15)</span><br></pre></td></tr></table></figure>
+<h4 id="active-deactive"><a class="markdownIt-Anchor" href="#active-deactive"></a> active &amp; deactive</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv activate my2.7.15</span><br><span class="line">(my2.7.15) $</span><br><span class="line">(my2.7.15) $ pyenv deactivate</span><br></pre></td></tr></table></figure>
+<h4 id="删除virtualenv"><a class="markdownIt-Anchor" href="#删除virtualenv"></a> 删除virtualenv</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ pyenv uninstall my2.7.15</span><br><span class="line">pyenv-virtualenv: remove /Users/abc/.pyenv/versions/2.7.15/envs/my2.7.15? Y</span><br></pre></td></tr></table></figure>
+<p><strong>Have Fun</strong> 😄</p>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
       </tags>
   </entry>
   <entry>
@@ -3795,74 +4012,6 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>旅行</tag>
         <tag>visa</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>k8s环境安装之差点儿我就放弃了</title>
-    <url>/2019/07/19/k8s-env-prep/</url>
-    <content><![CDATA[<p>尝试了好几种方式，想要准备一个k8s的实验集群，都或多或少的遇到了些问题。主要是因为要入门，所以要搭一套环境，但因为还没有入门，搭建过程中遇到问题，就不知如何下手。<br />
-在行将放弃之际，<a href="https://github.com/easzlab/kubeasz" target="_blank" rel="noopener">kubeasz</a>挽救了我，本文主要记录如何用kubeasz搭建一个allinone的环境</p>
-<a id="more"></a>
-<h2 id="环境准备"><a class="markdownIt-Anchor" href="#环境准备"></a> 环境准备</h2>
-<p>其实kubeasz的文档写的非常简单，因为本身搭建过程就是很简单，可参看<a href="https://github.com/easzlab/kubeasz/blob/master/docs/setup/quickStart.md" target="_blank" rel="noopener">官方文档</a></p>
-<ol>
-<li>一台Linux虚拟机(Ubuntu16.04 server或CentOS 7 Minimal)</li>
-<li>内存需要2G</li>
-<li>硬盘30G</li>
-</ol>
-<h2 id="安装"><a class="markdownIt-Anchor" href="#安装"></a> 安装</h2>
-<h3 id="下载文件"><a class="markdownIt-Anchor" href="#下载文件"></a> 下载文件</h3>
-<p>github的说明文档提供的下载方式，我其实都疑惑了，因为有一个<code>${release}</code>，并非开箱即食。可以这样做</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/easzlab/kubeasz.git</span><br></pre></td></tr></table></figure>
-<p>随后，进入kubeasz目录，使用工具脚本下载</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> kubeasz</span><br><span class="line">$ bash tools/easzup -D</span><br></pre></td></tr></table></figure>
-<h3 id="安装-2"><a class="markdownIt-Anchor" href="#安装-2"></a> 安装</h3>
-<p>下面就是按部就班的运行了，注意，你也不需要提前安装docker，所有的都是自动下载及安装的</p>
-<ol>
-<li>容器化运行 kubeasz</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ bash tools/easzup -S</span><br></pre></td></tr></table></figure>
-<ol start="2">
-<li>使用默认配置安装 aio 集群</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ docker <span class="built_in">exec</span> -it kubeasz easzctl start-aio</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>如遇到失败，可再次尝试执行</p>
-</blockquote>
-<h3 id="验证安装"><a class="markdownIt-Anchor" href="#验证安装"></a> 验证安装</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl version                   <span class="comment"># 验证集群版本     </span></span><br><span class="line">$ kubectl get componentstatus       <span class="comment"># 验证 scheduler/controller-manager/etcd等组件状态</span></span><br><span class="line">$ kubectl get node                  <span class="comment"># 验证节点就绪 (Ready) 状态</span></span><br><span class="line">$ kubectl get pod --all-namespaces  <span class="comment"># 验证集群pod状态，默认已安装网络插件、coredns、metrics-server等</span></span><br><span class="line">$ kubectl get svc --all-namespaces  <span class="comment"># 验证集群服务状态</span></span><br></pre></td></tr></table></figure>
-<h3 id="登陆dashboard"><a class="markdownIt-Anchor" href="#登陆dashboard"></a> 登陆dashboard</h3>
-<p>安装完成后，dashboard已经准备好了，只需要获取登陆方式即可。</p>
-<p>按照官方文档的说法，登陆dashboard有好几种方式，选择一种即可。如token方式</p>
-<h4 id="获取port"><a class="markdownIt-Anchor" href="#获取port"></a> 获取port</h4>
-<p>按照以上方式安装完成后，默认的port应该是34980，所以，可以访问<code>https://当前IP:34980</code>，即可登陆dashboard</p>
-<p>也可以查看dashboard的端口开放状况</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl get svc --all-namespaces</span><br><span class="line">NAMESPACE     NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                       AGE</span><br><span class="line">default       kubernetes                ClusterIP   10.68.0.1       &lt;none&gt;        443/TCP                       30m</span><br><span class="line">kube-system   heapster                  ClusterIP   10.68.91.148    &lt;none&gt;        80/TCP                        114s</span><br><span class="line">kube-system   kube-dns                  ClusterIP   10.68.0.2       &lt;none&gt;        53/UDP,53/TCP,9153/TCP        2m20s</span><br><span class="line">kube-system   kubernetes-dashboard      NodePort    10.68.23.76     &lt;none&gt;        443:34980/TCP                 118s</span><br><span class="line">kube-system   metrics-server            ClusterIP   10.68.29.183    &lt;none&gt;        443/TCP                       2m13s</span><br><span class="line">kube-system   traefik-ingress-service   NodePort    10.68.226.239   &lt;none&gt;        80:23456/TCP,8080:38858/TCP   105s</span><br></pre></td></tr></table></figure>
-<h4 id="获取token"><a class="markdownIt-Anchor" href="#获取token"></a> 获取token</h4>
-<ul>
-<li>查看如下文件是否存在</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ ls /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br></pre></td></tr></table></figure>
-<ul>
-<li>获取token</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ kubectl apply -f /etc/ansible/manifests/dashboard/admin-user-sa-rbac.yaml</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">====</span><br><span class="line">ca.crt:     1350 bytes</span><br><span class="line">namespace:  11 bytes</span><br><span class="line">token:      eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlLXN5c3RlbSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWRoNjYyIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiJmZDdjZjc4Mi1hOTM0LTExZTktOTA1Zi0wMDBjMjlhMzc1YmYiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZS1zeXN0ZW06YWRtaW4tdXNlciJ9.KXFNuuibxRpF7AJHZBRkGgvpiVl4axfGA0A8haLIR3coX0HHPrQph8sO9GKl7C0KP6YXN-43VIxlpDXy-i_UkimxDJRVS08IW4r39Z4HhD-rKFYafQJROMrFG9lcbn1pZWTLBRGsO3lFCI1DyRDC7W_HSb63mgO2IoiQXGhgdhEWc7OnyNfxovkbtQA5xfsVqWqeWE-Dn4Jeo0lFe630I-iREMXPQvF5I7UNJFMJLCgFV0fG8J7__MYBf8xVnYL3ryaMBwKjQxQVsD3IOGS6TAk7RLZzjevySl-pXE1CcE8fosQQwJsOjOoKn5u1LGK3XUkIJR2rOf3jVMoQYYqe1Q</span><br></pre></td></tr></table></figure>
-<h2 id="踩过的坑"><a class="markdownIt-Anchor" href="#踩过的坑"></a> 踩过的坑</h2>
-<h3 id="node出于notready状态"><a class="markdownIt-Anchor" href="#node出于notready状态"></a> node出于NotReady状态</h3>
-<ul>
-<li>排查思路</li>
-</ul>
-<p>查看服务状态及相关错误信息</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ journalctl -f -u kubelet</span><br></pre></td></tr></table></figure>
-<p>最终发现我的内存因为是1G导致运行失败</p>
-]]></content>
-      <categories>
-        <category>k8s</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>Kubernetes</tag>
-        <tag>k8s</tag>
       </tags>
   </entry>
   <entry>
@@ -4172,114 +4321,6 @@ h2的eth0与s1的eth2相连</p>
       <tags>
         <tag>network</tag>
         <tag>vpp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Openstack学习笔记1</title>
-    <url>/2018/06/28/openstack-study1/</url>
-    <content><![CDATA[<p>该系列用来记录本人使用Openstack的一些笔记和心得</p>
-<a id="more"></a>
-<h2 id="openstack一些理解"><a class="markdownIt-Anchor" href="#openstack一些理解"></a> Openstack一些理解</h2>
-<h3 id="服务说明"><a class="markdownIt-Anchor" href="#服务说明"></a> 服务说明</h3>
-<ul>
-<li>keystone - 必选</li>
-</ul>
-<p>认证服务，是其他所有服务的基础</p>
-<ul>
-<li>glance - 必选</li>
-</ul>
-<p>镜像服务，用来存储镜像文件，如iso, vmdk, qcow2等</p>
-<ul>
-<li>nova - 必选</li>
-</ul>
-<p>计算服务，包括计算，调度，管理，api等，是openstack的核心服务</p>
-<ul>
-<li>neutron - 必选</li>
-</ul>
-<p>网络服务</p>
-<ul>
-<li>horizon - 可选（推荐选择）</li>
-</ul>
-<p>管理界面，图形化管理界面，方便使用</p>
-<ul>
-<li>cinder - 可选</li>
-</ul>
-<p>块存储服务，用来创建虚拟机的磁盘</p>
-<h3 id="一些理解"><a class="markdownIt-Anchor" href="#一些理解"></a> 一些理解</h3>
-<p>openstack可以理解为插件型的，灵活就体现于此。</p>
-<ul>
-<li>计算服务，控制节点可以只做计算的调度，管理，也可以在控制节点上启动计算服务</li>
-<li>同样，可以在任意一个节点上起块存储服务</li>
-</ul>
-<h3 id="关于网络"><a class="markdownIt-Anchor" href="#关于网络"></a> 关于网络</h3>
-<p>刚开始的时候很疑惑，为什么每个计算节点上都要配置一个额外的网卡，并将其连在一起</p>
-<p>需要说明的是：</p>
-<ul>
-<li>虚拟机的第一个网口是openstack的各个节点用来通信的网卡</li>
-<li>第二个网口是用来实现在openstack上启动的实例彼此通信的（即东西向流量）</li>
-<li>也可以不用第二个网口，这时，两个实例可以通过基于第一个网口之间建立的隧道进行通信</li>
-<li>如果要让实例可以访问外网，则需要为其分配专门的访问外网的网口</li>
-<li>openstack并不直接管理网口或网桥，要么通过linux bridge，或者是openvSwitch</li>
-<li>在openstack的UI上看到的网口，都是代号</li>
-</ul>
-<h2 id="测试环境准备"><a class="markdownIt-Anchor" href="#测试环境准备"></a> 测试环境准备</h2>
-<h3 id="两台虚拟机当然也可以all-in-one"><a class="markdownIt-Anchor" href="#两台虚拟机当然也可以all-in-one"></a> 两台虚拟机（当然也可以all in one）</h3>
-<h4 id="硬件准备"><a class="markdownIt-Anchor" href="#硬件准备"></a> 硬件准备</h4>
-<p>每台虚拟机应包含</p>
-<ol>
-<li>虚机可上网</li>
-<li>另外包含一张额外的网卡</li>
-<li>内存尽量多（8G）</li>
-<li>CPU尽量多（8 cpus）</li>
-<li>controller硬盘稍微大一些</li>
-</ol>
-<h4 id="基本准备"><a class="markdownIt-Anchor" href="#基本准备"></a> 基本准备</h4>
-<blockquote>
-<p>Ubuntu16.04 + Q版本（Queens）</p>
-</blockquote>
-<h5 id="配置ntp"><a class="markdownIt-Anchor" href="#配置ntp"></a> 配置NTP</h5>
-<h5 id="安装openstack基础包"><a class="markdownIt-Anchor" href="#安装openstack基础包"></a> 安装Openstack基础包</h5>
-<ul>
-<li>准备仓库</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># apt install software-properties-common</span></span><br><span class="line"><span class="comment"># add-apt-repository cloud-archive:queens</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>安装openstack包</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ apt update</span><br><span class="line">$ apt upgrade <span class="comment">#经实际测试，如果用apt dist-upgrade可能会出现问题，安装的不是最新的包</span></span><br><span class="line">$ apt install python-openstackclient</span><br></pre></td></tr></table></figure>
-<h4 id="controller"><a class="markdownIt-Anchor" href="#controller"></a> controller</h4>
-<p>controller上需要安装的东西最多</p>
-<h5 id="依赖"><a class="markdownIt-Anchor" href="#依赖"></a> 依赖</h5>
-<ul>
-<li>数据库: MariaDB</li>
-<li>消息队列: RabbitMQ</li>
-<li>服务及身份认证: Memcached</li>
-<li>etcd</li>
-</ul>
-<h5 id="openstack服务"><a class="markdownIt-Anchor" href="#openstack服务"></a> openstack服务</h5>
-<ul>
-<li>认证服务: keystone</li>
-<li>镜像服务: glance</li>
-<li>计算服务（指计算的调度，管理，api等服务）: nova</li>
-<li>网络服务（网络管理，调度等服务）: neutron</li>
-<li>管理界面: horizon</li>
-<li>块存储服务（可选）: cinder</li>
-</ul>
-<h4 id="compute"><a class="markdownIt-Anchor" href="#compute"></a> compute</h4>
-<p>计算节点相对来说简单了很多</p>
-<h5 id="openstack服务-2"><a class="markdownIt-Anchor" href="#openstack服务-2"></a> openstack服务</h5>
-<ul>
-<li>计算服务（专指计算服务）: nova-compute</li>
-<li>网络服务: neutron</li>
-</ul>
-<p><strong>可在controller上同样起计算服务</strong></p>
-<p>详细安装过程可参看<a href="https://docs.openstack.org/install-guide/openstack-services.html" target="_blank" rel="noopener">官方文档</a></p>
-]]></content>
-      <categories>
-        <category>cloud</category>
-      </categories>
-      <tags>
-        <tag>openstack</tag>
       </tags>
   </entry>
 </search>
