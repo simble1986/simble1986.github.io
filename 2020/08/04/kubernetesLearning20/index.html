@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Simble的小站" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.5.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则。动手实践并记录结果 对应章节：20 | 深入理解StatefulSet（三）：有状态应用实践">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K8s学习笔记——StatefulSet实践">
+<meta property="og:url" content="http://www.isimble.com/2020/08/04/kubernetesLearning20/index.html">
+<meta property="og:site_name" content="Simble的小站">
+<meta property="og:description" content="学习极客时间上的《深入剖析Kubernetes》 秉持眼过千遍不如手过一遍的原则。动手实践并记录结果 对应章节：20 | 深入理解StatefulSet（三）：有状态应用实践">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-04T02:06:04.000Z">
+<meta property="article:modified_time" content="2020-08-04T02:07:58.789Z">
+<meta property="article:author" content="Simble">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="Kubernetes">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://www.isimble.com/2020/08/04/kubernetesLearning20/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>K8s学习笔记——StatefulSet实践 | Simble的小站</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-152780270-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-152780270-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Simble的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">晒晒狗 vs 练练手</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档<span class="badge">55</span></a>
+
+  </li>
+        <li class="menu-item menu-item-guestbook">
+
+    <a href="/guestbook/" rel="section"><i class="fa fa-fw fa-comments"></i>留言板</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://www.isimble.com/2020/08/04/kubernetesLearning20/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Simble">
+      <meta itemprop="description" content="记录一些技术的或者旅行的东东">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Simble的小站">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          K8s学习笔记——StatefulSet实践
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-04 10:06:04 / 修改时间：10:07:58" itemprop="dateCreated datePublished" datetime="2020-08-04T10:06:04+08:00">2020-08-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/k8s/" itemprop="url" rel="index">
+                    <span itemprop="name">k8s</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/08/04/kubernetesLearning20/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/08/04/kubernetesLearning20/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>10k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>学习极客时间上的<a href="https://time.geekbang.org/column/intro/116" target="_blank" rel="noopener">《深入剖析Kubernetes》</a></p>
+<p>秉持眼过千遍不如手过一遍的原则。动手实践并记录结果</p>
+<p>对应章节：<a href="https://time.geekbang.org/column/article/41217" target="_blank" rel="noopener">20 | 深入理解StatefulSet（三）：有状态应用实践</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="mysql集群"><a class="markdownIt-Anchor" href="#mysql集群"></a> MySQL集群</h2>
+<h3 id="描述"><a class="markdownIt-Anchor" href="#描述"></a> 描述</h3>
+<ol>
+<li>是一个“主从复制“的MySQL集群</li>
+<li>有一个主节点和多个从节点</li>
+<li>从节点可水平扩展</li>
+<li>所有写操作都只能在主节点上完成</li>
+<li>读操作可以在所有节点上完成</li>
+</ol>
+<h3 id="创建myconf的configmap"><a class="markdownIt-Anchor" href="#创建myconf的configmap"></a> 创建my.conf的configMap</h3>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="attr">master.cnf:</span> <span class="string">|</span></span><br><span class="line">    <span class="string">[mysqld]</span></span><br><span class="line">    <span class="string">log-bin</span></span><br><span class="line">  <span class="attr">slave.cnf:</span> <span class="string">|</span></span><br><span class="line">    <span class="string">[mysqld]</span></span><br><span class="line">    <span class="string">super-read-only</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get configmap</span><br><span class="line">mysql                                     2      19s</span><br></pre></td></tr></table></figure>
+<h3 id="创建两个service"><a class="markdownIt-Anchor" href="#创建两个service"></a> 创建两个Service</h3>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">3306</span></span><br><span class="line">  <span class="attr">clusterIP:</span> <span class="string">None</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql-read</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">3306</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">mysql</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service</span><br><span class="line">NAME                          TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE</span><br><span class="line">mysql                         ClusterIP      None             &lt;none&gt;        3306/TCP                        4s</span><br><span class="line">mysql-read                    ClusterIP      10.105.117.44    &lt;none&gt;        3306/TCP                        4s</span><br></pre></td></tr></table></figure>
+<h3 id="创建statefulset"><a class="markdownIt-Anchor" href="#创建statefulset"></a> 创建StatefulSet</h3>
+<blockquote>
+<p>这个yaml文件是如此的长，在不太懂的情况下手抄作业</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">3</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">initContainers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">init-mysql</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">mysql:5.7</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">bash</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">"-c"</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">          <span class="string">set</span> <span class="string">-ex</span></span><br><span class="line">          <span class="comment"># Generate mysql server-id from pod ordinal index.</span></span><br><span class="line">          <span class="string">[[</span> <span class="string">`hostname`</span> <span class="string">=~</span> <span class="string">-([0-9]+)$</span> <span class="string">]]</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">          <span class="string">ordinal=$&#123;BASH_REMATCH[1]&#125;</span></span><br><span class="line">          <span class="string">echo</span> <span class="string">[mysqld]</span> <span class="string">&gt;</span> <span class="string">/mnt/conf.d/server-id.cnf</span></span><br><span class="line">          <span class="comment"># Add an offset to avoid reserved server-id=0 value.</span></span><br><span class="line">          <span class="string">echo</span> <span class="string">server-id=$((100</span> <span class="string">+</span> <span class="string">$ordinal))</span> <span class="string">&gt;&gt;</span> <span class="string">/mnt/conf.d/server-id.cnf</span></span><br><span class="line">          <span class="comment"># Copy appropriate conf.d files from config-map to emptyDir.</span></span><br><span class="line">          <span class="string">if</span> <span class="string">[[</span> <span class="string">$ordinal</span> <span class="string">-eq</span> <span class="number">0</span> <span class="string">]];</span> <span class="string">then</span></span><br><span class="line">            <span class="string">cp</span> <span class="string">/mnt/config-map/master.cnf</span> <span class="string">/mnt/conf.d/</span></span><br><span class="line">          <span class="string">else</span></span><br><span class="line">            <span class="string">cp</span> <span class="string">/mnt/config-map/slave.cnf</span> <span class="string">/mnt/conf.d/</span></span><br><span class="line">          <span class="string">fi</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">conf</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/mnt/conf.d</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config-map</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/mnt/config-map</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">clone-mysql</span></span><br><span class="line">        <span class="attr">image:</span> <span class="number">10.160</span><span class="number">.15</span><span class="number">.5</span><span class="string">/google_containers/xtrabackup:1.0</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">bash</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">"-c"</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">          <span class="string">set</span> <span class="string">-ex</span></span><br><span class="line">          <span class="comment"># Skip the clone if data already exists.</span></span><br><span class="line">          <span class="string">[[</span> <span class="string">-d</span> <span class="string">/var/lib/mysql/mysql</span> <span class="string">]]</span> <span class="string">&amp;&amp;</span> <span class="string">exit</span> <span class="number">0</span></span><br><span class="line">          <span class="comment"># Skip the clone on master (ordinal index 0).</span></span><br><span class="line">          <span class="string">[[</span> <span class="string">`hostname`</span> <span class="string">=~</span> <span class="string">-([0-9]+)$</span> <span class="string">]]</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">          <span class="string">ordinal=$&#123;BASH_REMATCH[1]&#125;</span></span><br><span class="line">          <span class="string">[[</span> <span class="string">$ordinal</span> <span class="string">-eq</span> <span class="number">0</span> <span class="string">]]</span> <span class="string">&amp;&amp;</span> <span class="string">exit</span> <span class="number">0</span></span><br><span class="line">          <span class="comment"># Clone data from previous peer.</span></span><br><span class="line">          <span class="string">ncat</span> <span class="string">--recv-only</span> <span class="string">mysql-$(($ordinal-1)).mysql</span> <span class="number">3307</span> <span class="string">|</span> <span class="string">xbstream</span> <span class="string">-x</span> <span class="string">-C</span> <span class="string">/var/lib/mysql</span></span><br><span class="line">          <span class="comment"># Prepare the backup.</span></span><br><span class="line">          <span class="string">xtrabackup</span> <span class="string">--prepare</span> <span class="string">--target-dir=/var/lib/mysql</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">data</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/var/lib/mysql</span></span><br><span class="line">          <span class="attr">subPath:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">conf</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/mysql/conf.d</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">mysql:5.7</span></span><br><span class="line">        <span class="attr">env:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">MYSQL_ALLOW_EMPTY_PASSWORD</span></span><br><span class="line">          <span class="attr">value:</span> <span class="string">"1"</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">          <span class="attr">containerPort:</span> <span class="number">3306</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">data</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/var/lib/mysql</span></span><br><span class="line">          <span class="attr">subPath:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">conf</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/mysql/conf.d</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">500m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">1Gi</span></span><br><span class="line">        <span class="attr">livenessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="attr">command:</span> <span class="string">["mysqladmin",</span> <span class="string">"ping"</span><span class="string">]</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">30</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">10</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">5</span></span><br><span class="line">        <span class="attr">readinessProbe:</span></span><br><span class="line">          <span class="attr">exec:</span></span><br><span class="line">            <span class="comment"># Check we can execute queries over TCP (skip-networking is off).</span></span><br><span class="line">            <span class="attr">command:</span> <span class="string">["mysql",</span> <span class="string">"-h"</span><span class="string">,</span> <span class="string">"127.0.0.1"</span><span class="string">,</span> <span class="string">"-e"</span><span class="string">,</span> <span class="string">"SELECT 1"</span><span class="string">]</span></span><br><span class="line">          <span class="attr">initialDelaySeconds:</span> <span class="number">5</span></span><br><span class="line">          <span class="attr">periodSeconds:</span> <span class="number">2</span></span><br><span class="line">          <span class="attr">timeoutSeconds:</span> <span class="number">1</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">xtrabackup</span></span><br><span class="line">        <span class="attr">image:</span> <span class="number">10.160</span><span class="number">.15</span><span class="number">.5</span><span class="string">/google_containers/xtrabackup:1.0</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">xtrabackup</span></span><br><span class="line">          <span class="attr">containerPort:</span> <span class="number">3307</span></span><br><span class="line">        <span class="attr">command:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">bash</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">"-c"</span></span><br><span class="line">        <span class="bullet">-</span> <span class="string">|</span></span><br><span class="line">          <span class="string">set</span> <span class="string">-ex</span></span><br><span class="line">          <span class="string">cd</span> <span class="string">/var/lib/mysql</span></span><br><span class="line">          <span class="comment"># Determine binlog position of cloned data, if any.</span></span><br><span class="line">          <span class="string">if</span> <span class="string">[[</span> <span class="string">-f</span> <span class="string">xtrabackup_slave_info</span> <span class="string">]];</span> <span class="string">then</span></span><br><span class="line">            <span class="comment"># XtraBackup already generated a partial "CHANGE MASTER TO" query</span></span><br><span class="line">            <span class="comment"># because we're cloning from an existing slave.</span></span><br><span class="line">            <span class="string">mv</span> <span class="string">xtrabackup_slave_info</span> <span class="string">change_master_to.sql.in</span></span><br><span class="line">            <span class="comment"># Ignore xtrabackup_binlog_info in this case (it's useless).</span></span><br><span class="line">            <span class="string">rm</span> <span class="string">-f</span> <span class="string">xtrabackup_binlog_info</span></span><br><span class="line">          <span class="string">elif</span> <span class="string">[[</span> <span class="string">-f</span> <span class="string">xtrabackup_binlog_info</span> <span class="string">]];</span> <span class="string">then</span></span><br><span class="line">            <span class="comment"># We're cloning directly from master. Parse binlog position.</span></span><br><span class="line">            <span class="string">[[</span> <span class="string">`cat</span> <span class="string">xtrabackup_binlog_info`</span> <span class="string">=~</span> <span class="string">^(.*?)[[:space:]]+(.*?)$</span> <span class="string">]]</span> <span class="string">||</span> <span class="string">exit</span> <span class="number">1</span></span><br><span class="line">            <span class="string">rm</span> <span class="string">xtrabackup_binlog_info</span></span><br><span class="line">            <span class="string">echo</span> <span class="string">"CHANGE MASTER TO MASTER_LOG_FILE='$&#123;BASH_REMATCH[1]&#125;',\</span></span><br><span class="line"><span class="string">                  MASTER_LOG_POS=$&#123;BASH_REMATCH[2]&#125;"</span> <span class="string">&gt;</span> <span class="string">change_master_to.sql.in</span></span><br><span class="line">          <span class="string">fi</span></span><br><span class="line">          <span class="comment"># Check if we need to complete a clone by starting replication.</span></span><br><span class="line">          <span class="string">if</span> <span class="string">[[</span> <span class="string">-f</span> <span class="string">change_master_to.sql.in</span> <span class="string">]];</span> <span class="string">then</span></span><br><span class="line">            <span class="string">echo</span> <span class="string">"Waiting for mysqld to be ready (accepting connections)"</span></span><br><span class="line">            <span class="string">until</span> <span class="string">mysql</span> <span class="string">-h</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="string">-e</span> <span class="string">"SELECT 1"</span><span class="string">;</span> <span class="string">do</span> <span class="string">sleep</span> <span class="number">1</span><span class="string">;</span> <span class="string">done</span></span><br><span class="line">            <span class="string">echo</span> <span class="string">"Initializing replication from clone position"</span></span><br><span class="line">            <span class="comment"># In case of container restart, attempt this at-most-once.</span></span><br><span class="line">            <span class="string">mv</span> <span class="string">change_master_to.sql.in</span> <span class="string">change_master_to.sql.orig</span></span><br><span class="line">            <span class="string">mysql</span> <span class="string">-h</span> <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> <span class="string">&lt;&lt;EOF</span></span><br><span class="line">          <span class="string">$(&lt;change_master_to.sql.orig),</span></span><br><span class="line">            <span class="string">MASTER_HOST='mysql-0.mysql',</span></span><br><span class="line">            <span class="string">MASTER_USER='root',</span></span><br><span class="line">            <span class="string">MASTER_PASSWORD='',</span></span><br><span class="line">            <span class="string">MASTER_CONNECT_RETRY=10;</span></span><br><span class="line">          <span class="string">START</span> <span class="string">SLAVE;</span></span><br><span class="line">          <span class="string">EOF</span></span><br><span class="line">          <span class="string">fi</span></span><br><span class="line">          <span class="comment"># Start a server to send backups when requested by peers.</span></span><br><span class="line">          <span class="string">exec</span> <span class="string">ncat</span> <span class="string">--listen</span> <span class="string">--keep-open</span> <span class="string">--send-only</span> <span class="string">--max-conns=1</span> <span class="number">3307</span> <span class="string">-c</span> <span class="string">\</span></span><br><span class="line">            <span class="string">"xtrabackup --backup --slave-info --stream=xbstream --host=127.0.0.1 --user=root"</span></span><br><span class="line">        <span class="attr">volumeMounts:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">data</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/var/lib/mysql</span></span><br><span class="line">          <span class="attr">subPath:</span> <span class="string">mysql</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">conf</span></span><br><span class="line">          <span class="attr">mountPath:</span> <span class="string">/etc/mysql/conf.d</span></span><br><span class="line">        <span class="attr">resources:</span></span><br><span class="line">          <span class="attr">requests:</span></span><br><span class="line">            <span class="attr">cpu:</span> <span class="string">100m</span></span><br><span class="line">            <span class="attr">memory:</span> <span class="string">100Mi</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">conf</span></span><br><span class="line">        <span class="attr">emptyDir:</span> <span class="string">&#123;&#125;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config-map</span></span><br><span class="line">        <span class="attr">configMap:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">volumeClaimTemplates:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">name:</span> <span class="string">data</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">accessModes:</span> <span class="string">["ReadWriteOnce"]</span></span><br><span class="line">      <span class="attr">storageClassName:</span> <span class="string">"nfs-client"</span></span><br><span class="line">      <span class="attr">resources:</span></span><br><span class="line">        <span class="attr">requests:</span></span><br><span class="line">          <span class="attr">storage:</span> <span class="string">10Gi</span></span><br></pre></td></tr></table></figure>
+<h3 id="检查"><a class="markdownIt-Anchor" href="#检查"></a> 检查</h3>
+<ul>
+<li>PV及PVC</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pv</span><br><span class="line">NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                                 STORAGECLASS   REASON   AGE</span><br><span class="line">pvc-ba5e0a68-59f6-4812-b3cc-919898c72f21   10Gi       RWO            Delete           Bound    default/data-mysql-2                                  nfs-client              116s</span><br><span class="line">pvc-cd69aa2b-6e92-48da-998b-363fb3c796e9   10Gi       RWO            Delete           Bound    default/data-mysql-0                                  nfs-client              106m</span><br><span class="line">pvc-f89ba84c-f87c-498a-ac19-99eca1645f4f   10Gi       RWO            Delete           Bound    default/data-mysql-1                                  nfs-client              105m</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pvc</span><br><span class="line">NAME                                          STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE</span><br><span class="line">data-mysql-0                                  Bound    pvc-cd69aa2b-6e92-48da-998b-363fb3c796e9   10Gi       RWO            nfs-client     106m</span><br><span class="line">data-mysql-1                                  Bound    pvc-f89ba84c-f87c-498a-ac19-99eca1645f4f   10Gi       RWO            nfs-client     105m</span><br><span class="line">data-mysql-2                                  Bound    pvc-ba5e0a68-59f6-4812-b3cc-919898c72f21   10Gi       RWO            nfs-client     110s</span><br></pre></td></tr></table></figure>
+<ul>
+<li>pod</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS    RESTARTS   AGE</span><br><span class="line">mysql-0   2/2     Running   0          104m</span><br><span class="line">mysql-1   2/2     Running   1          3m27s</span><br><span class="line">mysql-2   2/2     Running   1          3m7s</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl describe pod mysql-2</span><br><span class="line">...</span><br><span class="line">Events:</span><br><span class="line">  Type     Reason            Age                    From               Message</span><br><span class="line">  ----     ------            ----                   ----               -------</span><br><span class="line">  Warning  FailedScheduling  3m35s                  default-scheduler  running <span class="string">"VolumeBinding"</span> filter plugin <span class="keyword">for</span> pod <span class="string">"mysql-2"</span>: pod has unbound immediate PersistentVolumeClaims</span><br><span class="line">  Warning  FailedScheduling  3m35s                  default-scheduler  persistentvolumeclaim <span class="string">"data-mysql-2"</span> not found</span><br><span class="line">  Normal   Scheduled         3m32s                  default-scheduler  Successfully assigned default/mysql-2 to node1</span><br><span class="line">  Normal   Pulled            3m32s                  kubelet, node1     Container image <span class="string">"mysql:5.7"</span> already present on machine</span><br><span class="line">  Normal   Created           3m32s                  kubelet, node1     Created container init-mysql</span><br><span class="line">  Normal   Started           3m31s                  kubelet, node1     Started container init-mysql</span><br><span class="line">  Normal   Started           3m30s                  kubelet, node1     Started container <span class="built_in">clone</span>-mysql</span><br><span class="line">  Normal   Pulled            3m30s                  kubelet, node1     Container image <span class="string">"10.160.15.5/google_containers/xtrabackup:1.0"</span> already present on machine</span><br><span class="line">  Normal   Created           3m30s                  kubelet, node1     Created container <span class="built_in">clone</span>-mysql</span><br><span class="line">  Normal   Pulled            2m55s                  kubelet, node1     Container image <span class="string">"10.160.15.5/google_containers/xtrabackup:1.0"</span> already present on machine</span><br><span class="line">  Normal   Created           2m55s                  kubelet, node1     Created container xtrabackup</span><br><span class="line">  Normal   Started           2m55s                  kubelet, node1     Started container xtrabackup</span><br><span class="line">  Normal   Pulled            2m54s (x2 over 2m55s)  kubelet, node1     Container image <span class="string">"mysql:5.7"</span> already present on machine</span><br><span class="line">  Normal   Created           2m54s (x2 over 2m55s)  kubelet, node1     Created container mysql</span><br><span class="line">  Normal   Started           2m54s (x2 over 2m55s)  kubelet, node1     Started container mysql</span><br></pre></td></tr></table></figure>
+<ul>
+<li>service</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get service</span><br><span class="line">NAME                                    TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                         AGE</span><br><span class="line">mysql                                   ClusterIP      None             &lt;none&gt;        3306/TCP                        21h</span><br><span class="line">mysql-read                              ClusterIP      10.105.117.44    &lt;none&gt;        3306/TCP                        21h</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get statefulset</span><br><span class="line">NAME                   READY   AGE</span><br><span class="line">mysql                  3/3     107m</span><br></pre></td></tr></table></figure>
+<h3 id="验证集群"><a class="markdownIt-Anchor" href="#验证集群"></a> 验证集群</h3>
+<ul>
+<li>创建测试数据</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run mysql-client --image=mysql:5.7 -i --rm --restart=Never --\</span><br><span class="line">  mysql -h mysql-0.mysql &lt;&lt;EOF</span><br><span class="line">CREATE DATABASE <span class="built_in">test</span>;</span><br><span class="line">CREATE TABLE test.messages (message VARCHAR(250));</span><br><span class="line">INSERT INTO test.messages VALUES (<span class="string">'hello'</span>);</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">pod "mysql-client" deleted</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>读取测试数据</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run mysql-client --image=mysql:5.7 -i -t --rm --restart=Never -- mysql -h mysql-read -e <span class="string">"SELECT * FROM test.messages"</span></span><br><span class="line">If you don<span class="string">'t see a command prompt, try pressing enter.</span></span><br><span class="line"><span class="string">+---------+</span></span><br><span class="line"><span class="string">| message |</span></span><br><span class="line"><span class="string">+---------+</span></span><br><span class="line"><span class="string">| hello   |</span></span><br><span class="line"><span class="string">+---------+</span></span><br><span class="line"><span class="string">pod "mysql-client" deleted</span></span><br></pre></td></tr></table></figure>
+<h3 id="扩容mysql集群"><a class="markdownIt-Anchor" href="#扩容mysql集群"></a> 扩容mysql集群</h3>
+<ul>
+<li>修改replicas为5</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">StatefulSet</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">mysql</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">serviceName:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>pods</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS    RESTARTS   AGE</span><br><span class="line">mysql-0   2/2     Running   0          4h51m</span><br><span class="line">mysql-1   2/2     Running   1          3h10m</span><br><span class="line">mysql-2   2/2     Running   1          3h10m</span><br><span class="line">mysql-3   2/2     Running   1          119s</span><br><span class="line">mysql-4   2/2     Running   0          71s</span><br></pre></td></tr></table></figure>
+<ul>
+<li>获取数据</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run mysql-client --image=mysql:5.7 -it --rm --restart=Never -- mysql -h mysql-4.mysql -e <span class="string">"SELECT * FROM test.messages"</span></span><br><span class="line">+---------+</span><br><span class="line">| message |</span><br><span class="line">+---------+</span><br><span class="line">| hello   |</span><br><span class="line">+---------+</span><br><span class="line">pod <span class="string">"mysql-client"</span> deleted</span><br></pre></td></tr></table></figure>
+<ul>
+<li>尝试写入</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl run mysql-client --image=mysql:5.7 -it --rm --restart=Never -- mysql -h mysql-4.mysql -e <span class="string">"INSERT INTO test.messages VALUES ('test')"</span></span><br><span class="line">ERROR 1290 (HY000) at line 1: The MySQL server is running with the --super-read-only option so it cannot execute this statement</span><br><span class="line">pod <span class="string">"mysql-client"</span> deleted</span><br><span class="line">pod default/mysql-client terminated (Error)</span><br></pre></td></tr></table></figure>
+<h2 id="分析"><a class="markdownIt-Anchor" href="#分析"></a> 分析</h2>
+<p>实验伴随着解决各种问题完成了，现在再回头来总结一下我理解的YAML文件的内容</p>
+<ol>
+<li>init_containers中定义了两个container，分别是mysql和xtrabackup
+<ol>
+<li>mysql的container根据hostname进行判断，是初始化为master还是slave</li>
+<li>xtrabackup的container，如果不为master，则根据数据是否存在决定是否要拷贝数据</li>
+</ol>
+</li>
+<li>containers中也同样定义了两个container，也同样是mysql和xtrabackup
+<ol>
+<li>mysql的container直接使用init_container中创建的数据，启动mysql服务</li>
+<li>xtrabackup的container则开启3307用来为其他的slave提供拷贝</li>
+</ol>
+</li>
+</ol>
+<h3 id="更新"><a class="markdownIt-Anchor" href="#更新"></a> 更新</h3>
+<p>修改镜像版本为<code>10.160.15.5/pub/mysql:5.7</code></p>
+<blockquote>
+<p>由于新镜像实际上和原来的镜像是同一个md5，不会出现其他问题。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS        RESTARTS   AGE</span><br><span class="line">mysql-0   2/2     Running       0          26h</span><br><span class="line">mysql-1   2/2     Running       1          24h</span><br><span class="line">mysql-2   2/2     Running       1          24h</span><br><span class="line">mysql-3   2/2     Running       1          21h</span><br><span class="line">mysql-4   2/2     Terminating   0          46s</span><br><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS        RESTARTS   AGE</span><br><span class="line">mysql-0   2/2     Running       0          26h</span><br><span class="line">mysql-1   2/2     Running       1          24h</span><br><span class="line">mysql-2   2/2     Running       1          24h</span><br><span class="line">mysql-3   2/2     Terminating   1          21h</span><br><span class="line">mysql-4   2/2     Running       0          46s</span><br><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS        RESTARTS   AGE</span><br><span class="line">mysql-0   2/2     Running       0          26h</span><br><span class="line">mysql-1   2/2     Terminating   1          25h</span><br><span class="line">mysql-2   2/2     Running       0          17s</span><br><span class="line">mysql-3   2/2     Running       0          68s</span><br><span class="line">mysql-4   2/2     Running       0          2m19s</span><br><span class="line">$ kubectl get pods -l app=mysql</span><br><span class="line">NAME      READY   STATUS     RESTARTS   AGE</span><br><span class="line">mysql-0   0/2     Init:0/2   0          1s</span><br><span class="line">mysql-1   2/2     Running    0          47s</span><br><span class="line">mysql-2   2/2     Running    0          90s</span><br><span class="line">mysql-3   2/2     Running    0          2m21s</span><br><span class="line">mysql-4   2/2     Running    0          3m32s</span><br></pre></td></tr></table></figure>
+<p>可以看到，StatefulSet更新后，会先将最后一个pod进行更新，成功后，会更新mysql-3，依次类推，直到更新到mysql-0</p>
+<h2 id="小结"><a class="markdownIt-Anchor" href="#小结"></a> 小结</h2>
+<blockquote>
+<p>StatefulSet 其实是一种特殊的 Deployment，只不过这个“Deployment”的每个 Pod 实例的名字里，都携带了一个唯一并且固定的编号。这个编号的顺序，固定了 Pod 的拓扑关系；这个编号对应的 DNS 记录，固定了 Pod 的访问方式；这个编号对应的 PV，绑定了 Pod 与持久化存储的关系。所以，当 Pod 被删除重建时，这些“状态”都会保持不变。</p>
+</blockquote>
+<p>可以看到，由于pod名称固定，PV以及PVC固定，即使删掉一个pod，重建后，仍然会创建一个与其名字相同的pod并使用原有的PV及PVC。从而对应的pod启动后，内容一致</p>
+<p>然而，由于将master和slave写在一个StatefulSet，感觉实现的非常复杂。</p>
+
+    </div>
+
+    
+    
+    
+      
+  <div class="popular-posts-header">相关文章</div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/08/kubernetesLearning14/" rel="bookmark">K8s学习笔记——Pod的基本概念</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/06/23/kubernetesLearning03/" rel="bookmark">K8s学习笔记——深入理解容器镜像</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/07/20/kubernetes-network-problem-resolve/" rel="bookmark">K8s网络相关问题及解决</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/06/17/kubernetesLearning01/" rel="bookmark">K8s学习笔记——container之于进程</a></div>
+    </li>
+    <li class="popular-posts-item">
+      <div class="popular-posts-title"><a href="/2020/06/17/kubernetesLearning02/" rel="bookmark">K8s学习笔记——限制与隔离</a></div>
+    </li>
+  </ul>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+              <a href="/tags/Kubernetes/" rel="tag"><i class="fa fa-tag"></i> Kubernetes</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/08/04/kubernetesLearning19/" rel="next" title="K8s学习笔记——StatefulSet之存储状态">
+                  <i class="fa fa-chevron-left"></i> K8s学习笔记——StatefulSet之存储状态
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql集群"><span class="nav-number">1.</span> <span class="nav-text"> MySQL集群</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.1.</span> <span class="nav-text"> 描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建myconf的configmap"><span class="nav-number">1.2.</span> <span class="nav-text"> 创建my.conf的configMap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建两个service"><span class="nav-number">1.3.</span> <span class="nav-text"> 创建两个Service</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建statefulset"><span class="nav-number">1.4.</span> <span class="nav-text"> 创建StatefulSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查"><span class="nav-number">1.5.</span> <span class="nav-text"> 检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证集群"><span class="nav-number">1.6.</span> <span class="nav-text"> 验证集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩容mysql集群"><span class="nav-number">1.7.</span> <span class="nav-text"> 扩容mysql集群</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">2.</span> <span class="nav-text"> 分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新"><span class="nav-number">2.1.</span> <span class="nav-text"> 更新</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text"> 小结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Simble"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Simble</p>
+  <div class="site-description" itemprop="description">记录一些技术的或者旅行的东东</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">55</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/simble1986" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:simble1986@gmail.com" title="E-Mail → mailto:simble1986@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.facebook.com/simble1987" title="FB Page → https:&#x2F;&#x2F;www.facebook.com&#x2F;simble1987" rel="noopener" target="_blank"><i class="fa fa-fw fa-facebook"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.linkedin.com/in/simble1986" title="Linkedin → https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;simble1986" rel="noopener" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://zpzhou.com/" title="https:&#x2F;&#x2F;zpzhou.com&#x2F;" rel="noopener" target="_blank">ZPDEV</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://10101.io/" title="https:&#x2F;&#x2F;10101.io&#x2F;" rel="noopener" target="_blank">WithdewHua</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Simble</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">245k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:43</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=5ab46d3d969efec5" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://simble.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: {page: {
+            url: "http://www.isimble.com/2020/08/04/kubernetesLearning20/",
+            identifier: "2020/08/04/kubernetesLearning20/",
+            title: "K8s学习笔记——StatefulSet实践"
+          }
+        }
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://simble.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    window.addEventListener('load', loadComments, false);
+</script>
+
+</body>
+</html>
