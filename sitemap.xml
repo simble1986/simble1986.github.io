@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.isimble.com/2020/12/23/k8s-python-sdk-usage/</loc>
+    
+    <lastmod>2020-12-23T06:42:47.687Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/2020/08/25/kubernetesLearning22/</loc>
     
     <lastmod>2020-08-25T05:56:56.847Z</lastmod>
@@ -247,14 +254,14 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
+    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
+    <loc>http://www.isimble.com/2018/03/30/docker-install-mysql-server-no-passwd/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -268,7 +275,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/06/21/marp/</loc>
+    <loc>http://www.isimble.com/2018/05/11/gitbook-gitlab/</loc>
     
     <lastmod>2018-11-15T05:46:30.039Z</lastmod>
     
@@ -380,7 +387,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/tags/index.html</loc>
+    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -394,7 +401,7 @@
   </url>
   
   <url>
-    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
+    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
@@ -415,21 +422,21 @@
   </url>
   
   <url>
+    <loc>http://www.isimble.com/tags/index.html</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.isimble.com/2018/03/23/nodejs-setup-pi/</loc>
+    
+    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.isimble.com/guestbook/index.html</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/2018/03/27/hexo-next-valine/</loc>
-    
-    <lastmod>2018-03-30T02:37:58.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.isimble.com/2018/03/25/setup-hexo-create-site/</loc>
     
     <lastmod>2018-03-30T02:37:58.000Z</lastmod>
     
